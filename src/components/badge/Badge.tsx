@@ -1,13 +1,13 @@
-import { forwardRef, type HTMLAttributes, type ReactNode } from 'react'
+import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export type BadgeVariant = 'circle' | 'overflow' | 'dot'
+export type BadgeVariant = 'circle' | 'overflow' | 'dot';
 
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: BadgeVariant
-  children?: ReactNode
-  className?: string
+  variant?: BadgeVariant;
+  children?: ReactNode;
+  className?: string;
 }
 
 // ─── Token → Tailwind map ─────────────────────────────────────────────────────
@@ -53,10 +53,12 @@ export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
             'shrink-0 rounded-full bg-red-500',
             'h-1.5 w-1.5',
             className,
-          ].filter(Boolean).join(' ')}
+          ]
+            .filter(Boolean)
+            .join(' ')}
           {...rest}
         />
-      )
+      );
     }
 
     return (
@@ -64,18 +66,20 @@ export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
         ref={ref}
         className={[
           'inline-flex items-center justify-center shrink-0',
-          'bg-red-500 rounded-full h-5',
+          'bg-red-500 rounded-full h-5 text-white',
           variant === 'circle' ? 'w-5' : 'min-w-5 px-1',
           className,
-        ].filter(Boolean).join(' ')}
+        ]
+          .filter(Boolean)
+          .join(' ')}
         {...rest}
       >
-        <span className="font-sans text-white text-xs font-medium leading-4 tracking-wide whitespace-nowrap">
+        <span className="font-sans text-xs font-medium leading-4 tracking-wide whitespace-nowrap">
           {children}
         </span>
       </div>
-    )
+    );
   },
-)
+);
 
-Badge.displayName = 'Badge'
+Badge.displayName = 'Badge';
