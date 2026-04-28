@@ -1,12 +1,12 @@
-# itui.css
+# @echoit/itui.css
 
 > A React component library built on Tailwind CSS v4 tokens, distributed as an npm package.
 
 <!-- Badges (add when published) -->
 <!--
-[![npm version](https://img.shields.io/npm/v/itui.css.svg)](https://www.npmjs.com/package/itui.css)
-[![license](https://img.shields.io/npm/l/itui.css.svg)](./LICENSE)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/itui.css)](https://bundlephobia.com/package/itui.css)
+[![npm version](https://img.shields.io/npm/v/@echoit/itui.css.svg)](https://www.npmjs.com/package/@echoit/itui.css)
+[![license](https://img.shields.io/npm/l/@echoit/itui.css.svg)](./LICENSE)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/@echoit/itui.css)](https://bundlephobia.com/package/@echoit/itui.css)
 -->
 
 ---
@@ -26,15 +26,46 @@
 ## Installation
 
 ```bash
-npm install itui.css
-# yarn add itui.css
-# pnpm add itui.css
+npm install @echoit/itui.css
+# yarn add @echoit/itui.css
+# pnpm add @echoit/itui.css
 ```
 
-Import the stylesheet once in your app entry (e.g. `main.tsx` or `_app.tsx`):
+### 1. Configure Tailwind CSS
+
+To ensure Tailwind generates the necessary styles for the components, you need to tell it where to look for the classes used in `@echoit/itui.css`.
+
+#### For Tailwind CSS v4 (Recommended)
+In your main CSS file (e.g., `app.css` or `globals.css`), simply import the library's styles. Tailwind v4 will automatically discover the component styles.
+
+```css
+@import "@echoit/itui.css/src/styles/global.css";
+```
+
+#### For Tailwind CSS v3
+Add the `@echoit/itui.css` distribution files to your `tailwind.config.js` `content` array:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@echoit/itui.css/dist/**/*.{js,mjs,cjs}", // Add this line
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+### 2. Import Styles
+
+If you are not using the `@import` method above, make sure to import the stylesheet in your app entry point (e.g., `main.tsx` or `_app.tsx`):
 
 ```tsx
-import "itui.css/styles.css";
+import "@echoit/itui.css/src/styles/global.css";
 ```
 
 ---
@@ -42,7 +73,7 @@ import "itui.css/styles.css";
 ## Quick Start
 
 ```tsx
-import { Button } from "itui.css";
+import { Button } from "@echoit/itui.css";
 
 export default function App() {
   return (
@@ -57,7 +88,7 @@ export default function App() {
 
 ## Theming
 
-itui.css uses CSS custom properties for theming. Override tokens at `:root` or on any scope:
+@echoit/itui.css uses CSS custom properties for theming. Override tokens at `:root` or on any scope:
 
 ```css
 :root {
@@ -104,11 +135,11 @@ Requires support for CSS custom properties and `oklch()` color.
 
 ## Contributing
 
-Contributions are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+Contributions are welcome. See [DEVELOPMENT.md](./DEVELOPMENT.md) for build and publishing guidelines.
 
 ```bash
-git clone git@github.com:platform-echoit/itui.css.git
-cd itui.css
+git clone git@github.com:platform-echoit/@echoit/itui.css.git
+cd @echoit/itui.css
 pnpm install
 pnpm dev
 ```

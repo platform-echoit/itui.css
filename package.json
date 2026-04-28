@@ -1,7 +1,15 @@
 {
-  "name": "itui.css",
+  "name": "@echoit/itui.css",
   "description": "",
-  "version": "1.0.2",
+  "version": "1.0.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "echoit <echoit.dev.04@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/platform-echoit/itui.css.git"
+  },
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -21,7 +29,6 @@
   },
   "type": "module",
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.23.0",
   "dependencies": {
