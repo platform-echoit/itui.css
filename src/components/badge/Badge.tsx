@@ -1,4 +1,5 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { cn } from '../../lib/utils';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -49,13 +50,10 @@ export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
           ref={ref}
           role="status"
           aria-label="notification indicator"
-          className={[
-            'shrink-0 rounded-full bg-red-500',
-            'h-1.5 w-1.5',
+          className={cn(
+            'shrink-0 rounded-full bg-red-500 h-1.5 w-1.5',
             className,
-          ]
-            .filter(Boolean)
-            .join(' ')}
+          )}
           {...rest}
         />
       );
@@ -64,14 +62,12 @@ export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
     return (
       <div
         ref={ref}
-        className={[
+        className={cn(
           'inline-flex items-center justify-center shrink-0',
           'bg-red-500 rounded-full h-5 text-white',
           variant === 'circle' ? 'w-5' : 'min-w-5 px-1',
           className,
-        ]
-          .filter(Boolean)
-          .join(' ')}
+        )}
         {...rest}
       >
         <span className="font-sans text-xs font-medium leading-4 tracking-wide whitespace-nowrap">

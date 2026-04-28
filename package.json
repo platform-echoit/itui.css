@@ -25,7 +25,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:generate": "tsx scripts/test-generate.ts",
-    "build": "tsup"
+    "build": "tsup",
+    "dev": "tsup --watch"
   },
   "type": "module",
   "keywords": [],
@@ -34,7 +35,9 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
     "@types/react": "^19.2.14",
+    "clsx": "2.1.1",
     "react": "^19.2.5",
+    "tailwind-merge": "3.5.0",
     "tailwindcss": "^4.2.4"
   },
   "devDependencies": {
