@@ -36,28 +36,30 @@ npm install @echoit/itui.css
 To ensure Tailwind generates the necessary styles for the components, you need to tell it where to look for the classes used in `@echoit/itui.css`.
 
 #### For Tailwind CSS v4 (Recommended)
+
 In your main CSS file (e.g., `app.css` or `globals.css`), simply import the library's styles. Tailwind v4 will automatically discover the component styles.
 
 ```css
-@import "@echoit/itui.css/src/styles/global.css";
+@import '@echoit/itui.css/src/styles/global.css';
 ```
 
 #### For Tailwind CSS v3
+
 Add the `@echoit/itui.css` distribution files to your `tailwind.config.js` `content` array:
 
 ```javascript
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@echoit/itui.css/dist/**/*.{js,mjs,cjs}", // Add this line
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@echoit/itui.css/dist/**/*.{js,mjs,cjs}', // Add this line
   ],
   theme: {
     extend: {},
   },
   plugins: [],
-}
+};
 ```
 
 ### 2. Import Styles
@@ -65,7 +67,7 @@ export default {
 If you are not using the `@import` method above, make sure to import the stylesheet in your app entry point (e.g., `main.tsx` or `_app.tsx`):
 
 ```tsx
-import "@echoit/itui.css/src/styles/global.css";
+import '@echoit/itui.css/src/styles/global.css';
 ```
 
 ---
@@ -73,7 +75,7 @@ import "@echoit/itui.css/src/styles/global.css";
 ## Quick Start
 
 ```tsx
-import { Button } from "@echoit/itui.css";
+import { Button } from '@echoit/itui.css';
 
 export default function App() {
   return (
@@ -117,9 +119,9 @@ Full documentation — including component API, examples, and theming guides —
 
 ## Browser Support
 
-| Chrome | Edge | Firefox | Safari |
-|---|---|---|---|
-| Last 2 | Last 2 | Last 2 | 15+ |
+| Chrome | Edge   | Firefox | Safari |
+| ------ | ------ | ------- | ------ |
+| Last 2 | Last 2 | Last 2  | 15+    |
 
 Requires support for CSS custom properties and `oklch()` color.
 

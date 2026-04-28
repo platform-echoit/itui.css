@@ -1,19 +1,24 @@
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
+import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export type ButtonVariant = 'primary' | 'alternative' | 'secondary' | 'link' | 'link-underline'
-export type ButtonSize = 'lg' | 'md' | 'sm'
+export type ButtonVariant =
+  | 'primary'
+  | 'alternative'
+  | 'secondary'
+  | 'link'
+  | 'link-underline';
+export type ButtonSize = 'lg' | 'md' | 'sm';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant
-  size?: ButtonSize
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   /** Leading icon slot */
-  iconLeft?: ReactNode
+  iconLeft?: ReactNode;
   /** Trailing icon slot */
-  iconRight?: ReactNode
-  loading?: boolean
-  fullWidth?: boolean
+  iconRight?: ReactNode;
+  loading?: boolean;
+  fullWidth?: boolean;
 }
 
 // ─── Token → Tailwind maps ────────────────────────────────────────────────────
@@ -40,23 +45,26 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     font/letter-spacing/md   → tracking-md  (in @theme)
     radius/sm          8px → rounded-lg  (Tailwind 0.5rem = 8px)
 */
-const sizeConfig: Record<ButtonSize, { label: string; iconOnly: string; icon: string }> = {
+const sizeConfig: Record<
+  ButtonSize,
+  { label: string; iconOnly: string; icon: string }
+> = {
   lg: {
-    label:    'h-button-lg px-6 py-3 gap-2 text-base leading-6 tracking-lg',
+    label: 'h-button-lg px-6 py-3 gap-2 text-base leading-6 tracking-lg',
     iconOnly: 'h-button-lg w-button-lg',
-    icon:     'h-icon-lg w-icon-lg',
+    icon: 'h-icon-lg w-icon-lg',
   },
   md: {
-    label:    'h-button-md px-5 py-2.5 gap-2 text-sm leading-5 tracking-md',
+    label: 'h-button-md px-5 py-2.5 gap-2 text-sm leading-5 tracking-md',
     iconOnly: 'h-button-md w-button-md',
-    icon:     'h-icon-lg w-icon-lg',
+    icon: 'h-icon-lg w-icon-lg',
   },
   sm: {
-    label:    'h-button-sm px-4 py-1.5 gap-2 text-sm leading-5 tracking-md',
+    label: 'h-button-sm px-4 py-1.5 gap-2 text-sm leading-5 tracking-md',
     iconOnly: 'h-button-sm w-button-sm',
-    icon:     'h-icon-lg w-icon-lg',
+    icon: 'h-icon-lg w-icon-lg',
   },
-}
+};
 
 /*
   Variant token mapping:
@@ -109,7 +117,7 @@ const variantConfig: Record<ButtonVariant, string> = {
     'active:text-brand-pressed',
     'disabled:text-neutral-disabled',
   ].join(' '),
-}
+};
 
 // ─── Button ───────────────────────────────────────────────────────────────────
 
@@ -130,8 +138,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    const isIconOnly = !children && (!!iconLeft || !!iconRight)
-    const sz = sizeConfig[size]
+    const isIconOnly = !children && (!!iconLeft || !!iconRight);
+    const sz = sizeConfig[size];
 
     const classes = [
       'inline-flex items-center justify-center shrink-0 cursor-pointer',
@@ -143,9 +151,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       fullWidth && !isIconOnly ? 'w-full' : '',
       loading ? 'pointer-events-none opacity-75' : '',
       className,
-    ].filter(Boolean).join(' ')
+    ]
+      .filter(Boolean)
+      .join(' ');
 
-    const iconClass = `shrink-0 ${sz.icon}`
+    const iconClass = `shrink-0 ${sz.icon}`;
 
     // CSS-only spinner: border-current adapts to the button's text color per variant
     const spinner = (
@@ -153,7 +163,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={`${iconClass} block rounded-full border-2 border-current border-t-transparent animate-spin`}
         aria-hidden="true"
       />
-    )
+    );
 
     return (
       <button
@@ -164,19 +174,22 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={classes}
         {...rest}
       >
-        {loading && (iconLeft || isIconOnly)
-          ? spinner
-          : iconLeft
-            ? <span className={iconClass} aria-hidden="true">{iconLeft}</span>
-            : null
-        }
+        {loading && (iconLeft || isIconOnly) ? (
+          spinner
+        ) : iconLeft ? (
+          <span className={iconClass} aria-hidden="true">
+            {iconLeft}
+          </span>
+        ) : null}
         {children}
         {!loading && iconRight && (
-          <span className={iconClass} aria-hidden="true">{iconRight}</span>
+          <span className={iconClass} aria-hidden="true">
+            {iconRight}
+          </span>
         )}
       </button>
-    )
+    );
   },
-)
+);
 
-Button.displayName = 'Button'
+Button.displayName = 'Button';
