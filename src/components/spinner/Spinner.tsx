@@ -1,11 +1,11 @@
-import { forwardRef, type HTMLAttributes } from 'react'
+import { forwardRef, type HTMLAttributes } from 'react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export type SpinnerSize = 'sm' | 'md' | 'lg'
+export type SpinnerSize = 'sm' | 'md' | 'lg';
 
 export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement> {
-  size?: SpinnerSize
+  size?: SpinnerSize;
 }
 
 // ─── Token → class map ───────────────────────────────────────────────────────
@@ -30,7 +30,7 @@ const sizeClasses: Record<SpinnerSize, string> = {
   lg: 'h-12 w-12 border-4',
   md: 'h-8 w-8 border-4',
   sm: 'h-5 w-5 border-2',
-}
+};
 
 // ─── Spinner ──────────────────────────────────────────────────────────────────
 
@@ -44,10 +44,12 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(
         'block shrink-0 rounded-full border-neutral-subtle border-t-brand animate-spin',
         sizeClasses[size],
         className,
-      ].filter(Boolean).join(' ')}
+      ]
+        .filter(Boolean)
+        .join(' ')}
       {...rest}
     />
   ),
-)
+);
 
-Spinner.displayName = 'Spinner'
+Spinner.displayName = 'Spinner';

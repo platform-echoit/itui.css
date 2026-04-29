@@ -1,21 +1,27 @@
-'use client'
+'use client';
 
-import { forwardRef, useId, type InputHTMLAttributes, type ReactNode } from 'react'
+import {
+  forwardRef,
+  useId,
+  type InputHTMLAttributes,
+  type ReactNode,
+} from 'react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
-  label?: string
-  error?: string
+export interface InputProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
+  label?: string;
+  error?: string;
   /** Slot rendered on the left — icon, text, or any ReactNode */
-  prefix?: ReactNode
+  prefix?: ReactNode;
   /** Slot rendered on the right — icon, button, or any ReactNode */
-  suffix?: ReactNode
-  block?: boolean
+  suffix?: ReactNode;
+  block?: boolean;
   /** Extra classes applied to the native <input> element */
-  fieldClassName?: string
+  fieldClassName?: string;
   /** Disables only the <input> field; box styling and prefix/suffix remain interactive */
-  disabledInput?: boolean
+  disabledInput?: boolean;
 }
 
 // ─── Input ────────────────────────────────────────────────────────────────────
@@ -37,11 +43,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
-    const generatedId = useId()
-    const inputId = id ?? generatedId
-    const isDisabled = !!disabled
-    const isInputDisabled = isDisabled || disabledInput
-    const isError = !!error && !isDisabled
+    const generatedId = useId();
+    const inputId = id ?? generatedId;
+    const isDisabled = !!disabled;
+    const isInputDisabled = isDisabled || disabledInput;
+    const isError = !!error && !isDisabled;
 
     /*
       Token → class map:
@@ -63,7 +69,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         : isError
           ? 'bg-white border-red-500'
           : 'bg-white border-neutral-subtle focus-within:border-brand',
-    ].join(' ')
+    ].join(' ');
 
     return (
       <div
@@ -82,7 +88,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         <div className={boxClass}>
           {prefix && (
-            <span className="shrink-0 flex items-center text-ink-muted" aria-hidden="true">
+            <span
+              className="shrink-0 flex items-center text-ink-muted"
+              aria-hidden="true"
+            >
               {prefix}
             </span>
           )}
@@ -107,20 +116,26 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           />
 
           {suffix && (
-            <span className="shrink-0 flex items-center text-ink-muted" aria-hidden="true">
+            <span
+              className="shrink-0 flex items-center text-ink-muted"
+              aria-hidden="true"
+            >
               {suffix}
             </span>
           )}
         </div>
 
         {isError && (
-          <p className="text-sm font-normal leading-5 tracking-md text-red-500" role="alert">
+          <p
+            className="text-sm font-normal leading-5 tracking-md text-red-500"
+            role="alert"
+          >
             {error}
           </p>
         )}
       </div>
-    )
+    );
   },
-)
+);
 
-Input.displayName = 'Input'
+Input.displayName = 'Input';
