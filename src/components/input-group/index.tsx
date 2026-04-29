@@ -1,8 +1,8 @@
 export {
-	InputGroup,
-	InputGroupAddon,
-	InputGroupButton,
-	InputGroupText,
-	InputGroupInput,
-	// InputGroupTextarea,
-} from './InputGroup'
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupText,
+  InputGroupInput,
+  // InputGroupTextarea,
+} from './InputGroup';
