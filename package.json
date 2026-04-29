@@ -13,8 +13,17 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./src/styles/global.css": "./src/styles/global.css"
+  },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "sideEffects": false,
   "peerDependencies": {
@@ -33,10 +42,14 @@
   "license": "ISC",
   "packageManager": "pnpm@10.23.0",
   "dependencies": {
+    "@radix-ui/react-dialog": "1.1.15",
     "@tailwindcss/vite": "4.2.3",
     "@types/react": "19.2.3",
+    "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
+    "lucide-react": "1.12.0",
     "react": "19.2.5",
+    "sonner": "2.0.7",
     "tailwind-merge": "2.6.0",
     "tailwindcss": "4.2.3"
   },

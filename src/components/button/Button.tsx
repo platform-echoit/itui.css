@@ -1,4 +1,5 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { Spinner } from '../spinner/Spinner';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -143,7 +144,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const classes = [
       'inline-flex items-center justify-center shrink-0 cursor-pointer',
-      'font-semibold rounded-md whitespace-nowrap select-none',
+      'font-semibold rounded-lg whitespace-nowrap select-none',
       'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
       'disabled:pointer-events-none',
       isIconOnly ? sz.iconOnly : sz.label,
@@ -157,14 +158,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const iconClass = `shrink-0 ${sz.icon}`;
 
-    // CSS-only spinner: border-current adapts to the button's text color per variant
-    const spinner = (
-      <span
-        className={`${iconClass} block rounded-full border-2 border-current border-t-transparent animate-spin`}
-        aria-hidden="true"
-      />
-    );
-
     return (
       <button
         ref={ref}
@@ -174,8 +167,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={classes}
         {...rest}
       >
-        {loading && (iconLeft || isIconOnly) ? (
-          spinner
+        {loading ? (
+          <Spinner size={size} />
         ) : iconLeft ? (
           <span className={iconClass} aria-hidden="true">
             {iconLeft}
