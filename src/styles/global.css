@@ -164,3 +164,70 @@
 
   --radius-base: var(--radius);
 }
+
+@theme {
+  /* ── Avatar profile sizes ─────────────────────────────────────────────── */
+  --width-profile-sm: 24px;   --height-profile-sm: 24px;
+  --width-profile-md: 32px;   --height-profile-md: 32px;
+  --width-profile-lg: 40px;   --height-profile-lg: 40px;
+  --width-profile-xl: 48px;   --height-profile-xl: 48px;
+  --width-profile-2xl: 60px;  --height-profile-2xl: 60px;
+  --width-profile-3xl: 72px;  --height-profile-3xl: 72px;
+
+  /* ── Colors ───────────────────────────────────────────────────────────── */
+  --color-semantic-red-700: #ad3026;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-300: #e0e0e0;
+  --color-icon-neutral-subtle: #9e9e9e;
+
+  /* ── Font sizes ───────────────────────────────────────────────────────── */
+  --text-11: 11px;
+  --text-32: 32px;
+
+  /* ── Letter spacing ───────────────────────────────────────────────────── */
+  --tracking-xs:  0.33px;
+  --tracking-md:  0.20px;
+  --tracking-lg:  0.09px;
+  --tracking-2xl: -0.24px;
+  --tracking-3xl: -0.55px;
+  --tracking-4xl: -0.64px;
+
+  /* ── List row heights ─────────────────────────────────────────────────── */
+  --height-list-sm: 40px;
+  --height-list-md: 56px;
+
+  /* ── List surface & text colors ───────────────────────────────────────── */
+  --color-surface-hover:   #f5f5f5;
+  --color-surface-pressed: #ededed;
+  --color-neutral-subtle:  #ededed;
+  --color-ink:             #0f0f0f;
+  --color-ink-muted:       #595858;
+
+  /* ── List shadow ──────────────────────────────────────────────────────── */
+  --shadow-downwards-sm: 0px 4px 16px 0px rgba(137, 137, 137, 0.1);
+
+  /* ── Brand colors ─────────────────────────────────────────────────────── */
+  --color-brand:            #009ce0;
+  --color-brand-hover:      #54bdea;
+  --color-brand-pressed:    #008ecc;
+  --color-brand-subtle:     #e6f5fc;
+  --color-brand-link-hover: #33b0e6;
+
+  /* ── Disabled state ───────────────────────────────────────────────────── */
+  --color-neutral-disabled: #c2c2c2;
+
+  /* ── Button & icon sizes ──────────────────────────────────────────────── */
+  --height-button-lg: 48px;  --width-button-lg: 48px;
+  --height-button-md: 40px;  --width-button-md: 40px;
+  --height-button-sm: 32px;  --width-button-sm: 32px;
+  --height-icon-lg:   20px;  --width-icon-lg:   20px;
+  --height-icon-md:   16px;  --width-icon-md:   16px;
+
+  /* ── Sidebar color tokens ─────────────────────────────────────────────── */
+  --color-sidebar:                   #ffffff;
+  --color-sidebar-foreground:        #0f0f0f;
+  --color-sidebar-border:            #ededed;
+  --color-sidebar-accent:            #f5f5f5;
+  --color-sidebar-accent-foreground: #0f0f0f;
+  --color-sidebar-ring:              #009ce0;
+}
