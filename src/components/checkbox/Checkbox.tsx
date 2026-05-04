@@ -65,7 +65,7 @@ export function Checkbox({
         {...rest}
       />
       <span
-        className={`${boxBase} ${box} ${boxStateClasses} peer-focus-visible:ring-2 peer-focus-visible:ring-[#009ce0] peer-focus-visible:ring-offset-1`}
+        className={`${boxBase} ${box} ${boxStateClasses} peer-focus-visible:ring-2 peer-focus-visible:ring-brand peer-focus-visible:ring-offset-1`}
       >
         {checked && <CheckIcon className={icon} />}
       </span>
