@@ -54,8 +54,9 @@ export function Checkbox({
 
   return (
     <label
-      className={`inline-flex items-center gap-2 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'
-        } ${className}`}
+      className={`inline-flex items-center gap-2 ${
+        disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+      } ${className}`}
     >
       <input
         type="checkbox"
@@ -71,8 +72,9 @@ export function Checkbox({
       </span>
       {label && (
         <span
-          className={`text-[12px] leading-[16px] tracking-[0.3px] ${disabled ? 'text-[#c2c2c2]' : 'text-[#0f0f0f]'
-            }`}
+          className={`text-[12px] leading-[16px] tracking-[0.3px] ${
+            disabled ? 'text-[#c2c2c2]' : 'text-[#0f0f0f]'
+          }`}
           style={{ fontFamily: 'var(--font-family-caption), sans-serif' }}
         >
           {label}
