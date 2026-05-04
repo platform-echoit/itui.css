@@ -6,6 +6,7 @@ import {
   type InputHTMLAttributes,
   type ReactNode,
 } from 'react';
+import { cn } from '../../lib/utils';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -73,9 +74,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div
-        className={['flex flex-col gap-2', block ? 'w-full' : '', className]
-          .filter(Boolean)
-          .join(' ')}
+        className={cn(`flex flex-col gap-2 ${className}`, {
+          'w-full': block,
+        })}
       >
         {label && (
           <label
