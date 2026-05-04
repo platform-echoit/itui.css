@@ -47,16 +47,15 @@ export function Checkbox({
     'relative inline-flex items-center justify-center flex-shrink-0 rounded-[4px] border transition-colors overflow-hidden';
 
   const boxStateClasses = disabled
-    ? 'bg-[#ededed] border-[#c2c2c2] text-[#c2c2c2]'
+    ? 'bg-neutral-subtle border-neutral-disabled text-neutral-disabled'
     : checked
-      ? 'bg-[#009ce0] border-transparent text-white hover:bg-[#007eb3]'
-      : 'bg-white border-[#595858] hover:border-[#009ce0]';
+      ? 'bg-brand border-transparent text-white hover:bg-[#007eb3]'
+      : 'bg-white border-[#595858] hover:border-brand';
 
   return (
     <label
-      className={`inline-flex items-center gap-2 ${
-        disabled ? 'cursor-not-allowed' : 'cursor-pointer'
-      } ${className}`}
+      className={`inline-flex items-center gap-2 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+        } ${className}`}
     >
       <input
         type="checkbox"
@@ -72,9 +71,8 @@ export function Checkbox({
       </span>
       {label && (
         <span
-          className={`text-[12px] leading-[16px] tracking-[0.3px] ${
-            disabled ? 'text-[#c2c2c2]' : 'text-[#0f0f0f]'
-          }`}
+          className={`text-[12px] leading-[16px] tracking-[0.3px] ${disabled ? 'text-[#c2c2c2]' : 'text-[#0f0f0f]'
+            }`}
           style={{ fontFamily: 'var(--font-family-caption), sans-serif' }}
         >
           {label}
