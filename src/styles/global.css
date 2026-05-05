@@ -186,6 +186,7 @@
 
   /* ── Letter spacing ───────────────────────────────────────────────────── */
   --tracking-xs:  0.33px;
+  --tracking-sm:  0.30px;
   --tracking-md:  0.20px;
   --tracking-lg:  0.09px;
   --tracking-2xl: -0.24px;
@@ -197,14 +198,16 @@
   --height-list-md: 56px;
 
   /* ── List surface & text colors ───────────────────────────────────────── */
-  --color-surface-hover:   #f5f5f5;
-  --color-surface-pressed: #ededed;
-  --color-neutral-subtle:  #ededed;
-  --color-ink:             #0f0f0f;
-  --color-ink-muted:       #595858;
+  --color-surface-hover:          #f5f5f5;
+  --color-surface-pressed:        #ededed;
+  --color-surface-subtle-pressed: #dadada;
+  --color-neutral-subtle:         #ededed;
+  --color-ink:                    #0f0f0f;
+  --color-ink-muted:              #595858;
 
   /* ── List shadow ──────────────────────────────────────────────────────── */
-  --shadow-downwards-sm: 0px 4px 16px 0px rgba(137, 137, 137, 0.1);
+  --shadow-downwards-sm:  0px 4px 16px 0px rgba(137, 137, 137, 0.10);
+  --shadow-rightwards-sm: 4px 0px  8px 0px rgba(137, 137, 137, 0.10);
 
   /* ── Brand colors ─────────────────────────────────────────────────────── */
   --color-brand:            #009ce0;
@@ -217,6 +220,13 @@
   --color-neutral-disabled: #c2c2c2;
 
   /* ── Button & icon sizes ──────────────────────────────────────────────── */
+  --radius-xs: 4px;
+
+  /* ── Checkbox sizes ───────────────────────────────────────────────────────── */
+  --height-checkbox-md: 18px;  --width-checkbox-md: 18px;
+  --height-checkbox-sm: 16px;  --width-checkbox-sm: 16px;
+
+  /* ── Button & icon sizes ──────────────────────────────────────────────────── */
   --height-button-lg: 48px;  --width-button-lg: 48px;
   --height-button-md: 40px;  --width-button-md: 40px;
   --height-button-sm: 32px;  --width-button-sm: 32px;
@@ -230,4 +240,9 @@
   --color-sidebar-accent:            #f5f5f5;
   --color-sidebar-accent-foreground: #0f0f0f;
   --color-sidebar-ring:              #009ce0;
+}
+
+/* Show sidebar item tooltip only when the sidebar is collapsed */
+[data-sidebar][data-collapsed] [data-sidebar-item]:hover [data-sidebar-tooltip] {
+  display: flex;
 }

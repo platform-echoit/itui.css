@@ -7,3 +7,7 @@ export * from './components/card';
 export * from './components/input-group';
 export * from './components/toast';
 export * from './components/dialog';
+export * from './components/sidebar';
+export * from './components/scroll';
+export * from './components/avatar';
+export * from './components/popover';

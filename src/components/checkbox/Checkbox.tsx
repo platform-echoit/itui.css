@@ -1,4 +1,39 @@
-import type { InputHTMLAttributes, ReactNode } from 'react';
+import { forwardRef, type InputHTMLAttributes, type ReactNode } from 'react';
+import { cn } from '../../lib/utils';
+
+/*
+  Token → Tailwind class reference (Figma node 26871:5818)
+  ─────────────────────────────────────────────────────────────────────────────
+  SIZES
+  height/checkbox/md  18px → h-checkbox-md  w-checkbox-md
+  height/checkbox/sm  16px → h-checkbox-sm  w-checkbox-sm
+  height/icon/sm      12px → size-3
+
+  RADIUS
+  radius/xs  4px → rounded-xs
+
+  BORDER
+  stroke/xs  1px → border (Tailwind default)
+
+  COLORS — box states
+  surface/neutral/secondary/default  white    → bg-white       (unchecked)
+  border/neutral/default             #595858  → border-ink-muted (unchecked)
+  surface/primary/default            #009ce0  → bg-brand        (checked)
+  surface/neutral/disabled/inverse   #ededed  → bg-neutral-subtle (disabled)
+  border/neutral/disabled            #c2c2c2  → border-neutral-disabled
+
+  COLORS — icon
+  icon/neutral/inverse  white   → text-white
+  icon/neutral/disabled #c2c2c2 → text-neutral-disabled
+
+  COLORS — label text
+  text/neutral/default   #0f0f0f → text-ink
+  text/neutral/disabled  #c2c2c2 → text-neutral-disabled
+
+  TYPOGRAPHY — label
+  caption/sm/regular  12px 400 leading-4 0.30px → text-xs font-normal leading-4 tracking-sm
+  ─────────────────────────────────────────────────────────────────────────────
+*/
 
 export type CheckboxSize = 'sm' | 'md';
 
@@ -8,9 +43,9 @@ export interface CheckboxProps
   label?: ReactNode;
 }
 
-const sizeMap: Record<CheckboxSize, { box: string; icon: string }> = {
-  md: { box: 'w-[18px] h-[18px]', icon: 'w-3 h-3' },
-  sm: { box: 'w-[16px] h-[16px]', icon: 'w-[10px] h-[10px]' },
+const boxSizeMap: Record<CheckboxSize, string> = {
+  md: 'h-checkbox-md w-checkbox-md',
+  sm: 'h-checkbox-sm w-checkbox-sm',
 };
 
 function CheckIcon({ className }: { className?: string }) {
@@ -33,32 +68,17 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
-export function Checkbox({
-  size = 'md',
-  label,
-  className = '',
-  checked,
-  disabled,
-  ...rest
-}: CheckboxProps) {
-  const { box, icon } = sizeMap[size];
-
-  const boxBase =
-    'relative inline-flex items-center justify-center flex-shrink-0 rounded-[4px] border transition-colors overflow-hidden';
-
-  const boxStateClasses = disabled
-    ? 'bg-neutral-subtle border-neutral-disabled text-neutral-disabled'
-    : checked
-      ? 'bg-brand border-transparent text-white hover:bg-[#007eb3]'
-      : 'bg-white border-[#595858] hover:border-brand';
-
-  return (
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ size = 'md', label, className, checked, disabled, ...rest }, ref) => (
     <label
-      className={`inline-flex items-center gap-2 ${
-        disabled ? 'cursor-not-allowed' : 'cursor-pointer'
-      } ${className}`}
+      className={cn(
+        'inline-flex items-center gap-2',
+        disabled ? 'cursor-not-allowed' : 'cursor-pointer',
+        className,
+      )}
     >
       <input
+        ref={ref}
         type="checkbox"
         checked={checked}
         disabled={disabled}
@@ -66,20 +86,30 @@ export function Checkbox({
         {...rest}
       />
       <span
-        className={`${boxBase} ${box} ${boxStateClasses} peer-focus-visible:ring-2 peer-focus-visible:ring-brand peer-focus-visible:ring-offset-1`}
+        className={cn(
+          'relative inline-flex shrink-0 items-center justify-center rounded-xs border overflow-hidden transition-colors',
+          boxSizeMap[size],
+          disabled
+            ? 'bg-neutral-subtle border-neutral-disabled text-neutral-disabled'
+            : checked
+              ? 'bg-brand border-transparent text-white hover:bg-brand-pressed'
+              : 'bg-white border-ink-muted hover:border-brand',
+          'peer-focus-visible:ring-2 peer-focus-visible:ring-brand peer-focus-visible:ring-offset-1',
+        )}
       >
-        {checked && <CheckIcon className={icon} />}
+        {checked && <CheckIcon className="size-3" />}
       </span>
       {label && (
         <span
-          className={`text-[12px] leading-[16px] tracking-[0.3px] ${
-            disabled ? 'text-[#c2c2c2]' : 'text-[#0f0f0f]'
-          }`}
-          style={{ fontFamily: 'var(--font-family-caption), sans-serif' }}
+          className={cn(
+            'font-normal leading-4 tracking-sm',
+            disabled ? 'text-neutral-disabled' : 'text-ink',
+          )}
         >
           {label}
         </span>
       )}
     </label>
-  );
-}
+  ),
+);
+Checkbox.displayName = 'Checkbox';

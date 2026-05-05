@@ -77,14 +77,14 @@ function DialogContent({
         {header != null && (
           <div
             className={cn(
-              'shrink-0 px-5 pt-4 pb-4 pr-12 mb-2',
+              'shrink-0 px-5 pt-4 pb-4 pr-12',
               hideHeaderBorder ? '' : 'border-b border-neutral-subtle',
             )}
           >
             {header}
           </div>
         )}
-        <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden p-4">
+        <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden p-4 pt-0">
           {body}
         </div>
         {showCloseButton && (
