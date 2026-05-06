@@ -1,4 +1,9 @@
-import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import {
+  forwardRef,
+  type ButtonHTMLAttributes,
+  type HTMLAttributes,
+  type ReactNode,
+} from 'react';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -51,7 +56,8 @@ export interface PopoverGroupProps extends HTMLAttributes<HTMLDivElement> {}
 
 export interface PopoverSeparatorProps extends HTMLAttributes<HTMLDivElement> {}
 
-export interface PopoverItemProps extends HTMLAttributes<HTMLDivElement> {
+export interface PopoverItemProps
+  extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Leading icon slot — render any 20×20 icon node */
   icon?: ReactNode;
   /** Secondary description text rendered below the label */
@@ -144,7 +150,7 @@ PopoverSeparator.displayName = 'PopoverSeparator';
 
 // ─── PopoverItem ──────────────────────────────────────────────────────────────
 
-export const PopoverItem = forwardRef<HTMLDivElement, PopoverItemProps>(
+export const PopoverItem = forwardRef<HTMLButtonElement, PopoverItemProps>(
   (
     {
       icon,
@@ -157,11 +163,13 @@ export const PopoverItem = forwardRef<HTMLDivElement, PopoverItemProps>(
     },
     ref,
   ) => (
-    <div
+    <button
       ref={ref}
+      type="button"
       className={cn(
-        'flex items-center gap-2 p-2 rounded-[8px] cursor-default select-none',
+        'flex w-full items-center gap-2 p-2 rounded-[8px] cursor-pointer select-none',
         'bg-white hover:bg-surface-hover active:bg-surface-pressed',
+        'disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
       {...rest}
@@ -172,11 +180,11 @@ export const PopoverItem = forwardRef<HTMLDivElement, PopoverItemProps>(
         </span>
       )}
       <span className="flex flex-col flex-1 min-w-0 gap-1">
-        <span className="text-sm font-medium leading-5 tracking-md text-ink">
+        <span className="text-sm font-medium leading-5 tracking-md text-ink text-left">
           {children}
         </span>
         {description && (
-          <span className="text-xs font-normal leading-4 tracking-sm text-ink-muted">
+          <span className="text-xs font-normal leading-4 tracking-sm text-ink-muted text-left">
             {description}
           </span>
         )}
@@ -192,7 +200,7 @@ export const PopoverItem = forwardRef<HTMLDivElement, PopoverItemProps>(
           strokeWidth={1.5}
         />
       )}
-    </div>
+    </button>
   ),
 );
 PopoverItem.displayName = 'PopoverItem';

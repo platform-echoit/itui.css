@@ -59,11 +59,16 @@ import { cn } from '../../lib/utils';
 export interface SidebarProps extends HTMLAttributes<HTMLElement> {
   /** Collapse to icon-only rail (52 px). Default: false → 264 px expanded. */
   collapsed?: boolean;
+  children?: ReactNode;
 }
 
-export interface SidebarHeaderProps extends HTMLAttributes<HTMLDivElement> {}
+export interface SidebarHeaderProps extends HTMLAttributes<HTMLDivElement> {
+  children?: ReactNode;
+}
 
-export interface SidebarMenuProps extends HTMLAttributes<HTMLUListElement> {}
+export interface SidebarMenuProps extends HTMLAttributes<HTMLUListElement> {
+  children?: ReactNode;
+}
 
 export interface SidebarItemProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -75,9 +80,12 @@ export interface SidebarItemProps
   indented?: boolean;
   /** Tooltip text shown to the right of the item when the sidebar is collapsed. Falls back to children if omitted and children is a string. */
   label?: string;
+  children?: ReactNode;
 }
 
-export interface SidebarFooterProps extends HTMLAttributes<HTMLDivElement> {}
+export interface SidebarFooterProps extends HTMLAttributes<HTMLDivElement> {
+  children?: ReactNode;
+}
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
 
