@@ -64,7 +64,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         text/semantic/error        #f44336 → text-red-500
     */
     const boxClass = [
-      'flex items-center gap-2 h-12 px-3 rounded-md border overflow-hidden',
+      'flex items-center gap-2 h-12 px-3 rounded-lg border overflow-hidden',
       isDisabled
         ? 'bg-neutral-100 border-neutral-disabled pointer-events-none'
         : isError

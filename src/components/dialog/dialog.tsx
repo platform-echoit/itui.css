@@ -35,7 +35,7 @@ function DialogOverlay({
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
       className={cn(
-        'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50',
+        'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-opacity-black-sm backdrop-blur-dialog',
         className,
       )}
       {...props}
@@ -77,8 +77,11 @@ function DialogContent({
         {header != null && (
           <div
             className={cn(
-              'shrink-0 px-5 pt-4 pb-4 pr-12',
+              'shrink-0 px-5 pt-4 pb-4 ',
               hideHeaderBorder ? '' : 'border-b border-neutral-subtle',
+              {
+                'pr-12': showCloseButton,
+              },
             )}
           >
             {header}
