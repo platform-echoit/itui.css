@@ -97,7 +97,7 @@ export const Sidebar = forwardRef<HTMLElement, SidebarProps>(
       data-collapsed={collapsed || undefined}
       className={cn(
         'group/sidebar flex flex-col h-full justify-between bg-sidebar p-2',
-        'border-r border-sidebar-border shadow-rightwards-sm',
+        'border-r border-sidebar-border shadow-[4px_0_16px_0_rgba(137,137,137,0.10)]',
         collapsed ? 'w-13 items-center' : 'w-66 items-start',
         className,
       )}
@@ -174,7 +174,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
           type="button"
           aria-current={active ? 'page' : undefined}
           className={cn(
-            'flex items-center rounded-lg font-medium text-sm leading-5 tracking-md font-sans cursor-pointer',
+            'flex items-center rounded-lg font-medium text-sm leading-5 tracking-md font-sans cursor-pointer hover:bg-surface-pressed',
             // Expanded defaults
             'gap-2 h-9 w-full',
             indented ? 'px-9 py-2' : 'p-2',
@@ -206,8 +206,8 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
             data-sidebar-tooltip
             className={cn(
               'hidden absolute left-full top-1/2 -translate-y-1/2 ml-2 z-50',
-              'items-center px-2 py-1 rounded-sm pointer-events-none whitespace-nowrap',
-              'text-11 font-normal leading-5 tracking-md text-white bg-ink',
+              'items-center p-2 rounded-lg pointer-events-none whitespace-nowrap',
+              'text-11 font-normal leading-5 tracking-md bg-white trackking-xs',
             )}
             aria-hidden="true"
           >
