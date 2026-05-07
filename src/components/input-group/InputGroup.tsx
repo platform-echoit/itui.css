@@ -2,7 +2,7 @@
 
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
-import { Button, ButtonProps, ButtonVariant } from '../button';
+import { Button, ButtonProps } from '../button';
 import { Input, InputProps } from '../input/Input';
 // import { Textarea } from "@/components/ui/textarea";
 
