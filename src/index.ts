@@ -11,3 +11,4 @@ export * from './components/sidebar';
 export * from './components/scroll';
 export * from './components/avatar';
 export * from './components/popover';
+export * from './components/file-type';
