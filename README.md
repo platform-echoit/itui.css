@@ -40,7 +40,7 @@ To ensure Tailwind generates the necessary styles for the components, you need t
 In your main CSS file (e.g., `app.css` or `globals.css`), import the library's styles **and** declare the package as a Tailwind source. Tailwind v4 does not scan `node_modules/` by default, so the `@source` directive is required for the library's utility classes (e.g. `bg-brand`, `h-button-lg`) to be generated.
 
 ```css
-@import "@echoit/itui.css";
+@import '@echoit/itui.css';
 ```
 
 > Adjust the relative path in `@source` to point from your CSS file to `node_modules/@echoit/itui.css`. Without this directive, components will render unstyled.

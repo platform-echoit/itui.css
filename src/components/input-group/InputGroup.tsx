@@ -45,7 +45,9 @@ function InputGroupAddon({
   className,
   align = 'inline-start',
   ...props
-}: React.ComponentProps<'div'> & { align?: 'inline-start' | 'inline-end' | 'block-start' | 'block-end' | null }) {
+}: React.ComponentProps<'div'> & {
+  align?: 'inline-start' | 'inline-end' | 'block-start' | 'block-end' | null;
+}) {
   return (
     <div
       role="group"
