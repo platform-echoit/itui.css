@@ -1,3 +1,5 @@
+import './styles/global.css';
+
 export * from './components/button';
 export * from './components/badge';
 export * from './components/spinner';
@@ -12,3 +14,5 @@ export * from './components/scroll';
 export * from './components/avatar';
 export * from './components/popover';
 export * from './components/file-type';
+export * from './components/table';
+export * from './components/empty';

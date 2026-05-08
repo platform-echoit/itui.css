@@ -5,7 +5,7 @@
 
 set -e
 
-UI_PKG_JSON="packages/ui/package.json"
+UI_PKG_JSON="./package.json"
 
 if [ -f "$UI_PKG_JSON" ]; then
     echo "📦 Patching $UI_PKG_JSON..."

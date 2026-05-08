@@ -1,7 +1,7 @@
 {
   "name": "@echoit/itui.css",
   "description": "",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "publishConfig": {
     "access": "public"
   },
@@ -10,20 +10,19 @@
     "type": "git",
     "url": "git+https://github.com/platform-echoit/itui.css.git"
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./src/styles/global.css": "./src/styles/global.css"
+      "require": "./dist/index.cjs",
+      "style": "./dist/index.css"
+    }
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "sideEffects": false,
   "peerDependencies": {
@@ -34,8 +33,13 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:generate": "tsx scripts/test-generate.ts",
-    "build": "tsup",
-    "dev": "tsup --watch"
+    "build": "pnpm build:js",
+    "dev": "tsup --watch",
+    "build:js": "tsup",
+    "build:css": "cpy src/styles/global.css dist/styles/global.css",
+    "check:package": "pnpm pack && npm publish --dry-run",
+    "publish:beta": "pnpm build && npm publish --tag beta --access public",
+    "publish:latest": "pnpm build && npm publish --access public"
   },
   "type": "module",
   "keywords": [],
@@ -56,6 +60,7 @@
   },
   "devDependencies": {
     "@types/node": "22.15.3",
+    "cpy-cli": "^7.0.0",
     "tsup": "8.5.1",
     "tsx": "4.21.0",
     "typescript": "5.9.3",
