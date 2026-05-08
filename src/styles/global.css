@@ -1,6 +1,5 @@
-@source "../";
-
 @import "tailwindcss";
+@source "../";
 
 :root {
   /* --- Background / Foreground --- */
