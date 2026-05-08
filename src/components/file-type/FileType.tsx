@@ -1,4 +1,41 @@
-import { forwardRef, type SVGAttributes } from 'react';
+import type { Ref, SVGAttributes } from 'react';
+import { ZipIcon } from '../../icons/file-type/zip';
+import { RarIcon } from '../../icons/file-type/rar';
+import { C4dIcon } from '../../icons/file-type/c4d';
+import { TxtIcon } from '../../icons/file-type/txt';
+import { ExeIcon } from '../../icons/file-type/exe';
+import { DmgIcon } from '../../icons/file-type/dmg';
+import { FigIcon } from '../../icons/file-type/fig';
+import { Mp4Icon } from '../../icons/file-type/mp4';
+import { AviIcon } from '../../icons/file-type/avi';
+import { MovIcon } from '../../icons/file-type/mov';
+import { MpgIcon } from '../../icons/file-type/mpg';
+import { Mp3Icon } from '../../icons/file-type/mp3';
+import { WavIcon } from '../../icons/file-type/wav';
+import { AepIcon } from '../../icons/file-type/aep';
+import { PsdIcon } from '../../icons/file-type/psd';
+import { JpgIcon } from '../../icons/file-type/jpg';
+import { JpegIcon } from '../../icons/file-type/jpeg';
+import { PngIcon } from '../../icons/file-type/png';
+import { GifIcon } from '../../icons/file-type/gif';
+import { TiffIcon } from '../../icons/file-type/tiff';
+import { IcoIcon } from '../../icons/file-type/ico';
+import { DocIcon } from '../../icons/file-type/doc';
+import { SvgIcon } from '../../icons/file-type/svg';
+import { WebpIcon } from '../../icons/file-type/webp';
+import { BlendIcon } from '../../icons/file-type/blend';
+import { HtmlIcon } from '../../icons/file-type/html';
+import { CssIcon } from '../../icons/file-type/css';
+import { JsIcon } from '../../icons/file-type/js';
+import { JsonIcon } from '../../icons/file-type/json';
+import { JavaIcon } from '../../icons/file-type/java';
+import { CdrIcon } from '../../icons/file-type/cdr';
+import { CsvIcon } from '../../icons/file-type/csv';
+import { XlsIcon } from '../../icons/file-type/xls';
+import { PptIcon } from '../../icons/file-type/ppt';
+import { PdfIcon } from '../../icons/file-type/pdf';
+import { AiIcon } from '../../icons/file-type/ai';
+import { SktIcon } from '../../icons/file-type/skt';
 
 export type FileTypeLogo =
   | 'aep'
@@ -44,150 +81,59 @@ export type FileTypeVariant = 'line' | 'flat' | 'color';
 export interface FileTypeProps extends SVGAttributes<SVGSVGElement> {
   logo?: FileTypeLogo;
   type?: FileTypeVariant;
+  ref?: Ref<SVGSVGElement>;
 }
 
-const BRAND_COLOR: Record<FileTypeLogo, string> = {
-  zip: '#344054',
-  rar: '#344054',
-  c4d: '#344054',
-  txt: '#344054',
-  exe: '#344054',
-  dmg: '#344054',
-  fig: '#6E45F0',
-  mp4: '#6E45F0',
-  avi: '#6E45F0',
-  mov: '#6E45F0',
-  mpg: '#6E45F0',
-  mp3: '#6E45F0',
-  wav: '#6E45F0',
-  aep: '#6E45F0',
-  psd: '#3873FF',
-  jpg: '#3873FF',
-  jpeg: '#3873FF',
-  png: '#3873FF',
-  gif: '#3873FF',
-  tiff: '#3873FF',
-  ico: '#3873FF',
-  doc: '#3873FF',
-  svg: '#3873FF',
-  webp: '#3873FF',
-  blend: '#3873FF',
-  html: '#0DB664',
-  css: '#0DB664',
-  js: '#0DB664',
-  json: '#0DB664',
-  java: '#0DB664',
-  cdr: '#0DB664',
-  csv: '#0DB664',
-  xls: '#0DB664',
-  ppt: '#FF1607',
-  pdf: '#FF1607',
-  ai: '#FFBA35',
-  skt: '#FFBA35',
+type IconComponent = (props: Omit<FileTypeProps, 'logo'>) => React.ReactElement;
+
+const LOGO_MAP: Record<FileTypeLogo, IconComponent> = {
+  zip: ZipIcon,
+  rar: RarIcon,
+  c4d: C4dIcon,
+  txt: TxtIcon,
+  exe: ExeIcon,
+  dmg: DmgIcon,
+  fig: FigIcon,
+  mp4: Mp4Icon,
+  avi: AviIcon,
+  mov: MovIcon,
+  mpg: MpgIcon,
+  mp3: Mp3Icon,
+  wav: WavIcon,
+  aep: AepIcon,
+  psd: PsdIcon,
+  jpg: JpgIcon,
+  jpeg: JpegIcon,
+  png: PngIcon,
+  gif: GifIcon,
+  tiff: TiffIcon,
+  ico: IcoIcon,
+  doc: DocIcon,
+  svg: SvgIcon,
+  webp: WebpIcon,
+  blend: BlendIcon,
+  html: HtmlIcon,
+  css: CssIcon,
+  js: JsIcon,
+  json: JsonIcon,
+  java: JavaIcon,
+  cdr: CdrIcon,
+  csv: CsvIcon,
+  xls: XlsIcon,
+  ppt: PptIcon,
+  pdf: PdfIcon,
+  ai: AiIcon,
+  skt: SktIcon,
 };
 
-function badgeWidth(label: string): number {
-  const len = label.length;
-  if (len <= 2) return 10;
-  if (len === 3) return 13;
-  if (len === 4) return 18;
-  return 22;
+export function FileType({
+  logo = 'zip',
+  type = 'line',
+  ref,
+  ...rest
+}: FileTypeProps) {
+  const Icon = LOGO_MAP[logo];
+  return <Icon type={type} ref={ref} {...rest} />;
 }
-
-export const FileType = forwardRef<SVGSVGElement, FileTypeProps>(
-  ({ logo = 'zip', type = 'line', ...rest }, ref) => {
-    const label = logo.toUpperCase();
-    const color = BRAND_COLOR[logo];
-
-    if (type === 'line') {
-      const bw = badgeWidth(label);
-      const bx = 0;
-      const by = 14;
-      const bh = 8;
-
-      return (
-        <svg
-          ref={ref}
-          viewBox="0 0 21 24"
-          width={21}
-          height={24}
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          {...rest}
-        >
-          {/* Document body */}
-          <path
-            d="M3 0 H17 L21 4 V24 H3 Z"
-            fill="white"
-            stroke={color}
-            strokeWidth="1"
-          />
-          {/* Dog-ear fold */}
-          <path d="M17 0 L21 4 H17 Z" fill={color} />
-          {/* Badge background */}
-          <rect x={bx} y={by} width={bw} height={bh} fill={color} />
-          {/* Badge text */}
-          <text
-            x={bx + bw / 2}
-            y={by + bh / 2 + 1.5}
-            textAnchor="middle"
-            fontSize="4.5"
-            fontWeight="700"
-            fontFamily="sans-serif"
-            fill="white"
-            letterSpacing="0.2"
-          >
-            {label}
-          </text>
-        </svg>
-      );
-    }
-
-    // flat and color share the same document geometry (18×24)
-    const badgeFill = type === 'flat' ? '#344054' : 'white';
-    const textFill = type === 'flat' ? 'white' : color;
-
-    return (
-      <svg
-        ref={ref}
-        viewBox="0 0 18 24"
-        width={18}
-        height={24}
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        {...rest}
-      >
-        {/* Document body */}
-        <path
-          d="M0 0 H13 L18 5 V24 H0 Z"
-          fill={type === 'flat' ? color : 'white'}
-          stroke={type === 'color' ? color : 'none'}
-          strokeWidth={type === 'color' ? '1' : '0'}
-        />
-        {/* Dog-ear fold */}
-        <path
-          d="M13 0 L18 5 H13 Z"
-          fill={type === 'flat' ? 'rgba(0,0,0,0.2)' : color}
-          opacity={type === 'flat' ? 1 : 1}
-        />
-        {/* Badge */}
-        <rect x={2} y={15.5} width={14} height={5.5} rx={1} fill={badgeFill} />
-        {/* Badge text */}
-        <text
-          x={9}
-          y={19.5}
-          textAnchor="middle"
-          fontSize="3.8"
-          fontWeight="700"
-          fontFamily="sans-serif"
-          fill={textFill}
-          letterSpacing="0.2"
-        >
-          {label}
-        </text>
-      </svg>
-    );
-  },
-);
 
 FileType.displayName = 'FileType';

@@ -1,6 +1,6 @@
 import {
-  forwardRef,
   type HTMLAttributes,
+  type Ref,
   type ThHTMLAttributes,
   type TdHTMLAttributes,
 } from 'react';
@@ -37,120 +37,113 @@ import { cn } from '../../lib/utils';
 
 export type SortDirection = 'asc' | 'desc';
 
-export interface TableProps extends HTMLAttributes<HTMLTableElement> {}
+export interface TableProps extends HTMLAttributes<HTMLTableElement> {
+  ref?: Ref<HTMLTableElement>;
+}
 export interface TableHeaderProps
-  extends HTMLAttributes<HTMLTableSectionElement> {}
+  extends HTMLAttributes<HTMLTableSectionElement> {
+  ref?: Ref<HTMLTableSectionElement>;
+}
 export interface TableBodyProps
-  extends HTMLAttributes<HTMLTableSectionElement> {}
+  extends HTMLAttributes<HTMLTableSectionElement> {
+  ref?: Ref<HTMLTableSectionElement>;
+}
 export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
+  ref?: Ref<HTMLTableRowElement>;
   selected?: boolean;
   disabled?: boolean;
 }
 export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
+  ref?: Ref<HTMLTableCellElement>;
   sortDirection?: SortDirection;
 }
-export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {}
+export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
+  ref?: Ref<HTMLTableCellElement>;
+}
 
 // ── Table ────────────────────────────────────────────────────────────────────
 
-export const Table = forwardRef<HTMLTableElement, TableProps>(
-  ({ className, ...props }, ref) => (
-    <div className="w-full overflow-x-auto">
-      <div className="overflow-hidden rounded-lg border border-neutral-subtle">
-        <table
-          ref={ref}
-          className={cn('w-full bg-white', className)}
-          {...props}
-        />
-      </div>
+export const Table = ({ className, ...props }: TableProps) => (
+  <div className="w-full overflow-x-auto">
+    <div className="overflow-hidden rounded-lg border border-neutral-subtle">
+      <table className={cn('w-full bg-white', className)} {...props} />
     </div>
-  ),
+  </div>
 );
-Table.displayName = 'Table';
 
 // ── TableHeader ───────────────────────────────────────────────────────────────
 
-export const TableHeader = forwardRef<
-  HTMLTableSectionElement,
-  TableHeaderProps
->(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn('bg-white', className)} {...props} />
-));
-TableHeader.displayName = 'TableHeader';
+export const TableHeader = ({ className, ...props }: TableHeaderProps) => (
+  <thead
+    className={cn('bg-white border-b border-neutral-subtle', className)}
+    {...props}
+  />
+);
 
 // ── TableBody ─────────────────────────────────────────────────────────────────
 
-export const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
-  ({ className, ...props }, ref) => (
-    <tbody ref={ref} className={cn(className)} {...props} />
-  ),
+export const TableBody = ({ className, ...props }: TableBodyProps) => (
+  <tbody className={cn(className)} {...props} />
 );
-TableBody.displayName = 'TableBody';
 
 // ── TableRow ──────────────────────────────────────────────────────────────────
 
-export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
-  ({ className, selected, disabled, ...props }, ref) => (
-    <tr
-      ref={ref}
-      className={cn(
-        'border-b border-neutral-subtle last:border-b-0',
-        selected
-          ? 'bg-neutral-100'
-          : disabled
-            ? 'bg-neutral-subtle'
-            : 'bg-white',
-        className,
-      )}
-      {...props}
-    />
-  ),
+export const TableRow = ({
+  className,
+  selected,
+  disabled,
+  ...props
+}: TableRowProps) => (
+  <tr
+    className={cn(
+      'border-b border-neutral-subtle last:border-b-0',
+      selected ? 'bg-neutral-100' : disabled ? 'bg-neutral-subtle' : 'bg-white',
+      className,
+    )}
+    {...props}
+  />
 );
-TableRow.displayName = 'TableRow';
 
 // ── TableHead ─────────────────────────────────────────────────────────────────
 
-export const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
-  ({ className, sortDirection, children, ...props }, ref) => (
-    <th
-      ref={ref}
-      className={cn(
-        'h-12 px-6 py-2 text-left align-middle',
-        'text-sm font-medium leading-6 tracking-md text-ink whitespace-nowrap',
-        className,
-      )}
-      {...props}
-    >
-      {sortDirection != null ? (
-        <span className="inline-flex items-center gap-2">
-          {children}
-          {sortDirection === 'asc' ? (
-            <ArrowUp size={12} className="shrink-0" />
-          ) : (
-            <ArrowDown size={12} className="shrink-0" />
-          )}
-        </span>
-      ) : (
-        children
-      )}
-    </th>
-  ),
+export const TableHead = ({
+  className,
+  sortDirection,
+  children,
+  ...props
+}: TableHeadProps) => (
+  <th
+    className={cn(
+      'h-12 px-6 py-2 text-left align-middle',
+      'text-sm font-medium leading-6 tracking-md text-brand-secondary-900 whitespace-nowrap',
+      className,
+    )}
+    {...props}
+  >
+    {sortDirection != null ? (
+      <span className="inline-flex items-center gap-2">
+        {children}
+        {sortDirection === 'asc' ? (
+          <ArrowUp size={12} className="shrink-0" />
+        ) : (
+          <ArrowDown size={12} className="shrink-0" />
+        )}
+      </span>
+    ) : (
+      children
+    )}
+  </th>
 );
-TableHead.displayName = 'TableHead';
 
 // ── TableCell ─────────────────────────────────────────────────────────────────
 
-export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
-  ({ className, ...props }, ref) => (
-    <td
-      ref={ref}
-      className={cn(
-        'h-12 px-6 py-2 align-middle',
-        'text-sm font-normal leading-6 tracking-md text-ink whitespace-nowrap',
-        className,
-      )}
-      {...props}
-    />
-  ),
+export const TableCell = ({ className, ...props }: TableCellProps) => (
+  <td
+    className={cn(
+      'h-12 px-6 py-2 align-middle',
+      'text-sm font-normal leading-6 tracking-md text-ink whitespace-nowrap',
+      className,
+    )}
+    {...props}
+  />
 );
-TableCell.displayName = 'TableCell';
