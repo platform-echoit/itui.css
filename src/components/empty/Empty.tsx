@@ -1,5 +1,4 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
-import { PackageOpen } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 // ── Token → Tailwind map ─────────────────────────────────────────────────────
