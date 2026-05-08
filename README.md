@@ -41,6 +41,7 @@ In your main CSS file (e.g., `app.css` or `globals.css`), import the library's s
 
 ```css
 @import "@echoit/itui.css";
+@source "../node_modules/@echoit/itui.css";
 ```
 
 > Adjust the relative path in `@source` to point from your CSS file to `node_modules/@echoit/itui.css`. Without this directive, components will render unstyled.
