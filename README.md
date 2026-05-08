@@ -41,14 +41,15 @@ In your main CSS file (e.g., `app.css` or `globals.css`), import the library's s
 
 ```css
 @import "@echoit/itui.css";
-@source "../node_modules/@echoit/itui.css";
 ```
 
 > Adjust the relative path in `@source` to point from your CSS file to `node_modules/@echoit/itui.css`. Without this directive, components will render unstyled.
 
 #### For Tailwind CSS v3
 
-Add the `@echoit/itui.css` distribution files to your `tailwind.config.js` `content` array:
+Add the `@echoit/itui.css` distribution files to your `content` array.
+
+**`tailwind.config.js`**
 
 ```javascript
 /** @type {import('tailwindcss').Config} */
@@ -63,6 +64,25 @@ export default {
   },
   plugins: [],
 };
+```
+
+**`tailwind.config.ts`**
+
+```typescript
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  content: [
+    './app/**/*.{ts,tsx}',
+    './node_modules/@echoit/itui.css/dist/**/*.{js,mjs,cjs}', // Add this line
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+export default config;
 ```
 
 ### 2. Import Styles
