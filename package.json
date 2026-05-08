@@ -35,7 +35,8 @@
     "test:watch": "vitest",
     "test:generate": "tsx scripts/test-generate.ts",
     "build": "tsup",
-    "dev": "tsup --watch"
+    "dev": "tsup --watch",
+    "prepublishOnly": "pnpm build"
   },
   "type": "module",
   "keywords": [],
