@@ -22,10 +22,18 @@
   },
   "exports": {
     ".": {
+      "style": "./dist/index.css",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "style": "./dist/index.css"
+      "require": "./dist/index.cjs"
+    },
+    "./dist/index.css": {
+      "style": "./dist/index.css",
+      "default": "./dist/index.css"
+    },
+    "./src/styles/global.css": {
+      "style": "./dist/index.css",
+      "default": "./dist/index.css"
     }
   },
   "files": [

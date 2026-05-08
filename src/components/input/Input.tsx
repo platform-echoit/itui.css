@@ -66,7 +66,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const boxClass = [
       'flex items-center gap-2 h-12 px-3 rounded-lg border overflow-hidden',
       isDisabled
-        ? 'bg-neutral-100 border-neutral-disabled pointer-events-none'
+        ? 'bg-neutral-100 border-neutral-subtle pointer-events-none'
         : isError
           ? 'bg-white border-red-500'
           : 'bg-white border-neutral-subtle focus-within:border-brand',
@@ -105,7 +105,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               'flex-1 min-w-0 bg-transparent outline-none',
               'text-base leading-6 tracking-lg',
               isDisabled
-                ? 'bg-neutral-100 text-neutral-disabled placeholder:text-neutral-disabled cursor-not-allowed'
+                ? 'bg-neutral-100 border-neutral-subtle text-neutral-disabled placeholder:text-neutral-disabled cursor-not-allowed'
                 : disabledInput
                   ? 'bg-transparent text-neutral-disabled placeholder:text-neutral-disabled cursor-not-allowed'
                   : 'bg-transparent text-ink placeholder:text-ink-muted',

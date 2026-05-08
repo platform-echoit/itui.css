@@ -122,14 +122,14 @@ Available `size` values: `lg` | `md` | `sm`
 import { Button } from '@echoit/itui.css';
 ```
 
-| Prop | Type | Default |
-|------|------|---------|
-| `variant` | `'primary' \| 'alternative' \| 'secondary' \| 'link' \| 'link-underline'` | `'primary'` |
-| `size` | `'lg' \| 'md' \| 'sm'` | `'md'` |
-| `iconLeft` | `ReactNode` | — |
-| `iconRight` | `ReactNode` | — |
-| `loading` | `boolean` | `false` |
-| `fullWidth` | `boolean` | `false` |
+| Prop        | Type                                                                      | Default     |
+| ----------- | ------------------------------------------------------------------------- | ----------- |
+| `variant`   | `'primary' \| 'alternative' \| 'secondary' \| 'link' \| 'link-underline'` | `'primary'` |
+| `size`      | `'lg' \| 'md' \| 'sm'`                                                    | `'md'`      |
+| `iconLeft`  | `ReactNode`                                                               | —           |
+| `iconRight` | `ReactNode`                                                               | —           |
+| `loading`   | `boolean`                                                                 | `false`     |
+| `fullWidth` | `boolean`                                                                 | `false`     |
 
 ---
 
@@ -141,12 +141,12 @@ import { Avatar } from '@echoit/itui.css';
 
 **Avatar**
 
-| Prop | Type | Default |
-|------|------|---------|
-| `size` | `'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '3xl'` | `'md'` |
-| `src` | `string` | — |
-| `alt` | `string` | — |
-| `backgroundColor` | `string` | — |
+| Prop              | Type                                             | Default |
+| ----------------- | ------------------------------------------------ | ------- |
+| `size`            | `'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '3xl'` | `'md'`  |
+| `src`             | `string`                                         | —       |
+| `alt`             | `string`                                         | —       |
+| `backgroundColor` | `string`                                         | —       |
 
 ---
 
@@ -156,8 +156,8 @@ import { Avatar } from '@echoit/itui.css';
 import { Badge } from '@echoit/itui.css';
 ```
 
-| Prop | Type | Default |
-|------|------|---------|
+| Prop      | Type                              | Default    |
+| --------- | --------------------------------- | ---------- |
 | `variant` | `'circle' \| 'overflow' \| 'dot'` | `'circle'` |
 
 ---
@@ -165,7 +165,15 @@ import { Badge } from '@echoit/itui.css';
 ### Card
 
 ```tsx
-import { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter } from '@echoit/itui.css';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardAction,
+  CardContent,
+  CardFooter,
+} from '@echoit/itui.css';
 ```
 
 Compound component — no custom variants. All parts extend `<div>` props.
@@ -178,10 +186,10 @@ Compound component — no custom variants. All parts extend `<div>` props.
 import { Checkbox } from '@echoit/itui.css';
 ```
 
-| Prop | Type | Default |
-|------|------|---------|
-| `size` | `'sm' \| 'md'` | `'md'` |
-| `label` | `ReactNode` | — |
+| Prop    | Type           | Default |
+| ------- | -------------- | ------- |
+| `size`  | `'sm' \| 'md'` | `'md'`  |
+| `label` | `ReactNode`    | —       |
 
 ---
 
@@ -189,16 +197,22 @@ import { Checkbox } from '@echoit/itui.css';
 
 ```tsx
 import {
-  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter,
-  DialogTitle, DialogDescription, DialogClose
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
 } from '@echoit/itui.css';
 ```
 
 **DialogContent**
 
-| Prop | Type | Default |
-|------|------|---------|
-| `showCloseButton` | `boolean` | `true` |
+| Prop               | Type      | Default |
+| ------------------ | --------- | ------- |
+| `showCloseButton`  | `boolean` | `true`  |
 | `hideHeaderBorder` | `boolean` | `false` |
 
 ---
@@ -209,11 +223,11 @@ import {
 import { Empty } from '@echoit/itui.css';
 ```
 
-| Prop | Type | Default |
-|------|------|---------|
-| `icon` | `ReactNode` | — |
-| `title` | `string` | — |
-| `description` | `string` | — |
+| Prop          | Type        | Default |
+| ------------- | ----------- | ------- |
+| `icon`        | `ReactNode` | —       |
+| `title`       | `string`    | —       |
+| `description` | `string`    | —       |
 
 ---
 
@@ -223,10 +237,10 @@ import { Empty } from '@echoit/itui.css';
 import { FileType } from '@echoit/itui.css';
 ```
 
-| Prop | Type | Default |
-|------|------|---------|
-| `logo` | `'aep' \| 'ai' \| 'avi' \| 'blend' \| 'c4d' \| 'cdr' \| 'css' \| 'csv' \| 'dmg' \| 'doc' \| 'exe' \| 'fig' \| 'gif' \| 'html' \| 'ico' \| 'java' \| 'jpeg' \| 'jpg' \| 'js' \| 'json' \| 'mov' \| 'mp3' \| 'mp4' \| 'mpg' \| 'pdf' \| 'png' \| 'ppt' \| 'psd' \| 'rar' \| 'skt' \| 'svg' \| 'tiff' \| 'txt' \| 'wav' \| 'webp' \| 'xls' \| 'zip'` | — |
-| `type` | `'line' \| 'flat' \| 'color'` | `'line'` |
+| Prop   | Type                                                                                                                                                                                                                                                                                                                                              | Default  |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `logo` | `'aep' \| 'ai' \| 'avi' \| 'blend' \| 'c4d' \| 'cdr' \| 'css' \| 'csv' \| 'dmg' \| 'doc' \| 'exe' \| 'fig' \| 'gif' \| 'html' \| 'ico' \| 'java' \| 'jpeg' \| 'jpg' \| 'js' \| 'json' \| 'mov' \| 'mp3' \| 'mp4' \| 'mpg' \| 'pdf' \| 'png' \| 'ppt' \| 'psd' \| 'rar' \| 'skt' \| 'svg' \| 'tiff' \| 'txt' \| 'wav' \| 'webp' \| 'xls' \| 'zip'` | —        |
+| `type` | `'line' \| 'flat' \| 'color'`                                                                                                                                                                                                                                                                                                                     | `'line'` |
 
 ---
 
@@ -236,26 +250,32 @@ import { FileType } from '@echoit/itui.css';
 import { Input } from '@echoit/itui.css';
 ```
 
-| Prop | Type | Default |
-|------|------|---------|
-| `label` | `string` | — |
-| `error` | `string` | — |
-| `prefix` | `ReactNode` | — |
-| `suffix` | `ReactNode` | — |
-| `block` | `boolean` | `false` |
+| Prop     | Type        | Default |
+| -------- | ----------- | ------- |
+| `label`  | `string`    | —       |
+| `error`  | `string`    | —       |
+| `prefix` | `ReactNode` | —       |
+| `suffix` | `ReactNode` | —       |
+| `block`  | `boolean`   | `false` |
 
 ---
 
 ### InputGroup
 
 ```tsx
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupInput } from '@echoit/itui.css';
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupText,
+  InputGroupInput,
+} from '@echoit/itui.css';
 ```
 
 **InputGroupAddon**
 
-| Prop | Type | Default |
-|------|------|---------|
+| Prop    | Type                                                             | Default          |
+| ------- | ---------------------------------------------------------------- | ---------------- |
 | `align` | `'inline-start' \| 'inline-end' \| 'block-start' \| 'block-end'` | `'inline-start'` |
 
 ---
@@ -264,25 +284,31 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGro
 
 ```tsx
 import {
-  PopoverRoot, PopoverTrigger, PopoverContent,
-  Popover, PopoverHeader, PopoverGroup, PopoverSeparator, PopoverItem
+  PopoverRoot,
+  PopoverTrigger,
+  PopoverContent,
+  Popover,
+  PopoverHeader,
+  PopoverGroup,
+  PopoverSeparator,
+  PopoverItem,
 } from '@echoit/itui.css';
 ```
 
 **PopoverContent**
 
-| Prop | Type | Default |
-|------|------|---------|
+| Prop        | Type                                                                                                                                                                                             | Default          |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- |
 | `placement` | `'top-start' \| 'top-center' \| 'top-end' \| 'bottom-start' \| 'bottom-center' \| 'bottom-end' \| 'left-start' \| 'left-center' \| 'left-end' \| 'right-start' \| 'right-center' \| 'right-end'` | `'bottom-start'` |
 
 **PopoverItem**
 
-| Prop | Type | Default |
-|------|------|---------|
-| `icon` | `ReactNode` | — |
-| `description` | `ReactNode` | — |
-| `trailing` | `ReactNode` | — |
-| `isSubmenu` | `boolean` | `false` |
+| Prop          | Type        | Default |
+| ------------- | ----------- | ------- |
+| `icon`        | `ReactNode` | —       |
+| `description` | `ReactNode` | —       |
+| `trailing`    | `ReactNode` | —       |
+| `isSubmenu`   | `boolean`   | `false` |
 
 ---
 
@@ -292,32 +318,38 @@ import {
 import { Scrollbar } from '@echoit/itui.css';
 ```
 
-| Prop | Type | Default |
-|------|------|---------|
-| `size` | `'sm' \| 'md'` | `'md'` |
+| Prop   | Type           | Default |
+| ------ | -------------- | ------- |
+| `size` | `'sm' \| 'md'` | `'md'`  |
 
 ---
 
 ### Sidebar
 
 ```tsx
-import { Sidebar, SidebarHeader, SidebarMenu, SidebarItem, SidebarFooter } from '@echoit/itui.css';
+import {
+  Sidebar,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarItem,
+  SidebarFooter,
+} from '@echoit/itui.css';
 ```
 
 **Sidebar**
 
-| Prop | Type | Default |
-|------|------|---------|
+| Prop        | Type      | Default |
+| ----------- | --------- | ------- |
 | `collapsed` | `boolean` | `false` |
 
 **SidebarItem**
 
-| Prop | Type | Default |
-|------|------|---------|
-| `active` | `boolean` | `false` |
-| `icon` | `ReactNode` | — |
-| `label` | `string` | — |
-| `indented` | `boolean` | `false` |
+| Prop       | Type        | Default |
+| ---------- | ----------- | ------- |
+| `active`   | `boolean`   | `false` |
+| `icon`     | `ReactNode` | —       |
+| `label`    | `string`    | —       |
+| `indented` | `boolean`   | `false` |
 
 ---
 
@@ -327,30 +359,37 @@ import { Sidebar, SidebarHeader, SidebarMenu, SidebarItem, SidebarFooter } from 
 import { Spinner } from '@echoit/itui.css';
 ```
 
-| Prop | Type | Default |
-|------|------|---------|
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` |
+| Prop   | Type                   | Default |
+| ------ | ---------------------- | ------- |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'`  |
 
 ---
 
 ### Table
 
 ```tsx
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@echoit/itui.css';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from '@echoit/itui.css';
 ```
 
 **TableRow**
 
-| Prop | Type | Default |
-|------|------|---------|
+| Prop       | Type      | Default |
+| ---------- | --------- | ------- |
 | `selected` | `boolean` | `false` |
 | `disabled` | `boolean` | `false` |
 
 **TableHead**
 
-| Prop | Type | Default |
-|------|------|---------|
-| `sortDirection` | `'asc' \| 'desc'` | — |
+| Prop            | Type              | Default |
+| --------------- | ----------------- | ------- |
+| `sortDirection` | `'asc' \| 'desc'` | —       |
 
 ---
 
