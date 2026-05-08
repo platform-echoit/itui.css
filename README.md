@@ -79,12 +79,15 @@ import { Button } from '@echoit/itui.css';
 
 export default function App() {
   return (
-    <Button variant="default" size="lg">
+    <Button variant="primary" size="lg">
       Click me
     </Button>
   );
 }
 ```
+
+Available `variant` values: `primary` | `alternative` | `secondary` | `link` | `link-underline`
+Available `size` values: `lg` | `md` | `sm`
 
 ---
 
@@ -129,7 +132,7 @@ Requires support for CSS custom properties and `oklch()` color.
 
 ## Requirements
 
-- React 18+
+- React 19+
 - Tailwind CSS 4+
 - Node.js 18+
 
@@ -140,8 +143,8 @@ Requires support for CSS custom properties and `oklch()` color.
 Contributions are welcome. See [DEVELOPMENT.md](./DEVELOPMENT.md) for build and publishing guidelines.
 
 ```bash
-git clone git@github.com:platform-echoit/@echoit/itui.css.git
-cd @echoit/itui.css
+git clone git@github.com:platform-echoit/itui.css.git
+cd itui.css
 pnpm install
 pnpm dev
 ```
@@ -150,4 +153,4 @@ pnpm dev
 
 ## License
 
-[MIT](./LICENSE) © echoit
+ISC © echoit
