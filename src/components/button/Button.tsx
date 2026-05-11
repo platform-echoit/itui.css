@@ -8,8 +8,10 @@ export type ButtonVariant =
   | 'alternative'
   | 'secondary'
   | 'link'
-  | 'link-underline';
-export type ButtonSize = 'lg' | 'md' | 'sm';
+  | 'link-underline'
+  | 'ghost'
+  | 'destructive';
+export type ButtonSize = 'lg' | 'md' | 'sm' | 'icon'; // Force refresh
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -65,6 +67,11 @@ const sizeConfig: Record<
     iconOnly: 'h-button-sm w-button-sm',
     icon: 'h-icon-lg w-icon-lg',
   },
+  icon: {
+    label: 'h-9 w-9 p-0',
+    iconOnly: 'h-9 w-9 p-0',
+    icon: 'h-icon-lg w-icon-lg',
+  },
 };
 
 /*
@@ -118,6 +125,19 @@ const variantConfig: Record<ButtonVariant, string> = {
     'active:text-brand-pressed',
     'disabled:text-neutral-disabled',
   ].join(' '),
+
+  ghost: [
+    'bg-transparent hover:bg-surface-hover text-ink',
+    'active:bg-surface-pressed',
+    'disabled:text-neutral-disabled',
+  ].join(' '),
+
+  destructive: [
+    'bg-red-600 text-white',
+    'hover:bg-red-700',
+    'active:bg-red-800',
+    'disabled:bg-neutral-subtle disabled:text-neutral-disabled',
+  ].join(' '),
 };
 
 // ─── Button ───────────────────────────────────────────────────────────────────
@@ -147,7 +167,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       'font-semibold rounded-lg whitespace-nowrap select-none',
       'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
       'disabled:pointer-events-none',
-      isIconOnly ? sz.iconOnly : sz.label,
+      size === 'icon' ? sz.label : isIconOnly ? sz.iconOnly : sz.label,
       variantConfig[variant],
       fullWidth && !isIconOnly ? 'w-full' : '',
       loading ? 'pointer-events-none opacity-75' : '',

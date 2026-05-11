@@ -2,7 +2,7 @@ import { forwardRef, type HTMLAttributes } from 'react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export type SpinnerSize = 'sm' | 'md' | 'lg';
+export type SpinnerSize = 'sm' | 'md' | 'lg' | 'icon';
 
 export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement> {
   size?: SpinnerSize;
@@ -30,6 +30,7 @@ const sizeClasses: Record<SpinnerSize, string> = {
   lg: 'h-12 w-12 border-4',
   md: 'h-8 w-8 border-4',
   sm: 'h-5 w-5 border-2',
+  icon: 'h-4 w-4 border-2',
 };
 
 // ─── Spinner ──────────────────────────────────────────────────────────────────
