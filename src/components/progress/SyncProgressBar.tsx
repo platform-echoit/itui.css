@@ -12,7 +12,10 @@ export interface SyncProgressBarProps extends HTMLAttributes<HTMLDivElement> {
  */
 export const SyncProgressBar = forwardRef<HTMLDivElement, SyncProgressBarProps>(
   ({ value = 0, max = 100, overlay = false, className = '', ...rest }, ref) => {
-    const percentage = Math.min(100, Math.max(0, Math.round((value / max) * 100)));
+    const percentage = Math.min(
+      100,
+      Math.max(0, Math.round((value / max) * 100)),
+    );
 
     const content = (
       <div
@@ -50,7 +53,7 @@ export const SyncProgressBar = forwardRef<HTMLDivElement, SyncProgressBarProps>(
         {content}
       </div>
     );
-  }
+  },
 );
 
 SyncProgressBar.displayName = 'SyncProgressBar';
