@@ -20,3 +20,4 @@ export * from './components/tooltip';
 export * from './components/dropdown-menu';
 export * from './components/tabs';
 export * from './components/modals';
+export * from './components/progress';
