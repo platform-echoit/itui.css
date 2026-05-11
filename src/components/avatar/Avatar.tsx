@@ -116,19 +116,22 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     },
     ref,
   ) => {
-    const bgClass = backgroundColor
-      ? `bg-[${backgroundColor}]`
-      : 'bg-semantic-red-700';
     const isImage = !!src;
+    const bgClass = BG_CLASS[backgroundColor ?? ''];
+    const bgStyle =
+      !isImage && !bgClass && backgroundColor
+        ? { backgroundColor }
+        : undefined;
     return (
       <div
         ref={ref}
         className={cn(
           'shrink-0 rounded-full overflow-hidden flex items-center justify-center text-white',
           containerSizeMap[size],
-          !isImage && bgClass,
+          !isImage && (bgClass ?? 'bg-semantic-red-700'),
           className,
         )}
+        style={bgStyle}
         {...rest}
       >
         {isImage ? (

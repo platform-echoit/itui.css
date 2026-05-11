@@ -7,6 +7,7 @@ export type FileIconProps = {
 
 const FILE_TYPE_MAP: Record<string, FileTypeLogo> = {
   // Exact extension matches
+  sheet: 'xls',
   pdf: 'pdf',
   doc: 'doc',
   docx: 'doc',
