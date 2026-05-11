@@ -119,9 +119,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     const isImage = !!src;
     const bgClass = BG_CLASS[backgroundColor ?? ''];
     const bgStyle =
-      !isImage && !bgClass && backgroundColor
-        ? { backgroundColor }
-        : undefined;
+      !isImage && !bgClass && backgroundColor ? { backgroundColor } : undefined;
     return (
       <div
         ref={ref}
