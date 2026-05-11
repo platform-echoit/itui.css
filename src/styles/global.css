@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @source "../";
 
 :root {
@@ -29,7 +29,7 @@
   --destructive-foreground: oklch(0.985 0 0);
   --success: oklch(0.723 0.219 149.6);
   --success-foreground: oklch(0.985 0 0);
-  --warning: oklch(0.795 0.184 86.0);
+  --warning: oklch(0.795 0.184 86);
   --warning-foreground: oklch(0.985 0 0);
   --info: oklch(0.623 0.214 259.1);
   --info-foreground: oklch(0.985 0 0);
@@ -168,12 +168,18 @@
 
 @theme {
   /* ── Avatar profile sizes ─────────────────────────────────────────────── */
-  --width-profile-sm: 24px;   --height-profile-sm: 24px;
-  --width-profile-md: 32px;   --height-profile-md: 32px;
-  --width-profile-lg: 40px;   --height-profile-lg: 40px;
-  --width-profile-xl: 48px;   --height-profile-xl: 48px;
-  --width-profile-2xl: 60px;  --height-profile-2xl: 60px;
-  --width-profile-3xl: 72px;  --height-profile-3xl: 72px;
+  --width-profile-sm: 24px;
+  --height-profile-sm: 24px;
+  --width-profile-md: 32px;
+  --height-profile-md: 32px;
+  --width-profile-lg: 40px;
+  --height-profile-lg: 40px;
+  --width-profile-xl: 48px;
+  --height-profile-xl: 48px;
+  --width-profile-2xl: 60px;
+  --height-profile-2xl: 60px;
+  --width-profile-3xl: 72px;
+  --height-profile-3xl: 72px;
 
   /* ── Colors ───────────────────────────────────────────────────────────── */
   --color-semantic-red-700: #ad3026;
@@ -186,10 +192,10 @@
   --text-32: 32px;
 
   /* ── Letter spacing ───────────────────────────────────────────────────── */
-  --tracking-xs:  0.33px;
-  --tracking-sm:  0.30px;
-  --tracking-md:  0.20px;
-  --tracking-lg:  0.09px;
+  --tracking-xs: 0.33px;
+  --tracking-sm: 0.3px;
+  --tracking-md: 0.2px;
+  --tracking-lg: 0.09px;
   --tracking-2xl: -0.24px;
   --tracking-3xl: -0.55px;
   --tracking-4xl: -0.64px;
@@ -199,24 +205,24 @@
   --height-list-md: 56px;
 
   /* ── List surface & text colors ───────────────────────────────────────── */
-  --color-surface-hover:          #f5f5f5;
-  --color-surface-pressed:        #ededed;
+  --color-surface-hover: #f5f5f5;
+  --color-surface-pressed: #ededed;
   --color-surface-subtle-pressed: #dadada;
-  --color-neutral-subtle:         #ededed;
-  --color-ink:                    #0f0f0f;
-  --color-ink-muted:              #595858;
+  --color-neutral-subtle: #ededed;
+  --color-ink: #0f0f0f;
+  --color-ink-muted: #595858;
 
   /* ── List shadow ──────────────────────────────────────────────────────── */
-  --shadow-downwards-sm:  0px 4px 16px 0px rgba(137, 137, 137, 0.10);
-  --shadow-rightwards-sm: 4px 0px  8px 0px rgba(137, 137, 137, 0.10);
+  --shadow-downwards-sm: 0px 4px 16px 0px rgba(137, 137, 137, 0.1);
+  --shadow-rightwards-sm: 4px 0px 8px 0px rgba(137, 137, 137, 0.1);
 
   /* ── Brand colors ─────────────────────────────────────────────────────── */
-  --color-brand:            #009ce0;
-  --color-brand-hover:      #54bdea;
-  --color-brand-pressed:    #008ecc;
-  --color-brand-subtle:     #e6f5fc;
+  --color-brand: #009ce0;
+  --color-brand-hover: #54bdea;
+  --color-brand-pressed: #008ecc;
+  --color-brand-subtle: #e6f5fc;
   --color-brand-link-hover: #33b0e6;
-  --color-brand-secondary-900: #1A1A1A;
+  --color-brand-secondary-900: #1a1a1a;
 
   /* ── Disabled state ───────────────────────────────────────────────────── */
   --color-neutral-disabled: #c2c2c2;
@@ -225,28 +231,35 @@
   --radius-xs: 4px;
 
   /* ── Checkbox sizes ───────────────────────────────────────────────────────── */
-  --height-checkbox-md: 18px;  --width-checkbox-md: 18px;
-  --height-checkbox-sm: 16px;  --width-checkbox-sm: 16px;
+  --height-checkbox-md: 18px;
+  --width-checkbox-md: 18px;
+  --height-checkbox-sm: 16px;
+  --width-checkbox-sm: 16px;
 
   /* ── Button & icon sizes ──────────────────────────────────────────────────── */
-  --height-button-lg: 48px;  --width-button-lg: 48px;
-  --height-button-md: 40px;  --width-button-md: 40px;
-  --height-button-sm: 32px;  --width-button-sm: 32px;
-  --height-icon-lg:   20px;  --width-icon-lg:   20px;
-  --height-icon-md:   16px;  --width-icon-md:   16px;
+  --height-button-lg: 48px;
+  --width-button-lg: 48px;
+  --height-button-md: 40px;
+  --width-button-md: 40px;
+  --height-button-sm: 32px;
+  --width-button-sm: 32px;
+  --height-icon-lg: 20px;
+  --width-icon-lg: 20px;
+  --height-icon-md: 16px;
+  --width-icon-md: 16px;
 
   /* ── Overlay / Backdrop ──────────────────────────────────────────────── */
-  --color-dim-black:            #1a1a1a66;   /* dim/black       — rgba(26,26,26,0.40) */
-  --color-opacity-black-sm:     #1a1a1a33;   /* opacity/black/sm — rgba(26,26,26,0.20) */
-  --shadow-downwards-blur-small: 4px;         /* shadow/downwards/blur/xs */
+  --color-dim-black: #1a1a1a66; /* dim/black       — rgba(26,26,26,0.40) */
+  --color-opacity-black-sm: #1a1a1a33; /* opacity/black/sm — rgba(26,26,26,0.20) */
+  --shadow-downwards-blur-small: 4px; /* shadow/downwards/blur/xs */
 
   /* ── Sidebar color tokens ─────────────────────────────────────────────── */
-  --color-sidebar:                   #ffffff;
-  --color-sidebar-foreground:        #0f0f0f;
-  --color-sidebar-border:            #ededed;
-  --color-sidebar-accent:            #f5f5f5;
+  --color-sidebar: #ffffff;
+  --color-sidebar-foreground: #0f0f0f;
+  --color-sidebar-border: #ededed;
+  --color-sidebar-accent: #f5f5f5;
   --color-sidebar-accent-foreground: #0f0f0f;
-  --color-sidebar-ring:              #009ce0;
+  --color-sidebar-ring: #009ce0;
 }
 
 @utility backdrop-blur-dialog {
@@ -254,6 +267,8 @@
 }
 
 /* Show sidebar item tooltip only when the sidebar is collapsed */
-[data-sidebar][data-collapsed] [data-sidebar-item]:hover [data-sidebar-tooltip] {
+[data-sidebar][data-collapsed]
+  [data-sidebar-item]:hover
+  [data-sidebar-tooltip] {
   display: flex;
 }

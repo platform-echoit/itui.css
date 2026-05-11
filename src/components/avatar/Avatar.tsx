@@ -116,7 +116,9 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     },
     ref,
   ) => {
-    const bgClass = backgroundColor ? `bg-[${backgroundColor}]` : 'bg-semantic-red-700';
+    const bgClass = backgroundColor
+      ? `bg-[${backgroundColor}]`
+      : 'bg-semantic-red-700';
     const isImage = !!src;
     return (
       <div
