@@ -101,7 +101,7 @@ const variantConfig: Record<ButtonVariant, string> = {
   alternative: [
     'bg-white border border-brand text-brand',
     'hover:bg-brand-subtle',
-    'active:bg-brand-subtle active:opacity-80',
+    'active:bg-brand-subtle-pressed active:opacity-80',
     'disabled:bg-white disabled:border-neutral-disabled disabled:text-neutral-disabled',
   ].join(' '),
 
