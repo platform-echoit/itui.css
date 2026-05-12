@@ -1,42 +1,47 @@
-export function TiffIcon() {
+export function TiffIcon({ className }: { className?: string }) {
   return (
     <svg
-      width="18"
+      width="21"
       height="24"
-      viewBox="0 0 18 24"
+      viewBox="0 0 21 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
-      <g clipPath="url(#clip0_26864_28136)">
+      <g clipPath="url(#clip0_26864_27703)">
         <path
-          d="M0 3.2C0 1.43269 1.43269 0 3.2 0H10.2L18 7.8V20.8C18 22.5673 16.5673 24 14.8 24H3.2C1.43269 24 0 22.5673 0 20.8V3.2Z"
-          fill="#3873FF"
+          d="M6.2002 0.599609H13.252L20.4004 7.74805V20.7998C20.4004 22.2357 19.2357 23.4004 17.7998 23.4004H6.2002C4.76425 23.4004 3.59961 22.2357 3.59961 20.7998V3.2002C3.59961 1.76425 4.76426 0.599609 6.2002 0.599609Z"
+          fill="white"
+          stroke="#C8D2E1"
+          strokeWidth="1.2"
         />
         <path
-          d="M12.6002 7.8H18.0002L10.2002 0V5.4C10.2002 6.72548 11.2747 7.8 12.6002 7.8Z"
-          fill="white"
-          fillOpacity="0.5"
+          d="M13.2002 0.600098V5.4001C13.2002 6.72558 14.2747 7.8001 15.6002 7.8001H20.4002"
+          stroke="#C8D2E1"
+          strokeWidth="1.2"
+          strokeLinecap="round"
         />
       </g>
+      <rect y="11.1001" width="15.75" height="9.9" rx="1.6" fill="#3873FF" />
       <path
-        d="M3.11377 16.1972V15.4365H6.69758V16.1972H5.36164V19.8002H4.44971V16.1972H3.11377Z"
+        d="M1.92773 14.6288V13.8682H5.51154V14.6288H4.1756V18.2318H3.26367V14.6288H1.92773Z"
         fill="white"
       />
       <path
-        d="M8.09036 15.4365V19.8002H7.16778V15.4365H8.09036Z"
+        d="M6.90433 13.8682V18.2318H5.98174V13.8682H6.90433Z"
         fill="white"
       />
       <path
-        d="M8.72942 19.8002V15.4365H11.6186V16.1972H9.652V17.2369H11.4269V17.9976H9.652V19.8002H8.72942Z"
+        d="M7.54338 18.2318V13.8682H10.4326V14.6288H8.46597V15.6686H10.2408V16.4292H8.46597V18.2318H7.54338Z"
         fill="white"
       />
       <path
-        d="M12.1192 19.8002V15.4365H15.0084V16.1972H13.0418V17.2369H14.8166V17.9976H13.0418V19.8002H12.1192Z"
+        d="M10.9331 18.2318V13.8682H13.8224V14.6288H11.8557V15.6686H13.6306V16.4292H11.8557V18.2318H10.9331Z"
         fill="white"
       />
       <defs>
-        <clipPath id="clip0_26864_28136">
-          <rect width="18" height="24" fill="white" />
+        <clipPath id="clip0_26864_27703">
+          <rect width="18" height="24" fill="white" transform="translate(3)" />
         </clipPath>
       </defs>
     </svg>
