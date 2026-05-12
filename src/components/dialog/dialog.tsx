@@ -135,7 +135,7 @@ function DialogTitle({
     <DialogPrimitive.Title
       data-slot="dialog-title"
       className={cn(
-        'text-xl font-semibold leading-7 text-center tracking-[-0.24px] text-ink ',
+        'text-xl font-semibold leading-7 text-center tracking-2xl text-ink ',
         className,
       )}
       {...props}
@@ -149,13 +149,15 @@ function DialogDescription({
 }: React.ComponentProps<typeof DialogPrimitive.Description>) {
   return (
     <DialogPrimitive.Description
+      asChild
       data-slot="dialog-description"
       className={cn(
         'text-ink text-base leading-6 text-center tracking-lg',
         className,
       )}
-      {...props}
-    />
+    >
+      <div {...props} />
+    </DialogPrimitive.Description>
   );
 }
 

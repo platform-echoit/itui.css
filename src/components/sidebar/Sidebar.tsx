@@ -117,7 +117,7 @@ export const SidebarHeader = forwardRef<HTMLDivElement, SidebarHeaderProps>(
       ref={ref}
       className={cn(
         'flex flex-col gap-8 shrink-0 items-start w-full',
-        'group-data-[collapsed]/sidebar:items-center group-data-[collapsed]/sidebar:w-auto',
+        'group-data-collapsed/sidebar:items-center group-data-collapsed/sidebar:w-auto',
         className,
       )}
       {...rest}
@@ -136,7 +136,7 @@ export const SidebarMenu = forwardRef<HTMLUListElement, SidebarMenuProps>(
       ref={ref}
       className={cn(
         'flex flex-col gap-2 shrink-0 list-none p-0 m-0 w-full',
-        'group-data-[collapsed]/sidebar:items-center group-data-[collapsed]/sidebar:w-auto',
+        'group-data-collapsed/sidebar:items-center group-data-collapsed/sidebar:w-auto',
         className,
       )}
       {...rest}
@@ -167,7 +167,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
     return (
       <li
         data-sidebar-item
-        className="list-none w-full group-data-[collapsed]/sidebar:w-auto relative"
+        className="list-none w-full group-data-collapsed/sidebar:w-auto relative"
       >
         <button
           ref={ref}
@@ -179,8 +179,8 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
             'gap-2 h-9 w-full',
             indented ? 'px-9 py-2' : 'p-2',
             // Collapsed overrides (CSS wins via group ancestor data attribute)
-            'group-data-[collapsed]/sidebar:justify-center group-data-[collapsed]/sidebar:w-9',
-            indented && 'group-data-[collapsed]/sidebar:!p-2',
+            'group-data-collapsed/sidebar:justify-center group-data-collapsed/sidebar:w-9',
+            indented && 'group-data-collapsed/sidebar:p-2!',
             active
               ? 'bg-surface-pressed text-ink'
               : 'bg-white text-ink-muted hover:bg-surface-hover',
@@ -197,7 +197,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
             </span>
           )}
           {/* sr-only keeps text accessible as button label when icon-only */}
-          <span className="truncate group-data-[collapsed]/sidebar:sr-only">
+          <span className="truncate group-data-collapsed/sidebar:sr-only">
             {label ?? children}
           </span>
         </button>
@@ -228,7 +228,7 @@ export const SidebarFooter = forwardRef<HTMLDivElement, SidebarFooterProps>(
       ref={ref}
       className={cn(
         'flex flex-col gap-2 shrink-0 w-full',
-        'group-data-[collapsed]/sidebar:items-center group-data-[collapsed]/sidebar:w-auto',
+        'group-data-collapsed/sidebar:items-center group-data-collapsed/sidebar:w-auto',
         className,
       )}
       {...rest}
