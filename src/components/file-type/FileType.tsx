@@ -14,7 +14,7 @@ import { Mp3Icon } from '../../icons/file-type/mp3';
 import { WavIcon } from '../../icons/file-type/wav';
 import { AepIcon } from '../../icons/file-type/aep';
 import { PsdIcon } from '../../icons/file-type/psd';
-import { JpgIcon } from '../../icons/file-type/jpg';
+import { SuccessIcon } from '../../icons/toast/success';
 import { JpegIcon } from '../../icons/file-type/jpeg';
 import { PngIcon } from '../../icons/file-type/png';
 import { GifIcon } from '../../icons/file-type/gif';
@@ -102,7 +102,7 @@ const LOGO_MAP: Record<FileTypeLogo, IconComponent> = {
   wav: WavIcon,
   aep: AepIcon,
   psd: PsdIcon,
-  jpg: JpgIcon,
+  jpg: SuccessIcon,
   jpeg: JpegIcon,
   png: PngIcon,
   gif: GifIcon,

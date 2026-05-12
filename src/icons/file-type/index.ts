@@ -13,7 +13,7 @@ export { Mp3Icon } from './mp3';
 export { WavIcon } from './wav';
 export { AepIcon } from './aep';
 export { PsdIcon } from './psd';
-export { JpgIcon } from './jpg';
+export { SuccessIcon as JpgIcon } from '../toast/success';
 export { JpegIcon } from './jpeg';
 export { PngIcon } from './png';
 export { GifIcon } from './gif';

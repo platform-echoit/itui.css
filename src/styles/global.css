@@ -288,15 +288,15 @@
   --color-border-neutral-subtle: #ededed;
 
   /* ── Text & Icon Colors ───────────────────────────────────────────────── */
-  --color-text-primary: #009ce0;
-  --color-text-primary-hover: #33b0e6;
-  --color-text-primary-pressed: #008ecc;
-  --color-text-neutral: #0f0f0f;
-  --color-text-neutral-strong: #1a1a1a;
-  --color-text-neutral-muted: #595858;
-  --color-text-neutral-subtle: #9e9e9e;
-  --color-text-neutral-disabled: #c2c2c2;
-  
+  --color-primary: #009ce0;
+  --color-primary-hover: #33b0e6;
+  --color-primary-pressed: #008ecc;
+  --color-neutral: #0f0f0f;
+  --color-neutral-strong: #1a1a1a;
+  --color-neutral-muted: #595858;
+  --color-neutral-subtle: #9e9e9e;
+  --color-neutral-disabled: #c2c2c2;
+
   /* ── Brand colors ─────────────────────────────────────────────────────── */
   --color-brand: #009ce0;
   --color-brand-hover: #54bdea;
