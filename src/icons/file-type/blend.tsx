@@ -1,4 +1,4 @@
-export function BlendIcon() {
+export function BlendIcon({ className }: { className?: string }) {
   return (
     <svg
       width="23"
@@ -6,6 +6,7 @@ export function BlendIcon() {
       viewBox="0 0 23 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <g clipPath="url(#clip0_26864_27781)">
         <path
