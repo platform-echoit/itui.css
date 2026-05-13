@@ -14,8 +14,8 @@ import { cn } from '../../lib/utils';
   surface/neutral/secondary/hover    #f5f5f5  → bg-surface-hover     (--color-surface-hover)
   surface/neutral/secondary/pressed  #ededed  → bg-surface-pressed   (--color-surface-pressed)
   border/neutral/subtle              #ededed  → border-sidebar-border (--color-sidebar-border)
-  text/neutral/default               #0f0f0f  → text-ink             (--color-ink)
-  text/neutral/muted                 #595858  → text-ink-muted       (--color-ink-muted)
+  text/neutral/default               #0f0f0f  → text-foreground             (--color-foreground)
+  text/neutral/muted                 #595858  → text-neutral-muted       (--color-neutral-muted)
 
   SIZING (Tailwind v4: n × 0.25rem; @theme for named tokens)
   height/lnb/sm     36px → h-9   (2.25rem)
@@ -72,7 +72,7 @@ export interface SidebarMenuProps extends HTMLAttributes<HTMLUListElement> {
 
 export interface SidebarItemProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Selected/active state — bg-surface-pressed + text-ink. */
+  /** Selected/active state — bg-surface-pressed + text-foreground. */
   active?: boolean;
   /** Leading 20 px icon slot. Required in collapsed mode for visual identification. */
   icon?: ReactNode;
@@ -182,8 +182,8 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
             'group-data-collapsed/sidebar:justify-center group-data-collapsed/sidebar:w-9',
             indented && 'group-data-collapsed/sidebar:p-2!',
             active
-              ? 'bg-surface-pressed text-ink'
-              : 'bg-white text-ink-muted hover:bg-sidebar-accent active:bg-secondary',
+              ? 'bg-surface-pressed text-foreground'
+              : 'bg-white text-neutral-muted hover:bg-sidebar-accent active:bg-secondary',
             className,
           )}
           {...rest}

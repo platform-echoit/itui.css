@@ -60,7 +60,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>(
         {...rest}
       >
         <span
-          className="shrink-0 h-5 flex items-center justify-center text-ink-muted"
+          className="shrink-0 h-5 flex items-center justify-center text-neutral-muted"
           aria-hidden="true"
         >
           <ChevronUp size={icon} strokeWidth={1.5} />
@@ -69,7 +69,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>(
         <div className="flex-1 w-full rounded-full min-h-10 bg-surface-hover hover:bg-secondary" />
 
         <span
-          className="shrink-0 h-5 flex items-center justify-center text-ink-muted"
+          className="shrink-0 h-5 flex items-center justify-center text-neutral-muted"
           aria-hidden="true"
         >
           <ChevronDown size={icon} strokeWidth={1.5} />

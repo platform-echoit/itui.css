@@ -62,7 +62,7 @@ function SelectTrigger({
       {label && (
         <label
           // htmlFor={inputId}
-          className="shrink-0 text-sm font-medium leading-5 tracking-md text-ink"
+          className="shrink-0 text-sm font-medium leading-5 tracking-md text-foreground"
         >
           {label}
         </label>

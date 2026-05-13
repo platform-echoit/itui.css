@@ -53,17 +53,20 @@ const sizeConfig: Record<
   { label: string; iconOnly: string; icon: string }
 > = {
   lg: {
-    label: 'h-button-lg px-6 py-3 gap-2 text-base leading-6 tracking-lg',
+    label:
+      'h-button-lg px-6 py-3 gap-2 text-base leading-6.5 tracking-lg font-semibold',
     iconOnly: 'h-button-lg w-button-lg',
     icon: 'h-icon-lg w-icon-lg',
   },
   md: {
-    label: 'h-button-md px-5 py-2.5 gap-2 text-sm leading-5 tracking-md',
+    label:
+      'h-button-md px-5 py-3 gap-2 text-sm leading-6 tracking-md font-semibold',
     iconOnly: 'h-button-md w-button-md',
     icon: 'h-icon-lg w-icon-lg',
   },
   sm: {
-    label: 'h-button-sm px-4 py-1.5 gap-2 text-sm leading-5 tracking-md',
+    label:
+      'h-button-sm px-4 py-3 gap-2 text-sm leading-6 tracking-md font-semibold',
     iconOnly: 'h-button-sm w-button-sm',
     icon: 'h-icon-lg w-icon-lg',
   },
@@ -88,28 +91,28 @@ const sizeConfig: Record<
     surface/neutral/secondary/pressed  → bg-surface-pressed (in @theme)
     surface/neutral/disabled/default   → bg-neutral-100     (in @theme)
     border/neutral/subtle    #ededed  → border-neutral-subtle (in @theme)
-    text/neutral/default     #0f0f0f  → text-ink             (in @theme)
+    text/neutral/default     #0f0f0f  → text-foreground             (in @theme)
 */
 const variantConfig: Record<ButtonVariant, string> = {
   primary: [
-    'bg-brand text-white',
+    'bg-brand text-inverse',
     'hover:bg-brand-hover',
     'active:bg-brand-pressed active:opacity-80',
-    'disabled:bg-brand-neutral-100 disabled:text-neutral-disabled',
+    'disabled:bg-secondary disabled:text-neutral-disabled',
   ].join(' '),
 
   alternative: [
-    'bg-white border border-brand text-brand',
-    'hover:bg-brand-subtle',
-    'active:bg-brand-subtle-pressed active:opacity-80',
-    'disabled:bg-white disabled:border-neutral-disabled disabled:text-neutral-disabled',
+    'bg-inverse border border-surface-primary text-surface-primary',
+    'hover:bg-surface-primary-subtle',
+    'active:bg-surface-primary-muted',
+    'disabled:bg-surface-neutral-hover disabled:border-surface-neutral-hover disabled:text-neutral-disabled',
   ].join(' '),
 
   secondary: [
-    'bg-white border border-neutral-subtle text-ink',
-    'hover:bg-surface-hover',
-    'active:bg-surface-pressed',
-    'disabled:border-neutral-disabled disabled:text-neutral-disabled',
+    'bg-inverse border border-surface-neutral-hover text-foreground',
+    'hover:bg-muted',
+    'active:bg-surface-neutral-hover',
+    'disabled:border-surface-neutral-hover disabled:bg-surface-neutral-hover disabled:text-neutral-disabled',
   ].join(' '),
 
   link: [
@@ -127,7 +130,7 @@ const variantConfig: Record<ButtonVariant, string> = {
   ].join(' '),
 
   ghost: [
-    'bg-transparent hover:bg-surface-hover text-ink',
+    'bg-transparent hover:bg-surface-hover text-foreground',
     'active:bg-surface-pressed',
     'disabled:text-neutral-disabled',
   ].join(' '),

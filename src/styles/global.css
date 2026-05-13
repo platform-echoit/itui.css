@@ -359,6 +359,9 @@
   --shadow-lg: 0px 16px 48px 0px rgba(15, 15, 15, 0.08);
   --shadow-xl: 0px 20px 64px 0px rgba(15, 15, 15, 0.08);
   --shadow-downwards-sm: 0 4px 16px 0 rgba(26, 26, 26, 0.08);
+  --shadow-downwards-md: 0 12px 24px 0 rgba(26, 26, 26, 0.08);
+  --shadow-downwards-lg: 0 20px 48px 0 rgba(26, 26, 26, 0.08);
+  --shadow-leftwards-lg: -20px 0 48px 0 rgba(26, 26, 26, 0.08);
 }
 
 @utility backdrop-blur-dialog {
