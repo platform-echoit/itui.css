@@ -174,7 +174,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
           type="button"
           aria-current={active ? 'page' : undefined}
           className={cn(
-            'flex items-center rounded-lg font-medium text-sm leading-5 tracking-md font-sans cursor-pointer hover:bg-surface-pressed',
+            'flex items-center rounded-lg font-medium text-sm leading-5 tracking-md font-sans cursor-pointer hover:bg-sidebar-accent',
             // Expanded defaults
             'gap-2 h-9 w-full',
             indented ? 'px-9 py-2' : 'p-2',
@@ -183,7 +183,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
             indented && 'group-data-collapsed/sidebar:p-2!',
             active
               ? 'bg-surface-pressed text-ink'
-              : 'bg-white text-ink-muted hover:bg-surface-hover',
+              : 'bg-white text-ink-muted hover:bg-sidebar-accent active:bg-secondary',
             className,
           )}
           {...rest}
@@ -207,7 +207,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
             className={cn(
               'hidden absolute left-full top-1/2 -translate-y-1/2 ml-2 z-50',
               'items-center p-2 rounded-lg pointer-events-none whitespace-nowrap',
-              'text-11 font-normal leading-5 tracking-md bg-white trackking-xs',
+              'text-[11px] font-normal leading-4 tracking-xs bg-white shadow-downwards-sm',
             )}
             aria-hidden="true"
           >
