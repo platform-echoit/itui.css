@@ -13,7 +13,7 @@ import { cn } from '../../lib/utils';
   surface/neutral/secondary/hover   (#f5f5f5) → bg-neutral-100       (@theme)
   surface/neutral/disabled/inverse  (#ededed) → bg-neutral-subtle     (@theme)
   border/neutral/subtle             (#ededed) → border-neutral-subtle  (@theme)
-  text/neutral/strong + default     (#1a1a1a, #0f0f0f) → text-ink    (@theme)
+  text/neutral/strong + default     (#1a1a1a, #0f0f0f) → text-foreground    (@theme)
   text/neutral/disabled             (#c2c2c2) → text-neutral-disabled  (@theme)
   border/primary/default as text    (#009ce0) → text-brand             (@theme)
   radius/sm (8px)                   → rounded-lg
@@ -139,7 +139,7 @@ export const TableCell = ({ className, ...props }: TableCellProps) => (
   <td
     className={cn(
       'h-12 px-6 py-2 align-middle',
-      'text-sm font-normal leading-6 tracking-md text-ink whitespace-nowrap',
+      'text-sm font-normal leading-6 tracking-md text-foreground whitespace-nowrap',
       className,
     )}
     {...props}

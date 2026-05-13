@@ -17,7 +17,7 @@ import { cn } from '../../lib/utils';
 
   COLORS — box states
   surface/neutral/secondary/default  white    → bg-white       (unchecked)
-  border/neutral/default             #595858  → border-ink-muted (unchecked)
+  border/neutral/default             #595858  → border-neutral-muted (unchecked)
   surface/primary/default            #009ce0  → bg-brand        (checked)
   surface/neutral/disabled/inverse   #ededed  → bg-neutral-subtle (disabled)
   border/neutral/disabled            #c2c2c2  → border-neutral-disabled
@@ -27,7 +27,7 @@ import { cn } from '../../lib/utils';
   icon/neutral/disabled #c2c2c2 → text-neutral-disabled
 
   COLORS — label text
-  text/neutral/default   #0f0f0f → text-ink
+  text/neutral/default   #0f0f0f → text-foreground
   text/neutral/disabled  #c2c2c2 → text-neutral-disabled
 
   TYPOGRAPHY — label
@@ -87,13 +87,13 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       />
       <span
         className={cn(
-          'relative inline-flex shrink-0 items-center justify-center rounded-xs border overflow-hidden transition-colors',
+          'relative inline-flex shrink-0 items-center justify-center rounded-sm border overflow-hidden transition-colors',
           boxSizeMap[size],
           disabled
             ? 'bg-neutral-subtle border-neutral-disabled text-neutral-disabled'
             : checked
               ? 'bg-brand border-transparent text-white hover:bg-brand-pressed'
-              : 'bg-white border-ink-muted hover:border-brand',
+              : 'bg-inverse border-neutral-muted hover:border-brand',
           'peer-focus-visible:ring-2 peer-focus-visible:ring-brand peer-focus-visible:ring-offset-1',
         )}
       >
@@ -103,7 +103,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         <span
           className={cn(
             'font-normal',
-            disabled ? 'text-neutral-disabled' : 'text-ink',
+            disabled ? 'text-neutral-disabled' : 'text-foreground',
           )}
         >
           {label}

@@ -104,12 +104,12 @@ export const PopoverHeader = forwardRef<HTMLDivElement, PopoverHeaderProps>(
           {(name || email) && (
             <div className="flex flex-col min-w-0">
               {name && (
-                <span className="text-sm font-medium leading-5 tracking-md text-ink truncate">
+                <span className="text-sm font-medium leading-5 tracking-md text-foreground truncate">
                   {name}
                 </span>
               )}
               {email && (
-                <span className="text-xs font-normal leading-4 tracking-sm text-ink-muted truncate">
+                <span className="text-xs font-normal leading-4 tracking-sm text-neutral-muted truncate">
                   {email}
                 </span>
               )}
@@ -175,28 +175,28 @@ export const PopoverItem = forwardRef<HTMLButtonElement, PopoverItemProps>(
       {...rest}
     >
       {icon && (
-        <span className="shrink-0 size-5 flex items-center justify-center text-ink">
+        <span className="shrink-0 size-5 flex items-center justify-center text-foreground">
           {icon}
         </span>
       )}
       <span className="flex flex-col flex-1 min-w-0 gap-1">
-        <span className="text-sm font-medium leading-5 tracking-md text-ink text-left">
+        <span className="text-sm font-medium leading-5 tracking-md text-foreground text-left">
           {children}
         </span>
         {description && (
-          <span className="text-xs font-normal leading-4 tracking-sm text-ink-muted text-left">
+          <span className="text-xs font-normal leading-4 tracking-sm text-neutral-muted text-left">
             {description}
           </span>
         )}
       </span>
       {trailing && (
-        <span className="shrink-0 text-ink-muted text-xs font-normal leading-4 tracking-sm">
+        <span className="shrink-0 text-neutral-muted text-xs font-normal leading-4 tracking-sm">
           {trailing}
         </span>
       )}
       {isSubmenu && (
         <ChevronRight
-          className="shrink-0 size-4 text-ink-muted"
+          className="shrink-0 size-4 text-neutral-muted"
           strokeWidth={1.5}
         />
       )}

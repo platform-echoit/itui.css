@@ -99,7 +99,7 @@ const BG_CLASS: Record<string, string> = {
   'brand-subtle': 'bg-brand-subtle',
   'surface-hover': 'bg-surface-hover',
   'surface-pressed': 'bg-surface-pressed',
-  ink: 'bg-ink',
+  ink: 'bg-foreground',
 };
 
 // ─── Avatar ───────────────────────────────────────────────────────────────────

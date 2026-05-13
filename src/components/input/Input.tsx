@@ -57,8 +57,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         border/primary/default     #009ce0 → border-brand            (@theme)
         border/neutral/disabled    #c2c2c2 → border-neutral-disabled (@theme)
         surface/neutral/disabled   #f5f5f5 → bg-neutral-100          (@theme)
-        text/neutral/default       #0f0f0f → text-ink                (@theme)
-        text/neutral/muted         #595858 → text-ink-muted          (@theme)
+        text/neutral/default       #0f0f0f → text-foreground                (@theme)
+        text/neutral/muted         #595858 → text-neutral-muted          (@theme)
         text/neutral/disabled      #c2c2c2 → text-neutral-disabled   (@theme)
         border/semantic/error      #f44336 → border-red-500
         text/semantic/error        #f44336 → text-red-500
@@ -81,7 +81,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="shrink-0 text-sm font-medium leading-5 tracking-md text-ink"
+            className="shrink-0 text-sm font-medium leading-5 tracking-md text-foreground"
           >
             {label}
           </label>
@@ -90,7 +90,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <div className={boxClass}>
           {prefix && (
             <span
-              className="shrink-0 flex items-center text-ink-muted"
+              className="shrink-0 flex items-center text-neutral-muted"
               aria-hidden="true"
             >
               {prefix}
@@ -103,12 +103,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             disabled={isInputDisabled}
             className={[
               'flex-1 min-w-0 bg-transparent outline-none',
-              'text-base leading-6 tracking-lg',
+              'text-base leading-lg tracking-lg',
               isDisabled
                 ? 'bg-neutral-100 border-neutral-subtle text-neutral-disabled placeholder:text-neutral-disabled cursor-not-allowed'
                 : disabledInput
                   ? 'bg-transparent text-neutral-disabled placeholder:text-neutral-disabled cursor-not-allowed'
-                  : 'bg-transparent text-ink placeholder:text-ink-muted',
+                  : 'bg-transparent text-foreground placeholder:text-neutral-muted',
               fieldClassName,
             ]
               .filter(Boolean)
@@ -118,7 +118,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
           {suffix && (
             <span
-              className="shrink-0 flex items-center text-ink-muted"
+              className="shrink-0 flex items-center text-neutral-muted"
               aria-hidden="true"
             >
               {suffix}
