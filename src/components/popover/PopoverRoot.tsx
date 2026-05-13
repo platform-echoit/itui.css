@@ -5,7 +5,9 @@ import { cn } from '../../lib/utils';
 // ─── Root / Trigger / Portal / Close ─────────────────────────────────────────
 
 export function PopoverRoot(
-  props: ComponentProps<typeof PopoverPrimitive.Root>,
+  props: ComponentProps<typeof PopoverPrimitive.Root> & {
+    className?: string;
+  },
 ) {
   return <PopoverPrimitive.Root {...props} />;
 }
@@ -94,7 +96,7 @@ export function PopoverContent({
         align={align}
         sideOffset={sideOffset}
         className={cn(
-          'bg-white border border-neutral-subtle rounded-[8px] shadow-downwards-sm flex flex-col overflow-hidden',
+          'bg-inverse border border-secondary rounded-lg shadow-downwards-sm flex flex-col overflow-hidden',
           'z-50 outline-none',
           'data-[state=open]:animate-in data-[state=closed]:animate-out',
           'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',

@@ -1,4 +1,5 @@
 import { forwardRef, type HTMLAttributes } from 'react';
+import { Avatar as RadixAvatar } from 'radix-ui';
 import { cn } from '../../lib/utils';
 
 /*
@@ -43,7 +44,7 @@ import { cn } from '../../lib/utils';
 
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 
-export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
+export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
   size?: AvatarSize;
   src?: string;
   alt?: string;
@@ -69,16 +70,16 @@ export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> {
 // ─── Token maps ───────────────────────────────────────────────────────────────
 
 const containerSizeMap: Record<AvatarSize, string> = {
-  sm: 'h-profile-sm  w-profile-sm',
-  md: 'h-profile-md  w-profile-md',
-  lg: 'h-profile-lg  w-profile-lg',
-  xl: 'h-profile-xl  w-profile-xl',
-  '2xl': 'h-profile-2xl w-profile-2xl',
-  '3xl': 'h-profile-3xl w-profile-3xl',
+  sm: 'h-6 w-6',
+  md: 'h-8 w-8',
+  lg: 'h-10 w-10',
+  xl: 'h-12 w-12',
+  '2xl': 'h-15 w-15',
+  '3xl': 'h-18 w-18',
 };
 
 const textSizeMap: Record<AvatarSize, string> = {
-  sm: 'text-11   leading-4  tracking-xs',
+  sm: 'text-[11px]   leading-4  tracking-xs',
   md: 'text-sm   leading-5  tracking-md',
   lg: 'text-base leading-6  tracking-lg',
   xl: 'text-xl   leading-7  tracking-2xl',
@@ -103,7 +104,7 @@ const BG_CLASS: Record<string, string> = {
 
 // ─── Avatar ───────────────────────────────────────────────────────────────────
 
-export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
+export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
   (
     {
       size = 'md',
@@ -116,38 +117,42 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     },
     ref,
   ) => {
-    const isImage = !!src;
     const bgClass = BG_CLASS[backgroundColor ?? ''];
     const bgStyle =
-      !isImage && !bgClass && backgroundColor ? { backgroundColor } : undefined;
+      !src && !bgClass && backgroundColor ? { backgroundColor } : undefined;
     return (
-      <div
+      <RadixAvatar.Root
         ref={ref}
         className={cn(
           'shrink-0 rounded-full overflow-hidden flex items-center justify-center text-white',
           containerSizeMap[size],
-          !isImage && (bgClass ?? 'bg-semantic-red-700'),
-          !isImage && 'flex items-center justify-center',
+          !src && (bgClass ?? 'bg-semantic-red-700'),
+          !src &&
+            'relative inline-flex items-center justify-center overflow-hidden',
           className,
         )}
         style={bgStyle}
         {...rest}
       >
-        {isImage ? (
-          <img src={src} alt={alt} className="w-full h-full object-cover" />
-        ) : (
-          <span
-            className={cn(
-              'font-semibold text-white select-none',
-              textSizeMap[size],
-            )}
-          >
-            {typeof children === 'string'
-              ? children.charAt(0).toUpperCase()
-              : children}
-          </span>
+        {src && (
+          <RadixAvatar.Image
+            src={src}
+            alt={alt}
+            className="w-full h-full object-cover"
+          />
         )}
-      </div>
+        <RadixAvatar.Fallback
+          delayMs={0}
+          className={cn(
+            'relative flex items-center justify-center overflow-hidden font-semibold text-white',
+            textSizeMap[size],
+          )}
+        >
+          {typeof children === 'string'
+            ? children.charAt(0).toUpperCase()
+            : children}
+        </RadixAvatar.Fallback>
+      </RadixAvatar.Root>
     );
   },
 );

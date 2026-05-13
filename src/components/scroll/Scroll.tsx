@@ -7,7 +7,7 @@ import { cn } from '../../lib/utils';
   ─────────────────────────────────────────────────────────────────────────────
   COLORS (from global.css @theme)
   surface/neutral/subtle/default   #f5f5f5 → bg-surface-hover         (--color-surface-hover)
-  surface/neutral/subtle/pressed   #dadada → bg-surface-subtle-pressed (--color-surface-subtle-pressed)
+  surface/neutral/subtle/pressed   #dadada → bg-secondary (--color-secondary)
 
   RADIUS
   radius/full  999px → rounded-full
@@ -66,7 +66,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>(
           <ChevronUp size={icon} strokeWidth={1.5} />
         </span>
 
-        <div className="flex-1 w-full rounded-full min-h-10 bg-surface-hover hover:bg-surface-subtle-pressed" />
+        <div className="flex-1 w-full rounded-full min-h-10 bg-surface-hover hover:bg-secondary" />
 
         <span
           className="shrink-0 h-5 flex items-center justify-center text-ink-muted"
