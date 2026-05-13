@@ -167,8 +167,8 @@ export const PopoverItem = forwardRef<HTMLButtonElement, PopoverItemProps>(
       ref={ref}
       type="button"
       className={cn(
-        'flex w-full items-center gap-2 p-2 rounded-[8px] cursor-pointer select-none',
-        'bg-white hover:bg-surface-hover active:bg-surface-pressed',
+        'flex w-full items-center gap-2 p-2 rounded-lg cursor-pointer select-none leading-md',
+        'bg-inverse hover:bg-muted active:bg-secondary',
         'disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
