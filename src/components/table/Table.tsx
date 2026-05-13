@@ -64,10 +64,8 @@ export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
 // ── Table ────────────────────────────────────────────────────────────────────
 
 export const Table = ({ className, ...props }: TableProps) => (
-  <div className="w-full overflow-x-auto">
-    <div className="overflow-hidden rounded-lg border border-neutral-subtle">
-      <table className={cn('w-full bg-white', className)} {...props} />
-    </div>
+  <div className="w-full overflow-x-auto rounded-lg border border-neutral-subtle">
+    <table className={cn('w-full bg-white', className)} {...props} />
   </div>
 );
 
