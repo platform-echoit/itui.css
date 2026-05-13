@@ -66,10 +66,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const boxClass = [
       'flex items-center gap-2 h-12 px-3 rounded-lg border overflow-hidden',
       isDisabled
-        ? 'bg-neutral-100 border-neutral-subtle pointer-events-none'
+        ? 'bg-neutral-100 border-input pointer-events-none'
         : isError
-          ? 'bg-white border-red-500'
-          : 'bg-white border-neutral-subtle focus-within:border-brand',
+          ? 'bg-white border-destructive'
+          : 'bg-white border-input focus-within:border-ring',
     ].join(' ');
 
     return (
@@ -128,7 +128,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         {isError && (
           <p
-            className="text-sm font-normal leading-5 tracking-md text-red-500"
+            className="text-sm font-normal leading-5 tracking-md text-destructive"
             role="alert"
           >
             {error}

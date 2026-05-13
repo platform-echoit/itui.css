@@ -52,10 +52,10 @@ function SelectTrigger({
   const boxClass = [
     'flex items-center justify-between gap-2 h-12 px-3 rounded-lg border overflow-hidden',
     isDisabled
-      ? 'bg-neutral-100 border-neutral-subtle pointer-events-none'
+      ? 'bg-neutral-100 border-input pointer-events-none'
       : isError
-        ? 'bg-white border-red-500'
-        : 'bg-white border-neutral-subtle focus-within:border-brand',
+        ? 'bg-white border-destructive'
+        : 'bg-white border-input focus-within:border-ring',
   ].join(' ');
   return (
     <div className="flex flex-col gap-2">
@@ -81,7 +81,7 @@ function SelectTrigger({
 
       {isError && (
         <p
-          className="text-sm font-normal leading-5 tracking-md text-red-500"
+          className="text-sm font-normal leading-5 tracking-md text-destructive"
           role="alert"
         >
           {error}
@@ -106,7 +106,7 @@ function SelectContent({
         className={cn(
           'bg-popover text-popover-foreground data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 ring-foreground/10 min-w-36 rounded-md shadow-md ring-1 duration-100 relative z-50 max-h-(--radix-select-content-available-height) origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto',
           position === 'popper' &&
-            'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
+          'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
           className,
         )}
         position={position}
