@@ -48,11 +48,13 @@ function DialogContent({
   children,
   showCloseButton = true,
   hideHeaderBorder = true,
+  contentClassName,
   onOpenAutoFocus,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean;
   hideHeaderBorder?: boolean;
+  contentClassName?: string;
 }) {
   const childArray = React.Children.toArray(children);
   const header = childArray[0];
@@ -87,13 +89,18 @@ function DialogContent({
             {header}
           </div>
         )}
-        <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden p-4 pt-0">
+        <div
+          className={cn([
+            'flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden p-4 pt-0',
+            contentClassName,
+          ])}
+        >
           {body}
         </div>
         {showCloseButton && (
           <DialogPrimitive.Close
             data-slot="dialog-close"
-            className="absolute top-4 right-4 opacity-70 transition-opacity hover:opacity-100 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+            className="cursor-pointer absolute top-4 right-4 opacity-70 transition-opacity hover:opacity-100 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
           >
             <XIcon />
             <span className="sr-only">Close</span>

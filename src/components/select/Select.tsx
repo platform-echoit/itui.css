@@ -60,10 +60,7 @@ function SelectTrigger({
   return (
     <div className="flex flex-col gap-2">
       {label && (
-        <label
-          // htmlFor={inputId}
-          className="shrink-0 text-sm font-medium leading-5 tracking-md text-foreground"
-        >
+        <label className="shrink-0 text-sm font-medium leading-6 tracking-md text-foreground">
           {label}
         </label>
       )}
