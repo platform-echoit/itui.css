@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  CircleCheckIcon,
-  InfoIcon,
-  Loader2Icon,
-  OctagonXIcon,
-  TriangleAlertIcon,
-} from 'lucide-react';
+import { InfoIcon, Loader2Icon } from 'lucide-react';
 import { Toaster as Sonner, type ToasterProps } from 'sonner';
 import { SuccessIcon } from '../../icons/toast/success';
 import { WarningIcon } from '../../icons/toast/warning';

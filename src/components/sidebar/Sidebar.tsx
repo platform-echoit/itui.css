@@ -205,7 +205,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
           <span
             data-sidebar-tooltip
             className={cn(
-              'hidden absolute left-full top-1/2 -translate-y-1/2 ml-2 z-50',
+              'hidden absolute left-full top-1/2 -translate-y-1/2 ml-1 z-50',
               'items-center p-2 rounded-lg pointer-events-none whitespace-nowrap',
               'text-[11px] font-normal leading-4 tracking-xs bg-white shadow-downwards-sm',
             )}
