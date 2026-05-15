@@ -40,8 +40,8 @@ export interface ScrollbarProps extends HTMLAttributes<HTMLDivElement> {
 // ─── Size map ─────────────────────────────────────────────────────────────────
 
 const sizeMap: Record<ScrollbarSize, { container: string; icon: number }> = {
-  md: { container: 'w-2.5', icon: 8 },
-  sm: { container: 'w-1.5', icon: 6 },
+  md: { container: 'w-4', icon: 8 },
+  sm: { container: 'w-3', icon: 6 },
 };
 
 // ─── Scrollbar ────────────────────────────────────────────────────────────────
@@ -53,7 +53,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>(
       <div
         ref={ref}
         className={cn(
-          'flex flex-col items-center h-full py-6 pr-0.5 gap-1',
+          'flex flex-col items-center justify-center h-full px-0.5 gap-6 bg-white rounded-none',
           container,
           className,
         )}

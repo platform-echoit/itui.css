@@ -22,3 +22,4 @@ export * from './components/tabs';
 export * from './components/modals';
 export * from './components/progress';
 export * from './components/select';
+export * from './icons/ITUI/icons';

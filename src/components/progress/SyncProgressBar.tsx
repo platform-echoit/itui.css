@@ -19,19 +19,19 @@ export const SyncProgressBar = forwardRef<HTMLDivElement, SyncProgressBarProps>(
 
     const content = (
       <div
-        className={`flex flex-col items-center gap-3 w-64 ${overlay ? '' : className}`}
+        className={`flex flex-col items-center gap-2 w-[331px] ${overlay ? '' : className}`}
         {...rest}
       >
         {/* Progress Track */}
-        <div className="w-full h-1.5 bg-neutral-subtle/30 rounded-full overflow-hidden backdrop-blur-sm">
+        <div className="w-full h-1.5 bg-[#F5F5F5] rounded-full overflow-hidden">
           {/* Progress Fill */}
           <div
-            className="h-full bg-success shadow-[0_0_8px_rgba(34,197,94,0.5)] transition-all duration-300 ease-out"
+            className="h-full bg-[#4CAF50] transition-all duration-300 ease-out"
             style={{ width: `${percentage}%` }}
           />
         </div>
         {/* Percentage Text */}
-        <span className="text-sm font-bold text-slate-600 drop-shadow-sm">
+        <span className="text-sm font-semibold text-[#595858]">
           {percentage}%
         </span>
       </div>
@@ -41,7 +41,7 @@ export const SyncProgressBar = forwardRef<HTMLDivElement, SyncProgressBarProps>(
       return (
         <div
           ref={ref}
-          className={`fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/10 backdrop-blur-[2px] animate-in fade-in duration-500 ${className}`}
+          className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black/20 [backdrop-filter:blur(2px)] animate-in fade-in duration-500 ${className}`}
         >
           {content}
         </div>
