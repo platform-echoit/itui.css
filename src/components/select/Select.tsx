@@ -1,14 +1,18 @@
 'use client';
 
 import { Select as SelectPrimitive } from 'radix-ui';
-import { CaretDownIcon, CheckIcon, CaretUpIcon } from '@phosphor-icons/react';
+import { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react';
 import { cn } from '../../lib/utils';
+
+// ─── Select ───────────────────────────────────────────────────────────────────
 
 function Select({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
   return <SelectPrimitive.Root data-slot="select" {...props} />;
 }
+
+// ─── SelectGroup ──────────────────────────────────────────────────────────────
 
 function SelectGroup({
   className,
@@ -23,11 +27,15 @@ function SelectGroup({
   );
 }
 
+// ─── SelectValue ──────────────────────────────────────────────────────────────
+
 function SelectValue({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
   return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
+
+// ─── SelectTrigger ────────────────────────────────────────────────────────────
 
 export interface SelectTriggerProps
   extends React.ComponentProps<typeof SelectPrimitive.Trigger> {
@@ -36,6 +44,16 @@ export interface SelectTriggerProps
   error?: string;
   placeholder?: string;
 }
+
+const triggerBase =
+  'group flex items-center justify-between gap-2 h-12 px-3 rounded-lg border overflow-hidden outline-none cursor-pointer';
+
+const triggerVariants = {
+  disabled: 'bg-neutral-100 border-input pointer-events-none',
+  error: 'bg-white border-destructive',
+  default:
+    'bg-white border-input focus-visible:ring-0 focus-visible:outline-none data-[state=open]:border-brand data-[state=open]:bg-accent data-[state=closed]:border-input data-[state=closed]:bg-white',
+};
 
 function SelectTrigger({
   className,
@@ -49,14 +67,13 @@ function SelectTrigger({
 }: SelectTriggerProps) {
   const isDisabled = !!disabled;
   const isError = !!error && !isDisabled;
-  const boxClass = [
-    'flex items-center justify-between gap-2 h-12 px-3 rounded-lg border overflow-hidden',
-    isDisabled
-      ? 'bg-neutral-100 border-input pointer-events-none'
-      : isError
-        ? 'bg-white border-destructive'
-        : 'bg-white border-input focus-within:border-ring',
-  ].join(' ');
+
+  const variant = isDisabled
+    ? triggerVariants.disabled
+    : isError
+      ? triggerVariants.error
+      : triggerVariants.default;
+
   return (
     <div className="flex flex-col gap-2">
       {label && (
@@ -64,15 +81,16 @@ function SelectTrigger({
           {label}
         </label>
       )}
+
       <SelectPrimitive.Trigger
         data-slot="select-trigger"
         data-size={size}
-        className={cn(boxClass, className)}
+        className={cn(triggerBase, variant, className)}
         {...props}
       >
         {children}
         <SelectPrimitive.Icon asChild>
-          <CaretDownIcon className="text-muted-foreground size-4 pointer-events-none" />
+          <CaretDownIcon className="text-muted-foreground size-4 pointer-events-none transition-transform duration-100 ease-out group-data-[state=open]:rotate-180" />
         </SelectPrimitive.Icon>
       </SelectPrimitive.Trigger>
 
@@ -88,6 +106,17 @@ function SelectTrigger({
   );
 }
 
+// ─── SelectContent ────────────────────────────────────────────────────────────
+
+const contentBase =
+  'w-(--radix-select-trigger-width) py-2 bg-inverse shadow-downwards-sm border-secondary text-popover-foreground data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 ring-foreground/10 min-w-36 rounded-lg ring-1 duration-100 relative z-50 max-h-(--radix-select-content-available-height) origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto';
+
+const contentPopper =
+  'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1';
+
+const viewportBase =
+  'data-[position=popper]:h-(--radix-select-trigger-height) data-[position=popper]:w-full data-[position=popper]:min-w-[min(var(--radix-select-trigger-width),18rem)]';
+
 function SelectContent({
   className,
   children,
@@ -100,22 +129,19 @@ function SelectContent({
       <SelectPrimitive.Content
         data-slot="select-content"
         className={cn(
-          'max-w-72 w-full py-2 bg-inverse shadow-downwards-sm border-secondary text-popover-foreground data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 ring-foreground/10 min-w-36 rounded-lg ring-1 duration-100 relative z-50 max-h-(--radix-select-content-available-height) origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto',
-          position === 'popper' &&
-            'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
+          contentBase,
+          position === 'popper' && contentPopper,
           className,
         )}
         position={position}
         align={align}
+        sideOffset={8}
         {...props}
       >
         <SelectScrollUpButton />
         <SelectPrimitive.Viewport
           data-position={position}
-          className={cn(
-            'data-[position=popper]:h-(--radix-select-trigger-height) data-[position=popper]:w-full data-[position=popper]:min-w-[min(var(--radix-select-trigger-width),18rem)] data-[position=popper]:max-w-72',
-            position === 'popper' && '',
-          )}
+          className={viewportBase}
         >
           {children}
         </SelectPrimitive.Viewport>
@@ -124,6 +150,8 @@ function SelectContent({
     </SelectPrimitive.Portal>
   );
 }
+
+// ─── SelectLabel ──────────────────────────────────────────────────────────────
 
 function SelectLabel({
   className,
@@ -138,6 +166,11 @@ function SelectLabel({
   );
 }
 
+// ─── SelectItem ───────────────────────────────────────────────────────────────
+
+const itemBase =
+  "mx-2 hover:bg-accent hover:cursor-pointer rounded-lg focus:bg-secondary focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground gap-2 p-2 text-sm [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 relative flex w-[calc(100%-1rem)] cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0";
+
 function SelectItem({
   className,
   children,
@@ -146,16 +179,15 @@ function SelectItem({
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
-      className={cn(
-        "mx-2 hover:bg-accent hover:cursor-pointer rounded-lg focus:bg-secondary focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground gap-2 p-2 text-sm [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 relative flex w-[calc(100%-1rem)] cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-        className,
-      )}
+      className={cn(itemBase, className)}
       {...props}
     >
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
   );
 }
+
+// ─── SelectSeparator ──────────────────────────────────────────────────────────
 
 function SelectSeparator({
   className,
@@ -169,6 +201,8 @@ function SelectSeparator({
     />
   );
 }
+
+// ─── SelectScrollUpButton ─────────────────────────────────────────────────────
 
 function SelectScrollUpButton({
   className,
@@ -188,6 +222,8 @@ function SelectScrollUpButton({
   );
 }
 
+// ─── SelectScrollDownButton ───────────────────────────────────────────────────
+
 function SelectScrollDownButton({
   className,
   ...props
@@ -205,6 +241,8 @@ function SelectScrollDownButton({
     </SelectPrimitive.ScrollDownButton>
   );
 }
+
+// ─── Exports ──────────────────────────────────────────────────────────────────
 
 export {
   Select,
