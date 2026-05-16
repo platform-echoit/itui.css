@@ -19,10 +19,7 @@ export function PopoverTrigger({
 }: ComponentProps<typeof PopoverPrimitive.Trigger>) {
   return (
     <PopoverPrimitive.Trigger
-      className={cn(
-        'data-[state=open]:shadow-[inset_0_0_0_9999px_rgba(0,0,0,0.08)] [&[data-state=open]_button]:shadow-[inset_0_0_0_9999px_rgba(0,0,0,0.08)]',
-        className,
-      )}
+      className={cn(className)}
       {...props}
     />
   );

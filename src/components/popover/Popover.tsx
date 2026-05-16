@@ -6,6 +6,7 @@ import {
 } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { CaretRight } from '../../icons/ITUI/icons';
 
 /*
   Token → Tailwind class reference (Figma node 28208:791)
@@ -195,10 +196,7 @@ export const PopoverItem = forwardRef<HTMLButtonElement, PopoverItemProps>(
         </span>
       )}
       {isSubmenu && (
-        <ChevronRight
-          className="shrink-0 size-4 text-neutral-muted"
-          strokeWidth={1.5}
-        />
+<CaretRight width={16} height={16}  />
       )}
     </button>
   ),
