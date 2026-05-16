@@ -195,9 +195,7 @@ export const PopoverItem = forwardRef<HTMLButtonElement, PopoverItemProps>(
           {trailing}
         </span>
       )}
-      {isSubmenu && (
-<CaretRight width={16} height={16}  />
-      )}
+      {isSubmenu && <CaretRight width={16} height={16} />}
     </button>
   ),
 );
