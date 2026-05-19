@@ -36,6 +36,7 @@ import { PptIcon } from '../../icons/file-type/ppt';
 import { PdfIcon } from '../../icons/file-type/pdf';
 import { AiIcon } from '../../icons/file-type/ai';
 import { SktIcon } from '../../icons/file-type/skt';
+import { FolderIcon } from '../../icons/file-type/folder';
 
 export type FileTypeLogo =
   | 'aep'
@@ -74,7 +75,9 @@ export type FileTypeLogo =
   | 'wav'
   | 'webp'
   | 'xls'
-  | 'zip';
+  | 'zip'
+  | 'folder';
+
 
 export type FileTypeVariant = 'line' | 'flat' | 'color';
 
@@ -124,6 +127,7 @@ const LOGO_MAP: Record<FileTypeLogo, IconComponent> = {
   pdf: PdfIcon,
   ai: AiIcon,
   skt: SktIcon,
+  folder: FolderIcon,
 };
 
 export function FileType({
