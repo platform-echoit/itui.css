@@ -57,6 +57,7 @@ const FILE_TYPE_MAP: Record<string, FileTypeLogo> = {
   audio: 'mp3',
   archive: 'zip',
   text: 'txt',
+  folder: 'folder',
 };
 
 const FALLBACK: FileTypeLogo = 'txt';
