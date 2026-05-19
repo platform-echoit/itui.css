@@ -1,4 +1,4 @@
-export * from './icons'
+export * from './icons';
 export * from './address-book';
 export * from './air-traffic-control';
 export * from './airplane';

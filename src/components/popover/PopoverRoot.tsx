@@ -17,12 +17,7 @@ export function PopoverTrigger({
   className,
   ...props
 }: ComponentProps<typeof PopoverPrimitive.Trigger>) {
-  return (
-    <PopoverPrimitive.Trigger
-      className={cn(className)}
-      {...props}
-    />
-  );
+  return <PopoverPrimitive.Trigger className={cn(className)} {...props} />;
 }
 PopoverTrigger.displayName = 'PopoverTrigger';
 
