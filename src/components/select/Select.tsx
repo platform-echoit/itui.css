@@ -52,7 +52,7 @@ const triggerVariants = {
   disabled: 'bg-neutral-100 border-input pointer-events-none',
   error: 'bg-white border-destructive',
   default:
-    'bg-white border-input focus-visible:ring-0 focus-visible:outline-none data-[state=open]:border-brand data-[state=open]:bg-accent data-[state=closed]:border-input data-[state=closed]:bg-white',
+    'bg-white border-input focus-visible:ring-0 focus-visible:outline-none data-[state=open]:border-brand data-[state=open]:bg-white data-[state=closed]:border-input data-[state=closed]:bg-white',
 };
 
 function SelectTrigger({
