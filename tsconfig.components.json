@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "emitDeclarationOnly": true,
+    "noEmit": false
+  },
+  "include": [
+    "global.d.ts",
+    "src/lib/**/*",
+    "src/tokens/**/*",
+    "src/styles/**/*",
+    "src/components/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/icons"
+  ]
+}
