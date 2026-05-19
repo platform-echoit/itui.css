@@ -1,0 +1,30 @@
+import { SVGProps } from 'react';
+
+interface IconProps extends SVGProps<SVGSVGElement> {
+  width?: number;
+  height?: number;
+  color?: string;
+}
+
+const DropHalfFillIcon = ({
+  width = 32,
+  height = 32,
+  color = 'none',
+  ...props
+}: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    width={width}
+    height={height}
+    fill={color}
+    {...props}
+  >
+    <path
+      d="M21.75 5.96871C20.206 4.18551 18.4682 2.57978 16.5688 1.18121C16.4006 1.06343 16.2003 1.00024 15.995 1.00024C15.7897 1.00024 15.5894 1.06343 15.4213 1.18121C13.5253 2.58036 11.7909 4.18607 10.25 5.96871C6.81375 9.91496 5 14.075 5 18C5 20.9173 6.15893 23.7152 8.22183 25.7781C10.2847 27.841 13.0826 29 16 29C18.9174 29 21.7153 27.841 23.7782 25.7781C25.8411 23.7152 27 20.9173 27 18C27 14.075 25.1862 9.91496 21.75 5.96871ZM7 18C7 10.8462 13.9337 4.87496 16 3.24996V27C13.6139 26.9973 11.3262 26.0483 9.63896 24.361C7.95171 22.6737 7.00265 20.3861 7 18Z"
+      fill="#101010"
+    />
+  </svg>
+);
+
+export default DropHalfFillIcon;

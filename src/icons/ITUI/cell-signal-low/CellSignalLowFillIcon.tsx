@@ -1,0 +1,30 @@
+import { SVGProps } from 'react';
+
+interface IconProps extends SVGProps<SVGSVGElement> {
+  width?: number;
+  height?: number;
+  color?: string;
+}
+
+const CellSignalLowFillIcon = ({
+  width = 32,
+  height = 32,
+  color = 'none',
+  ...props
+}: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    width={width}
+    height={height}
+    fill={color}
+    {...props}
+  >
+    <path
+      d="M24.7651 3.15365C24.3997 3.00205 23.9975 2.96223 23.6095 3.03921C23.2214 3.1162 22.8649 3.30653 22.5851 3.58615L2.58508 23.5861C2.30549 23.8659 2.11513 24.2223 2.03807 24.6103C1.96102 24.9982 2.00073 25.4003 2.15218 25.7657C2.30364 26.1311 2.56003 26.4434 2.88895 26.6631C3.21787 26.8827 3.60455 27 4.00008 26.9999H24.0001C24.5305 26.9999 25.0392 26.7892 25.4143 26.4141C25.7894 26.039 26.0001 25.5303 26.0001 24.9999V4.9999C26.0007 4.60433 25.8837 4.21751 25.6637 3.88871C25.4438 3.55992 25.131 3.30403 24.7651 3.15365ZM24.0001 24.9999H11.0001V17.9999L24.0001 4.9999V24.9999Z"
+      fill="#101010"
+    />
+  </svg>
+);
+
+export default CellSignalLowFillIcon;

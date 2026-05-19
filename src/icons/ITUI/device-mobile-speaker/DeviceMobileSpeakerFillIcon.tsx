@@ -1,0 +1,30 @@
+import { SVGProps } from 'react';
+
+interface IconProps extends SVGProps<SVGSVGElement> {
+  width?: number;
+  height?: number;
+  color?: string;
+}
+
+const DeviceMobileSpeakerFillIcon = ({
+  width = 32,
+  height = 32,
+  color = 'none',
+  ...props
+}: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    width={width}
+    height={height}
+    fill={color}
+    {...props}
+  >
+    <path
+      d="M22 2H10C9.20435 2 8.44129 2.31607 7.87868 2.87868C7.31607 3.44129 7 4.20435 7 5V27C7 27.7956 7.31607 28.5587 7.87868 29.1213C8.44129 29.6839 9.20435 30 10 30H22C22.7956 30 23.5587 29.6839 24.1213 29.1213C24.6839 28.5587 25 27.7956 25 27V5C25 4.20435 24.6839 3.44129 24.1213 2.87868C23.5587 2.31607 22.7956 2 22 2ZM20 8H12C11.7348 8 11.4804 7.89464 11.2929 7.70711C11.1054 7.51957 11 7.26522 11 7C11 6.73478 11.1054 6.48043 11.2929 6.29289C11.4804 6.10536 11.7348 6 12 6H20C20.2652 6 20.5196 6.10536 20.7071 6.29289C20.8946 6.48043 21 6.73478 21 7C21 7.26522 20.8946 7.51957 20.7071 7.70711C20.5196 7.89464 20.2652 8 20 8Z"
+      fill="#101010"
+    />
+  </svg>
+);
+
+export default DeviceMobileSpeakerFillIcon;

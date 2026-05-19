@@ -1,0 +1,35 @@
+import { SVGProps } from 'react';
+
+interface IconProps extends SVGProps<SVGSVGElement> {
+  width?: number;
+  height?: number;
+  color?: string;
+}
+
+const KanbanDuotoneIcon = ({
+  width = 32,
+  height = 32,
+  color = 'none',
+  ...props
+}: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    width={width}
+    height={height}
+    fill={color}
+    {...props}
+  >
+    <path
+      opacity="0.2"
+      d="M27 7V15H20V7H27ZM5 26C5 26.2652 5.10536 26.5196 5.29289 26.7071C5.48043 26.8946 5.73478 27 6 27H11C11.2652 27 11.5196 26.8946 11.7071 26.7071C11.8946 26.5196 12 26.2652 12 26V15H5V26Z"
+      fill="#101010"
+    />
+    <path
+      d="M27 6H5C4.73478 6 4.48043 6.10536 4.29289 6.29289C4.10536 6.48043 4 6.73478 4 7V26C4 26.5304 4.21071 27.0391 4.58579 27.4142C4.96086 27.7893 5.46957 28 6 28H11C11.5304 28 12.0391 27.7893 12.4142 27.4142C12.7893 27.0391 13 26.5304 13 26V20H19V22C19 22.5304 19.2107 23.0391 19.5858 23.4142C19.9609 23.7893 20.4696 24 21 24H26C26.5304 24 27.0391 23.7893 27.4142 23.4142C27.7893 23.0391 28 22.5304 28 22V7C28 6.73478 27.8946 6.48043 27.7071 6.29289C27.5196 6.10536 27.2652 6 27 6ZM26 14H21V8H26V14ZM11 8V14H6V8H11ZM11 26H6V16H11V26ZM13 18V8H19V18H13ZM21 22V16H26V22H21Z"
+      fill="#101010"
+    />
+  </svg>
+);
+
+export default KanbanDuotoneIcon;

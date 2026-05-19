@@ -1,0 +1,30 @@
+import { SVGProps } from 'react';
+
+interface IconProps extends SVGProps<SVGSVGElement> {
+  width?: number;
+  height?: number;
+  color?: string;
+}
+
+const EqualsRegularIcon = ({
+  width = 32,
+  height = 32,
+  color = 'none',
+  ...props
+}: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    width={width}
+    height={height}
+    fill={color}
+    {...props}
+  >
+    <path
+      d="M28 20C28 20.2652 27.8946 20.5196 27.7071 20.7071C27.5196 20.8946 27.2652 21 27 21H5C4.73478 21 4.48043 20.8946 4.29289 20.7071C4.10536 20.5196 4 20.2652 4 20C4 19.7348 4.10536 19.4804 4.29289 19.2929C4.48043 19.1054 4.73478 19 5 19H27C27.2652 19 27.5196 19.1054 27.7071 19.2929C27.8946 19.4804 28 19.7348 28 20ZM5 13H27C27.2652 13 27.5196 12.8946 27.7071 12.7071C27.8946 12.5196 28 12.2652 28 12C28 11.7348 27.8946 11.4804 27.7071 11.2929C27.5196 11.1054 27.2652 11 27 11H5C4.73478 11 4.48043 11.1054 4.29289 11.2929C4.10536 11.4804 4 11.7348 4 12C4 12.2652 4.10536 12.5196 4.29289 12.7071C4.48043 12.8946 4.73478 13 5 13Z"
+      fill="#101010"
+    />
+  </svg>
+);
+
+export default EqualsRegularIcon;

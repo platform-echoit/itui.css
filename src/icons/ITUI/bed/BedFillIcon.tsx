@@ -1,0 +1,30 @@
+import { SVGProps } from 'react';
+
+interface IconProps extends SVGProps<SVGSVGElement> {
+  width?: number;
+  height?: number;
+  color?: string;
+}
+
+const BedFillIcon = ({
+  width = 32,
+  height = 32,
+  color = 'none',
+  ...props
+}: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    width={width}
+    height={height}
+    fill={color}
+    {...props}
+  >
+    <path
+      d="M26 9H3V6C3 5.73478 2.89464 5.48043 2.70711 5.29289C2.51957 5.10536 2.26522 5 2 5C1.73478 5 1.48043 5.10536 1.29289 5.29289C1.10536 5.48043 1 5.73478 1 6V26C1 26.2652 1.10536 26.5196 1.29289 26.7071C1.48043 26.8946 1.73478 27 2 27C2.26522 27 2.51957 26.8946 2.70711 26.7071C2.89464 26.5196 3 26.2652 3 26V22H29V26C29 26.2652 29.1054 26.5196 29.2929 26.7071C29.4804 26.8946 29.7348 27 30 27C30.2652 27 30.5196 26.8946 30.7071 26.7071C30.8946 26.5196 31 26.2652 31 26V14C31 12.6739 30.4732 11.4021 29.5355 10.4645C28.5979 9.52678 27.3261 9 26 9ZM3 11H12V20H3V11Z"
+      fill="#101010"
+    />
+  </svg>
+);
+
+export default BedFillIcon;

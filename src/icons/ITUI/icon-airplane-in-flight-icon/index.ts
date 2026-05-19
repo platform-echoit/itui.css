@@ -1,0 +1,2 @@
+export { default as IconAirplaneInFlightIconDuotoneIcon } from './IconAirplaneInFlightIconDuotoneIcon';
+export { default as IconAirplaneInFlightIconFillIcon } from './IconAirplaneInFlightIconFillIcon';

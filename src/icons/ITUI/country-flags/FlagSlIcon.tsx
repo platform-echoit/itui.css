@@ -1,0 +1,45 @@
+import { SVGProps } from 'react';
+
+interface IconProps extends SVGProps<SVGSVGElement> {
+  width?: number;
+  height?: number;
+  color?: string;
+}
+
+const FlagSlIcon = ({
+  width = 32,
+  height = 32,
+  color = 'none',
+  ...props
+}: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    width={width}
+    height={height}
+    fill={color}
+    {...props}
+  >
+    <g clip-path="url(#clip0_1_18195)">
+      <path
+        d="M23.2536 16.1745C23.736 14.8745 24 13.4684 24 12.0006C24 10.5327 23.736 9.12667 23.2536 7.82669L12 6.7832L0.746391 7.82669C0.264 9.12667 0 10.5327 0 12.0006C0 13.4684 0.264 14.8745 0.746391 16.1745L12 17.2179L23.2536 16.1745Z"
+        fill="#F0F0F0"
+      />
+      <path
+        d="M11.9997 24.0004C17.1593 24.0004 21.5578 20.7439 23.2533 16.1743H0.746094C2.44166 20.7439 6.84012 24.0004 11.9997 24.0004Z"
+        fill="#338AF3"
+      />
+      <path
+        d="M11.9997 0C6.84012 0 2.44166 3.2565 0.746094 7.82611H23.2534C21.5578 3.2565 17.1593 0 11.9997 0Z"
+        fill="#6DA544"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_1_18195">
+        <rect width="24" height="24" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export default FlagSlIcon;

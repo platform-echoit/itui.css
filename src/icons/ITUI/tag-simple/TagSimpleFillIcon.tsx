@@ -1,0 +1,30 @@
+import { SVGProps } from 'react';
+
+interface IconProps extends SVGProps<SVGSVGElement> {
+  width?: number;
+  height?: number;
+  color?: string;
+}
+
+const TagSimpleFillIcon = ({
+  width = 32,
+  height = 32,
+  color = 'none',
+  ...props
+}: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    width={width}
+    height={height}
+    fill={color}
+    {...props}
+  >
+    <path
+      d="M30.8325 15.445L25.125 6.89125C24.9433 6.61728 24.6966 6.39252 24.407 6.23702C24.1174 6.08151 23.7937 6.00008 23.465 6H5C4.46957 6 3.96086 6.21071 3.58579 6.58579C3.21071 6.96086 3 7.46957 3 8V24C3 24.5304 3.21071 25.0391 3.58579 25.4142C3.96086 25.7893 4.46957 26 5 26H23.465C23.7935 25.9994 24.1168 25.9179 24.4063 25.7626C24.6958 25.6074 24.9427 25.3833 25.125 25.11L30.8288 16.555C30.9389 16.391 30.9981 16.1981 30.9988 16.0006C30.9994 15.803 30.9416 15.6097 30.8325 15.445Z"
+      fill="#101010"
+    />
+  </svg>
+);
+
+export default TagSimpleFillIcon;

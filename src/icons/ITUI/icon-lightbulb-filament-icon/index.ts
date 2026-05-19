@@ -1,0 +1,2 @@
+export { default as IconLightbulbFilamentIconDuotoneIcon } from './IconLightbulbFilamentIconDuotoneIcon';
+export { default as IconLightbulbFilamentIconFillIcon } from './IconLightbulbFilamentIconFillIcon';
