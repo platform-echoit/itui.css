@@ -78,7 +78,6 @@ export type FileTypeLogo =
   | 'zip'
   | 'folder';
 
-
 export type FileTypeVariant = 'line' | 'flat' | 'color';
 
 export interface FileTypeProps extends SVGAttributes<SVGSVGElement> {
