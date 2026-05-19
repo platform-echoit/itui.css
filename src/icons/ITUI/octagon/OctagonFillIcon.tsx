@@ -1,0 +1,27 @@
+import { SVGProps } from 'react';
+
+interface IconProps extends SVGProps<SVGSVGElement> {
+  width?: number;
+  height?: number;
+  color?: string;
+}
+
+const OctagonFillIcon = ({
+  width = 32,
+  height = 32,
+  color = 'none',
+  ...props
+}: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 32 32"
+    width={width}
+    height={height}
+    fill={color}
+    {...props}
+  >
+    <path d="M28.4137 10.0288L21.9713 3.58625C21.5951 3.21232 21.0867 3.00169 20.5562 3H11.4438C10.9133 3.00169 10.4049 3.21232 10.0288 3.58625L3.58625 10.0288C3.21232 10.4049 3.00169 10.9133 3 11.4438V20.5562C3.00169 21.0867 3.21232 21.5951 3.58625 21.9713L10.0288 28.4137C10.4049 28.7877 10.9133 28.9983 11.4438 29H20.5562C21.0867 28.9983 21.5951 28.7877 21.9713 28.4137L28.4137 21.9713C28.7877 21.5951 28.9983 21.0867 29 20.5562V11.4438C28.9983 10.9133 28.7877 10.4049 28.4137 10.0288Z" fill="#101010"/>
+  </svg>
+);
+
+export default OctagonFillIcon;
