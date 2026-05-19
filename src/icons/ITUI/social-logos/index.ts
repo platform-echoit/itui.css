@@ -4,7 +4,7 @@ export { default as ClubHouse } from './ClubHouse';
 export { default as Discord } from './Discord';
 export { default as Dribbble } from './Dribbble';
 export { default as Dropbox } from './Dropbox';
-export { default as Empty } from './Empty';
+export { default as EmptyIcon } from './EmptyIcon';
 export { default as Facebook } from './Facebook';
 export { default as Figma } from './Figma';
 export { default as GitHub } from './GitHub';
