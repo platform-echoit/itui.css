@@ -26,9 +26,9 @@ const ituiSrc = join(root, 'src/icons/ITUI');
 const mainBarrel = readFileSync(join(ituiSrc, 'index.ts'), 'utf-8');
 
 // `export * from './airplane';` → 'airplane'
-const subDirs = [...mainBarrel.matchAll(/^export \* from '\.\/([^']+)';?$/gm)].map(
-  (m) => m[1],
-);
+const subDirs = [
+  ...mainBarrel.matchAll(/^export \* from '\.\/([^']+)';?$/gm),
+].map((m) => m[1]);
 
 const iconNames: string[] = [];
 for (const dir of subDirs) {
@@ -63,9 +63,7 @@ const iconsDts = [
 ].join('\n');
 
 writeFileSync(join(ituiOutDir, 'index.d.ts'), iconsDts);
-console.log(
-  `✓ ${iconNames.length} icon types  →  dist/icons/ITUI/index.d.ts`,
-);
+console.log(`✓ ${iconNames.length} icon types  →  dist/icons/ITUI/index.d.ts`);
 
 // ── 2. Generate dist/index.d.ts  ─────────────────────────────────────────────
 //    Mirrors src/index.ts, stripping the CSS import and rewriting paths so

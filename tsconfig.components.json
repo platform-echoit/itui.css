@@ -11,9 +11,5 @@
     "src/styles/**/*",
     "src/components/**/*"
   ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src/icons"
-  ]
+  "exclude": ["node_modules", "dist", "src/icons"]
 }
