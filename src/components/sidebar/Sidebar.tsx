@@ -182,7 +182,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
             'group-data-collapsed/sidebar:justify-center group-data-collapsed/sidebar:w-9',
             indented && 'group-data-collapsed/sidebar:p-2!',
             active
-              ? 'bg-surface-pressed text-foreground'
+              ? 'bg-secondary text-foreground'
               : 'bg-white text-neutral-muted hover:bg-sidebar-accent active:bg-secondary',
             className,
           )}
