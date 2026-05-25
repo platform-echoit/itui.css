@@ -117,7 +117,6 @@ function resolveIcon(iconType: string): FileTypeLogo {
 
 export const FileIcon = ({ iconType, className }: FileIconProps) => {
   const logo: FileTypeLogo = iconType ? resolveIcon(iconType) : FALLBACK;
-  console.log('Resolved file icon:', { iconType, logo });
 
   return <FileType logo={logo} type="color" className={className} />;
 };
