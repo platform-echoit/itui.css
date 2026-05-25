@@ -60,11 +60,64 @@ const FILE_TYPE_MAP: Record<string, FileTypeLogo> = {
   folder: 'folder',
 };
 
+const MIME_TYPE_MAP: Record<string, FileTypeLogo> = {
+  'application/pdf': 'pdf',
+  'application/msword': 'doc',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+    'doc',
+  'application/vnd.ms-excel': 'xls',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xls',
+  'text/csv': 'csv',
+  'application/vnd.ms-powerpoint': 'ppt',
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+    'ppt',
+  'image/jpeg': 'jpeg',
+  'image/png': 'png',
+  'image/gif': 'gif',
+  'image/webp': 'webp',
+  'image/svg+xml': 'svg',
+  'image/tiff': 'tiff',
+  'image/x-icon': 'ico',
+  'image/vnd.adobe.photoshop': 'psd',
+  'video/mp4': 'mp4',
+  'video/quicktime': 'mov',
+  'video/x-msvideo': 'avi',
+  'video/mpeg': 'mpg',
+  'audio/mpeg': 'mp3',
+  'audio/wav': 'wav',
+  'application/zip': 'zip',
+  'application/x-rar-compressed': 'rar',
+  'application/vnd.rar': 'rar',
+  'text/plain': 'txt',
+  'text/javascript': 'js',
+  'application/javascript': 'js',
+  'application/json': 'json',
+  'text/html': 'html',
+  'text/css': 'css',
+  'text/x-java-source': 'java',
+  'application/x-msdownload': 'exe',
+};
+
 const FALLBACK: FileTypeLogo = 'txt';
 
+function resolveIcon(iconType: string): FileTypeLogo {
+  const lower = iconType.toLowerCase();
+  // Direct map lookup (extension or semantic alias)
+  if (FILE_TYPE_MAP[lower]) return FILE_TYPE_MAP[lower];
+  // Full MIME type (e.g. "image/jpeg")
+  if (MIME_TYPE_MAP[lower]) return MIME_TYPE_MAP[lower];
+  // MIME category fallback (e.g. "image/x-unknown" → image icon)
+  const [category] = lower.split('/');
+  if (category === 'image') return 'png';
+  if (category === 'video') return 'mp4';
+  if (category === 'audio') return 'mp3';
+  if (category === 'text') return 'txt';
+  return FALLBACK;
+}
+
 export const FileIcon = ({ iconType, className }: FileIconProps) => {
-  const logo: FileTypeLogo =
-    (iconType ? FILE_TYPE_MAP[iconType.toLowerCase()] : undefined) ?? FALLBACK;
+  const logo: FileTypeLogo = iconType ? resolveIcon(iconType) : FALLBACK;
+  console.log('Resolved file icon:', { iconType, logo });
 
   return <FileType logo={logo} type="color" className={className} />;
 };
