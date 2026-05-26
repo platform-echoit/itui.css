@@ -21,6 +21,8 @@ export interface InputProps
   block?: boolean;
   /** Extra classes applied to the native <input> element */
   fieldClassName?: string;
+  /** Extra classes applied to the inner box wrapper — useful for overriding focus-within border color */
+  boxClassName?: string;
   /** Disables only the <input> field; box styling and prefix/suffix remain interactive */
   disabledInput?: boolean;
 }
@@ -40,6 +42,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       id,
       className = '',
       fieldClassName = '',
+      boxClassName = '',
       ...rest
     },
     ref,
@@ -63,14 +66,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         border/semantic/error      #f44336 → border-red-500
         text/semantic/error        #f44336 → text-red-500
     */
-    const boxClass = [
+    const boxClass = cn(
       'flex items-center gap-2 h-12 px-3 rounded-lg border overflow-hidden',
       isDisabled
         ? 'bg-neutral-100 border-input pointer-events-none'
         : isError
           ? 'bg-white border-destructive'
           : 'bg-white border-input focus-within:border-ring',
-    ].join(' ');
+      boxClassName,
+    );
 
     return (
       <div
