@@ -19,6 +19,8 @@ const Toaster = ({ ...props }: ToasterProps) => {
         error: <ErrorIcon className="size-4" />,
       }}
       position="top-center"
+      expand={true}
+      visibleToasts={5}
       toastOptions={{
         classNames: {
           toast:
