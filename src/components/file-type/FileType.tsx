@@ -141,13 +141,15 @@ const LOGO_MAP: Record<FileTypeLogo, IconComponent> = {
 };
 
 export function FileType({
+  width = 32,
+  height = 32,
   logo = 'zip',
   type = 'line',
   ref,
   ...rest
 }: FileTypeProps) {
   const Icon = LOGO_MAP[logo];
-  return <Icon type={type} ref={ref} {...rest} />;
+  return <Icon type={type} width={width} height={height} ref={ref} {...rest} />;
 }
 
 FileType.displayName = 'FileType';
