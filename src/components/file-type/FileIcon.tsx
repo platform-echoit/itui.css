@@ -1,6 +1,8 @@
 import { FileType, type FileTypeLogo } from './FileType';
 
 export type FileIconProps = {
+  width?: number;
+  height?: number;
   iconType?: string;
   className?: string;
 };
@@ -115,8 +117,21 @@ function resolveIcon(iconType: string): FileTypeLogo {
   return FALLBACK;
 }
 
-export const FileIcon = ({ iconType, className }: FileIconProps) => {
+export const FileIcon = ({
+  iconType,
+  width,
+  height,
+  className,
+}: FileIconProps) => {
   const logo: FileTypeLogo = iconType ? resolveIcon(iconType) : FALLBACK;
 
-  return <FileType logo={logo} type="color" className={className} />;
+  return (
+    <FileType
+      logo={logo}
+      type="color"
+      width={width}
+      height={height}
+      className={className}
+    />
+  );
 };
