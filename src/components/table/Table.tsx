@@ -138,7 +138,7 @@ export const TableHead = ({
 export const TableCell = ({ className, ...props }: TableCellProps) => (
   <td
     className={cn(
-      'h-12 px-6 py-2 align-middle',
+      'h-10 px-6 py-2 align-middle',
       'text-sm font-normal leading-6 tracking-md text-foreground whitespace-nowrap',
       className,
     )}
