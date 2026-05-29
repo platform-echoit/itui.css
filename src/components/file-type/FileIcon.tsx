@@ -102,10 +102,6 @@ const MIME_TYPE_MAP: Record<string, FileTypeLogo> = {
 
 const FALLBACK: FileTypeLogo = 'txt';
 
-export function getMimeExtension(mimeType: string): string | null {
-  return MIME_TYPE_MAP[mimeType.toLowerCase()] ?? null;
-}
-
 function resolveIcon(iconType: string): FileTypeLogo {
   const lower = iconType.toLowerCase();
   // Direct map lookup (extension or semantic alias)

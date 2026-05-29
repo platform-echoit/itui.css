@@ -112,7 +112,7 @@ export const TableHead = ({
 }: TableHeadProps) => (
   <th
     className={cn(
-      'h-12 px-6 py-2 text-left align-middle',
+      'h-10 px-6 text-left align-middle',
       'text-sm font-medium leading-6 tracking-md text-brand-secondary-900 whitespace-nowrap',
       className,
     )}
