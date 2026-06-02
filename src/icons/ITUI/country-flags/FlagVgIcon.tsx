@@ -20,7 +20,7 @@ const FlagVgIcon = ({
     fill={color}
     {...props}
   >
-    <g clip-path="url(#clip0_1_17954)">
+    <g clipPath="url(#clip0_1_17954)">
       <path
         d="M24 12C24 18.6274 18.6274 24 12 24C5.37262 24 0 18.6274 0 12C0 12.0029 12 0.0013125 12 0C18.6274 0 24 5.37262 24 12Z"
         fill="#0052B4"

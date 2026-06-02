@@ -1,17 +1,5 @@
-export function FolderIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 32 32"
-      fill="none"
-      className={className}
-    >
-      <path
-        d="M27 9.00001H16.4137L13 5.58626C12.815 5.39973 12.5947 5.25185 12.352 5.15121C12.1093 5.05057 11.849 4.99917 11.5863 5.00001H5C4.46957 5.00001 3.96086 5.21072 3.58579 5.5858C3.21071 5.96087 3 6.46958 3 7.00001V25.0775C3.00066 25.5872 3.20342 26.0758 3.56382 26.4362C3.92421 26.7966 4.41282 26.9993 4.9225 27H27.1112C27.612 26.9993 28.092 26.8001 28.4461 26.4461C28.8001 26.092 28.9993 25.612 29 25.1113V11C29 10.4696 28.7893 9.96087 28.4142 9.5858C28.0391 9.21072 27.5304 9.00001 27 9.00001ZM5 7.00001H11.5863L13.5863 9.00001H5V7.00001ZM27 25H5V11H27V25Z"
-        fill="#101010"
-      />
-    </svg>
-  );
+import FolderColorLogo from '../ITUI/file-type/FolderColorLogo';
+
+export function FolderIcon({ className, width, height }: { className?: string; width?: number; height?: number }) {
+  return <FolderColorLogo className={className} width={width ?? 20} height={height ?? 20} />;
 }

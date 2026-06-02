@@ -20,7 +20,7 @@ const PngTextColorLogo = ({
     fill={color}
     {...props}
   >
-    <g clip-path="url(#clip0_1_20072)">
+    <g clipPath="url(#clip0_1_20072)">
       <path
         d="M0 3.2C0 1.43269 1.43269 0 3.2 0H10.2L18 7.8V20.8C18 22.5673 16.5673 24 14.8 24H3.2C1.43269 24 0 22.5673 0 20.8V3.2Z"
         fill="#3873FF"

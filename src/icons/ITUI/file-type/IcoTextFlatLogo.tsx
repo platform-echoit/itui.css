@@ -20,7 +20,7 @@ const IcoTextFlatLogo = ({
     fill={color}
     {...props}
   >
-    <g clip-path="url(#clip0_1_19810)">
+    <g clipPath="url(#clip0_1_19810)">
       <path
         d="M0 3.2C0 1.43269 1.43269 0 3.2 0H10.2L18 7.8V20.8C18 22.5673 16.5673 24 14.8 24H3.2C1.43269 24 0 22.5673 0 20.8V3.2Z"
         fill="url(#paint0_linear_1_19810)"
@@ -33,7 +33,7 @@ const IcoTextFlatLogo = ({
         d="M3.2002 0.400391H10.0342L17.5996 7.96582V20.7998C17.5996 22.3462 16.3462 23.5996 14.7998 23.5996H3.2002C1.6538 23.5996 0.400391 22.3462 0.400391 20.7998V3.2002C0.400391 1.6538 1.6538 0.400391 3.2002 0.400391Z"
         stroke="black"
         stroke-opacity="0.06"
-        stroke-width="0.8"
+        strokeWidth="0.8"
       />
     </g>
     <path
