@@ -20,7 +20,7 @@ const FlagKiIcon = ({
     fill={color}
     {...props}
   >
-    <g clip-path="url(#clip0_1_18171)">
+    <g clipPath="url(#clip0_1_18171)">
       <path
         d="M0 12C0 5.37262 5.37262 0 12 0C18.6274 0 24 5.37262 24 12"
         fill="#D80027"

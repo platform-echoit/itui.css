@@ -20,18 +20,18 @@ const Mp3TextLineLogo = ({
     fill={color}
     {...props}
   >
-    <g clip-path="url(#clip0_1_19684)">
+    <g clipPath="url(#clip0_1_19684)">
       <path
         d="M4.40039 0.450195H12.3135L19.5498 7.68652V21.5996C19.5498 22.6766 18.6766 23.5498 17.5996 23.5498H4.40039C3.32344 23.5498 2.4502 22.6766 2.4502 21.5996V2.40039C2.4502 1.32344 3.32344 0.450195 4.40039 0.450195Z"
         fill="white"
         stroke="#C8D2E1"
-        stroke-width="0.9"
+        strokeWidth="0.9"
       />
       <path
         d="M12.1997 0.599609V5.99961C12.1997 6.99372 13.0056 7.79961 13.9997 7.79961H19.3997"
         stroke="#C8D2E1"
-        stroke-width="0.9"
-        stroke-linecap="round"
+        strokeWidth="0.9"
+        strokeLinecap="round"
       />
     </g>
     <rect y="11.1001" width="16.5" height="9.9" rx="1.6" fill="#6E45F0" />

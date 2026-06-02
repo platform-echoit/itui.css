@@ -20,7 +20,7 @@ const FlagEcIcon = ({
     fill={color}
     {...props}
   >
-    <g clip-path="url(#clip0_1_18358)">
+    <g clipPath="url(#clip0_1_18358)">
       <path
         d="M0 12C0 5.37263 5.37262 0 12 0C18.6274 0 24 5.37263 24 12L12 13.0435L0 12Z"
         fill="#FFDA44"

@@ -20,7 +20,7 @@ const GitHub = ({
     fill={color}
     {...props}
   >
-    <g clip-path="url(#clip0_1_20158)">
+    <g clipPath="url(#clip0_1_20158)">
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"

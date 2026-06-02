@@ -20,7 +20,7 @@ const FlagEarthIcon = ({
     fill={color}
     {...props}
   >
-    <g clip-path="url(#clip0_1_19418)">
+    <g clipPath="url(#clip0_1_19418)">
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"

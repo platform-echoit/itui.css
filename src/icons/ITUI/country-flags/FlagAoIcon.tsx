@@ -20,7 +20,7 @@ const FlagAoIcon = ({
     fill={color}
     {...props}
   >
-    <g clip-path="url(#clip0_1_17947)">
+    <g clipPath="url(#clip0_1_17947)">
       <path
         d="M0 12C0 5.37262 5.37262 0 12 0C18.6274 0 24 5.37262 24 12C23.4783 12 12 13.5652 12 13.5652L0 12Z"
         fill="#D80027"
