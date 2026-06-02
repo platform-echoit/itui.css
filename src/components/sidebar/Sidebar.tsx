@@ -207,7 +207,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
             className={cn(
               'hidden absolute left-full top-1/2 -translate-y-1/2 ml-1 z-50',
               'items-center px-2 py-1 rounded-lg pointer-events-none whitespace-nowrap',
-              'text-[11px] font-normal leading-4 tracking-xs bg-[#2a2a2a] text-white shadow-downwards-sm',
+              'text-xs font-medium leading-4 tracking-xs bg-[#2a2a2a] text-white shadow-downwards-sm',
             )}
             aria-hidden="true"
           >
