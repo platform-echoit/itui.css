@@ -30,9 +30,10 @@ function SelectGroup({
 // ─── SelectValue ──────────────────────────────────────────────────────────────
 
 function SelectValue({
+  className,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
-  return <SelectPrimitive.Value data-slot="select-value" {...props} />;
+  return <SelectPrimitive.Value data-slot="select-value" className={cn('truncate min-w-0 flex-1', className)} {...props} />;
 }
 
 // ─── SelectTrigger ────────────────────────────────────────────────────────────
@@ -169,7 +170,7 @@ function SelectLabel({
 // ─── SelectItem ───────────────────────────────────────────────────────────────
 
 const itemBase =
-  "mx-2 hover:bg-accent hover:cursor-pointer rounded-lg focus:bg-secondary focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground gap-2 p-2 text-sm [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 relative flex w-[calc(100%-1rem)] cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0";
+  "mx-2 hover:bg-accent hover:cursor-pointer rounded-lg focus:bg-secondary focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground gap-2 p-2 text-sm [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 relative flex w-[calc(100%-1rem)] cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 overflow-hidden";
 
 function SelectItem({
   className,
