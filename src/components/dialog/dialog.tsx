@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import {XIcon} from 'lucide-react';
-import {cn} from '../../lib/utils';
+import { XIcon } from 'lucide-react';
+import { cn } from '../../lib/utils';
 
 function Dialog({
   ...props
@@ -46,19 +46,19 @@ function DialogOverlay({
 function DialogContent({
   className,
   children,
-  showCloseButton=true,
-  hideHeaderBorder=true,
+  showCloseButton = true,
+  hideHeaderBorder = true,
   contentClassName,
   onOpenAutoFocus,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content>&{
+}: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean;
   hideHeaderBorder?: boolean;
   contentClassName?: string;
 }) {
-  const childArray=React.Children.toArray(children);
-  const header=childArray[0];
-  const body=childArray.slice(1);
+  const childArray = React.Children.toArray(children);
+  const header = childArray[0];
+  const body = childArray.slice(1);
 
   return (
     <DialogPortal data-slot="dialog-portal">
@@ -76,11 +76,11 @@ function DialogContent({
         }}
         {...props}
       >
-        {header!=null&&(
+        {header != null && (
           <div
             className={cn(
               'shrink-0 px-5 pt-4 pb-4 ',
-              hideHeaderBorder? '':'border-b border-neutral-subtle',
+              hideHeaderBorder ? '' : 'border-b border-neutral-subtle',
               {
                 'pr-12': showCloseButton,
               },
@@ -97,7 +97,7 @@ function DialogContent({
         >
           {body}
         </div>
-        {showCloseButton&&(
+        {showCloseButton && (
           <DialogPrimitive.Close
             data-slot="dialog-close"
             className="cursor-pointer absolute top-4 right-4 opacity-70 transition-opacity hover:opacity-100 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
@@ -111,17 +111,17 @@ function DialogContent({
   );
 }
 
-function DialogHeader({className,...props}: React.ComponentProps<'div'>) {
+function DialogHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn('flex flex-col gap-4',className)}
+      className={cn('flex flex-col gap-4', className)}
       {...props}
     />
   );
 }
 
-function DialogFooter({className,...props}: React.ComponentProps<'div'>) {
+function DialogFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="dialog-footer"
