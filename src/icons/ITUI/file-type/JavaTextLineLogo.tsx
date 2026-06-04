@@ -20,18 +20,18 @@ const JavaTextLineLogo = ({
     fill={color}
     {...props}
   >
-    <g clip-path="url(#clip0_1_19594)">
+    <g clipPath="url(#clip0_1_19594)">
       <path
         d="M6.2002 0.599609H13.252L20.4004 7.74805V20.7998C20.4004 22.2357 19.2357 23.4004 17.7998 23.4004H6.2002C4.76425 23.4004 3.59961 22.2357 3.59961 20.7998V3.2002C3.59961 1.76425 4.76426 0.599609 6.2002 0.599609Z"
         fill="white"
         stroke="#C8D2E1"
-        stroke-width="1.2"
+        strokeWidth="1.2"
       />
       <path
         d="M13.2002 0.600098V5.4001C13.2002 6.72558 14.2747 7.8001 15.6002 7.8001H20.4002"
         stroke="#C8D2E1"
-        stroke-width="1.2"
-        stroke-linecap="round"
+        strokeWidth="1.2"
+        strokeLinecap="round"
       />
     </g>
     <rect y="11.1001" width="18.75" height="9.9" rx="1.6" fill="#0DB664" />

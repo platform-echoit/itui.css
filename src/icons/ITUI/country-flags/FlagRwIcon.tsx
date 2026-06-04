@@ -20,7 +20,7 @@ const FlagRwIcon = ({
     fill={color}
     {...props}
   >
-    <g clip-path="url(#clip0_1_19149)">
+    <g clipPath="url(#clip0_1_19149)">
       <path
         d="M0 11.9991C0 14.078 0.528891 16.0333 1.45908 17.7382L12 18.7817L22.5409 17.7382C23.4711 16.0333 24 14.078 24 11.9991L12 10.9556L0 11.9991Z"
         fill="#FFDA44"

@@ -1,10 +1,12 @@
 'use client';
 
-import { InfoIcon, Loader2Icon } from 'lucide-react';
 import { Toaster as Sonner, type ToasterProps } from 'sonner';
-import { SuccessIcon } from '../../icons/toast/success';
-import { WarningIcon } from '../../icons/toast/warning';
-import { ErrorIcon } from '../../icons/toast/error';
+import {
+  SuccessIcon,
+  InfoIcon,
+  WarningIcon,
+  ErrorIcon,
+} from '../../icons/toast';
 
 const Toaster = ({ ...props }: ToasterProps) => {
   return (
@@ -15,9 +17,10 @@ const Toaster = ({ ...props }: ToasterProps) => {
         info: <InfoIcon className="size-4" />,
         warning: <WarningIcon className="size-4" />,
         error: <ErrorIcon className="size-4" />,
-        loading: <Loader2Icon className="size-4 animate-spin" />,
       }}
       position="top-center"
+      expand={true}
+      visibleToasts={5}
       toastOptions={{
         classNames: {
           toast:

@@ -20,7 +20,7 @@ const GoogleCalendar = ({
     fill={color}
     {...props}
   >
-    <g clip-path="url(#clip0_1_20206)">
+    <g clipPath="url(#clip0_1_20206)">
       <path d="M24.4211 7.5791H7.5791V24.4211H24.4211V7.5791Z" fill="white" />
       <path
         d="M24.4211 31.9999L32.0001 24.4209L28.2106 23.7744L24.4211 24.4209L23.7295 27.8872L24.4211 31.9999Z"

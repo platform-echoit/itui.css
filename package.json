@@ -1,7 +1,7 @@
 {
   "name": "@echoit/itui.css",
   "description": "",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "publishConfig": {
     "access": "public"
   },
@@ -57,7 +57,8 @@
     "build:css": "cpy src/styles/global.css dist/styles/global.css",
     "check:package": "pnpm pack && npm publish --dry-run",
     "publish:beta": "pnpm build && npm publish --tag beta --access public",
-    "publish:latest": "pnpm build && npm publish --access public"
+    "publish:latest": "pnpm build && npm publish --access public",
+    "npm:set-token": "npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN"
   },
   "type": "module",
   "keywords": [],

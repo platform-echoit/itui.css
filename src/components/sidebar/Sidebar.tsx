@@ -182,7 +182,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
             'group-data-collapsed/sidebar:justify-center group-data-collapsed/sidebar:w-9',
             indented && 'group-data-collapsed/sidebar:p-2!',
             active
-              ? 'bg-surface-pressed text-foreground'
+              ? 'bg-secondary text-foreground'
               : 'bg-white text-neutral-muted hover:bg-sidebar-accent active:bg-secondary',
             className,
           )}
@@ -206,8 +206,8 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
             data-sidebar-tooltip
             className={cn(
               'hidden absolute left-full top-1/2 -translate-y-1/2 ml-1 z-50',
-              'items-center p-2 rounded-lg pointer-events-none whitespace-nowrap',
-              'text-[11px] font-normal leading-4 tracking-xs bg-white shadow-downwards-sm',
+              'items-center px-2 py-1 rounded-lg pointer-events-none whitespace-nowrap',
+              'text-xs font-medium leading-4 tracking-xs bg-[#2a2a2a] text-white shadow-downwards-sm',
             )}
             aria-hidden="true"
           >
