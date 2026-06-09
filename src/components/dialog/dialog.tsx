@@ -79,11 +79,20 @@ function DialogContent({
         {header != null && (
           <div
             className={cn(
-              'shrink-0 px-5 pt-4 pb-4 ',
+              'relative shrink-0 px-5 pt-4 pb-4',
               hideHeaderBorder ? '' : 'border-b border-neutral-subtle',
             )}
           >
             {header}
+            {showCloseButton && (
+              <DialogPrimitive.Close
+                data-slot="dialog-close"
+                className="cursor-pointer absolute top-1/2 -translate-y-1/2 right-4 opacity-70 transition-opacity hover:opacity-100 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+              >
+                <XIcon />
+                <span className="sr-only">Close</span>
+              </DialogPrimitive.Close>
+            )}
           </div>
         )}
         <div
@@ -94,15 +103,6 @@ function DialogContent({
         >
           {body}
         </div>
-        {showCloseButton && (
-          <DialogPrimitive.Close
-            data-slot="dialog-close"
-            className="cursor-pointer absolute top-[22px] right-4 opacity-70 transition-opacity hover:opacity-100 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5"
-          >
-            <XIcon />
-            <span className="sr-only">Close</span>
-          </DialogPrimitive.Close>
-        )}
       </DialogPrimitive.Content>
     </DialogPortal>
   );
