@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { cn } from '../../lib/utils';
-import { XRegularIcon } from '@echoit/itui.css';
+import { XRegularIcon } from '../../icons/ITUI/x';
 
 function Dialog({
   ...props
