@@ -12,8 +12,8 @@ export function FolderIcon({
   return (
     <FolderColorLogo
       className={className}
-      width={width ?? 20}
-      height={height ?? 20}
+      width={width??20}
+      height={height??20}
     />
   );
 }
