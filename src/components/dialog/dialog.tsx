@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { XIcon } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { XRegularIcon } from '@echoit/itui.css';
 
 function Dialog({
   ...props
@@ -87,9 +87,9 @@ function DialogContent({
             {showCloseButton && (
               <DialogPrimitive.Close
                 data-slot="dialog-close"
-                className="cursor-pointer absolute top-1/2 -translate-y-1/2 right-4 opacity-70 transition-opacity hover:opacity-100 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+                className="cursor-pointer absolute top-1/2 -translate-y-1/2 right-4 transition-opacity hover:opacity-100 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
               >
-                <XIcon />
+                <XRegularIcon />
                 <span className="sr-only">Close</span>
               </DialogPrimitive.Close>
             )}
