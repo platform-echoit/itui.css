@@ -87,7 +87,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       />
       <span
         className={cn(
-          'relative inline-flex shrink-0 items-center justify-center rounded-sm border overflow-hidden transition-colors',
+          'relative inline-flex shrink-0 items-center justify-center rounded-sm border overflow-hidden',
           boxSizeMap[size],
           disabled
             ? 'bg-neutral-subtle border-neutral-disabled text-neutral-disabled'

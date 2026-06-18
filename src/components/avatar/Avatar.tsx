@@ -79,7 +79,7 @@ const containerSizeMap: Record<AvatarSize, string> = {
 };
 
 const textSizeMap: Record<AvatarSize, string> = {
-  sm: 'text-[11px]   leading-4  tracking-xs',
+  sm: 'text-[11px] leading-[initial] tracking-xs',
   md: 'text-sm   leading-5  tracking-md',
   lg: 'text-base leading-6  tracking-lg',
   xl: 'text-xl   leading-7  tracking-2xl',
@@ -128,7 +128,7 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
           containerSizeMap[size],
           !src && (bgClass ?? 'bg-semantic-red-700'),
           !src &&
-            'relative inline-flex items-center justify-center overflow-hidden',
+          'relative inline-flex items-center justify-center overflow-hidden',
           className,
         )}
         style={bgStyle}
