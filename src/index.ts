@@ -2,6 +2,9 @@ import './styles/global.css';
 
 export * from './components/button';
 export * from './components/badge';
+export * from './components/chip';
+export * from './components/divider';
+export * from './components/slider';
 export * from './components/spinner';
 export * from './components/input';
 export * from './components/checkbox';

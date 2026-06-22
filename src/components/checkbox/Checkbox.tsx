@@ -10,28 +10,29 @@ import { cn } from '../../lib/utils';
   height/icon/sm      12px → size-3
 
   RADIUS
-  radius/xs  4px → rounded-xs
+  radius/xs  4px → rounded-sm  (Tailwind v4: rounded-sm = 0.25rem = 4px)
 
   BORDER
   stroke/xs  1px → border (Tailwind default)
 
   COLORS — box states
-  surface/neutral/secondary/default  white    → bg-white       (unchecked)
+  surface/neutral/secondary/default  #fafafa  → bg-inverse      (unchecked)
   border/neutral/default             #595858  → border-neutral-muted (unchecked)
   surface/primary/default            #009ce0  → bg-brand        (checked)
-  surface/neutral/disabled/inverse   #ededed  → bg-neutral-subtle (disabled)
+  surface/neutral/disabled/inverse   #ededed  → bg-surface-neutral-disabled (disabled)
   border/neutral/disabled            #c2c2c2  → border-neutral-disabled
 
   COLORS — icon
-  icon/neutral/inverse  white   → text-white
+  icon/neutral/inverse  #fafafa → text-inverse
   icon/neutral/disabled #c2c2c2 → text-neutral-disabled
 
   COLORS — label text
   text/neutral/default   #0f0f0f → text-foreground
   text/neutral/disabled  #c2c2c2 → text-neutral-disabled
 
-  TYPOGRAPHY — label
-  caption/sm/regular  12px 400 leading-4 0.30px → text-xs font-normal leading-4 tracking-sm
+  TYPOGRAPHY — label (size-dependent)
+  md body/md/regular     14px 400 leading-6 0.20px → text-sm leading-6 tracking-md
+  sm caption/sm/regular  12px 400 leading-5 0.30px → text-xs leading-5 tracking-sm
   ─────────────────────────────────────────────────────────────────────────────
 */
 
@@ -46,6 +47,12 @@ export interface CheckboxProps
 const boxSizeMap: Record<CheckboxSize, string> = {
   md: 'h-checkbox-md w-checkbox-md',
   sm: 'h-checkbox-sm w-checkbox-sm',
+};
+
+// Label typography per size (Figma: Md → body/md/regular, Sm → caption/sm/regular)
+const labelTypeMap: Record<CheckboxSize, string> = {
+  md: 'text-sm leading-6 tracking-md',
+  sm: 'text-xs leading-5 tracking-sm',
 };
 
 function CheckIcon({ className }: { className?: string }) {
@@ -90,9 +97,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           'relative inline-flex shrink-0 items-center justify-center rounded-sm border overflow-hidden',
           boxSizeMap[size],
           disabled
-            ? 'bg-neutral-subtle border-neutral-disabled text-neutral-disabled'
+            ? 'bg-surface-neutral-disabled border-neutral-disabled text-neutral-disabled'
             : checked
-              ? 'bg-brand border-transparent text-white hover:bg-brand-pressed'
+              ? 'bg-brand border-transparent text-inverse hover:bg-brand-pressed'
               : 'bg-inverse border-neutral-muted hover:border-brand',
           'peer-focus-visible:ring-2 peer-focus-visible:ring-brand peer-focus-visible:ring-offset-1',
         )}
@@ -103,6 +110,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         <span
           className={cn(
             'font-normal',
+            labelTypeMap[size],
             disabled ? 'text-neutral-disabled' : 'text-foreground',
           )}
         >
