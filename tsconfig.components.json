@@ -11,5 +11,5 @@
     "src/styles/**/*",
     "src/components/**/*"
   ],
-  "exclude": ["node_modules", "dist", "src/icons", "src/**/*.stories.tsx"]
+  "exclude": ["node_modules", "dist", "src/icons"]
 }
