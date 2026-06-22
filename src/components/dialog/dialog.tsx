@@ -79,7 +79,7 @@ function DialogContent({
         {header != null && (
           <div
             className={cn(
-              'relative shrink-0 px-5 pt-4 pb-4',
+              'relative shrink-0 p-4',
               hideHeaderBorder ? '' : 'border-b border-neutral-subtle',
             )}
           >
