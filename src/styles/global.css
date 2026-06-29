@@ -280,6 +280,7 @@
   --color-surface-neutral-hover: #ededed;
   --color-surface-neutral-pressed: #dadada;
   --color-surface-neutral-disabled: #ededed; /* surface/neutral/disabled/inverse */
+  --color-surface-neutral-strong: #2a2a2a; /* surface/neutral/strong/default */
 
   --color-border-primary: #009ce0;
   --color-border-primary-hover: #54bdea;
