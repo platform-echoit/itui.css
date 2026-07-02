@@ -128,7 +128,7 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
           containerSizeMap[size],
           !src && (bgClass ?? 'bg-semantic-red-700'),
           !src &&
-          'relative inline-flex items-center justify-center overflow-hidden',
+            'relative inline-flex items-center justify-center overflow-hidden',
           className,
         )}
         style={bgStyle}
