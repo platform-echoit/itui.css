@@ -39,7 +39,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     static/space/12   12px → py-3
     10px (derived md)      → py-2.5  (no static/space/10 token → Tailwind scale fallback)
     6px  (derived sm)      → py-1.5  (no static/space/6  token → Tailwind scale fallback)
-    static/space/8     8px → gap-2
+    static/space/8     8px → gap-2  (lg, md)
+    static/space/4      4px → gap-1  (sm — spacing/xs)
     font/size/16      16px → text-base
     font/size/14      14px → text-sm
     font/line-height/lg 24px → leading-6
@@ -66,7 +67,7 @@ const sizeConfig: Record<
   },
   sm: {
     label:
-      'h-button-sm px-4 py-3 gap-2 text-sm leading-6 tracking-md font-semibold',
+      'h-button-sm px-4 py-3 gap-1 text-sm leading-6 tracking-md font-semibold',
     iconOnly: 'h-button-sm w-button-sm',
     icon: 'h-icon-lg w-icon-lg',
   },
@@ -118,14 +119,14 @@ const variantConfig: Record<ButtonVariant, string> = {
   link: [
     'text-brand',
     'hover:text-brand-link-hover',
-    'active:text-brand-pressed',
+    'active:text-brand-pressed active:opacity-80',
     'disabled:text-neutral-disabled',
   ].join(' '),
 
   'link-underline': [
     'text-brand underline underline-offset-2',
     'hover:text-brand-link-hover',
-    'active:text-brand-pressed',
+    'active:text-brand-pressed active:opacity-80',
     'disabled:text-neutral-disabled',
   ].join(' '),
 
