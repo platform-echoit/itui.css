@@ -13,6 +13,8 @@ export * from './components/bubble';
 export * from './components/carousel';
 export * from './components/pagination';
 export * from './components/popup';
+export * from './components/bottom-sheet';
+export * from './components/navigation';
 export * from './components/spinner';
 export * from './components/input';
 export * from './components/checkbox';

@@ -13,3 +13,6 @@ export type {
   SidebarItemProps,
   SidebarFooterProps,
 } from './Sidebar';
+
+export { SidebarGroup } from './SidebarGroup';
+export type { SidebarGroupProps } from './SidebarGroup';
