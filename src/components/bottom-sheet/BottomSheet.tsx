@@ -1,7 +1,16 @@
-import { type ReactNode } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+  type ReactNode,
+} from 'react';
 import { Dialog as RadixDialog } from 'radix-ui';
 import { cn } from '../../lib/utils';
 import { Button } from '../button';
+
+// Drag further than this (px) and release → close.
+const DRAG_CLOSE_THRESHOLD = 80;
 
 /*
   Token → Tailwind map (Figma node 28375:7517)
@@ -61,6 +70,45 @@ export function BottomSheet({
   onSecondary,
   className,
 }: BottomSheetProps) {
+  // Drag-to-dismiss: dragging the handle down translates the sheet; releasing
+  // past the threshold closes it (which then plays the slide-out animation).
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragOffsetRef = useRef(0);
+  const startYRef = useRef(0);
+
+  const setDrag = (next: number) => {
+    dragOffsetRef.current = next;
+    setDragOffset(next);
+  };
+
+  // Reset the drag translate whenever the sheet (re)opens.
+  useEffect(() => {
+    if (open || defaultOpen) setDrag(0);
+  }, [open, defaultOpen]);
+
+  const handlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    startYRef.current = e.clientY;
+    setIsDragging(true);
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    // Downward only.
+    setDrag(Math.max(0, e.clientY - startYRef.current));
+  };
+
+  const handlePointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    e.currentTarget.releasePointerCapture?.(e.pointerId);
+    const shouldClose = dragOffsetRef.current > DRAG_CLOSE_THRESHOLD;
+    // Snap back to 0; if closing, the slide-out animation takes over from here.
+    setDrag(0);
+    if (shouldClose) onOpenChange?.(false);
+  };
+
   const defaultFooter = primaryText != null && (
     <>
       <Button variant="primary" size="md" fullWidth onClick={onPrimary}>
@@ -81,19 +129,44 @@ export function BottomSheet({
     <RadixDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       {trigger != null && <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>}
       <RadixDialog.Portal>
-        <RadixDialog.Overlay className="fixed inset-0 z-50 bg-dim-black" />
+        <RadixDialog.Overlay
+          // Tapping the backdrop (outside the sheet content) closes it.
+          onClick={() => onOpenChange?.(false)}
+          className="fixed inset-0 z-50 bg-dim-black backdrop-blur-[2px] data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0"
+        />
         <RadixDialog.Content
           aria-describedby={undefined}
           className={cn(
-            'fixed inset-x-0 bottom-0 z-50 mx-auto flex w-full max-w-[480px] flex-col',
+            'fixed inset-x-0 bottom-0 z-50 flex w-full flex-col',
             'rounded-t-[28px] bg-inverse focus:outline-none',
+            // Slide up on open, slide down on close (Radix keeps it mounted for
+            // the exit animation, so overlay-click / drag close animate too).
+            'duration-300 data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom',
             sizeMap[size],
             className,
           )}
+          style={{
+            transform: dragOffset ? `translateY(${dragOffset}px)` : undefined,
+            transition: isDragging ? 'none' : 'transform 0.25s ease-out',
+          }}
         >
           {showHandle && (
-            <div className="flex shrink-0 justify-center p-3">
-              <div className="h-1.5 w-11 rounded-sm bg-surface-neutral-hover" />
+            <div
+              className="flex shrink-0 cursor-grab touch-none justify-center p-3 active:cursor-grabbing"
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+            >
+              <div
+                className={cn(
+                  'h-1.5 w-11 rounded-sm transition-colors',
+                  // Darker while being grabbed/dragged.
+                  isDragging
+                    ? 'bg-icon-neutral-subtle'
+                    : 'bg-surface-neutral-hover',
+                )}
+              />
             </div>
           )}
 
