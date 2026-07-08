@@ -33,6 +33,43 @@ const sizeMap: Record<BottomSheetSize, string> = {
   regular: 'max-h-[75dvh]',
 };
 
+// Enter/exit animations, injected once at runtime rather than relying on the
+// tailwindcss-animate utilities (animate-in / slide-*-from-bottom): this project
+// doesn't ship that plugin, so those classes are no-ops and the sheet would
+// pop/vanish with no animation. Defining real @keyframes gives the closed state
+// a running `animation-name`, which is what Radix's Presence waits on before
+// unmounting — so the slide-down + fade-out always play on every close
+// (option tap, backdrop, drag-release, Esc, navigation).
+const ANIM_STYLE_ID = 'itui-bottom-sheet-animations';
+const ANIM_MS = 300;
+
+function ensureBottomSheetStyles() {
+  if (typeof document === 'undefined') return;
+  if (document.getElementById(ANIM_STYLE_ID)) return;
+  const style = document.createElement('style');
+  style.id = ANIM_STYLE_ID;
+  style.textContent = `
+    @keyframes itui-bs-slide-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    @keyframes itui-bs-slide-out { from { transform: translateY(0); } to { transform: translateY(100%); } }
+    @keyframes itui-bs-fade-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes itui-bs-fade-out { from { opacity: 1; } to { opacity: 0; } }
+    .itui-bottom-sheet-content[data-state='open'] { animation: itui-bs-slide-in ${ANIM_MS}ms cubic-bezier(0.32, 0.72, 0, 1); }
+    .itui-bottom-sheet-content[data-state='closed'] { animation: itui-bs-slide-out ${ANIM_MS}ms cubic-bezier(0.32, 0.72, 0, 1) forwards; }
+    .itui-bottom-sheet-overlay[data-state='open'] { animation: itui-bs-fade-in 250ms ease-out; }
+    .itui-bottom-sheet-overlay[data-state='closed'] { animation: itui-bs-fade-out 250ms ease-out forwards; }
+    @media (prefers-reduced-motion: reduce) {
+      .itui-bottom-sheet-content[data-state],
+      .itui-bottom-sheet-overlay[data-state] { animation-duration: 1ms; }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+// Inject as soon as the module is evaluated on the client, so the styles are in
+// place before the first open (a useEffect would run too late for the initial
+// enter animation). SSR-safe via the document guard.
+ensureBottomSheetStyles();
+
 export interface BottomSheetProps {
   open?: boolean;
   defaultOpen?: boolean;
@@ -132,16 +169,19 @@ export function BottomSheet({
         <RadixDialog.Overlay
           // Tapping the backdrop (outside the sheet content) closes it.
           onClick={() => onOpenChange?.(false)}
-          className="fixed inset-0 z-50 bg-dim-black backdrop-blur-[2px] data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0"
+          className="itui-bottom-sheet-overlay fixed inset-0 z-50 bg-dim-black backdrop-blur-[2px]"
         />
         <RadixDialog.Content
           aria-describedby={undefined}
           className={cn(
+            'itui-bottom-sheet-content',
             'fixed inset-x-0 bottom-0 z-50 flex w-full flex-col',
             'rounded-t-[28px] bg-inverse focus:outline-none',
-            // Slide up on open, slide down on close (Radix keeps it mounted for
-            // the exit animation, so overlay-click / drag close animate too).
-            'duration-300 data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom',
+            // Slide up on open, slide down on close. The keyframes are injected
+            // by ensureBottomSheetStyles (the tailwindcss-animate utilities used
+            // before were no-ops here); Radix keeps the node mounted until the
+            // exit animation ends, so overlay-click / drag / navigation close
+            // all animate.
             sizeMap[size],
             className,
           )}
