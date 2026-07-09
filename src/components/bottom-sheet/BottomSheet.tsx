@@ -220,13 +220,23 @@ export function BottomSheet({
           </RadixDialog.Title>
 
           {children != null && (
-            <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4 text-sm leading-6 tracking-md text-foreground">
+            <div
+              className={cn(
+                'min-h-0 flex-1 overflow-y-auto px-4 text-sm leading-6 tracking-md text-foreground',
+                // No footer below it → this is what actually touches the
+                // bottom edge (the sheet is `fixed inset-x-0 bottom-0`), so it
+                // carries the home-indicator clearance instead of a plain pb-4.
+                footerContent
+                  ? 'pb-4'
+                  : 'pb-[calc(1rem+env(safe-area-inset-bottom,0))]',
+              )}
+            >
               {children}
             </div>
           )}
 
           {footerContent && (
-            <div className="flex shrink-0 flex-col gap-3 px-4 pb-8 pt-4">
+            <div className="flex shrink-0 flex-col gap-3 px-4 pb-[calc(2rem+env(safe-area-inset-bottom,0))] pt-4">
               {footerContent}
             </div>
           )}
