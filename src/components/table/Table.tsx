@@ -4,8 +4,8 @@ import {
   type ThHTMLAttributes,
   type TdHTMLAttributes,
 } from 'react';
-import { ArrowDown, ArrowUp } from 'lucide-react';
-import { cn } from '../../lib/utils';
+import {ArrowDown,ArrowUp} from 'lucide-react';
+import {cn} from '../../lib/utils';
 
 // ── Token → Tailwind map ─────────────────────────────────────────────────────
 /*
@@ -35,7 +35,7 @@ import { cn } from '../../lib/utils';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
-export type SortDirection = 'asc' | 'desc';
+export type SortDirection='asc'|'desc';
 
 export interface TableProps extends HTMLAttributes<HTMLTableElement> {
   ref?: Ref<HTMLTableElement>;
@@ -63,30 +63,30 @@ export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
 
 // ── Table ────────────────────────────────────────────────────────────────────
 
-export const Table = ({ className, ...props }: TableProps) => (
-  <div className="w-full overflow-x-auto rounded-lg border border-neutral-subtle">
-    <table className={cn('w-full bg-white', className)} {...props} />
+export const Table=({className,...props}: TableProps) => (
+  <div className="w-full overflow-x-auto rounded-lg border border-neutral-subtle border-b-0">
+    <table className={cn('w-full bg-white',className)} {...props} />
   </div>
 );
 
 // ── TableHeader ───────────────────────────────────────────────────────────────
 
-export const TableHeader = ({ className, ...props }: TableHeaderProps) => (
+export const TableHeader=({className,...props}: TableHeaderProps) => (
   <thead
-    className={cn('bg-white border-b border-neutral-subtle', className)}
+    className={cn('bg-white border-b border-neutral-subtle',className)}
     {...props}
   />
 );
 
 // ── TableBody ─────────────────────────────────────────────────────────────────
 
-export const TableBody = ({ className, ...props }: TableBodyProps) => (
+export const TableBody=({className,...props}: TableBodyProps) => (
   <tbody className={cn(className)} {...props} />
 );
 
 // ── TableRow ──────────────────────────────────────────────────────────────────
 
-export const TableRow = ({
+export const TableRow=({
   className,
   selected,
   disabled,
@@ -94,8 +94,8 @@ export const TableRow = ({
 }: TableRowProps) => (
   <tr
     className={cn(
-      'border-b border-neutral-subtle last:border-b-0',
-      selected ? 'bg-neutral-100' : disabled ? 'bg-neutral-subtle' : 'bg-white',
+      'border-b border-neutral-subtle overflow-x-auto w-full min-w-0 shadow-downwards-sm [&>div]:overflow-visible',
+      selected? 'bg-neutral-100':disabled? 'bg-neutral-subtle':'bg-white',
       className,
     )}
     {...props}
@@ -104,7 +104,7 @@ export const TableRow = ({
 
 // ── TableHead ─────────────────────────────────────────────────────────────────
 
-export const TableHead = ({
+export const TableHead=({
   className,
   sortDirection,
   children,
@@ -118,16 +118,16 @@ export const TableHead = ({
     )}
     {...props}
   >
-    {sortDirection != null ? (
+    {sortDirection!=null? (
       <span className="inline-flex items-center gap-2">
         {children}
-        {sortDirection === 'asc' ? (
+        {sortDirection==='asc'? (
           <ArrowUp size={12} className="shrink-0" />
-        ) : (
+        ):(
           <ArrowDown size={12} className="shrink-0" />
         )}
       </span>
-    ) : (
+    ):(
       children
     )}
   </th>
@@ -135,7 +135,7 @@ export const TableHead = ({
 
 // ── TableCell ─────────────────────────────────────────────────────────────────
 
-export const TableCell = ({ className, ...props }: TableCellProps) => (
+export const TableCell=({className,...props}: TableCellProps) => (
   <td
     className={cn(
       'h-10 px-3 py-2 align-middle',
