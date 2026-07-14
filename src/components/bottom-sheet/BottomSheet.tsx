@@ -169,13 +169,13 @@ export function BottomSheet({
         <RadixDialog.Overlay
           // Tapping the backdrop (outside the sheet content) closes it.
           onClick={() => onOpenChange?.(false)}
-          className="itui-bottom-sheet-overlay fixed inset-0 z-50 bg-dim-black backdrop-blur-[2px]"
+          className="itui-bottom-sheet-overlay fixed inset-0 z-70 bg-dim-black backdrop-blur-[2px]"
         />
         <RadixDialog.Content
           aria-describedby={undefined}
           className={cn(
             'itui-bottom-sheet-content',
-            'fixed inset-x-0 bottom-0 z-50 flex w-full flex-col',
+            'fixed inset-x-0 bottom-0 z-70 flex w-full flex-col',
             'rounded-t-[28px] bg-inverse focus:outline-none',
             // Slide up on open, slide down on close. The keyframes are injected
             // by ensureBottomSheetStyles (the tailwindcss-animate utilities used
