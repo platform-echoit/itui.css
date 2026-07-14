@@ -222,6 +222,7 @@ export function BottomSheet({
           {children != null && (
             <div
               className={cn(
+                'itui-bottom-sheet-scroll',
                 'min-h-0 flex-1 overflow-y-auto px-4 text-sm leading-6 tracking-md text-foreground',
                 // No footer below it → this is what actually touches the
                 // bottom edge (the sheet is `fixed inset-x-0 bottom-0`), so it
