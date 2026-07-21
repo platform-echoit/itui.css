@@ -89,6 +89,12 @@ export interface BottomSheetProps {
   secondaryText?: ReactNode;
   onSecondary?: () => void;
   className?: string;
+  /**
+   * Forwarded to the underlying Radix Dialog.Content. Call `event.preventDefault()`
+   * to stop Radix from restoring focus to the trigger on close — lets the caller
+   * decide where focus lands (e.g. back into an editor at a specific caret).
+   */
+  onCloseAutoFocus?: (event: Event) => void;
 }
 
 export function BottomSheet({
@@ -106,6 +112,7 @@ export function BottomSheet({
   secondaryText,
   onSecondary,
   className,
+  onCloseAutoFocus,
 }: BottomSheetProps) {
   // Drag-to-dismiss: dragging the handle down translates the sheet; releasing
   // past the threshold closes it (which then plays the slide-out animation).
@@ -173,6 +180,7 @@ export function BottomSheet({
         />
         <RadixDialog.Content
           aria-describedby={undefined}
+          onCloseAutoFocus={onCloseAutoFocus}
           className={cn(
             'itui-bottom-sheet-content',
             'fixed inset-x-0 bottom-0 z-70 flex w-full flex-col',
