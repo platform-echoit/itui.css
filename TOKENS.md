@@ -159,10 +159,15 @@ Defined in `@theme` as `--color-{name}`. Used directly as Tailwind utilities.
 
 #### Surface
 
-| Token                   | CSS Variable              | Value  | Tailwind Class       |
-| ----------------------- | ------------------------- | ------ | -------------------- |
-| `color.surface.hover`   | `--color-surface-hover`   | `TODO` | `bg-surface-hover`   |
-| `color.surface.pressed` | `--color-surface-pressed` | `TODO` | `bg-surface-pressed` |
+| Token                          | CSS Variable                     | Value       | Tailwind Class              |
+| ------------------------------ | -------------------------------- | ----------- | --------------------------- |
+| `color.surface.hover`          | `--color-surface-hover`          | `TODO`      | `bg-surface-hover`          |
+| `color.surface.pressed`        | `--color-surface-pressed`        | `TODO`      | `bg-surface-pressed`        |
+| `color.surface.success.muted`  | `--color-surface-success-muted`  | `#459f494d` | `bg-surface-success-muted`  |
+| `color.surface.error.muted`    | `--color-surface-error-muted`    | `#de3d314d` | `bg-surface-error-muted`    |
+
+> `surface.success.muted` / `surface.error.muted` are the Figma `color/semantic/{green,red}/600@30`
+> tints, added for the Calendar event badges. They pair with `text-success` / `text-destructive`.
 
 #### Neutral (itui.css)
 
@@ -519,6 +524,19 @@ These are NOT Tailwind built-ins — they must be declared explicitly.
 | `component.badge.stroke.none` | `--stroke-none`   | `0px`            | `border-0`                    |
 | `component.badge.stroke.xs`   | `--stroke-xs`     | `1px`            | `border`                      |
 
+### Calendar
+
+> ⚠ The `--size-*` namespace only generates the square `size-*` utility — it does **not** produce
+> `w-*` / `h-*`. Container widths therefore live in `--width-*`, which does generate `w-*`.
+
+| Token                      | CSS Variable          | Value   | Figma Token         | Tailwind Class   |
+| -------------------------- | --------------------- | ------- | ------------------- | ---------------- |
+| `component.calendar.width.md` | `--width-calendar-md` | `358px` | `size/container/md` | `w-calendar-md`  |
+| `component.calendar.width.lg` | `--width-calendar-lg` | `480px` | `size/container/lg` | `w-calendar-lg`  |
+| `component.calendar.width.xl` | `--width-calendar-xl` | `624px` | RangePicker frame (27729:706) | `w-calendar-xl` |
+| `component.calendar.width.panel` | `--width-calendar-panel` | `312px` | RangePicker month panel (27729:708) | `w-calendar-panel` |
+| `component.dateHeader.width` | `--width-date-header` | `280px` | Date Header (27193:2381) | `w-date-header` |
+
 ---
 
 ## Validation Report
@@ -532,6 +550,17 @@ These are NOT Tailwind built-ins — they must be declared explicitly.
 | `typography.letterSpacing.lg`      | Used in Button (`tracking-lg`) but pixel value not in Figma export | Measure in Figma for `font/size/16` pairing                 |
 | `typography.fontFamily.pretendard` | Used in Figma designs but not in system `@theme`                   | Register `@font-face` + add `--font-pretendard` to `@theme` |
 | `component.badge.color.bg`         | `color/semantic/red/500 = #f44336` not in Tailwind palette         | Add `--color-semantic-red-500: #f44336` to `@theme`         |
+
+### Resolved (previously missing)
+
+| Token                          | Figma Source                  | Added As                        | Used By  |
+| ------------------------------ | ----------------------------- | ------------------------------- | -------- |
+| `color.surface.success.muted`  | `color/semantic/green/600@30` | `--color-surface-success-muted` | Calendar |
+| `color.surface.error.muted`    | `color/semantic/red/600@30`   | `--color-surface-error-muted`   | Calendar |
+| `component.calendar.width.md`  | `size/container/md`           | `--width-calendar-md`           | Calendar |
+| `component.calendar.width.lg`  | `size/container/lg`           | `--width-calendar-lg`           | Calendar |
+| `component.calendar.width.xl`    | RangePicker frame `27729:706` | `--width-calendar-xl`         | DatePicker |
+| `component.calendar.width.panel` | RangePicker panel `27729:708` | `--width-calendar-panel`      | DatePicker |
 
 ### Duplicates Removed
 

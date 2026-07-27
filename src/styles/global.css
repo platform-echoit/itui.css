@@ -234,6 +234,11 @@
   --size-gnb: 72px;
   --size-lnb-sm: 36px;
   --size-lnb-md: 48px;
+  --width-calendar-md: 358px; /* size/container/md */
+  --width-calendar-lg: 480px; /* size/container/lg */
+  --width-calendar-xl: 624px; /* DatePicker RangePicker, 2 × 312px month panel */
+  --width-calendar-panel: 312px; /* one month panel inside the RangePicker */
+  --width-date-header: 280px; /* Date Header row (prev · caption · next) */
 
   /* ── Line Height ──────────────────────────────────────────────────────── */
   --leading-xs: 16px;
@@ -281,6 +286,8 @@
   --color-surface-neutral-pressed: #dadada;
   --color-surface-neutral-disabled: #ededed; /* surface/neutral/disabled/inverse */
   --color-surface-neutral-strong: #2a2a2a; /* surface/neutral/strong/default */
+  --color-surface-success-muted: #459f494d; /* color/semantic/green/600@30 */
+  --color-surface-error-muted: #de3d314d; /* color/semantic/red/600@30 */
 
   --color-border-primary: #009ce0;
   --color-border-primary-hover: #54bdea;
@@ -364,6 +371,14 @@
   --shadow-downwards-md: 0 12px 24px 0 rgba(26, 26, 26, 0.08);
   --shadow-downwards-lg: 0 20px 48px 0 rgba(26, 26, 26, 0.08);
   --shadow-leftwards-lg: -20px 0 48px 0 rgba(26, 26, 26, 0.08);
+}
+
+/* Scrollable, but with no visible scrollbar — the wheel picker scrolls by drag/snap. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @utility backdrop-blur-dialog {
