@@ -240,6 +240,10 @@
   --width-calendar-panel: 312px; /* one month panel inside the RangePicker */
   --width-date-header: 280px; /* Date Header row (prev · caption · next) */
   --width-snackbar: 358px; /* size/container/md */
+  /* Canonical size/container/md. --width-calendar-md and --width-snackbar are
+     older component-scoped aliases of the same Figma variable; prefer this one. */
+  --width-container-md: 358px; /* size/container/md */
+  --width-container-xs: 160px; /* size/container/xs — OverflowMenu panel */
 
   /* ── Line Height ──────────────────────────────────────────────────────── */
   --leading-xs: 16px;
@@ -374,6 +378,12 @@
   --shadow-downwards-sm: 0 4px 16px 0 rgba(26, 26, 26, 0.08);
   --shadow-downwards-md: 0 12px 24px 0 rgba(26, 26, 26, 0.08);
   --shadow-downwards-lg: 0 20px 48px 0 rgba(26, 26, 26, 0.08);
+  /* shadow/upwards/sm — shadow/blur/sm (16) at shadow/positioning-up/xs (-4),
+     the mirror of --shadow-downwards-sm. Used by the bottom navigation bar. */
+  --shadow-upwards-sm: 0 -4px 16px 0 rgba(26, 26, 26, 0.08);
+  /* shadow/rightwards/sm — shadow/blur/sm (16) at shadow/positioning-down/xs (4)
+     on the x axis. The rail shadow cast by the LNB / sidebar. */
+  --shadow-rightwards-sm: 4px 0 16px 0 rgba(26, 26, 26, 0.08);
   --shadow-leftwards-lg: -20px 0 48px 0 rgba(26, 26, 26, 0.08);
 
   /* ── Motion ──────────────────────────────────────────────────────────── */
@@ -389,6 +399,40 @@
     to {
       transform: translateX(200%);
     }
+  }
+
+  /* Radix Collapsible open/close. Height has no interpolatable start value, so it
+     needs real @keyframes reading Radix's measured --radix-collapsible-content-height
+     — a `transition` cannot animate to/from `auto`. Deliberately named for the
+     primitive rather than a component so Accordion can adopt them too (it currently
+     ships with no height animation for want of exactly these keyframes).
+     Durations live in the token, the Tailwind v4 pattern — see --animate-skeleton-wave. */
+  --animate-collapsible-down: collapsible-down 200ms var(--ease-out);
+  --animate-collapsible-up: collapsible-up 200ms var(--ease-out);
+  @keyframes collapsible-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-collapsible-content-height);
+    }
+  }
+  @keyframes collapsible-up {
+    from {
+      height: var(--radix-collapsible-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+/* Honour the OS "reduce motion" setting for the tokens declared above, matching the
+   same guard bottom-sheet/BottomSheet.tsx injects for its slide/fade keyframes. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-collapsible-down,
+  .animate-collapsible-up {
+    animation-duration: 1ms;
   }
 }
 

@@ -558,10 +558,10 @@ These are NOT Tailwind built-ins — they must be declared explicitly.
 
 ### Snackbar
 
-| Token                            | CSS Variable                    | Value                | Figma Token              | Tailwind Class               |
-| -------------------------------- | ------------------------------- | -------------------- | ------------------------ | ---------------------------- |
-| `component.snackbar.width`       | `--width-snackbar`              | `358px`              | `size/container/md`      | `w-snackbar`                 |
-| `color.surface.snackbar.dark`    | `--color-surface-snackbar-dark` | `rgba(26,26,26,0.6)` | `color/opacity/black/lg` | `bg-surface-snackbar-dark`   |
+| Token                         | CSS Variable                    | Value                | Figma Token              | Tailwind Class             |
+| ----------------------------- | ------------------------------- | -------------------- | ------------------------ | -------------------------- |
+| `component.snackbar.width`    | `--width-snackbar`              | `358px`              | `size/container/md`      | `w-snackbar`               |
+| `color.surface.snackbar.dark` | `--color-surface-snackbar-dark` | `rgba(26,26,26,0.6)` | `color/opacity/black/lg` | `bg-surface-snackbar-dark` |
 
 > The Light tone needs no new token: `color/opacity/white/xl` (`#ffffffcc`) is already
 > `--color-opacity-white-xl`, and `blur/default` (a `BACKGROUND_BLUR` of `shadow/blur/xs` = 4)
@@ -582,6 +582,262 @@ These are NOT Tailwind built-ins — they must be declared explicitly.
 >
 > `Animation=Pulse` needs no token: its End fill `rgba(0,0,0,0.04)` is exactly half the
 > Start alpha `color/opacity/black/xs`, which the built-in `animate-pulse` already draws.
+
+### Floating Button
+
+Figma node `28386:3249` ("Float"). Every value resolved to a token that already existed —
+no new CSS variable was added.
+
+| Figma Token               | Value                   | CSS Variable                      | Tailwind Class                           |
+| ------------------------- | ----------------------- | --------------------------------- | ---------------------------------------- |
+| `height/float/md`         | `56px`                  | `--size-float-md`                 | `size-float-md`                          |
+| `height/float/sm`         | `40px`                  | `--size-float-sm`                 | `size-float-sm`                          |
+| `surface/primary/default` | `#009ce0`               | `--color-surface-primary`         | `bg-surface-primary`                     |
+| `surface/primary/hover`   | `#54bdea`               | `--color-surface-primary-hover`   | `hover:bg-surface-primary-hover`         |
+| `surface/primary/pressed` | `#008ecc`               | `--color-surface-primary-pressed` | `active:bg-surface-primary-pressed`      |
+| `icon/primary/inverse`    | `#fafafa`               | `--color-inverse`                 | `text-inverse` + `[&_path]:fill-current` |
+| `shadow/downwards/md`     | `0 12px 24px #1a1a1a14` | `--shadow-downwards-md`           | `shadow-downwards-md`                    |
+| `spacing/sm`              | `8px`                   | `--spacing-2`                     | `p-2`                                    |
+| `radius/full`             | `999px`                 | `--radius-full`                   | `rounded-full`                           |
+| `height/icon/lg`          | `20px`                  | spacing scale                     | `[&_svg]:size-5` (size `sm`)             |
+| `exception/icon/28`       | `28px`                  | spacing scale                     | `[&_svg]:size-7` (size `md`)             |
+
+> `exception/icon/28` gets no dedicated variable: 28px is already `spacing.7` (1.75rem),
+> so it resolves through the scale the same way `static/scale/*` does. Adding
+> `--size-icon-28` would only duplicate `size-7`, and the `--size-*` namespace generates
+> the square `size-*` utility anyway — see the Calendar/List caveats above.
+>
+> The Figma effect is a `DROP_SHADOW` whose blur radius is `shadow/blur/md` (24) at
+> offset-y `shadow/positioning-down/md` (12), colour `shadow/color/black` (`#1a1a1a14`
+> ≈ `rgba(26,26,26,0.08)`). As a `box-shadow` that is exactly `--shadow-downwards-md`,
+> so the button reuses that token instead of a `drop-shadow-[…]` filter.
+>
+> Figma specs no `disabled` state for this component. The implementation borrows
+> Button `variant="primary"`'s (`disabled:bg-secondary` + `disabled:text-neutral-disabled`)
+> so both brand-filled controls grey out the same way.
+
+### GNB
+
+Figma node `28390:4906` ("GNB"). Only `--width-container-md` was added — every other
+value resolved to a token that already existed.
+
+| Figma Token               | Value                   | CSS Variable                   | Tailwind Class                     |
+| ------------------------- | ----------------------- | ------------------------------ | ---------------------------------- |
+| `height/gnb/sm`           | `72px`                  | spacing scale                  | `h-18` (see caveat below)          |
+| `padding`                 | `48px`                  | `--spacing-12`                 | `px-12`                            |
+| `spacing/5xl`             | `48px`                  | `--spacing-12`                 | `gap-12` (between menu items)      |
+| `spacing/3xl`             | `32px`                  | `--spacing-8`                  | `gap-8` (logo ↔ menu, Default)     |
+| `spacing/2xl`             | `24px`                  | `--spacing-6`                  | `gap-6` (logo ↔ menu, Search)      |
+| `spacing/xl`              | `20px`                  | `--spacing-5`                  | `gap-5` (Login action cluster)     |
+| `spacing/lg`              | `16px`                  | `--spacing-4`                  | `gap-4` (search ↔ actions)         |
+| `spacing/md`              | `12px`                  | `--spacing-3`                  | `gap-3` (between actions)          |
+| `color/static/white`      | `#fafafa`               | `--color-inverse`              | `bg-inverse`                       |
+| `border/neutral/subtle`   | `#ededed`               | `--color-border-neutral-subtle`| `border-b border-border-neutral-subtle` |
+| `stroke/xs`               | `1px`                   | —                              | `border-b`                         |
+| `shadow/downwards/sm`     | `0 4px 16px #1a1a1a14`  | `--shadow-downwards-sm`        | `shadow-downwards-sm`              |
+| `typography/body/lg/medium` | `16 / 26 / 0.09`      | `--leading-lg` · `--tracking-lg` | `text-base leading-lg tracking-lg font-medium` |
+| `text/neutral/default`    | `#0f0f0f`               | `--color-neutral`              | `text-foreground`                  |
+| `text/primary/default`    | `#009ce0`               | `--color-primary`              | `text-primary` (active / hover)    |
+| `height/profile/lg`       | `40px`                  | `--size-profile-lg`            | `Avatar size="lg"`                 |
+| `size/container/md`       | `358px`                 | `--width-container-md`         | `w-container-md` (search field)    |
+
+> `--size-gnb` (72px) already existed but the `--size-*` namespace only generates the
+> square `size-*` utility — it cannot produce `h-*`. The bar therefore uses `h-18`
+> (4.5rem = 72px) off the spacing scale, the same resolution Calendar/List/Navigation
+> reached for their own height tokens.
+>
+> The Figma frame is 72px tall while its inner `Header` measures 88px at `y = -8`, so
+> the content overflows ±8px and is clipped. The implementation reproduces the visible
+> result: a 72px bar with vertically centered content, no vertical padding.
+>
+> Buttons and the search field are the existing `Button` / `Input` components — Figma's
+> 로그인 is `variant="alternative" size="lg"`, 회원가입 is `variant="primary" size="lg"`,
+> and the Login-state icon buttons are `variant="secondary" size="md"` (40×40), all of
+> which already match the specced fills, borders and heights exactly.
+>
+> Figma specs no hover or active state for the menu items. `GnbMenuItem`'s `active`
+> and `hover:` both paint `text-primary`, mirroring `BottomNavigationItem` in
+> `navigation/Navigation.tsx` so the two nav families stay consistent.
+
+### Navigation V2 (mobile)
+
+Figma node `28390:4665` ("Navigation"). Only `--shadow-upwards-sm` was added — every
+other value resolved to a token that already existed.
+
+| Figma Token                 | Value                    | CSS Variable                     | Tailwind Class                                 |
+| --------------------------- | ------------------------ | -------------------------------- | ---------------------------------------------- |
+| `height/navigation/md`      | `56px`                   | `--size-navigation-md`           | `h-14` (see caveat below)                      |
+| `surface/neutral/secondary` | `#fafafa`                | `--color-inverse`                | `bg-inverse`                                   |
+| `shadow/downwards/sm`       | `0 4px 16px #1a1a1a14`   | `--shadow-downwards-sm`          | `shadow-downwards-sm` (top bar)                |
+| `shadow/upwards/sm`         | `0 -4px 16px #1a1a1a14`  | `--shadow-upwards-sm`            | `shadow-upwards-sm` (bottom bar)               |
+| `spacing/lg`                | `16px`                   | `--spacing-4`                    | `px-4` · `gap-4` (BackIcon cluster)            |
+| `spacing/md`                | `12px`                   | `--spacing-3`                    | `gap-3` (left/right cluster, default)          |
+| `spacing/sm`                | `8px`                    | `--spacing-2`                    | `py-2` (bottom bar) · `p-2` (item)             |
+| `spacing/xs`                | `4px`                    | `--spacing-1`                    | `gap-1` (item icon ↔ label)                    |
+| `height/icon/lg`            | `20px`                   | spacing scale                    | `size-5` (item glyph)                          |
+| `typography/body/lg/medium` | `16 / 26 / 0.09`         | `--leading-lg` · `--tracking-lg` | `text-base leading-lg tracking-lg font-medium` |
+| `typography/body/md/medium` | `14 / 24 / 0.2`          | `--leading-md` · `--tracking-md` | `text-sm leading-md tracking-md font-medium`   |
+| `text/neutral/default`      | `#0f0f0f`                | `--color-neutral`                | `text-foreground` (item `State=Default`)       |
+| `text/primary/default`      | `#009ce0`                | `--color-primary`                | `text-primary` (item `State=Select`)           |
+| `height/profile/md`         | `32px`                   | `--size-profile-md`              | `Avatar size="md"` (MenuAvatar cell)           |
+| `height/button/sm`          | `32px`                   | `--height-button-sm`             | `Button size="sm"` (all icon buttons)          |
+
+> `--size-navigation-md` (56px) already existed but the `--size-*` namespace only
+> generates the square `size-*` utility — it cannot produce `h-*`. Both bars therefore
+> use `h-14` (3.5rem = 56px) off the spacing scale, the same resolution Calendar /
+> List / GNB reached for their own height tokens.
+>
+> Figma's top-bar frame is 56px tall with 16px vertical padding around a 32px inner
+> row (16+32+16 = 64), so the padding overflows and is clipped. The implementation
+> reproduces the visible result: `h-14` with a centered `h-8` row and no vertical
+> padding — same as GNB.
+>
+> Figma's five top-bar types (BackIcon · BackButton · MenuAvatar · Logo · LogoBack)
+> are the same three slots with different content, so `TopNavigationV2` exposes
+> `left` / `title` / `right` props instead of a `type` variant. The only measurable
+> difference between the cells is the cluster gap — 16px on BackIcon, 12px elsewhere —
+> which is the `actionGap` prop.
+>
+> The icon buttons ("General / Button", 32×32, `#fafafa` on a 1px `#ededed` border,
+> `radius/sm` 8px) are the existing `Button variant="secondary" size="sm"`, which
+> already matches that fill, border and height exactly. Figma draws the back caret as
+> a bare 18px glyph; the story wraps it in `Button variant="ghost" size="sm"` so it
+> gets a real 32px hit target and a focus ring.
+>
+> Figma pins 56px items on a 390px bottom bar with `justify-between`. The items are
+> `flex-1` with a 56px floor instead, so they stay evenly spread at any width and tab
+> count — matching `BottomNavigationItem` in V1.
+>
+> V1 (`navigation/Navigation.tsx`) is untouched and still carries this shadow as the
+> arbitrary value `shadow-[0_-4px_16px_0_rgba(26,26,26,0.08)]`; fold it into
+> `shadow-upwards-sm` when that file is next edited.
+
+### Overflow Menu
+
+Figma node `28392:283` ("Overflow Menu"). Only `--width-container-xs` was added — every
+other value resolved to a token that already existed.
+
+| Figma Token                        | Value                   | CSS Variable                    | Tailwind Class                                |
+| ---------------------------------- | ----------------------- | ------------------------------- | --------------------------------------------- |
+| `size/container/xs`                | `160px`                 | `--width-container-xs`          | `w-container-xs` (panel)                      |
+| `surface/neutral/secondary/default`| `#fafafa`               | `--color-inverse`               | `bg-inverse`                                  |
+| `surface/neutral/secondary/hover`  | `#f5f5f5`               | `--muted`                       | `data-[highlighted]:bg-muted`                 |
+| `border/neutral/subtle`            | `#ededed`               | `--color-border-neutral-subtle` | `border border-border-neutral-subtle`         |
+| `stroke/xs`                        | `1px`                   | —                               | `border`                                      |
+| `radius/sm`                        | `8px`                   | `--radius-lg`                   | `rounded-lg`                                  |
+| `shadow/downwards/md`              | `0 12px 24px #1a1a1a14` | `--shadow-downwards-md`         | `shadow-downwards-md`                         |
+| `spacing/sm`                       | `8px`                   | `--spacing-2`                   | `p-2` · `gap-2` (icon ↔ label)                |
+| `spacing/none`                     | `0px`                   | `--spacing-0`                   | `gap-0` (rows sit flush)                      |
+| `height/icon/md`                   | `16px`                  | spacing scale                   | `size-4`                                      |
+| `typography/body/md/regular`       | `14 / 24 / 0.2`         | `--leading-md` · `--tracking-md`| `text-sm leading-md tracking-md`              |
+| `text` · `icon/neutral/default`    | `#0f0f0f`               | `--color-neutral`               | `text-foreground` (`State=Enabled`)           |
+| `text` · `icon/neutral/disabled`   | `#c2c2c2`               | `--color-neutral-disabled`      | `data-[disabled]:text-neutral-disabled`       |
+| `height/button/sm`                 | `32px`                  | `--height-button-sm`            | `Button variant="secondary" size="sm"`        |
+
+> `--size-overflow` (36px, Figma `height/overFlow`) already existed but is **not** used:
+> the standalone Base Overflow Menu symbol pins 36px, while every instance composed
+> into the panel measures 40px (`p-2` + 24px line) — `get_metadata` reports the panel
+> as 176px = 8 + 4×40 + 8. The row is therefore auto-height, matching real usage.
+> The `--size-*` namespace could not have produced an `h-*` utility anyway — see the
+> Calendar / List caveats above.
+>
+> The trigger is Figma's "General / Button" (32×32, `#fafafa` on a 1px `#ededed`
+> border, `radius/sm` 8px), which is exactly the existing
+> `Button variant="secondary" size="sm"` — same resolution GNB and Navigation V2 reached.
+>
+> Figma's `State=Hover` maps to Radix's `data-highlighted`, which is also set by
+> keyboard focus, so pointer and arrow-key navigation paint the same row.
+
+### LNB
+
+Figma node `28392:397` ("LNB"). Only `--shadow-rightwards-sm` was added — every other
+value resolved to a token that already existed.
+
+| Figma Token                         | Value                   | CSS Variable                    | Tailwind Class                                 |
+| ----------------------------------- | ----------------------- | ------------------------------- | ---------------------------------------------- |
+| rail width, `Type=Collapse`         | `52px`                  | spacing scale                   | `w-13` (3.25rem)                               |
+| rail width, `Type=Expand`           | `264px`                 | spacing scale                   | `w-66` (16.5rem)                               |
+| `height/lnb/sm`                     | `36px`                  | `--size-lnb-sm`                 | `h-9` · `size-9` (see caveat below)            |
+| `height/lnb/md`                     | `48px`                  | `--size-lnb-md`                 | `h-12` (Avatar row)                            |
+| `surface/neutral/secondary/default` | `#fafafa`               | `--color-inverse`               | `bg-inverse` (rail · `State=Default`)          |
+| `surface/neutral/secondary/hover`   | `#f5f5f5`               | `--muted`                       | `hover:bg-muted` (`State=Hover`)               |
+| `surface/neutral/secondary/pressed` | `#ededed`               | `--secondary`                   | `bg-secondary` (`State=Select`)                |
+| `border/neutral/subtle`             | `#ededed`               | `--color-border-neutral-subtle` | `border-r border-border-neutral-subtle`        |
+| `stroke/xs`                         | `1px`                   | —                               | `border-r`                                     |
+| `shadow/rightwards/sm`              | `4px 0 16px #1a1a1a14`  | `--shadow-rightwards-sm`        | `shadow-rightwards-sm`                         |
+| `radius/sm`                         | `8px`                   | `--radius-lg`                   | `rounded-lg`                                   |
+| `spacing/3xl`                       | `32px`                  | `--spacing-8`                   | `gap-8` (logo ↔ menu)                          |
+| `spacing/md`                        | `12px`                  | `--spacing-3`                   | `gap-3` (collapsed avatar cell)                |
+| `spacing/sm`                        | `8px`                   | `--spacing-2`                   | `p-2` · `gap-2`                                |
+| sub-item indent                     | `36px`                  | `--spacing-9`                   | `px-9`                                         |
+| `height/icon/lg`                    | `20px`                  | spacing scale                   | `size-5` (leading glyph)                       |
+| `height/icon/md`                    | `16px`                  | spacing scale                   | `size-4` (caret)                               |
+| `height/profile/sm`                 | `24px`                  | `--size-profile-sm`             | `Avatar size="sm"`                             |
+| `typography/body/md/medium`         | `14 / 24 / 0.2`         | `--leading-md` · `--tracking-md`| `text-sm leading-md tracking-md font-medium`   |
+| `typography/caption/sm/regular`     | `12 / 20 / 0.3`         | `--leading-sm` · `--tracking-sm`| `text-xs leading-sm tracking-sm` (email line)  |
+| `text` · `icon/neutral/default`     | `#0f0f0f`               | `--color-neutral`               | `text-foreground`                              |
+| `text/neutral/muted`                | `#595858`               | `--color-neutral-muted`         | `text-neutral-muted` (sub-items · email)       |
+| — (motion, not in Figma)            | `200ms` `ease-out`      | `--animate-collapsible-down`    | `data-[state=open]:animate-collapsible-down`   |
+| — (motion, not in Figma)            | `200ms` `ease-out`      | `--animate-collapsible-up`      | `data-[state=closed]:animate-collapsible-up`   |
+
+> `--size-lnb-sm` / `--size-lnb-md` already existed but the `--size-*` namespace only
+> generates the square `size-*` utility — it cannot produce `h-*`. Rows therefore use
+> `h-9` / `h-12` off the spacing scale, the same resolution Calendar / List / GNB /
+> Navigation V2 reached for their own height tokens. The collapsed 36×36 cell does use
+> `size-9` rather than `size-lnb-sm`, so both axes come from one scale.
+>
+> `shadow/rightwards/sm` is the x-axis mirror of the existing `--shadow-downwards-sm`
+> (`shadow/blur/sm` 16 at `shadow/positioning-down/xs` 4, `shadow/color/black`
+> `#1a1a1a14`). `sidebar/Sidebar.tsx` still carries an approximation of it as the
+> arbitrary value `shadow-[4px_0_16px_0_rgba(137,137,137,0.10)]`; fold it into
+> `shadow-rightwards-sm` when that file is next edited.
+>
+> `sidebar/Sidebar.tsx` is untouched. LNB is a separate component because Figma specs
+> three things the sidebar has no notion of: the folding sub-menu (`Base LNB` with
+> `CaretDown` ⇄ `CaretUp`), the `SidebarSimple` collapse toggle, and the `Type=Avatar`
+> user footer.
+>
+> The folding group wraps `radix-ui`'s `Collapsible`, so open/close state, ARIA and
+> keyboard handling come from Radix and the caret keys off its `data-[state]`.
+>
+> **Motion.** Figma specs no transitions, so the values below are implementation
+> choices drawn from the existing motion tokens (`duration-150/200`, `ease-out`) —
+> nothing arbitrary. The rail animates `width` (52 ⇄ 264px), the caret rotates 180°,
+> and the logo ⇄ toggle swap crossfades `opacity`. The folding group needs real
+> `@keyframes` rather than a `transition`, because `height: auto` has no interpolatable
+> value for a transition to start from; `--animate-collapsible-down` / `-up` read
+> Radix's measured `--radix-collapsible-content-height`. They are named for the
+> primitive, not for LNB, so `accordion/Accordion.tsx` — which ships with no height
+> animation for want of exactly these keyframes — can adopt them unchanged.
+>
+> Every one is disabled under `prefers-reduced-motion` (`motion-reduce:transition-none`
+> on the transitions, an `animation-duration: 1ms` guard in `global.css` for the two
+> keyframe tokens), matching what `bottom-sheet/BottomSheet.tsx` already does.
+>
+> ⚠ The `tailwindcss-animate` utilities (`animate-in`, `fade-in-0`, `zoom-in-95`,
+> `slide-in-from-*`) that `dialog`, `dropdown-menu`, `select`, `tooltip`, `popover`,
+> `overflow-menu` and `progress` all use are **no-ops** — the plugin is not a
+> dependency of this package, so those classes compile to zero rules (verified by
+> building `global.css`; `BottomSheet.tsx:37` records the same finding and works around
+> it with a runtime-injected `<style>`). LNB therefore uses only plain transitions and
+> `@theme` `--animate-*` keyframes, both of which do compile. Either add the plugin or
+> stop documenting that pattern in `CLAUDE.md`.
+>
+> Figma's three rail types are the same rail with two switches, so they are props, not
+> variants: `Collapse` is `collapsed`, and `Expand (With Folding)` vs `(Without
+> Folding)` is whether `LnbLogo` gets an `action`.
+>
+> Figma's `Collapse / Hover` state (28500:2806) swaps the logo for the toggle. The swap
+> is keyed off hovering the logo cell, not the whole rail: one element cannot be both
+> the `data-collapsed` ancestor and the `:hover` ancestor of the same target, and
+> pointing at the cell that changes is the clearer affordance. `focus-within` mirrors
+> it for keyboard users.
+>
+> Every glyph resolves to the matching ITUI icon component — `Circle_phos` →
+> `CircleRegularIcon`, `CaretDown`/`CaretUp` → `CaretDown`/`CaretUpRegularIcon`,
+> `SidebarSimple` → `SidebarSimpleRegularIcon` — at Figma's 20px / 16px boxes. The
+> brand mark is a consumer slot (`LnbLogo` children), rendered in the story by
+> `DiamondsFourFillIcon`, the same stand-in `Gnb.stories.tsx` uses.
 
 ---
 
@@ -610,6 +866,16 @@ These are NOT Tailwind built-ins — they must be declared explicitly.
 | `component.calendar.width.lg`    | `size/container/lg`           | `--width-calendar-lg`           | Calendar   |
 | `component.calendar.width.xl`    | RangePicker frame `27729:706` | `--width-calendar-xl`           | DatePicker |
 | `component.calendar.width.panel` | RangePicker panel `27729:708` | `--width-calendar-panel`        | DatePicker |
+| `size.container.md`              | `size/container/md`           | `--width-container-md`          | GNB        |
+| `shadow.upwards.sm`              | `shadow/upwards/sm`           | `--shadow-upwards-sm`           | Navigation V2 |
+| `size.container.xs`              | `size/container/xs`           | `--width-container-xs`          | OverflowMenu |
+| `shadow.rightwards.sm`           | `shadow/rightwards/sm`        | `--shadow-rightwards-sm`        | LNB        |
+| `motion.animate.collapsible`     | — (Radix Collapsible)         | `--animate-collapsible-down/-up`| LNB        |
+
+> `--width-container-md` is the canonical `size/container/md` (358px).
+> `--width-calendar-md` and `--width-snackbar` are older component-scoped aliases of
+> the same Figma variable — prefer `--width-container-md` for new components, and fold
+> the aliases into it when those two components are next touched.
 
 ### Duplicates Removed
 
@@ -638,6 +904,6 @@ These are NOT Tailwind built-ins — they must be declared explicitly.
 | `radius/2xl`             | `28px`      | `rounded-2xl = 16px` | No built-in → TODO `--radius-component-2xl: 1.75rem`                        |
 | `color/semantic/red/500` | `#f44336`   | `red-500 = #ef4444`  | Add as custom `--color-semantic-red-500`; do not conflate with Tailwind red |
 
-| Token                    | Figma Value            | itui.css Value            | Resolution                                                                                                                                             |
-| ------------------------ | ---------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Token                    | Figma Value                  | itui.css Value                                    | Resolution                                                                                                                                                                                                                                                                                           |
+| ------------------------ | ---------------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `color/opacity/black/lg` | `#1a1a1a99` (26,26,26 @ 0.6) | `--color-opacity-black-lg` = `rgba(15,15,15,0.5)` | Same Figma name, different base and alpha. Rewriting the existing var would break its `xs…xl` siblings, which all share the `#0f0f0f` base — so the Snackbar value landed as its own `--color-surface-snackbar-dark`. Reconcile the whole `opacity/black` ramp against Figma before merging the two. |
