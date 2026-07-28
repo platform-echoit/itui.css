@@ -239,6 +239,7 @@
   --width-calendar-xl: 624px; /* DatePicker RangePicker, 2 × 312px month panel */
   --width-calendar-panel: 312px; /* one month panel inside the RangePicker */
   --width-date-header: 280px; /* Date Header row (prev · caption · next) */
+  --width-snackbar: 358px; /* size/container/md */
 
   /* ── Line Height ──────────────────────────────────────────────────────── */
   --leading-xs: 16px;
@@ -288,6 +289,9 @@
   --color-surface-neutral-strong: #2a2a2a; /* surface/neutral/strong/default */
   --color-surface-success-muted: #459f494d; /* color/semantic/green/600@30 */
   --color-surface-error-muted: #de3d314d; /* color/semantic/red/600@30 */
+  /* Figma color/opacity/black/lg (#1a1a1a99). Kept separate from
+     --color-opacity-black-lg, which is a different base (#0f0f0f) and alpha (0.5). */
+  --color-surface-snackbar-dark: rgba(26, 26, 26, 0.6);
 
   --color-border-primary: #009ce0;
   --color-border-primary-hover: #54bdea;
@@ -371,6 +375,21 @@
   --shadow-downwards-md: 0 12px 24px 0 rgba(26, 26, 26, 0.08);
   --shadow-downwards-lg: 0 20px 48px 0 rgba(26, 26, 26, 0.08);
   --shadow-leftwards-lg: -20px 0 48px 0 rgba(26, 26, 26, 0.08);
+
+  /* ── Motion ──────────────────────────────────────────────────────────── */
+  /* Skeleton "Wave": a band half the width of the skeleton sweeps across it.
+     Figma draws the two loop endpoints as siblings — Start at left:-50% and
+     End at left:100% of the box — which for a 50%-wide band is translateX
+     from -100% to 200% of its own width. Figma pins no duration variable. */
+  --animate-skeleton-wave: skeleton-wave 1.6s linear infinite;
+  @keyframes skeleton-wave {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(200%);
+    }
+  }
 }
 
 /* Scrollable, but with no visible scrollbar — the wheel picker scrolls by drag/snap. */

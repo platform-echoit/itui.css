@@ -159,12 +159,12 @@ Defined in `@theme` as `--color-{name}`. Used directly as Tailwind utilities.
 
 #### Surface
 
-| Token                          | CSS Variable                     | Value       | Tailwind Class              |
-| ------------------------------ | -------------------------------- | ----------- | --------------------------- |
-| `color.surface.hover`          | `--color-surface-hover`          | `TODO`      | `bg-surface-hover`          |
-| `color.surface.pressed`        | `--color-surface-pressed`        | `TODO`      | `bg-surface-pressed`        |
-| `color.surface.success.muted`  | `--color-surface-success-muted`  | `#459f494d` | `bg-surface-success-muted`  |
-| `color.surface.error.muted`    | `--color-surface-error-muted`    | `#de3d314d` | `bg-surface-error-muted`    |
+| Token                         | CSS Variable                    | Value       | Tailwind Class             |
+| ----------------------------- | ------------------------------- | ----------- | -------------------------- |
+| `color.surface.hover`         | `--color-surface-hover`         | `TODO`      | `bg-surface-hover`         |
+| `color.surface.pressed`       | `--color-surface-pressed`       | `TODO`      | `bg-surface-pressed`       |
+| `color.surface.success.muted` | `--color-surface-success-muted` | `#459f494d` | `bg-surface-success-muted` |
+| `color.surface.error.muted`   | `--color-surface-error-muted`   | `#de3d314d` | `bg-surface-error-muted`   |
 
 > `surface.success.muted` / `surface.error.muted` are the Figma `color/semantic/{green,red}/600@30`
 > tints, added for the Calendar event badges. They pair with `text-success` / `text-destructive`.
@@ -529,13 +529,59 @@ These are NOT Tailwind built-ins — they must be declared explicitly.
 > ⚠ The `--size-*` namespace only generates the square `size-*` utility — it does **not** produce
 > `w-*` / `h-*`. Container widths therefore live in `--width-*`, which does generate `w-*`.
 
-| Token                      | CSS Variable          | Value   | Figma Token         | Tailwind Class   |
-| -------------------------- | --------------------- | ------- | ------------------- | ---------------- |
-| `component.calendar.width.md` | `--width-calendar-md` | `358px` | `size/container/md` | `w-calendar-md`  |
-| `component.calendar.width.lg` | `--width-calendar-lg` | `480px` | `size/container/lg` | `w-calendar-lg`  |
-| `component.calendar.width.xl` | `--width-calendar-xl` | `624px` | RangePicker frame (27729:706) | `w-calendar-xl` |
+| Token                            | CSS Variable             | Value   | Figma Token                         | Tailwind Class     |
+| -------------------------------- | ------------------------ | ------- | ----------------------------------- | ------------------ |
+| `component.calendar.width.md`    | `--width-calendar-md`    | `358px` | `size/container/md`                 | `w-calendar-md`    |
+| `component.calendar.width.lg`    | `--width-calendar-lg`    | `480px` | `size/container/lg`                 | `w-calendar-lg`    |
+| `component.calendar.width.xl`    | `--width-calendar-xl`    | `624px` | RangePicker frame (27729:706)       | `w-calendar-xl`    |
 | `component.calendar.width.panel` | `--width-calendar-panel` | `312px` | RangePicker month panel (27729:708) | `w-calendar-panel` |
-| `component.dateHeader.width` | `--width-date-header` | `280px` | Date Header (27193:2381) | `w-date-header` |
+| `component.dateHeader.width`     | `--width-date-header`    | `280px` | Date Header (27193:2381)            | `w-date-header`    |
+
+### Stepper
+
+| Token                       | CSS Variable        | Value  | Figma Token         | Tailwind Class    |
+| --------------------------- | ------------------- | ------ | ------------------- | ----------------- |
+| `component.stepper.size.sm` | `--size-stepper-sm` | `24px` | `height/stepper/sm` | `size-stepper-sm` |
+| `component.stepper.size.md` | `--size-stepper-md` | `28px` | `height/stepper/md` | `size-stepper-md` |
+| `component.dot.size.sm`     | `--size-dot-sm`     | `10px` | `height/dot/sm`     | `size-dot-sm`     |
+
+### List
+
+> ⚠ Same `--size-*` caveat as Calendar: the namespace only generates the square `size-*`
+> utility, so these two cannot be used as row heights. Rows use the spacing scale instead —
+> the pixel values are identical.
+
+| Token                    | CSS Variable     | Value  | Figma Token       | Used as                           |
+| ------------------------ | ---------------- | ------ | ----------------- | --------------------------------- |
+| `component.list.size.sm` | `--size-list-sm` | `40px` | `height/list/sm`  | `min-h-10` (label-only row)       |
+| `component.list.size.md` | `--size-list-md` | `56px` | List `27901:1785` | `min-h-14` (row with description) |
+
+### Snackbar
+
+| Token                            | CSS Variable                    | Value                | Figma Token              | Tailwind Class               |
+| -------------------------------- | ------------------------------- | -------------------- | ------------------------ | ---------------------------- |
+| `component.snackbar.width`       | `--width-snackbar`              | `358px`              | `size/container/md`      | `w-snackbar`                 |
+| `color.surface.snackbar.dark`    | `--color-surface-snackbar-dark` | `rgba(26,26,26,0.6)` | `color/opacity/black/lg` | `bg-surface-snackbar-dark`   |
+
+> The Light tone needs no new token: `color/opacity/white/xl` (`#ffffffcc`) is already
+> `--color-opacity-white-xl`, and `blur/default` (a `BACKGROUND_BLUR` of `shadow/blur/xs` = 4)
+> is the same `blur(4px / 2)` the existing `@utility backdrop-blur-dialog` computes, so
+> Snackbar reuses that utility rather than declaring a second one.
+
+### Skeleton
+
+| Token                     | CSS Variable              | Value                                | Figma Source                        | Tailwind Class          |
+| ------------------------- | ------------------------- | ------------------------------------ | ----------------------------------- | ----------------------- |
+| `motion.animate.skeleton` | `--animate-skeleton-wave` | `skeleton-wave 1.6s linear infinite` | Skeleton `Animation=Wave` Start/End | `animate-skeleton-wave` |
+
+> The `Wave` overlay is a band half the skeleton's width. Figma models the loop as two
+> sibling frames — Start at `left:-50%`, End at `left:100%` of the box — which for that
+> band is `translateX(-100%)` → `translateX(200%)` of its own width. Figma pins no
+> duration variable, so the `1.6s linear` lives in the `--animate-*` token itself
+> (the Tailwind v4 pattern, same as the built-in `--animate-spin`).
+>
+> `Animation=Pulse` needs no token: its End fill `rgba(0,0,0,0.04)` is exactly half the
+> Start alpha `color/opacity/black/xs`, which the built-in `animate-pulse` already draws.
 
 ---
 
@@ -543,34 +589,38 @@ These are NOT Tailwind built-ins — they must be declared explicitly.
 
 ### Missing Tokens
 
-| Token                              | Reason                                                             | Resolution                                                  |
-| ---------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------- |
-| `color.surface.hover`              | Value not specified in Figma or source                             | Add hex to `@theme` and update here                         |
-| `color.surface.pressed`            | Value not specified in Figma or source                             | Add hex to `@theme` and update here                         |
-| `typography.letterSpacing.lg`      | Used in Button (`tracking-lg`) but pixel value not in Figma export | Measure in Figma for `font/size/16` pairing                 |
-| `typography.fontFamily.pretendard` | Used in Figma designs but not in system `@theme`                   | Register `@font-face` + add `--font-pretendard` to `@theme` |
-| `component.badge.color.bg`         | `color/semantic/red/500 = #f44336` not in Tailwind palette         | Add `--color-semantic-red-500: #f44336` to `@theme`         |
+| Token                              | Reason                                                                                                                    | Resolution                                                                                                                                          |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `color.surface.hover`              | Value not specified in Figma or source                                                                                    | Add hex to `@theme` and update here                                                                                                                 |
+| `color.surface.pressed`            | Value not specified in Figma or source                                                                                    | Add hex to `@theme` and update here                                                                                                                 |
+| `typography.letterSpacing.lg`      | Used in Button (`tracking-lg`) but pixel value not in Figma export                                                        | Measure in Figma for `font/size/16` pairing                                                                                                         |
+| `typography.fontFamily.pretendard` | Used in Figma designs but not in system `@theme`                                                                          | Register `@font-face` + add `--font-pretendard` to `@theme`                                                                                         |
+| `component.badge.color.bg`         | `color/semantic/red/500 = #f44336` not in Tailwind palette                                                                | Add `--color-semantic-red-500: #f44336` to `@theme`                                                                                                 |
+| `component.progress.ring.stroke`   | Only `lg` has a Figma variable (`Border Width/200 = 8`); `md` (5px) and `sm` (~3.6px) were measured off the rendered node | Kept as an SVG `strokeWidth` constant in `progress/Progress.tsx` — SVG stroke is an attribute, not a Tailwind utility, so no `@theme` entry applies |
 
 ### Resolved (previously missing)
 
-| Token                          | Figma Source                  | Added As                        | Used By  |
-| ------------------------------ | ----------------------------- | ------------------------------- | -------- |
-| `color.surface.success.muted`  | `color/semantic/green/600@30` | `--color-surface-success-muted` | Calendar |
-| `color.surface.error.muted`    | `color/semantic/red/600@30`   | `--color-surface-error-muted`   | Calendar |
-| `component.calendar.width.md`  | `size/container/md`           | `--width-calendar-md`           | Calendar |
-| `component.calendar.width.lg`  | `size/container/lg`           | `--width-calendar-lg`           | Calendar |
-| `component.calendar.width.xl`    | RangePicker frame `27729:706` | `--width-calendar-xl`         | DatePicker |
-| `component.calendar.width.panel` | RangePicker panel `27729:708` | `--width-calendar-panel`      | DatePicker |
+| Token                            | Figma Source                  | Added As                        | Used By    |
+| -------------------------------- | ----------------------------- | ------------------------------- | ---------- |
+| `color.surface.snackbar.dark`    | `color/opacity/black/lg`      | `--color-surface-snackbar-dark` | Snackbar   |
+| `component.snackbar.width`       | `size/container/md`           | `--width-snackbar`              | Snackbar   |
+| `color.surface.success.muted`    | `color/semantic/green/600@30` | `--color-surface-success-muted` | Calendar   |
+| `color.surface.error.muted`      | `color/semantic/red/600@30`   | `--color-surface-error-muted`   | Calendar   |
+| `component.calendar.width.md`    | `size/container/md`           | `--width-calendar-md`           | Calendar   |
+| `component.calendar.width.lg`    | `size/container/lg`           | `--width-calendar-lg`           | Calendar   |
+| `component.calendar.width.xl`    | RangePicker frame `27729:706` | `--width-calendar-xl`           | DatePicker |
+| `component.calendar.width.panel` | RangePicker panel `27729:708` | `--width-calendar-panel`        | DatePicker |
 
 ### Duplicates Removed
 
-| Removed                           | Canonical                           | Reason                                            |
-| --------------------------------- | ----------------------------------- | ------------------------------------------------- |
-| `color/static/white` (Figma)      | `color.white` (`--color-white`)     | Same value `#ffffff`; Tailwind built-in covers it |
-| `text/sematic/inverse` (Figma)    | `color.white`                       | Same value `#ffffff`; maps to `text-white`        |
-| `text/neutral/default` (Figma)    | `color.neutral.ink` (`--color-ink`) | Same value `#0f0f0f`                              |
-| `static/scale/500` (Figma, 20px)  | `spacing.5` (`--spacing-5`, 20px)   | Resolved via spacing scale                        |
-| `static/scale/1000` (Figma, 40px) | `spacing.10` (`--spacing-10`, 40px) | Resolved via spacing scale                        |
+| Removed                                               | Canonical                                                         | Reason                                                                                                                                                                   |
+| ----------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `color/static/white` (Figma)                          | `color.white` (`--color-white`)                                   | Same value `#ffffff`; Tailwind built-in covers it                                                                                                                        |
+| `text/sematic/inverse` (Figma)                        | `color.white`                                                     | Same value `#ffffff`; maps to `text-white`                                                                                                                               |
+| `text/neutral/default` (Figma)                        | `color.neutral.ink` (`--color-ink`)                               | Same value `#0f0f0f`                                                                                                                                                     |
+| `static/scale/500` (Figma, 20px)                      | `spacing.5` (`--spacing-5`, 20px)                                 | Resolved via spacing scale                                                                                                                                               |
+| `static/scale/1000` (Figma, 40px)                     | `spacing.10` (`--spacing-10`, 40px)                               | Resolved via spacing scale                                                                                                                                               |
+| `surface/neutral/disabled/default` (Figma, `#f5f5f5`) | `color.surface.neutral.subtle` (`--color-surface-neutral-subtle`) | Same value `#f5f5f5`. Note `--color-surface-neutral-disabled` is `#ededed` — it maps to Figma's `surface/neutral/disabled/**inverse**`, not `/default`. Used by Stepper. |
 
 ### Renamed Tokens
 
@@ -587,3 +637,7 @@ These are NOT Tailwind built-ins — they must be declared explicitly.
 | `radius/lg`              | `16px`      | `rounded-lg = 8px`   | Use `rounded-2xl` (1rem = 16px) in components; Figma scale ≠ Tailwind scale |
 | `radius/2xl`             | `28px`      | `rounded-2xl = 16px` | No built-in → TODO `--radius-component-2xl: 1.75rem`                        |
 | `color/semantic/red/500` | `#f44336`   | `red-500 = #ef4444`  | Add as custom `--color-semantic-red-500`; do not conflate with Tailwind red |
+
+| Token                    | Figma Value            | itui.css Value            | Resolution                                                                                                                                             |
+| ------------------------ | ---------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `color/opacity/black/lg` | `#1a1a1a99` (26,26,26 @ 0.6) | `--color-opacity-black-lg` = `rgba(15,15,15,0.5)` | Same Figma name, different base and alpha. Rewriting the existing var would break its `xs…xl` siblings, which all share the `#0f0f0f` base — so the Snackbar value landed as its own `--color-surface-snackbar-dark`. Reconcile the whole `opacity/black` ramp against Figma before merging the two. |
