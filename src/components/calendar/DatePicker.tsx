@@ -1,3 +1,5 @@
+'use client';
+
 import { isValidElement, type CSSProperties, type ReactNode } from 'react';
 import {
   DayPicker,
