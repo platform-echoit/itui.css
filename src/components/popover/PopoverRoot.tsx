@@ -1,5 +1,5 @@
 import * as PopoverPrimitive from '@radix-ui/react-popover';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, RefObject } from 'react';
 import { cn } from '../../lib/utils';
 
 // ─── Root / Trigger / Portal / Close ─────────────────────────────────────────
@@ -20,6 +20,39 @@ export function PopoverTrigger({
   return <PopoverPrimitive.Trigger className={cn(className)} {...props} />;
 }
 PopoverTrigger.displayName = 'PopoverTrigger';
+
+type RadixAnchorProps = ComponentProps<typeof PopoverPrimitive.Anchor>;
+
+export interface PopoverAnchorProps
+  extends Omit<RadixAnchorProps, 'virtualRef'> {
+  /**
+   * Position against this element instead — nothing is rendered. Use it to
+   * anchor to a node the anchor cannot wrap, such as an input's box while the
+   * label and error message stay outside the popover's reference rect.
+   */
+  virtualRef?: RefObject<Element | null>;
+}
+
+/**
+ * Positions the content against something other than the trigger — e.g. a whole
+ * input field whose caret button is the trigger.
+ */
+export function PopoverAnchor({
+  className,
+  virtualRef,
+  ...props
+}: PopoverAnchorProps) {
+  return (
+    <PopoverPrimitive.Anchor
+      className={cn(className)}
+      // Radix's types predate refs that are null before mount; the runtime only
+      // reads the ref once it is measuring.
+      virtualRef={virtualRef as RadixAnchorProps['virtualRef']}
+      {...props}
+    />
+  );
+}
+PopoverAnchor.displayName = 'PopoverAnchor';
 
 export function PopoverPortal(
   props: ComponentProps<typeof PopoverPrimitive.Portal>,

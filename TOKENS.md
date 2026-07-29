@@ -165,6 +165,7 @@ Defined in `@theme` as `--color-{name}`. Used directly as Tailwind utilities.
 | `color.surface.pressed`       | `--color-surface-pressed`       | `TODO`      | `bg-surface-pressed`       |
 | `color.surface.success.muted` | `--color-surface-success-muted` | `#459f494d` | `bg-surface-success-muted` |
 | `color.surface.error.muted`   | `--color-surface-error-muted`   | `#de3d314d` | `bg-surface-error-muted`   |
+| `color.surface.error.subtle`  | `--color-surface-error-subtle`  | `#feeceb`   | `bg-surface-error-subtle` |
 
 > `surface.success.muted` / `surface.error.muted` are the Figma `color/semantic/{green,red}/600@30`
 > tints, added for the Calendar event badges. They pair with `text-success` / `text-destructive`.
@@ -177,6 +178,22 @@ Defined in `@theme` as `--color-{name}`. Used directly as Tailwind utilities.
 | `color.neutral.muted`    | `--color-neutral-muted`    | `#595858` | `text-neutral-muted`                                |
 | `color.neutral.disabled` | `--color-neutral-disabled` | `#c2c2c2` | `text-neutral-disabled` · `border-neutral-disabled` |
 | `color.neutral.subtle`   | `--color-neutral-subtle`   | `#ededed` | `border-neutral-subtle`                             |
+
+#### Figma Ramps
+
+The full ITUI colour ramps — 129 variables across four namespaces, each mirroring its Figma
+path 1:1. See the `### Colors` section under _Component Tokens_ for the values, the
+duplication list and the ⚠ Tailwind-collision warning.
+
+| Figma namespace         | CSS Variable pattern       | Steps            | Example class          |
+| ----------------------- | -------------------------- | ---------------- | ---------------------- |
+| `color/brand/sky/*`      | `--color-brand-sky-*`      | 50…900           | `bg-brand-sky-500`     |
+| `color/brand/neutral/*`  | `--color-brand-neutral-*`  | 50…900, 950      | `bg-brand-neutral-950` |
+| `color/semantic/{hue}/*` | `--color-semantic-{hue}-*` | 50, 500 (red +700) | `bg-semantic-red-500`  |
+| `color/scheme/{hue}/*`   | `--color-scheme-{hue}-*`   | 50…900 × 10 hues | `bg-scheme-teal-500`   |
+
+> ⚠ Never write `bg-teal-500` / `text-yellow-400` for an ITUI hue — those are Tailwind's own
+> built-ins at different values, and `apps/web` depends on them. Use the `scheme-` prefix.
 
 #### Figma Semantic Colors
 
@@ -246,6 +263,39 @@ Exact pixel values from Figma `static/space/*` tokens, resolved to the base scal
 | `static/space/4`  | `4px`  | `p-1`            |
 | `static/space/40` | `40px` | `p-10`           |
 
+### 2.3 The ITUI spacing scale — the Spacing foundation board
+
+Figma node `29919:311`. Eleven named steps, a 4px progression that doubles its own step twice
+(`+4` up to 24, `+8` to 48, `+16` to 64). **Every step already exists on the base scale above —
+no new CSS variable was added.**
+
+| ITUI step | px | CSS Variable   | gap class | padding class |
+| --------- | -- | -------------- | --------- | ------------- |
+| `none`    | 0  | `--spacing-0`  | `gap-0`   | `p-0`         |
+| `xs`      | 4  | `--spacing-1`  | `gap-1`   | `p-1`         |
+| `sm`      | 8  | `--spacing-2`  | `gap-2`   | `p-2`         |
+| `md`      | 12 | `--spacing-3`  | `gap-3`   | `p-3`         |
+| `lg`      | 16 | `--spacing-4`  | `gap-4`   | `p-4`         |
+| `xl`      | 20 | `--spacing-5`  | `gap-5`   | `p-5`         |
+| `2xl`     | 24 | `--spacing-6`  | `gap-6`   | `p-6`         |
+| `3xl`     | 32 | `--spacing-8`  | `gap-8`   | `p-8`         |
+| `4xl`     | 40 | `--spacing-10` | `gap-10`  | `p-10`        |
+| `5xl`     | 48 | `--spacing-12` | `gap-12`  | `p-12`        |
+| `6xl`     | 64 | `--spacing-16` | `gap-16`  | `p-16`        |
+
+> ⚠ **The name trap.** ITUI and Tailwind share no naming axis here, and where the step names
+> collide across this package they mean different pixels:
+>
+> ```
+> spacing/md = 12px   spacing/lg = 16px   spacing/xl = 20px
+> radius/md  = 12px   radius/lg  = 16px   radius/xl  = 20px
+> --leading-md = 24   --leading-lg = 26   --leading-xl = 28
+> ```
+>
+> A layer bound to `spacing/xl` is 20px, but anything else named `xl` is 28px. There is no
+> `gap-xl` — reach for `spacingClass.gap.xl` in `components/spacing`, the single reconciliation
+> point, exactly as `radiusClass` is for radius.
+
 ---
 
 ## 3. Radius
@@ -272,15 +322,33 @@ CSS variable pattern: `--radius-{key}` → Tailwind class: `rounded-{key}`.
 | ------------- | ------------ | ----------------- | ------------------------------------------------------------------------- |
 | `radius.base` | `--radius`   | `0.625rem` (10px) | Design system base radius, surfaced as `rounded-base` via `@theme inline` |
 
-### 3.3 Figma Radius Tokens
+### 3.3 Figma Radius Tokens — the ITUI scale
 
-> ⚠ Figma uses a different radius scale. Map by pixel value, not by name.
+> ⚠ Figma and Tailwind share the step **names** but not their **values**. Map by pixel
+> value, not by name: Figma `radius/sm` is 8px while `rounded-sm` is 4px.
+> `radiusClass` in `components/radius/Radius.tsx` is the single reconciliation point —
+> reach for `radiusClass.md` rather than `rounded-md` (6px, a different scale).
 
-| Figma Token   | px               | Maps to Tailwind                                        |
-| ------------- | ---------------- | ------------------------------------------------------- |
-| `radius/full` | `999px`          | `rounded-full`                                          |
-| `radius/2xl`  | `28px` → 1.75rem | No built-in equivalent → `TODO: --radius-component-2xl` |
-| `radius/lg`   | `16px` → 1rem    | `rounded-2xl` (Tailwind `--radius-2xl = 1rem`)          |
+| ITUI step     | px      | CSS Variable             | Tailwind Class            |
+| ------------- | ------- | ------------------------ | ------------------------- |
+| `radius/xs`   | `4px`   | `--radius-sm`            | `rounded-sm`              |
+| `radius/sm`   | `8px`   | `--radius-lg`            | `rounded-lg`              |
+| `radius/md`   | `12px`  | `--radius-xl`            | `rounded-xl`              |
+| `radius/lg`   | `16px`  | `--radius-2xl`           | `rounded-2xl`             |
+| `radius/xl`   | `20px`  | `--radius-component-xl`  | `rounded-component-xl`    |
+| `radius/2xl`  | `28px`  | `--radius-component-2xl` | `rounded-component-2xl`   |
+| `radius/full` | `999px` | `--radius-full`          | `rounded-full`            |
+
+See the `### Radius` section under *Component Tokens* for the full derivation, including
+why `md` is 12px despite its Figma layer binding.
+
+#### Nesting tokens (declared, currently unused)
+
+`--radius-{xs…xl}-nest-{4,8}` encode the outer = inner + padding rule (`--radius-md-nest-8`
+= 12 + 8 = 20px). No component references them yet, and the Radius board does not spec the
+rule — but each one is `base + padding` of the scale above, which is what pins `md` to 12px.
+`--radius-3xl` is likewise declared (overridden to `32px`, vs Tailwind's built-in 24px) and
+unused.
 
 ---
 
@@ -317,13 +385,30 @@ CSS variable: `--text-{key}` → Tailwind class: `text-{key}`.
 | `typography.fontSize.8xl`  | `--text-8xl`  | `6rem`     | `96px`  | `text-8xl`     |
 | `typography.fontSize.9xl`  | `--text-9xl`  | `8rem`     | `128px` | `text-9xl`     |
 
-#### Figma Font Sizes
+#### Figma Font Sizes — the ITUI ramp
 
-| Figma Token    | px     | Maps to Tailwind |
-| -------------- | ------ | ---------------- |
-| `font/size/12` | `12px` | `text-xs`        |
-| `font/size/14` | `14px` | `text-sm`        |
-| `font/size/18` | `18px` | `text-lg`        |
+Ten sizes. Seven already exist on the Tailwind scale; three have no built-in at the
+right value (Tailwind's `text-3xl` is 30px and `text-4xl` is 36px, neither an ITUI
+step, and there is no 11px key at all) and were added as `--text-{style}`, named
+after the style that owns them so they cannot shadow a Tailwind utility.
+
+| Figma Token             | px     | CSS Variable         | Tailwind Class     |
+| ----------------------- | ------ | -------------------- | ------------------ |
+| `typography/size/11`    | `11px` | `--text-caption-xs`  | `text-caption-xs`  |
+| `typography/size/12`    | `12px` | `--text-xs`          | `text-xs`          |
+| `typography/size/14`    | `14px` | `--text-sm`          | `text-sm`          |
+| `typography/size/16`    | `16px` | `--text-base`        | `text-base`        |
+| `typography/size/18`    | `18px` | `--text-lg`          | `text-lg`          |
+| `typography/size/20`    | `20px` | `--text-xl`          | `text-xl`          |
+| `typography/size/24`    | `24px` | `--text-2xl`         | `text-2xl`         |
+| `typography/size/32`    | `32px` | `--text-heading-4xl` | `text-heading-4xl` |
+| `typography/size/40`    | `40px` | `--text-display-5xl` | `text-display-5xl` |
+| `typography/size/48`    | `48px` | `--text-5xl`         | `text-5xl`         |
+
+> ⚠ The step names collide across axes at different pixels — `heading-3xl` is 24px
+> but `text-3xl` is 30px, `body-lg` is 16px but `text-lg` is 18px. Reach for
+> `typographyClass` in `components/typography`; see the `### Typography` section
+> under _Component Tokens_.
 
 ### 4.3 Font Weight
 
@@ -361,13 +446,23 @@ CSS variable: `--leading-{key}` → Tailwind class: `leading-{key}`.
 | `typography.lineHeight.relaxed` | `--leading-relaxed` | `1.625` | `leading-relaxed` |
 | `typography.lineHeight.loose`   | `--leading-loose`   | `2`     | `leading-loose`   |
 
-#### Figma Line Heights (resolved via Tailwind spacing scale)
+#### Figma Line Heights — the ITUI ramp
 
-| Figma Token           | px     | Maps to Tailwind                             |
-| --------------------- | ------ | -------------------------------------------- |
-| `font/line-height/sm` | `16px` | `leading-4` (1rem)                           |
-| `font/line-height/md` | `20px` | `leading-5` (1.25rem)                        |
-| `font/line-height/xl` | `26px` | No built-in → `leading-[26px]` (last resort) |
+Declared in `@theme` as absolute px, one key per ITUI step, mirroring Figma 1:1.
+Additive to Tailwind's own `--leading-{tight…loose}`, which stay untouched.
+
+| Figma Token                 | CSS Variable    | Value  | Tailwind Class |
+| --------------------------- | --------------- | ------ | -------------- |
+| `typography/line-height/xs` | `--leading-xs`  | `16px` | `leading-xs`   |
+| `typography/line-height/sm` | `--leading-sm`  | `20px` | `leading-sm`   |
+| `typography/line-height/md` | `--leading-md`  | `24px` | `leading-md`   |
+| `typography/line-height/lg` | `--leading-lg`  | `26px` | `leading-lg`   |
+| `typography/line-height/xl` | `--leading-xl`  | `28px` | `leading-xl`   |
+| `typography/line-height/2xl` | `--leading-2xl` | `32px` | `leading-2xl`  |
+| `typography/line-height/3xl` | `--leading-3xl` | `36px` | `leading-3xl`  |
+| `typography/line-height/4xl` | `--leading-4xl` | `44px` | `leading-4xl`  |
+| `typography/line-height/5xl` | `--leading-5xl` | `52px` | `leading-5xl`  |
+| `typography/line-height/6xl` | `--leading-6xl` | `64px` | `leading-6xl`  |
 
 ### 4.5 Letter Spacing
 
@@ -384,24 +479,25 @@ CSS variable: `--tracking-{key}` → Tailwind class: `tracking-{key}`.
 | `typography.letterSpacing.wider`   | `--tracking-wider`   | `0.05em`   | `tracking-wider`   |
 | `typography.letterSpacing.widest`  | `--tracking-widest`  | `0.1em`    | `tracking-widest`  |
 
-#### itui.css Custom Letter Spacing Tokens
+#### itui.css Custom Letter Spacing Tokens — the ITUI ramp
 
-Defined in `@theme` to match Figma absolute pixel values at their paired font sizes.
+Defined in `@theme` as Figma's absolute pixel values at their paired font sizes,
+one key per ITUI step. Additive to Tailwind's own `--tracking-{tighter…widest}`,
+which stay untouched. The ramp crosses zero between `lg` and `xl`: the small
+steps are tracked out, the display steps tightened in.
 
-| Token                         | CSS Variable    | Value     | Paired Font Size   | Tailwind Class |
-| ----------------------------- | --------------- | --------- | ------------------ | -------------- |
-| `typography.letterSpacing.sm` | `--tracking-sm` | `0.3px`   | `12px (text-xs)`   | `tracking-sm`  |
-| `typography.letterSpacing.md` | `--tracking-md` | `0.2px`   | `14px (text-sm)`   | `tracking-md`  |
-| `typography.letterSpacing.lg` | `--tracking-lg` | `TODO`    | `16px (text-base)` | `tracking-lg`  |
-| `typography.letterSpacing.xl` | `--tracking-xl` | `-0.04px` | `18px (text-lg)`   | `tracking-xl`  |
-
-#### Figma Letter Spacing
-
-| Figma Token              | Absolute px | Maps to Token |
-| ------------------------ | ----------- | ------------- |
-| `font/letter-spacing/sm` | `0.3px`     | `tracking-sm` |
-| `font/letter-spacing/md` | `0.2px`     | `tracking-md` |
-| `font/letter-spacing/xl` | `-0.04px`   | `tracking-xl` |
+| Figma Token                       | CSS Variable     | Value     | Paired Font Size            | Tailwind Class  |
+| --------------------------------- | ---------------- | --------- | --------------------------- | --------------- |
+| `typography/letter-spacing/xs`    | `--tracking-xs`  | `0.33px`  | `11px (text-caption-xs)`    | `tracking-xs`   |
+| `typography/letter-spacing/sm`    | `--tracking-sm`  | `0.3px`   | `12px (text-xs)`            | `tracking-sm`   |
+| `typography/letter-spacing/md`    | `--tracking-md`  | `0.2px`   | `14px (text-sm)`            | `tracking-md`   |
+| `typography/letter-spacing/lg`    | `--tracking-lg`  | `0.09px`  | `16px (text-base)`          | `tracking-lg`   |
+| `typography/letter-spacing/xl`    | `--tracking-xl`  | `-0.04px` | `18px (text-lg)`            | `tracking-xl`   |
+| `typography/letter-spacing/2xl`   | `--tracking-2xl` | `-0.24px` | `20px (text-xl)`            | `tracking-2xl`  |
+| `typography/letter-spacing/3xl`   | `--tracking-3xl` | `-0.55px` | `24px (text-2xl)`           | `tracking-3xl`  |
+| `typography/letter-spacing/4xl`   | `--tracking-4xl` | `-0.64px` | `32px (text-heading-4xl)`   | `tracking-4xl`  |
+| `typography/letter-spacing/5xl`   | `--tracking-5xl` | `-1.13px` | `40px (text-display-5xl)`   | `tracking-5xl`  |
+| `typography/letter-spacing/6xl`   | `--tracking-6xl` | `-1.68px` | `48px (text-5xl)`           | `tracking-6xl`  |
 
 ---
 
@@ -409,16 +505,46 @@ Defined in `@theme` to match Figma absolute pixel values at their paired font si
 
 CSS variable: `--shadow-{key}` → Tailwind class: `shadow-{key}`.
 
-| Token          | CSS Variable     | Value                                                                 | Tailwind Class |
-| -------------- | ---------------- | --------------------------------------------------------------------- | -------------- |
-| `shadow.none`  | `--shadow-none`  | `0 0 #0000`                                                           | `shadow-none`  |
-| `shadow.xs`    | `--shadow-xs`    | `0 1px 2px 0 rgb(0 0 0 / 0.05)`                                       | `shadow-xs`    |
-| `shadow.sm`    | `--shadow-sm`    | `0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)`       | `shadow-sm`    |
-| `shadow.md`    | `--shadow-md`    | `0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)`    | `shadow-md`    |
-| `shadow.lg`    | `--shadow-lg`    | `0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)`  | `shadow-lg`    |
-| `shadow.xl`    | `--shadow-xl`    | `0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)` | `shadow-xl`    |
-| `shadow.2xl`   | `--shadow-2xl`   | `0 25px 50px -12px rgb(0 0 0 / 0.25)`                                 | `shadow-2xl`   |
-| `shadow.inner` | `--shadow-inner` | `inset 0 2px 4px 0 rgb(0 0 0 / 0.05)`                                 | `shadow-inner` |
+> ⚠ **This package ships two shadow ramps.** They share the `shadow-*` prefix but come from
+> different sources and are not interchangeable — see §5.3 and the Value Conflicts table.
+
+### 5.1 The named ramp — `xs…xl` (ITUI, overrides Tailwind)
+
+`global.css` re-points Tailwind's own `--shadow-{xs…xl}` onto an older ITUI ramp based on
+`#0f0f0f` at 8%. `2xl`, `inner` and `none` keep Tailwind's stock values.
+
+| Token          | CSS Variable     | Value                                                              | Tailwind Class |
+| -------------- | ---------------- | ------------------------------------------------------------------ | -------------- |
+| `shadow.none`  | `--shadow-none`  | `0 0 #0000`                                                        | `shadow-none`  |
+| `shadow.xs`    | `--shadow-xs`    | `0 4px 4px 0 rgba(15,15,15,0.08)`                                  | `shadow-xs`    |
+| `shadow.sm`    | `--shadow-sm`    | `0 8px 16px 0 rgba(15,15,15,0.08)`                                 | `shadow-sm`    |
+| `shadow.md`    | `--shadow-md`    | `0 12px 24px 0 rgba(15,15,15,0.08)`                                | `shadow-md`    |
+| `shadow.lg`    | `--shadow-lg`    | `0 16px 48px 0 rgba(15,15,15,0.08)`                                | `shadow-lg`    |
+| `shadow.xl`    | `--shadow-xl`    | `0 20px 64px 0 rgba(15,15,15,0.08)`                                | `shadow-xl`    |
+| `shadow.2xl`   | `--shadow-2xl`   | `0 25px 50px -12px rgb(0 0 0 / 0.25)` (Tailwind stock)             | `shadow-2xl`   |
+| `shadow.inner` | `--shadow-inner` | `inset 0 2px 4px 0 rgb(0 0 0 / 0.05)` (Tailwind stock)             | `shadow-inner` |
+
+### 5.2 The directional ramp — the Shadow foundation board
+
+Twelve tokens, `--shadow-{downwards,upwards,leftwards,rightwards}-{sm,md,lg}`, all on
+`rgba(26,26,26,0.08)`. One 3-step ramp (`sm` 4/16 · `md` 12/24 · `lg` 20/48) mirrored onto four
+axes. See the `### Shadow` section under _Component Tokens_ for values and derivation.
+
+Reach for `shadowClass` in `components/shadow` rather than typing these by hand.
+
+### 5.3 ⚠ The two ramps overlap but do not match
+
+| Class       | §5.1 named ramp                  | §5.2 nearest directional        | Difference        |
+| ----------- | -------------------------------- | ------------------------------- | ----------------- |
+| `shadow-sm` | `0 8px 16px rgba(15,15,15,.08)`  | `0 4px 16px rgba(26,26,26,.08)` | offset **and** grey |
+| `shadow-md` | `0 12px 24px rgba(15,15,15,.08)` | `0 12px 24px rgba(26,26,26,.08)` | grey only         |
+| `shadow-lg` | `0 16px 48px rgba(15,15,15,.08)` | `0 20px 48px rgba(26,26,26,.08)` | offset **and** grey |
+
+`shadow-md` is the trap: it matches `shadow-downwards-md` on geometry and differs only in base
+grey, so the two are indistinguishable by eye but are different tokens. **`shadow-md` is not
+`shadow-downwards-md`.** Reconciling the ramps is a re-point of five variables plus a sweep of
+every `shadow-*` in `packages/ui` — deliberately out of scope; `shadowClass` is the interim
+answer.
 
 ---
 
@@ -536,6 +662,45 @@ These are NOT Tailwind built-ins — they must be declared explicitly.
 | `component.calendar.width.xl`    | `--width-calendar-xl`    | `624px` | RangePicker frame (27729:706)       | `w-calendar-xl`    |
 | `component.calendar.width.panel` | `--width-calendar-panel` | `312px` | RangePicker month panel (27729:708) | `w-calendar-panel` |
 | `component.dateHeader.width`     | `--width-date-header`    | `280px` | Date Header (27193:2381)            | `w-date-header`    |
+
+### Typography
+
+> ⚠ Same shape as Radius and Spacing: ITUI and Tailwind share the step **names** but
+> not their **values**. `typographyClass` in `components/typography/Typography.tsx` is
+> the single reconciliation point — reach for `typographyClass['heading-3xl']` rather
+> than assembling `text-3xl leading-3xl tracking-3xl` (30px, a different scale).
+
+The ITUI type scale is **one ten-step ramp**, not four. Each step belongs to exactly
+one family, so the step name alone identifies the style — `2xl` is always heading,
+`md` is always body, there is no `body/2xl`.
+
+| Variant       | size | line-height | letter-spacing | Tailwind classes                       |
+| ------------- | ---- | ----------- | -------------- | -------------------------------------- |
+| `display-6xl` | 48   | 64          | -1.68          | `text-5xl leading-6xl tracking-6xl`         |
+| `display-5xl` | 40   | 52          | -1.13          | `text-display-5xl leading-5xl tracking-5xl` |
+| `heading-4xl` | 32   | 44          | -0.64          | `text-heading-4xl leading-4xl tracking-4xl` |
+| `heading-3xl` | 24   | 36          | -0.55          | `text-2xl leading-3xl tracking-3xl`         |
+| `heading-2xl` | 20   | 32          | -0.24          | `text-xl leading-2xl tracking-2xl`          |
+| `heading-xl`  | 18   | 28          | -0.04          | `text-lg leading-xl tracking-xl`            |
+| `body-lg`     | 16   | 26          | 0.09           | `text-base leading-lg tracking-lg`          |
+| `body-md`     | 14   | 24          | 0.2            | `text-sm leading-md tracking-md`            |
+| `caption-sm`  | 12   | 20          | 0.3            | `text-xs leading-sm tracking-sm`            |
+| `caption-xs`  | 11   | 16          | 0.33           | `text-caption-xs leading-xs tracking-xs`    |
+
+**Only the font-size axis needed new tokens.** `--leading-{xs…6xl}` and
+`--tracking-{xs…6xl}` already *are* the ITUI ramp, 1:1 by step name, so they may be
+read off the step directly — the name trap applies to `text-*` alone.
+
+Weights are Tailwind's own: `regular` → `font-normal` (400), `medium` →
+`font-medium` (500), `semibold` → `font-semibold` (600), `bold` → `font-bold` (700).
+
+Colour is **not** part of the component. The board binds text to
+`text/neutral/default` (#0f0f0f), which is what `--foreground` already resolves to,
+so `Typography` inherits rather than seizing the colour axis.
+
+All four Figma families (`typography/family/{display,heading,body,caption}`) resolve
+to the same Pretendard binding — `--font-sans`, i.e. `font-sans`. No family token was
+added. The `@font-face` for Pretendard is still unregistered; see _Missing Tokens_.
 
 ### Stepper
 
@@ -807,8 +972,9 @@ value resolved to a token that already existed.
 > `@keyframes` rather than a `transition`, because `height: auto` has no interpolatable
 > value for a transition to start from; `--animate-collapsible-down` / `-up` read
 > Radix's measured `--radix-collapsible-content-height`. They are named for the
-> primitive, not for LNB, so `accordion/Accordion.tsx` — which ships with no height
-> animation for want of exactly these keyframes — can adopt them unchanged.
+> primitive, not for LNB, so `accordion/Accordion.tsx` uses them unchanged for its own
+> content open/close (Radix's Accordion is built on Collapsible, so it sets the same
+> CSS variable).
 >
 > Every one is disabled under `prefers-reduced-motion` (`motion-reduce:transition-none`
 > on the transitions, an `animation-duration: 1ms` guard in `global.css` for the two
@@ -839,6 +1005,556 @@ value resolved to a token that already existed.
 > brand mark is a consumer slot (`LnbLogo` children), rendered in the story by
 > `DiamondsFourFillIcon`, the same stand-in `Gnb.stories.tsx` uses.
 
+### Scroll Area
+
+Figma node `27288:877` ("Scroll", `Size=Md | Sm` × `State=Default | Hover`). No new CSS
+variable was added — and the two `--size-scroll-bar-*` tokens, previously declared but
+unused, finally carry the thumb.
+
+| Figma Token                         | Value     | CSS Variable                      | Tailwind Class                                       |
+| ----------------------------------- | --------- | --------------------------------- | ---------------------------------------------------- |
+| rail width, `Size=Md`               | `18px`    | spacing scale                     | `w-4.5` (1.125rem) · `h-4.5` horizontal              |
+| rail width, `Size=Sm`               | `12px`    | spacing scale                     | `w-3` · `h-3` horizontal                             |
+| `height/scroll-bar/md`              | `10px`    | `--size-scroll-bar-md`            | `[--radix-scroll-area-thumb-width:…]` (see below)    |
+| `height/scroll-bar/sm`              | `6px`     | `--size-scroll-bar-sm`            | `[--radix-scroll-area-thumb-width:…]` (see below)    |
+| caret box, `Size=Md`                | `16px`    | spacing scale                     | `size-4`                                             |
+| caret box, `Size=Sm`                | `10px`    | spacing scale                     | `size-2.5`                                           |
+| `spacing/xs` (caret ↔ thumb)        | `4px`     | `--spacing-1`                     | folded into `py-5` / `py-3.5` (see below)             |
+| `exception/spacing/2`               | `2px`     | `--spacing-0.5`                   | `pr-0.5` · `pb-0.5` horizontal                       |
+| `radius/full`                       | `999px`   | `--radius-full`                   | `rounded-full`                                       |
+| `surface/neutral/secondary/pressed` | `#ededed` | `--secondary`                     | `bg-secondary` (thumb) · `text-secondary` (caret)    |
+| `surface/neutral/subtle/pressed`    | `#dadada` | `--color-surface-neutral-pressed` | `group-hover/scroll-rail:bg-surface-neutral-pressed` |
+| — (motion, not in Figma)            | `150ms`   | `--duration-150` · `--ease-out`   | `transition-colors duration-150 ease-out`            |
+
+> `--size-scroll-bar-md` / `-sm` cannot produce a `w-*` utility — the `--size-*`
+> namespace only generates the square `size-*`, the same caveat Calendar / List / GNB /
+> Navigation V2 / LNB all hit. They are usable here because Radix pins the thumb's
+> cross-axis size through its own custom property: the thumb carries an inline
+> `width: var(--radix-scroll-area-thumb-width)`, and Radix only defines the variable for
+> the axis it measures (vertical defines `…-thumb-height`, horizontal `…-thumb-width`).
+> The undefined one is invalid at computed-value time, so it computes to `auto` and,
+> being inline, would beat any `w-*` / `h-*` class. The rail therefore supplies the
+> missing variable from the token —
+> `[--radix-scroll-area-thumb-width:var(--size-scroll-bar-md)]` — which is a token
+> reference, not an arbitrary value.
+>
+> The caret zone is declared as rail **padding** (`py-5` = 16 + 4 for `md`, `py-3.5` =
+> 10 + 4 for `sm`) rather than as flow siblings, because Radix subtracts the rail's
+> `paddingTop`/`paddingBottom` (`paddingLeft`/`paddingRight` when horizontal) from both
+> the thumb size and its scroll offset. The thumb can therefore never slide underneath a
+> caret. The carets themselves are absolutely positioned inside that padding, inset by
+> the same 2px as the content box (`left-0 right-0.5`) so caret and thumb share one
+> centre line.
+>
+> Figma exports the carets as vectors filled `#EDEDED`. That glyph is the Phosphor
+> **Fill** caret — a solid 11×6 triangle in a 16×16 box — which is exactly
+> `CaretUpFillIcon`'s path at half scale (both 68.75% × 37.5% of their box), so the ITUI
+> icon components are used instead of the exported asset. Both `State` variants share one
+> caret asset in Figma: only the thumb changes colour on hover, never the carets. As
+> everywhere else, the glyphs need `[&_path]:fill-current` to escape the hardcoded
+> `fill="#101010"`.
+>
+> `type="always"` is the composed `ScrollArea`'s default because Figma draws the bar in
+> its un-hovered `State=Default`; Radix's own default (`hover`) would fade it in only on
+> pointer entry. Radix still hides the thumb when the content does not overflow.
+>
+> Figma's `State=Hover` is keyed off the **rail**, not the thumb, so the full 18px track
+> is the hit area rather than the 10px thumb. Tailwind compiles it under
+> `@media (hover: hover)`, so it never sticks on touch.
+>
+> Figma specs the vertical bar only. `orientation="horizontal"` mirrors every value onto
+> the other axis (`h-4.5` for `w-4.5`, `pb-0.5` for `pr-0.5`, `CaretLeft`/`CaretRight`
+> Fill for `CaretUp`/`CaretDown`), and `"both"` adds Radix's `Corner`.
+>
+> This **replaces** the previous decorative `Scrollbar` in the same folder, which never
+> scrolled anything and had drifted from this node on every value: a 16px rail, a
+> full-width thumb, `#f5f5f5` at rest, and 8px lucide `ChevronUp`/`ChevronDown` strokes.
+
+### Tab
+
+Figma node `27754:55` ("Tab" — `Base Tab` 27752:285 × the list frame 27754:222). Every
+value resolved to a token that already existed — no new CSS variable was added.
+
+| Figma Token                  | Value           | CSS Variable                     | Tailwind Class                                      |
+| ---------------------------- | --------------- | -------------------------------- | --------------------------------------------------- |
+| `height/tab`                 | `32px`          | `--size-tab`                     | `h-8` (see caveat below)                            |
+| `spacing/md`                 | `12px`          | `--spacing-3`                    | `px-3` (trigger)                                    |
+| `spacing/sm`                 | `8px`           | `--spacing-2`                    | `gap-2` (icon ↔ label · between triggers)           |
+| `spacing/sm` (vertical)      | `8px`           | —                                | dropped — overflows the 32px row (see below)        |
+| `height/icon/md`             | `16px`          | spacing scale                    | `size-4` (`iconLeft` / `iconRight`)                 |
+| `radius/sm`                  | `8px`           | `--radius-lg`                    | `rounded-lg` (`segment` · list)                     |
+| `radius/full`                | `999px`         | `--radius-full`                  | `rounded-full` (`pill`)                             |
+| `stroke/sm`                  | `2px`           | —                                | `border-b-2` (`line`)                               |
+| `border/primary/default`     | `#009ce0`       | `--color-border-primary`         | `data-[state=active]:border-border-primary`         |
+| `surface/primary/default`    | `#009ce0`       | `--color-surface-primary`        | `data-[state=active]:bg-surface-primary`            |
+| `text/neutral/default`       | `#0f0f0f`       | `--color-neutral`                | `text-foreground` (`State=Unselected`)              |
+| `text/neutral/subtle`        | `#9e9e9e`       | `--color-neutral-subtle`         | `data-[state=inactive]:hover:text-neutral-subtle`   |
+| `text/primary/default`       | `#009ce0`       | `--color-primary`                | `data-[state=active]:text-primary` (default · line) |
+| `text/primary/inverse`       | `#fafafa`       | `--color-inverse`                | `data-[state=active]:text-inverse` (segment · pill) |
+| `typography/body/md/medium`  | `14 / 24 / 0.2` | `--leading-md` · `--tracking-md` | `text-sm leading-md tracking-md font-medium`        |
+| `size/container/md`          | `358px`         | `--width-container-md`           | `w-container-md` (not the default — see below)      |
+| — (motion, not in Figma)     | `150ms`         | `--duration-150` · `--ease-out`  | `transition-colors duration-150 ease-out`           |
+
+> `--size-tab` (32px) already existed but the `--size-*` namespace only generates the
+> square `size-*` utility — it cannot produce `h-*`. The row therefore uses `h-8`
+> (2rem = 32px) off the spacing scale, the same resolution Calendar / List / GNB /
+> Navigation V2 / LNB reached for their own height tokens.
+>
+> Figma pins `spacing/sm` (8px) as *vertical* padding inside the 32px frame around a
+> 24px line — 8 + 24 + 8 = 40, so it overflows and is clipped. The implementation
+> reproduces the visible result: `h-8` with vertically centered content and no vertical
+> padding, the same reading GNB and Navigation V2 already record above.
+>
+> `Type=Line` gives **every** trigger `border-b-2 border-transparent`, not just the
+> selected one. Figma draws the 2px stroke on the boundary, where it costs no layout;
+> as a CSS border on a `border-box` element it would shrink the content box and move the
+> label 1px between states.
+>
+> Figma models `Hover` as a `State` alongside `Unselected` / `Selected`, i.e. it belongs
+> to the unselected tab. It is therefore `data-[state=inactive]:hover:` — pointing at the
+> selected trigger keeps its own colour rather than fading it to `#9e9e9e`.
+>
+> `Style=Label` + `Type=Default` + `State=Hover` is the only one of the 24 variants drawn
+> in Pretendard **Regular**; the other 23 are Medium. Treated as a slip in the design
+> file — every state is `font-medium`.
+>
+> The radius is applied on all states, not only on `Selected` where Figma's fill makes it
+> visible, so the `focus-visible` ring follows the trigger's shape.
+>
+> `TabList` defaults to `w-full` rather than Figma's fixed `w-container-md` (358px), so it
+> fits real layouts; pass `className="w-container-md"` for the exact frame. Figma's
+> `justify-center` is kept — `className="justify-start"` or `[&>*]:flex-1` covers the
+> other two arrangements.
+>
+> `Style=Label` vs `Style=LabelIcon` is not a variant: the only difference between them is
+> whether a leading glyph is present, so it is the `iconLeft` / `iconRight` props — the
+> same resolution Navigation V2 reached for its five top-bar types.
+>
+> Figma specs no `disabled` state. The implementation borrows Accordion's
+> (`disabled:text-neutral-disabled` + `disabled:cursor-not-allowed`) so both keyboard-
+> navigable Radix families grey out the same way.
+>
+> This is a **new** `tab/` folder, not a rewrite of `tabs/tabs.tsx` — that file is the
+> stock shadcn Tabs on the slate palette and is still imported by `apps/web`
+> (`settings-dialog.tsx`, `shortcut-help-modal.tsx`). The parts are named `Tab` /
+> `TabList` / `TabTrigger` / `TabContent`, so neither barrel export collides.
+
+### Backdrop
+
+Figma node `27437:1149` ("Background Blur" — Backdrop `Shape=Dim` 27883:585 / `Shape=Blur`
+27883:586). No new CSS variable was added: both fills reuse the tokens the existing scrims
+already paint.
+
+| Figma Token              | Value                    | CSS Variable               | Tailwind Class                       |
+| ------------------------ | ------------------------ | -------------------------- | ------------------------------------ |
+| `dim/black`              | `#1a1a1a66`              | `--color-dim-black`        | `bg-dim-black` (`variant="dim"`)     |
+| `color/opacity/black/sm` | `#1a1a1a33`              | `--color-opacity-black-sm` | `bg-opacity-black-sm`                |
+| `blur/default`           | `BACKGROUND_BLUR` `4`    | `--shadow-downwards-blur-small` | `backdrop-blur-dialog` (`blur(4px / 2)`) |
+| `radius/sm`              | `8px`                    | —                          | dropped — showcase swatch (see below) |
+| `size/container/gfh`     | `256px`                  | —                          | dropped — showcase swatch (see below) |
+
+> **Fill deviation, accepted deliberately.** Figma's two fills sit on the `#1a1a1a` ink,
+> while both repo tokens sit on `#0f0f0f` at a slightly lower alpha — `--color-dim-black`
+> is `rgba(15,15,15,0.32)` against Figma's `0.4`, and `--color-opacity-black-sm` is
+> `rgba(15,15,15,0.16)` against Figma's `0.2`. They are reused anyway so the system keeps
+> **one** overlay colour: `bg-dim-black` is what `bottom-sheet`, `popup` and `modals`
+> already draw, and `bg-opacity-black-sm` is what `dialog` draws. Rebasing
+> `--color-opacity-black-sm` is not an option either — the `opacity/black` ramp shares the
+> `#0f0f0f` base across `xs…xl`, the same constraint that pushed Snackbar's
+> `color/opacity/black/lg` into its own `--color-surface-snackbar-dark`. `Skeleton` records
+> the same reuse call for `color/opacity/black/xs`. Reconcile the whole ramp against Figma
+> before splitting these apart.
+>
+> The 256×256 box and `radius/sm` in the Figma frame belong to the **showcase swatch**
+> (`size/container/gfh`), not to the component: a backdrop takes the shape of whatever it
+> covers, so it ships as `inset-0` on a `fixed` (viewport) or `absolute` (nearest
+> positioned ancestor) box with no radius of its own.
+>
+> Figma specs no motion, and the `animate-in` / `fade-in-0` utilities the older overlays
+> carry compile to zero rules in this package — see the ⚠ note under LNB — so no fade is
+> declared rather than shipping dead classes.
+>
+> Figma's `Shape` prop is exposed as `variant` to match `Button` / `Badge` / `Skeleton` /
+> `Snackbar`. `asChild` (Radix `Slot`) lets the scrim paint an element that already
+> behaves — a `Dialog.Overlay`, or a `<button>` that closes a panel — instead of stacking
+> a second layer over it.
+
+### Grid
+
+Figma nodes `26866:28879` ("1440px website 12-columns grid"), `26866:28999` ("1440px website
+with sidebar"), `26866:29215` ("Tablet Grid") and `26867:8173` ("Mobile Grid"). No new CSS
+variable was added — every margin and gutter lands on the spacing scale.
+
+All four nodes are annotated layout-grid **diagrams**, not components: `get_variable_defs`
+returns no `grid/*` variable, so the geometry is read off the diagrams and cross-checked
+against each frame's own `Measure` pill.
+
+| Preset            | Frame  | Figma columns | Shipped columns | Margin | Gutter | Content width |
+| ----------------- | ------ | ------------- | --------------- | ------ | ------ | ------------- |
+| Mobile            | 390px  | 4             | **12**          | 16px   | 16px   | `358px` ✓     |
+| Tablet            | 744px  | 8             | **12**          | 24px   | 20px   | `696px` ✓     |
+| Desktop           | 1440px | 12            | 12              | 32px   | 24px   | `1376px` ✓    |
+| Desktop + sidebar | 1176px | 12            | 12              | 24px   | 24px   | `1128px` ✓    |
+
+| Figma value             | Value   | CSS Variable                  | Tailwind Class                          |
+| ----------------------- | ------- | ----------------------------- | --------------------------------------- |
+| margin, mobile          | `16px`  | `--spacing-4`                 | `px-4`                                  |
+| margin, tablet          | `24px`  | `--spacing-6`                 | `md:px-6`                               |
+| margin, desktop         | `32px`  | `--spacing-8`                 | `xl:px-8` (`layout="full-width"`)       |
+| margin, beside sidebar  | `24px`  | `--spacing-6`                 | `xl:px-6` (`layout="beside-sidebar"`)   |
+| gutter, mobile          | `16px`  | `--spacing-4`                 | `gap-4`                                 |
+| gutter, tablet          | `20px`  | `--spacing-5`                 | `md:gap-5`                              |
+| gutter, desktop         | `24px`  | `--spacing-6`                 | `xl:gap-6`                              |
+| track count             | —       | —                             | `grid-cols-12` at every width (see below) |
+| LNB rail (sidebar node) | `264px` | spacing scale                 | `w-66` — story stand-in, same as LNB    |
+| overlay stripe fill     | `#faa9a3` | `--color-surface-error-muted` | `bg-surface-error-muted` (see below)  |
+
+> Each preset reconciles exactly against its `Measure` label:
+> `390 − 2×16 = 358` · `744 − 2×24 = 696` · `1440 − 2×32 = 1376` · `1176 − 2×24 = 1128`,
+> and `12×72 + 11×24 = 1128` for the sidebar node whose columns are pinned rather than `Auto`.
+> Every other node labels its columns `Auto`, so all four presets are
+> `repeat(N, minmax(0, 1fr))` — only the count, margin and gutter change.
+>
+> **Track-count deviation, decided deliberately.** Figma specs three track counts —
+> 4 (Mobile Grid `26867:8173`), 8 (Tablet Grid `26866:29215`), 12 (desktop) — but the
+> shipped grid is **12 columns at every width**, so `size={1}` is always 1/12 of the
+> container and twelve items always land on one row. This overrides the two smaller
+> nodes and was taken with the cost understood: at 390px a single column is only ~14px,
+> so anything meant to read on a phone must carry a wider `size` there. The idiomatic
+> form is `size={{ xs: 12, md: 6, xl: 4 }}`, not a bare `size={4}`. Only the track count
+> was flattened — gutter and margin still step through all three bands.
+>
+> **Breakpoint deviation, accepted deliberately.** Figma gives *device widths*
+> (390 / 744 / 1440), not CSS breakpoints. The gutter/margin steps reuse Tailwind's
+> built-in `md:` (768px) and `xl:` (1280px) rather than registering
+> `--breakpoint-tablet: 744px` / `--breakpoint-desktop: 1440px`, so the package stays on
+> one breakpoint scale — every other responsive class in `packages/ui` already uses the
+> built-ins. A **744px** tablet (Figma's exact frame) therefore takes the mobile gutter
+> and margin, and **1280–1439px** laptops take the desktop pair before Figma's 1440px
+> frame. Switching later is a two-line `@theme` addition plus a `md:`→`tablet:` /
+> `xl:`→`desktop:` rename.
+>
+> **Overlay fill deviation.** Figma's measuring stripes are `color/semantic/red/200`
+> (`#faa9a3`) — annotation ink with no token in this package, alongside the `red/400`
+> arrows, `blue/*` gutter marks and `green/*` margin marks, none of which describe the
+> component. `GridOverlay` reuses the existing translucent `--color-surface-error-muted`
+> (`#de3d314d`) instead: still red, lets content read through, and adds no colour token.
+> Same reuse call recorded for Backdrop's fills above.
+>
+> The 264px rail, the `1376`/`696`/`358` measure pills, the dashed stripe borders and the
+> GNB / Navigation bars drawn in each frame all belong to the **measuring overlay**, not to
+> the grid — the same reading Backdrop's "showcase swatch" note records.
+>
+> No Radix primitive applies: a layout grid has no interaction, focus management or ARIA
+> surface. Only `@radix-ui/react-slot` is used, to back `asChild` on `Grid` and `GridItem`.
+>
+> `GridItem`'s API follows **MUI Grid v2** (`size` / `offset`, taking one value or a
+> `{ xs, md, xl }` object). Those keys are MUI's own names *and* Tailwind's prefixes, so the
+> object maps 1:1 onto the classes it generates. Three divergences: the container/item split
+> stays two named components rather than MUI's `container` boolean; `offset` resolves to
+> `col-start-*` (an absolute grid line) rather than MUI's `margin-left`, since this is real
+> CSS Grid — identical for the first item in a row, and it snaps to the true track; and
+> `spacing` / `columns` are not exposed, because the gutter and track count *are* the Figma
+> preset.
+
+### Radius
+
+Figma node `26871:5998` ("Radius" foundation board). Two new CSS variables were added —
+the only two steps of the ITUI scale with no equivalent anywhere in the package.
+
+The board is seven annotated swatch tiles, not an interactive component, so no Radix
+primitive applies; only `@radix-ui/react-slot` is used, to back `asChild`. Same reading
+recorded for Grid and Backdrop below/above.
+
+| Figma Token / value                  | Value                   | CSS Variable                     | Tailwind Class                               |
+| ------------------------------------ | ----------------------- | -------------------------------- | -------------------------------------------- |
+| `Radius old/Size/xxxs` (`radius/xs`) | `4px`                   | `--radius-sm`                    | `rounded-sm`                                 |
+| `Radius old/Size/xxs` (`radius/sm`)  | `8px`                   | `--radius-lg`                    | `rounded-lg`                                 |
+| `radius/md`                          | `12px`                  | `--radius-xl`                    | `rounded-xl` (see derivation below)          |
+| `Radius old/Size/Small` (`radius/lg`)| `16px`                  | `--radius-2xl`                   | `rounded-2xl`                                |
+| `Radius old/Size/Medium` (`radius/xl`)| `20px`                 | `--radius-component-xl` **(new)**| `rounded-component-xl`                       |
+| `radius/2xl`                         | `28px`                  | `--radius-component-2xl` **(new)**| `rounded-component-2xl`                     |
+| `Radius old/Size/Full`               | `512px`                 | `--radius-full`                  | `rounded-full` (9999px — see below)          |
+| tile field, `surface/primary/subtle` | `#e6f5fc`               | `--color-surface-primary-subtle` | `bg-surface-primary-subtle` (story only)     |
+| tile card, `color/static/white`      | `#fafafa`               | `--color-inverse`                | `bg-inverse` (story only)                    |
+| tile card shadow                     | `16px 0 24px #8989891a` | `--shadow-md`                    | `shadow-md` — reuse, see below (story only)  |
+| annotation, `text/primary/default`   | `#009ce0`               | `--color-primary`                | `text-primary` · `border-primary`            |
+| `typography/caption/sm/regular`      | `12 / 20 / 0.3`         | `--leading-sm` · `--tracking-sm` | `text-xs leading-sm tracking-sm`             |
+| `typography/heading/xl/medium`       | `18 / 28 / -0.04`       | `--leading-xl` · `--tracking-xl` | `text-lg leading-xl tracking-xl font-medium` |
+| `typography/body/md/regular`         | `14 / 24 / 0.2`         | `--leading-md` · `--tracking-md` | `text-sm leading-md tracking-md`             |
+| tile field 320px · card 160px        | `320px` · `160px`       | spacing scale                    | `size-80` · `size-40` (story only)           |
+| `scale/40` · `scale/20`              | `40px` · `20px`         | `--spacing-10` · `--spacing-5`   | `gap-10` (tiles) · `gap-5` (label ↔ tile)    |
+| `Border Width/10` · `Border Radius/none` | `0`                 | —                                | dropped — 0-width borders on the tile cards  |
+
+> **`md` is 12px, and the Figma layer binding is wrong.** The Md tile is bound to
+> `Radius old/Size/Small` (**16px**), the same variable as Lg, while its own annotation
+> reads **12px**. The label wins: the `--radius-*-nest-*` tokens are each `base + padding`,
+> and `md-nest-4` = 16 with `md-nest-8` = 20 both resolve `md` to 12. That also makes the
+> scale a clean 4px progression — **4 · 8 · 12 · 16 · 20 · 28 · full**. Worth asking the
+> designer to rebind the layer.
+>
+> **`full` ships as 9999px, not Figma's 512px.** The intent is "fully round whatever the
+> box is", which 512px only happens to satisfy for the 160px swatch.
+>
+> **New token names.** 20px and 28px have no equivalent in the package, and both ITUI names
+> that would fit them (`xl`, `2xl`) are already taken by a different Tailwind value —
+> `rounded-xl` is 12px, `rounded-2xl` is 16px. Hence `--radius-component-{xl,2xl}`, the name
+> this file already carried as a TODO. Rebasing `--radius-xs…2xl` onto the ITUI values so
+> `rounded-md` *is* Figma `radius/md` remains the clean end state, but it is a breaking sweep
+> of every `rounded-*` in the package; deliberately **not** done here. `radiusClass` holds
+> the name→pixel mapping in the meantime.
+>
+> **The swatch tile is story-only.** A radius has no surface of its own, so the 320px blue
+> field, the 160px card, its shadow and the blue px annotation live in `Radius.stories.tsx`
+> rather than shipping as a component. This diverges from Grid, which does ship
+> `GridOverlay` — a grid ruler has a dev-facing use a radius swatch does not.
+>
+> **The corner guide is CSS, not the exported PNG.** Figma exports a blue bracket per tile,
+> but every tile uses the same ~15px box whatever its radius, so it is a fixed-size leader
+> annotation rather than a scaled tracing. It is rebuilt as a `size-4` box with
+> `border-t border-l border-primary` plus the tile's own top-left radius, keeping six
+> near-identical PNGs on 7-day URLs out of the repo — the same call recorded for Grid's
+> measuring overlay and Backdrop's showcase swatch. ⚠ CSS clamps a corner to half the box,
+> so `xl` (20px) and `2xl` (28px) render their curve at 8px on the 16px bracket.
+>
+> **The card shadow reuses `--shadow-md`.** Figma's is `16px 0 24px 0 #8989891a`
+> (`shadow/rightwards/positioning/xl` 16 at `shadow/blur/md` 24 in
+> `shadow/downwards/color/neutral`); `--shadow-md` has the same 24px blur and alpha on a
+> different axis and grey. No eighth shadow variable for documentation ink — and it sits on
+> a different colour ramp (`#898989`) from `--shadow-rightwards-sm` (`#1a1a1a`), so it could
+> not have been that token's `md` sibling.
+>
+> `Radius` defaults to `md` rather than Figma's first variant (`XS`, 4px), which is too
+> subtle to read as a deliberate corner on anything but a small control — the same kind of
+> call `TabList` makes with its `w-full` default.
+
+### Colors
+
+Figma nodes `28652:1601` ("Color Brand"), `28652:1507` ("Color Semantic") and `28652:1778`
+("Color Palette"). **129 new CSS variables** — the four ITUI colour ramps, each mirroring its
+Figma path 1:1. Purely additive: no existing variable was renamed, re-pointed or removed.
+
+The boards are annotated swatch grids, not interactive components, so no Radix primitive
+applies; only `@radix-ui/react-slot`, to back `asChild`. Same reading recorded for Radius
+and Grid.
+
+| Figma namespace          | CSS Variable                | Steps                | Tailwind Class            |
+| ------------------------ | --------------------------- | -------------------- | ------------------------- |
+| `color/brand/sky/*`       | `--color-brand-sky-*`       | 50…900 (10)          | `bg-brand-sky-500`        |
+| `color/brand/neutral/*`   | `--color-brand-neutral-*`   | 50…900, 950 (11)     | `bg-brand-neutral-500`    |
+| `color/semantic/{hue}/*`  | `--color-semantic-{hue}-*`  | 50, 500 (+ red 700)  | `bg-semantic-red-500`     |
+| `color/scheme/{hue}/*`    | `--color-scheme-{hue}-*`    | 50…900 × 10 hues     | `bg-scheme-teal-500`      |
+
+Hues: semantic = `green` · `blue` · `red` · `orange`; scheme = `blue-grey` · `indigo` ·
+`deep-purple` · `teal` · `cyan` · `light-green` · `lime` · `yellow` · `orange` · `pink`.
+
+`components/colors/Colors.tsx` is the single reconciliation point: `COLOR_HEX`,
+`colorBgClass`, `COLOR_RAMPS` and `colorName()`, the same role `radiusClass` plays for the
+radius scale.
+
+> **⚠ The `brand-` / `semantic-` / `scheme-` prefixes are load-bearing.** Tailwind already
+> ships `--color-{teal,cyan,lime,yellow,pink,indigo}-*` at *different* values, and product
+> code depends on them — `apps/web/components/health-status.tsx` paints `text-yellow-400`
+> (`oklch(85.2% .199 91.936)`). Declaring ITUI's hues under the bare names would silently
+> repaint it. Reach for `colorBgClass['scheme-teal-500']`, never `bg-teal-500`
+> (Tailwind's `#14b8a6` vs ITUI's `#009688`). Verified: the built-in ramps are still
+> unshadowed in the compiled bundle.
+>
+> **⚠ 17 hexes now carry two names — deliberately.** The ramps were added without
+> re-pointing anything, so `--color-brand-sky-500` and the older `--color-brand` /
+> `--color-primary` / `--color-surface-primary` / `--color-border-primary` /
+> `--color-icon-primary` all hold `#009ce0`. Full list:
+>
+> | New ramp token                | Existing token(s) with the identical value                                                  |
+> | ----------------------------- | ------------------------------------------------------------------------------------------- |
+> | `--color-brand-sky-50`        | `--color-brand-subtle` · `--color-surface-primary-subtle` · `--color-border-primary-subtle`  |
+> | `--color-brand-sky-100`       | `--color-surface-primary-muted` · `--color-border-primary-muted`                             |
+> | `--color-brand-sky-300`       | `--color-brand-hover` · `--color-surface-primary-hover`                                      |
+> | `--color-brand-sky-400`       | `--color-primary-hover` · `--color-brand-link-hover` · `--color-icon-primary-hover`          |
+> | `--color-brand-sky-500`       | `--color-brand` · `--color-primary` · `--color-surface-primary` · `--color-border-primary`   |
+> | `--color-brand-sky-600`       | `--color-brand-pressed` · `--color-primary-pressed` · `--color-surface-primary-pressed`      |
+> | `--color-brand-neutral-50`    | `--color-surface-neutral-subtle`                                                             |
+> | `--color-brand-neutral-200`   | `--color-border-neutral` · `--color-surface-neutral-pressed`                                 |
+> | `--color-brand-neutral-300`   | `--color-neutral-disabled` · `--color-icon-neutral-disabled`                                 |
+> | `--color-brand-neutral-400`   | `--color-neutral-subtle` · `--color-icon-neutral-subtle`                                     |
+> | `--color-brand-neutral-500`   | `--color-neutral-muted` · `--color-icon-neutral-muted`                                       |
+> | `--color-brand-neutral-800`   | `--color-surface-neutral-strong`                                                             |
+> | `--color-brand-neutral-900`   | `--color-neutral-strong` · `--color-border-neutral-strong` · `--color-brand-secondary-900`   |
+> | `--color-brand-neutral-950`   | `--color-neutral` · `--color-ink` · `--color-icon-neutral`                                   |
+> | `--color-semantic-red-50`     | `--color-surface-error-subtle`                                                               |
+> | `--color-scheme-{9 hues}-500` | the nine bare `--color-teal` / `--color-cyan` / `--color-pink` / … tokens                    |
+>
+> Keep the semantic alias when you mean **intent** ("the primary surface"); reach for the
+> ramp when you mean the **step** ("sky/500"). The clean end state is the aliases becoming
+> `var(--color-brand-sky-500)` references — a re-point of ~30 variables, deliberately out of
+> scope here. `--color-brand-neutral-100` was the one name that already existed at the
+> identical value and was left untouched.
+>
+> **⚠ The semantic ramp is not the shadcn status ramp.** `--success` / `--info` /
+> `--warning` / `--destructive` keep their oklch values and are visibly different colours
+> from Figma's `#4caf50` / `#1677ff` / `#ffad33` / `#f44336`. The system currently has two
+> status ramps; reconciling them is a re-point, not an addition.
+>
+> **The Palette board binds its orange 50/500 to the *semantic* orange**, not to a scheme
+> variable of its own, so `--color-scheme-orange-50` / `-500` are declared as
+> `var(--color-semantic-orange-*)` references — mirroring Figma rather than copying the hex.
+>
+> **`--color-semantic-red-700` (`#ad3026`) is not on any board.** It was added alongside
+> because `Avatar`'s src-less fallback has always painted `bg-semantic-red-700`, which had no
+> `@theme` entry and so compiled to nothing — a src-less `Avatar` rendered white on
+> transparent. `COLOR_RAMPS` therefore lists 50 and 500 only for `semantic-red`, so the
+> board story still matches Figma exactly.
+>
+> **Only `bg-*` is enumerated in `colorBgClass`.** That is what the boards draw; `text-*` and
+> `border-*` are written literally by callers, as everywhere else in this package. Every
+> class is spelled out rather than interpolated so Tailwind's scanner finds the literal —
+> same reason `Radius.tsx` spells out `radiusClass`.
+>
+> **Story-only ink.** The swatch card, the info card, the blue section band and the three
+> boards live in `Colors.stories.tsx`; a colour has no surface of its own to ship. Figma's
+> swatch border is `rgba(0,0,0,0.03)` — all but invisible — replaced by the real
+> `border-neutral-subtle` token so a near-white step still reads as a box. The board's 40px
+> title and 19px strapline resolve to `text-4xl` (36px) and `text-base` (16px); no
+> `--text-40` / `--text-19` is registered for type that never leaves the story.
+>
+> **Two slips in the design file**, both worth telling the designer: every Primary swatch
+> caption reads `Primary Echo/50` regardless of its step, and the Primary and Neutral info
+> cards both read `R88 / G169 / B220` (correct for neither `#009CE0` nor `#595858`). The
+> story derives both strings from the hex instead.
+>
+> **⚠ `dist/index.css` must be rebuilt for token changes to show up.** `CLAUDE.md` says
+> Storybook aliases `@echoit/itui.css` straight to `src` so no build is needed — that is true
+> for JS/TS only. The `@import '@echoit/itui.css'` in `.storybook/tailwind.css` resolves
+> through the package `exports` `style` condition to **`dist/index.css`**, so a new `@theme`
+> variable stays invisible until `pnpm build:js` runs in `packages/ui`. This cost one full
+> debug cycle here.
+
+### Shadow
+
+Figma node `26871:6078` — named "Dropshadow" on the canvas, titled "Shadow" in its own header.
+**Six new CSS variables**, filling the gaps in a ramp that was already half-registered: the
+other six arrived one at a time, pulled in by whichever component needed them (Floating Button
+/ GNB / OverflowMenu, Navigation V2, LNB, drawer). Their names and values already matched the
+board exactly, so nothing was renamed or re-pointed.
+
+The board is an annotated swatch grid, not an interactive component, so no Radix primitive
+applies; only `@radix-ui/react-slot`, to back `asChild`. Same reading recorded for Radius,
+Grid and Colors.
+
+All twelve effects are the same `DROP_SHADOW` in `shadow/color/black` (`#1a1a1a14` ≈
+`rgba(26,26,26,0.08)`) at `spread: 0`. Only offset and blur vary, and they move together — so
+the board is **one 3-step ramp mirrored onto four axes**:
+
+| Size | Offset | Blur | Figma variables                              |
+| ---- | ------ | ---- | -------------------------------------------- |
+| `sm` | `4`    | `16` | `shadow/positioning-*/xs` · `shadow/blur/sm` |
+| `md` | `12`   | `24` | `shadow/positioning-*/md` · `shadow/blur/md` |
+| `lg` | `20`   | `48` | `shadow/positioning-*/xl` · `shadow/blur/lg` |
+
+Direction picks the axis and the sign: `downwards` = +y, `upwards` = −y, `rightwards` = +x,
+`leftwards` = −x.
+
+| Direction    | Size | box-shadow                          | CSS Variable             | Tailwind Class         | Status  |
+| ------------ | ---- | ----------------------------------- | ------------------------ | ---------------------- | ------- |
+| `downwards`  | `sm` | `0 4px 16px 0 rgba(26,26,26,.08)`   | `--shadow-downwards-sm`  | `shadow-downwards-sm`  | existed |
+| `downwards`  | `md` | `0 12px 24px 0 rgba(26,26,26,.08)`  | `--shadow-downwards-md`  | `shadow-downwards-md`  | existed |
+| `downwards`  | `lg` | `0 20px 48px 0 rgba(26,26,26,.08)`  | `--shadow-downwards-lg`  | `shadow-downwards-lg`  | existed |
+| `upwards`    | `sm` | `0 -4px 16px 0 rgba(26,26,26,.08)`  | `--shadow-upwards-sm`    | `shadow-upwards-sm`    | existed |
+| `upwards`    | `md` | `0 -12px 24px 0 rgba(26,26,26,.08)` | `--shadow-upwards-md`    | `shadow-upwards-md`    | **new** |
+| `upwards`    | `lg` | `0 -20px 48px 0 rgba(26,26,26,.08)` | `--shadow-upwards-lg`    | `shadow-upwards-lg`    | **new** |
+| `leftwards`  | `sm` | `-4px 0 16px 0 rgba(26,26,26,.08)`  | `--shadow-leftwards-sm`  | `shadow-leftwards-sm`  | **new** |
+| `leftwards`  | `md` | `-12px 0 24px 0 rgba(26,26,26,.08)` | `--shadow-leftwards-md`  | `shadow-leftwards-md`  | **new** |
+| `leftwards`  | `lg` | `-20px 0 48px 0 rgba(26,26,26,.08)` | `--shadow-leftwards-lg`  | `shadow-leftwards-lg`  | existed |
+| `rightwards` | `sm` | `4px 0 16px 0 rgba(26,26,26,.08)`   | `--shadow-rightwards-sm` | `shadow-rightwards-sm` | existed |
+| `rightwards` | `md` | `12px 0 24px 0 rgba(26,26,26,.08)`  | `--shadow-rightwards-md` | `shadow-rightwards-md` | **new** |
+| `rightwards` | `lg` | `20px 0 48px 0 rgba(26,26,26,.08)`  | `--shadow-rightwards-lg` | `shadow-rightwards-lg` | **new** |
+
+`components/shadow/Shadow.tsx` is the single reconciliation point: `shadowClass`,
+`SHADOW_OFFSET` and `SHADOW_BLUR`, the same role `radiusClass` plays for the radius scale and
+`colorBgClass` for the ramps.
+
+> **⚠ These are not `shadow-sm` / `shadow-md` / `shadow-lg`.** See the Value Conflicts entry —
+> this package ships two shadow ramps, and `shadowClass.downwards.md` is the only spelling that
+> cannot pick the wrong one.
+>
+> **`shadow/positioning-up/*` is a sign, not an axis.** Figma has only two positioning ramps —
+> `positioning-down` (`0 · 4 · 12 · 20`) and `positioning-up` (`0 · −4 · −12 · −20`) — and both
+> horizontal directions borrow from them: `shadow/leftwards/md` is
+> `offset: (positioning-up/md, positioning-up/none)`, i.e. `−12` on **x**. `shadow/rightwards/lg`
+> even mixes the two for its zero. Harmless, but the variable names cannot be read as axis
+> names; the direction table above is the actual mapping.
+>
+> **`--shadow-leftwards-sm` is derived, not read.** It is the only one of the twelve with no
+> Figma variable, so its tile (`26871:6275`) is bound to `shadow/leftwards/lg` and paints an
+> identical `−20/48` — visible on the board as a first tile with a wider halo than the second.
+> The eleven others follow the ramp without exception and its mirror `--shadow-rightwards-sm`
+> was already shipped, so the ramp wins over the slipped binding. Same call the Radius board's
+> `Md` tile got. Worth telling the designer: the variable should be created and the layer
+> rebound.
+>
+> **`tailwind.extend.ts` gained twelve `boxShadow` keys, not six.** None of the six existing
+> directional shadows had ever been mirrored into that file, so the v3/hybrid reference was
+> already incomplete. Purely additive — v4 reads `@theme` in `global.css`, not this file.
+>
+> **Story-only ink.** The 320px `surface/primary/subtle` field, the white card and the
+> offset/blur annotation live in `Shadow.stories.tsx`; a shadow has no surface of its own to
+> ship. Figma's card measures `218.88px` — a scaled-symbol artifact, not reachable from the
+> spacing scale — and ships centred at `size-55` (220px); `size-[218.88px]` would be an
+> arbitrary value buying a 1.1px difference on documentation ink. The card's `radius/md` corner
+> reuses `radiusClass.md` from the Radius module rather than re-deriving that 12px ≠
+> `rounded-md` mapping a second time.
+>
+> **No elevation semantics.** The board names directions, not roles; nothing in it says which
+> step a menu or a sheet should use. `Shadow` stays a literal scale rather than inventing
+> design intent, and defaults to `downwards`/`md` — the direction three of the six pre-existing
+> tokens use, at the middle step.
+
+### Spacing
+
+Figma node `29919:311` ("Spacing" foundation board). **Zero new CSS variables** — all eleven
+steps already existed on the Tailwind spacing scale. See §2.3 for the scale table and the
+`md`/`lg`/`xl` name trap; `components/spacing` exports `SPACING_PX` and `spacingClass`.
+
+| Figma Token    | Value  | CSS Variable   | Tailwind Class    |
+| -------------- | ------ | -------------- | ----------------- |
+| `spacing/none` | `0`    | `--spacing-0`  | `gap-0` · `p-0`   |
+| `spacing/xs`   | `4px`  | `--spacing-1`  | `gap-1` · `p-1`   |
+| `spacing/sm`   | `8px`  | `--spacing-2`  | `gap-2` · `p-2`   |
+| `spacing/md`   | `12px` | `--spacing-3`  | `gap-3` · `p-3`   |
+| `spacing/lg`   | `16px` | `--spacing-4`  | `gap-4` · `p-4`   |
+| `spacing/xl`   | `20px` | `--spacing-5`  | `gap-5` · `p-5`   |
+| — (see below)  | `24px` | `--spacing-6`  | `gap-6` · `p-6`   |
+| `spacing/3xl`  | `32px` | `--spacing-8`  | `gap-8` · `p-8`   |
+| `spacing/4xl`  | `40px` | `--spacing-10` | `gap-10` · `p-10` |
+| `spacing/5xl`  | `48px` | `--spacing-12` | `gap-12` · `p-12` |
+| `spacing/6xl`  | `64px` | `--spacing-16` | `gap-16` · `p-16` |
+
+> **`2xl` = 24px is the one unbound step.** `get_variable_defs` returns no `spacing/2xl`; the
+> row's bar is a raw 24px and its layer is named `24` where every sibling is named `4px` /
+> `8px` / `32px`. But its own px column reads `24px`, and 24 is the exact 4px step between
+> `xl` (20) and `3xl` (32) — a missing variable, not a missing step. Same call `radius/md`
+> gets in the Radius section.
+>
+> **`spacingClass` covers four properties, not twelve.** `gap` / `p` / `px` / `py` cover
+> essentially every real use; `m*`, `space-*` and the single-side paddings are left out rather
+> than shipping ~130 literal strings for cases nobody has. Classes are spelled out, never
+> interpolated, so Tailwind's scanner finds them — the same reason `radiusClass` is.
+>
+> **Story-only ink.** The Name/Pixels table, the `brand-sky-100` measuring bars on their
+> `brand-sky-500` dashed rules, and the board's 28px right corners live in
+> `Spacing.stories.tsx`; spacing has no surface of its own to ship. The board's bars are drawn
+> with the real `Spacing` component so the documentation cannot drift from the scale. Two
+> deviations there: Figma's `0.5px` bar rules render as `border-y` (1px — Tailwind's smallest,
+> and sub-pixel borders are unreliable across DPRs), and the 43px / 42px label columns are
+> auto-layout hug widths, not tokens, so they round to `w-11` / `w-10`.
+>
+> **Two `TOKENS.md` inaccuracies this board surfaced, left uncorrected on request** (both are
+> pre-existing rows in §1.3, not introduced here): `color/static/white` resolves to `#fafafa`
+> in this file, not the `#ffffff`/`bg-white` recorded there — `--color-inverse` is the accurate
+> token. And `color.neutral.ink` / `--color-ink` / `text-ink` is documented but **does not
+> exist** in `global.css`; `text-ink` compiles to nothing. `#0f0f0f` is `--foreground`, so
+> `text-foreground` is what the story uses.
+
 ---
 
 ## Validation Report
@@ -849,9 +1565,8 @@ value resolved to a token that already existed.
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `color.surface.hover`              | Value not specified in Figma or source                                                                                    | Add hex to `@theme` and update here                                                                                                                 |
 | `color.surface.pressed`            | Value not specified in Figma or source                                                                                    | Add hex to `@theme` and update here                                                                                                                 |
-| `typography.letterSpacing.lg`      | Used in Button (`tracking-lg`) but pixel value not in Figma export                                                        | Measure in Figma for `font/size/16` pairing                                                                                                         |
-| `typography.fontFamily.pretendard` | Used in Figma designs but not in system `@theme`                                                                          | Register `@font-face` + add `--font-pretendard` to `@theme`                                                                                         |
-| `component.badge.color.bg`         | `color/semantic/red/500 = #f44336` not in Tailwind palette                                                                | Add `--color-semantic-red-500: #f44336` to `@theme`                                                                                                 |
+| `typography.fontFamily.pretendard` | `--font-sans` is `Pretendard, system-ui`, but no `@font-face` ships it — everything renders in the `system-ui` fallback   | Register `@font-face` (or a CDN import). No new variable needed: all four Figma families resolve to the same Pretendard binding `--font-sans` holds |
+| `color.status.reconciliation`      | Two status ramps coexist: shadcn `--success`/`--info`/`--warning`/`--destructive` (oklch) vs Figma `color/semantic/*`     | Decide which wins, then re-point the loser. A re-point, not an addition — see the ⚠ note under _Colors_                                             |
 | `component.progress.ring.stroke`   | Only `lg` has a Figma variable (`Border Width/200 = 8`); `md` (5px) and `sm` (~3.6px) were measured off the rendered node | Kept as an SVG `strokeWidth` constant in `progress/Progress.tsx` — SVG stroke is an attribute, not a Tailwind utility, so no `@theme` entry applies |
 
 ### Resolved (previously missing)
@@ -862,6 +1577,7 @@ value resolved to a token that already existed.
 | `component.snackbar.width`       | `size/container/md`           | `--width-snackbar`              | Snackbar   |
 | `color.surface.success.muted`    | `color/semantic/green/600@30` | `--color-surface-success-muted` | Calendar   |
 | `color.surface.error.muted`      | `color/semantic/red/600@30`   | `--color-surface-error-muted`   | Calendar   |
+| `color.surface.error.subtle`     | `surface/semantic/error`      | `--color-surface-error-subtle`  | Input Field (FileUploadInput error row) |
 | `component.calendar.width.md`    | `size/container/md`           | `--width-calendar-md`           | Calendar   |
 | `component.calendar.width.lg`    | `size/container/lg`           | `--width-calendar-lg`           | Calendar   |
 | `component.calendar.width.xl`    | RangePicker frame `27729:706` | `--width-calendar-xl`           | DatePicker |
@@ -871,6 +1587,24 @@ value resolved to a token that already existed.
 | `size.container.xs`              | `size/container/xs`           | `--width-container-xs`          | OverflowMenu |
 | `shadow.rightwards.sm`           | `shadow/rightwards/sm`        | `--shadow-rightwards-sm`        | LNB        |
 | `motion.animate.collapsible`     | — (Radix Collapsible)         | `--animate-collapsible-down/-up`| LNB        |
+| `radius.component.xl`            | `radius/xl` (20px)            | `--radius-component-xl`         | Radius     |
+| `radius.component.2xl`           | `radius/2xl` (28px)           | `--radius-component-2xl`        | Radius     |
+| `component.badge.color.bg`       | `color/semantic/red/500`      | `--color-semantic-red-500`      | Colors · Badge |
+| `color.brand.sky.*`              | `color/brand/sky/*` (10)      | `--color-brand-sky-{50…900}`    | Colors     |
+| `color.brand.neutral.*`          | `color/brand/neutral/*` (10)  | `--color-brand-neutral-{50…950}` | Colors    |
+| `color.semantic.*`               | `color/semantic/{hue}/{50,500}` | `--color-semantic-{hue}-{50,500}` | Colors  |
+| `color.semantic.red.700`         | — (Avatar fallback, unspecced) | `--color-semantic-red-700`     | Colors · Avatar |
+| `color.scheme.*`                 | `color/scheme/{hue}/*` (100)  | `--color-scheme-{hue}-{50…900}` | Colors     |
+| `shadow.upwards.md`              | `shadow/upwards/md`           | `--shadow-upwards-md`           | Shadow     |
+| `shadow.upwards.lg`              | `shadow/upwards/lg`           | `--shadow-upwards-lg`           | Shadow     |
+| `shadow.leftwards.sm`            | — (derived; no Figma variable) | `--shadow-leftwards-sm`        | Shadow     |
+| `shadow.leftwards.md`            | `shadow/leftwards/md`         | `--shadow-leftwards-md`         | Shadow     |
+| `shadow.rightwards.md`           | `shadow/rightwards/md`        | `--shadow-rightwards-md`        | Shadow     |
+| `shadow.rightwards.lg`           | `shadow/rightwards/lg`        | `--shadow-rightwards-lg`        | Shadow     |
+| `typography.fontSize.caption-xs` | `typography/size/11`          | `--text-caption-xs`             | Typography · Avatar |
+| `typography.fontSize.heading-4xl`| `typography/size/32`          | `--text-heading-4xl`            | Typography |
+| `typography.fontSize.display-5xl`| `typography/size/40`          | `--text-display-5xl`            | Typography |
+| `typography.letterSpacing.lg`    | `typography/letter-spacing/lg` | `--tracking-lg` = `0.09px`     | Typography · Button |
 
 > `--width-container-md` is the canonical `size/container/md` (358px).
 > `--width-calendar-md` and `--width-snackbar` are older component-scoped aliases of
@@ -900,10 +1634,18 @@ value resolved to a token that already existed.
 
 | Token                    | Figma Value | Tailwind Built-in    | Resolution                                                                  |
 | ------------------------ | ----------- | -------------------- | --------------------------------------------------------------------------- |
+| `radius/xs`              | `4px`       | `rounded-xs = 2px`   | Use `rounded-sm` (0.25rem = 4px); §3.3 has the whole scale                   |
+| `radius/sm`              | `8px`       | `rounded-sm = 4px`   | Use `rounded-lg` (0.5rem = 8px)                                             |
+| `radius/md`              | `12px`      | `rounded-md = 6px`   | Use `rounded-xl` (0.75rem = 12px) — never `rounded-md`                      |
 | `radius/lg`              | `16px`      | `rounded-lg = 8px`   | Use `rounded-2xl` (1rem = 16px) in components; Figma scale ≠ Tailwind scale |
-| `radius/2xl`             | `28px`      | `rounded-2xl = 16px` | No built-in → TODO `--radius-component-2xl: 1.75rem`                        |
+| `typography/size/11`     | `11px`      | none                 | No built-in at all → added as `--text-caption-xs`                            |
+| `typography/size/32`     | `32px`      | `text-4xl = 36px`    | No built-in → added as `--text-heading-4xl`; never `text-4xl`                |
+| `typography/size/40`     | `40px`      | `text-5xl = 48px`    | No built-in → added as `--text-display-5xl`; `text-5xl` is 48px = `display-6xl` |
+| `radius/xl`              | `20px`      | `rounded-xl = 12px`  | No built-in → added as `--radius-component-xl`                               |
+| `radius/2xl`             | `28px`      | `rounded-2xl = 16px` | No built-in → added as `--radius-component-2xl`                             |
 | `color/semantic/red/500` | `#f44336`   | `red-500 = #ef4444`  | Add as custom `--color-semantic-red-500`; do not conflate with Tailwind red |
 
 | Token                    | Figma Value                  | itui.css Value                                    | Resolution                                                                                                                                                                                                                                                                                           |
 | ------------------------ | ---------------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `color/opacity/black/lg` | `#1a1a1a99` (26,26,26 @ 0.6) | `--color-opacity-black-lg` = `rgba(15,15,15,0.5)` | Same Figma name, different base and alpha. Rewriting the existing var would break its `xs…xl` siblings, which all share the `#0f0f0f` base — so the Snackbar value landed as its own `--color-surface-snackbar-dark`. Reconcile the whole `opacity/black` ramp against Figma before merging the two. |
+| `shadow/downwards/{sm,md,lg}` | `rgba(26,26,26,.08)` at 4/16 · 12/24 · 20/48 | `--shadow-{sm,md,lg}` = `rgba(15,15,15,.08)` at 8/16 · 12/24 · 16/48 | **Two shadow ramps coexist** — §5.3. `md` matches on geometry and differs only in base grey; `sm`/`lg` differ in offset too. The board landed as its own `--shadow-{direction}-{size}` namespace because re-pointing `--shadow-{xs…xl}` would repaint every `shadow-sm`/`shadow-md` already shipped in this package. Use `shadowClass` from `components/shadow`; `shadow-md` is **not** `shadow-downwards-md`. |

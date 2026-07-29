@@ -29,8 +29,15 @@ import { cn } from '../../lib/utils';
     outline              #009ce0 → text-brand      · hover #33b0e6 → hover:text-primary-hover
 
   NOTE: chevron + left icon inherit currentColor (follow the title color).
-  Open/close height animation is not implemented (would require @keyframes in
-  global.css); content simply toggles. radius/sm 8px → rounded-lg.
+  radius/sm 8px → rounded-lg.
+
+  ANIMATION (Figma specs none; values taken from the motion tokens)
+    content open/close  animate-collapsible-down / -up (@keyframes in global.css)
+                        — height:auto has no interpolatable start value, so this
+                          needs real keyframes reading Radix's measured
+                          --radix-collapsible-content-height, not a transition.
+    chevron             transition-transform duration-200 ease-out → rotate-180 when open
+    title color         transition-colors duration-150 ease-out
   ─────────────────────────────────────────────────────────────────────────────
 */
 
@@ -133,7 +140,8 @@ export const AccordionTrigger = forwardRef<
         ref={ref}
         className={cn(
           'group flex h-12 w-full cursor-pointer items-center justify-between gap-2 px-5',
-          'text-base leading-lg tracking-lg font-medium transition-colors outline-none',
+          'text-base leading-lg tracking-lg font-medium outline-none',
+          'transition-colors duration-150 ease-out motion-reduce:transition-none',
           'focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
           'disabled:cursor-not-allowed disabled:text-neutral-disabled',
           triggerColorMap[variant],
@@ -152,7 +160,12 @@ export const AccordionTrigger = forwardRef<
           )}
           <span className="truncate">{children}</span>
         </span>
-        <ChevronIcon className="size-4 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+        <ChevronIcon
+          className={cn(
+            'size-4 shrink-0 transition-transform duration-200 ease-out',
+            'group-data-[state=open]:rotate-180 motion-reduce:transition-none',
+          )}
+        />
       </RadixAccordion.Trigger>
     </RadixAccordion.Header>
   );
@@ -168,7 +181,17 @@ export const AccordionContent = forwardRef<
   ComponentRef<typeof RadixAccordion.Content>,
   AccordionContentProps
 >(({ className, children, ...props }, ref) => (
-  <RadixAccordion.Content ref={ref} className="overflow-hidden" {...props}>
+  // The height keyframes live on Content — that is the element Radix measures into
+  // --radix-collapsible-content-height and flips data-state on. The inner div keeps
+  // the padding so it is not animated along with the height.
+  <RadixAccordion.Content
+    ref={ref}
+    className={cn(
+      'overflow-hidden',
+      'data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up',
+    )}
+    {...props}
+  >
     <div
       className={cn(
         'px-5 pb-5 text-sm leading-6 tracking-md text-foreground',

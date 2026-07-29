@@ -190,6 +190,16 @@
   --size-icon-xl: 32px;
   --size-icon-2xl: 40px;
 
+  /* ── Radius ───────────────────────────────────────────────────────────
+     The ITUI scale is 4 · 8 · 12 · 16 · 20 · 28 · full. Five of those steps
+     already exist under a Tailwind name with a *different* number (Figma's
+     radius/sm is 8px, Tailwind's rounded-sm is 4px), so components match by
+     pixel value — see radiusClass in components/radius/Radius.tsx. Only 20px
+     and 28px had no equivalent, and both ITUI names that fit them (xl, 2xl)
+     are taken by another Tailwind value, hence the `component-` prefix. */
+  --radius-component-xl: 20px; /* radius/xl · Radius old/Size/Medium */
+  --radius-component-2xl: 28px; /* radius/2xl */
+
   --radius-xs-nest-4: 8px;
   --radius-sm-nest-4: 12px;
   --radius-sm-nest-8: 16px;
@@ -245,6 +255,18 @@
   --width-container-md: 358px; /* size/container/md */
   --width-container-xs: 160px; /* size/container/xs — OverflowMenu panel */
 
+  /* ── Font size ────────────────────────────────────────────────────────
+     The ITUI ramp is 11 · 12 · 14 · 16 · 18 · 20 · 24 · 32 · 40 · 48px.
+     Seven of those steps already exist on the Tailwind scale (text-xs …
+     text-2xl, text-5xl); only these three have no built-in at the right
+     value — Tailwind's text-3xl is 30px and text-4xl is 36px, neither of
+     which is an ITUI step. Named after the ITUI style that owns each size
+     rather than after a scale key, so they can never shadow a Tailwind
+     utility. Reach for `typographyClass` in components/typography.       */
+  --text-caption-xs: 11px;
+  --text-heading-4xl: 32px;
+  --text-display-5xl: 40px;
+
   /* ── Line Height ──────────────────────────────────────────────────────── */
   --leading-xs: 16px;
   --leading-sm: 20px;
@@ -293,6 +315,7 @@
   --color-surface-neutral-strong: #2a2a2a; /* surface/neutral/strong/default */
   --color-surface-success-muted: #459f494d; /* color/semantic/green/600@30 */
   --color-surface-error-muted: #de3d314d; /* color/semantic/red/600@30 */
+  --color-surface-error-subtle: #feeceb; /* surface/semantic/error */
   /* Figma color/opacity/black/lg (#1a1a1a99). Kept separate from
      --color-opacity-black-lg, which is a different base (#0f0f0f) and alpha (0.5). */
   --color-surface-snackbar-dark: rgba(26, 26, 26, 0.6);
@@ -335,6 +358,172 @@
   --color-icon-neutral-subtle: #9e9e9e;
   --color-icon-neutral-disabled: #c2c2c2;
 
+  /* ── Figma colour ramps ───────────────────────────────────────────────────
+     The three Figma foundation boards, each variable mirroring its Figma path
+     1:1 (`color/scheme/teal/500` → --color-scheme-teal-500).
+
+     ⚠ The `brand-` / `semantic-` / `scheme-` prefixes are load-bearing. Tailwind
+     already ships `--color-{teal,cyan,lime,yellow,pink,indigo}-*` at DIFFERENT
+     values, and apps/web depends on them (health-status.tsx uses text-yellow-400).
+     Declaring the ITUI hues under the bare names would silently repaint those.
+
+     Purely additive: no variable above is renamed or re-pointed, so several of
+     these hexes are also reachable through an older semantic alias
+     (--color-brand-sky-500 === --color-brand === --color-primary). See the
+     "Colors" section of TOKENS.md for the full duplication list. */
+
+  /* color/brand/sky — the Primary ramp */
+  --color-brand-sky-50: #e6f5fc;
+  --color-brand-sky-100: #b0e0f5;
+  --color-brand-sky-200: #8ad1f1;
+  --color-brand-sky-300: #54bdea;
+  --color-brand-sky-400: #33b0e6;
+  --color-brand-sky-500: #009ce0;
+  --color-brand-sky-600: #008ecc;
+  --color-brand-sky-700: #006f9f;
+  --color-brand-sky-800: #00567b;
+  --color-brand-sky-900: #00425e;
+
+  /* color/brand/neutral — the Secondary ramp. `100` is declared above already. */
+  --color-brand-neutral-50: #f5f5f5;
+  --color-brand-neutral-200: #dadada;
+  --color-brand-neutral-300: #c2c2c2;
+  --color-brand-neutral-400: #9e9e9e;
+  --color-brand-neutral-500: #595858;
+  --color-brand-neutral-600: #4a4a4a;
+  --color-brand-neutral-700: #3a3a3a;
+  --color-brand-neutral-800: #2a2a2a;
+  --color-brand-neutral-900: #1a1a1a;
+  --color-brand-neutral-950: #0f0f0f;
+
+  /* color/semantic — Success / Information / Error / Warning.
+     Figma specs 50 and 500 only. These are NOT the shadcn --success / --info /
+     --warning / --destructive oklch values, which stay on their own ramp. */
+  --color-semantic-green-50: #edf7ee;
+  --color-semantic-green-500: #4caf50;
+  --color-semantic-blue-50: #e8f1ff;
+  --color-semantic-blue-500: #1677ff;
+  --color-semantic-red-50: #feeceb;
+  --color-semantic-red-500: #f44336;
+  --color-semantic-orange-50: #fff5e6;
+  --color-semantic-orange-500: #ffad33;
+  /* Not on the Colour Semantic board — Avatar's src-less fallback paints
+     bg-semantic-red-700, which had no @theme entry and so rendered nothing. */
+  --color-semantic-red-700: #ad3026;
+
+  /* color/scheme — the 10-hue Palette board, 50…900 each */
+  --color-scheme-blue-grey-50: #eff2f3;
+  --color-scheme-blue-grey-100: #ced7db;
+  --color-scheme-blue-grey-200: #b6c3ca;
+  --color-scheme-blue-grey-300: #94a8b1;
+  --color-scheme-blue-grey-400: #8097a2;
+  --color-scheme-blue-grey-500: #607d8b;
+  --color-scheme-blue-grey-600: #57727e;
+  --color-scheme-blue-grey-700: #445963;
+  --color-scheme-blue-grey-800: #35454c;
+  --color-scheme-blue-grey-900: #28353a;
+
+  --color-scheme-indigo-50: #eceef8;
+  --color-scheme-indigo-100: #c3c9e8;
+  --color-scheme-indigo-200: #a7afdd;
+  --color-scheme-indigo-300: #7e8acd;
+  --color-scheme-indigo-400: #6574c4;
+  --color-scheme-indigo-500: #3f51b5;
+  --color-scheme-indigo-600: #394aa5;
+  --color-scheme-indigo-700: #2d3a81;
+  --color-scheme-indigo-800: #232d64;
+  --color-scheme-indigo-900: #1a224c;
+
+  --color-scheme-deep-purple-50: #f0ebf8;
+  --color-scheme-deep-purple-100: #d0c2e9;
+  --color-scheme-deep-purple-200: #b9a4de;
+  --color-scheme-deep-purple-300: #997bcf;
+  --color-scheme-deep-purple-400: #8561c5;
+  --color-scheme-deep-purple-500: #673ab7;
+  --color-scheme-deep-purple-600: #5e35a7;
+  --color-scheme-deep-purple-700: #492982;
+  --color-scheme-deep-purple-800: #392065;
+  --color-scheme-deep-purple-900: #2b184d;
+
+  --color-scheme-teal-50: #e6f5f3;
+  --color-scheme-teal-100: #b0deda;
+  --color-scheme-teal-200: #8acfc8;
+  --color-scheme-teal-300: #54b9af;
+  --color-scheme-teal-400: #33aba0;
+  --color-scheme-teal-500: #009688;
+  --color-scheme-teal-600: #00897c;
+  --color-scheme-teal-700: #006b61;
+  --color-scheme-teal-800: #00534b;
+  --color-scheme-teal-900: #003f39;
+
+  --color-scheme-cyan-50: #e6f8fb;
+  --color-scheme-cyan-100: #b0eaf2;
+  --color-scheme-cyan-200: #8ae0eb;
+  --color-scheme-cyan-300: #54d2e2;
+  --color-scheme-cyan-400: #33c9dd;
+  --color-scheme-cyan-500: #00bcd4;
+  --color-scheme-cyan-600: #00abc1;
+  --color-scheme-cyan-700: #008597;
+  --color-scheme-cyan-800: #006775;
+  --color-scheme-cyan-900: #004f59;
+
+  --color-scheme-light-green-50: #f3f9ed;
+  --color-scheme-light-green-100: #dbecc7;
+  --color-scheme-light-green-200: #cae3ac;
+  --color-scheme-light-green-300: #b1d786;
+  --color-scheme-light-green-400: #a2cf6e;
+  --color-scheme-light-green-500: #8bc34a;
+  --color-scheme-light-green-600: #7eb143;
+  --color-scheme-light-green-700: #638a35;
+  --color-scheme-light-green-800: #4c6b29;
+  --color-scheme-light-green-900: #3a521f;
+
+  --color-scheme-lime-50: #fafceb;
+  --color-scheme-lime-100: #f0f4c2;
+  --color-scheme-lime-200: #e8efa4;
+  --color-scheme-lime-300: #dee87a;
+  --color-scheme-lime-400: #d7e361;
+  --color-scheme-lime-500: #cddc39;
+  --color-scheme-lime-600: #bbc834;
+  --color-scheme-lime-700: #929c28;
+  --color-scheme-lime-800: #71791f;
+  --color-scheme-lime-900: #565c18;
+
+  --color-scheme-yellow-50: #fffde9;
+  --color-scheme-yellow-100: #fff9ca;
+  --color-scheme-yellow-200: #fef4a8;
+  --color-scheme-yellow-300: #fdf088;
+  --color-scheme-yellow-400: #fded72;
+  --color-scheme-yellow-500: #fdea60;
+  --color-scheme-yellow-600: #f8d859;
+  --color-scheme-yellow-700: #f3c14f;
+  --color-scheme-yellow-800: #eeaa46;
+  --color-scheme-yellow-900: #e78438;
+
+  /* The Palette board binds this ramp's 50 and 500 to the SEMANTIC orange
+     rather than to a scheme variable of their own — mirrored, not copied. */
+  --color-scheme-orange-50: var(--color-semantic-orange-50);
+  --color-scheme-orange-100: #ffdfb0;
+  --color-scheme-orange-200: #ffd08a;
+  --color-scheme-orange-300: #ffba54;
+  --color-scheme-orange-400: #ffb443;
+  --color-scheme-orange-500: var(--color-semantic-orange-500);
+  --color-scheme-orange-600: #e88a00;
+  --color-scheme-orange-700: #b56c00;
+  --color-scheme-orange-800: #8c5400;
+  --color-scheme-orange-900: #6b4000;
+
+  --color-scheme-pink-50: #fde9ef;
+  --color-scheme-pink-100: #f8b9cf;
+  --color-scheme-pink-200: #f598b7;
+  --color-scheme-pink-300: #f06896;
+  --color-scheme-pink-400: #ed4b82;
+  --color-scheme-pink-500: #e91e63;
+  --color-scheme-pink-600: #d41b5a;
+  --color-scheme-pink-700: #a51546;
+  --color-scheme-pink-800: #801136;
+  --color-scheme-pink-900: #620d2a;
+
   /* ── Checkbox sizes ───────────────────────────────────────────────────────── */
   --height-checkbox-md: 18px;
   --width-checkbox-md: 18px;
@@ -375,16 +564,29 @@
   --shadow-md: 0px 12px 24px 0px rgba(15, 15, 15, 0.08);
   --shadow-lg: 0px 16px 48px 0px rgba(15, 15, 15, 0.08);
   --shadow-xl: 0px 20px 64px 0px rgba(15, 15, 15, 0.08);
+  /* The Shadow foundation board: one 3-step ramp — sm 4/16 · md 12/24 · lg 20/48,
+     all in shadow/color/black (#1a1a1a14) at spread 0 — mirrored onto four axes.
+     Direction picks the axis and the sign; nothing else varies.
+
+     ⚠ These are NOT the --shadow-{xs…xl} above. That is an older ITUI ramp on a
+     #0f0f0f base: shadow-md happens to match shadow-downwards-md's geometry but
+     not its grey, and sm/lg differ in offset too. Reach for shadowClass in
+     components/shadow so the two can never be confused. */
   --shadow-downwards-sm: 0 4px 16px 0 rgba(26, 26, 26, 0.08);
   --shadow-downwards-md: 0 12px 24px 0 rgba(26, 26, 26, 0.08);
   --shadow-downwards-lg: 0 20px 48px 0 rgba(26, 26, 26, 0.08);
-  /* shadow/upwards/sm — shadow/blur/sm (16) at shadow/positioning-up/xs (-4),
-     the mirror of --shadow-downwards-sm. Used by the bottom navigation bar. */
   --shadow-upwards-sm: 0 -4px 16px 0 rgba(26, 26, 26, 0.08);
-  /* shadow/rightwards/sm — shadow/blur/sm (16) at shadow/positioning-down/xs (4)
-     on the x axis. The rail shadow cast by the LNB / sidebar. */
-  --shadow-rightwards-sm: 4px 0 16px 0 rgba(26, 26, 26, 0.08);
+  --shadow-upwards-md: 0 -12px 24px 0 rgba(26, 26, 26, 0.08);
+  --shadow-upwards-lg: 0 -20px 48px 0 rgba(26, 26, 26, 0.08);
+  /* leftwards/sm is derived, not read: it is the only one of the twelve with no
+     Figma variable, so its tile is mis-bound to leftwards/lg. This is the mirror
+     of --shadow-rightwards-sm, which the rest of the ramp agrees on. */
+  --shadow-leftwards-sm: -4px 0 16px 0 rgba(26, 26, 26, 0.08);
+  --shadow-leftwards-md: -12px 0 24px 0 rgba(26, 26, 26, 0.08);
   --shadow-leftwards-lg: -20px 0 48px 0 rgba(26, 26, 26, 0.08);
+  --shadow-rightwards-sm: 4px 0 16px 0 rgba(26, 26, 26, 0.08);
+  --shadow-rightwards-md: 12px 0 24px 0 rgba(26, 26, 26, 0.08);
+  --shadow-rightwards-lg: 20px 0 48px 0 rgba(26, 26, 26, 0.08);
 
   /* ── Motion ──────────────────────────────────────────────────────────── */
   /* Skeleton "Wave": a band half the width of the skeleton sweeps across it.

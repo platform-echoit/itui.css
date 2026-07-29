@@ -130,6 +130,9 @@ export const themeExtend = {
     '2xl': '1rem',
     '3xl': '1.5rem',
     full: '9999px',
+    /* The two steps of the ITUI radius scale with no Tailwind equivalent. */
+    'component-xl': '20px',
+    'component-2xl': '28px',
   },
 
   boxShadow: {
@@ -141,6 +144,21 @@ export const themeExtend = {
     '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
     inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
     none: '0 0 #0000',
+
+    /* The ITUI Shadow board: one ramp (sm 4/16 · md 12/24 · lg 20/48) mirrored
+       onto four axes. Distinct from the xs…xl ramp above — see components/shadow. */
+    'downwards-sm': 'var(--shadow-downwards-sm)',
+    'downwards-md': 'var(--shadow-downwards-md)',
+    'downwards-lg': 'var(--shadow-downwards-lg)',
+    'upwards-sm': 'var(--shadow-upwards-sm)',
+    'upwards-md': 'var(--shadow-upwards-md)',
+    'upwards-lg': 'var(--shadow-upwards-lg)',
+    'leftwards-sm': 'var(--shadow-leftwards-sm)',
+    'leftwards-md': 'var(--shadow-leftwards-md)',
+    'leftwards-lg': 'var(--shadow-leftwards-lg)',
+    'rightwards-sm': 'var(--shadow-rightwards-sm)',
+    'rightwards-md': 'var(--shadow-rightwards-md)',
+    'rightwards-lg': 'var(--shadow-rightwards-lg)',
   },
 
   fontSize: {
@@ -157,6 +175,10 @@ export const themeExtend = {
     '7xl': '4.5rem',
     '8xl': '6rem',
     '9xl': '8rem',
+    // The three ITUI sizes with no Tailwind built-in at the right value.
+    'caption-xs': '11px',
+    'heading-4xl': '32px',
+    'display-5xl': '40px',
   },
 
   fontFamily: {
