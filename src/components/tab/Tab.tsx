@@ -1,3 +1,5 @@
+'use client';
+
 import {
   createContext,
   forwardRef,
@@ -97,7 +99,7 @@ const triggerColorMap: Record<TabType, string> = {
 // ─── Tab (Root) ─────────────────────────────────────────────────────────────
 
 export interface TabProps
-  extends ComponentPropsWithoutRef<typeof RadixTabs.Root> {}
+  extends ComponentPropsWithoutRef<typeof RadixTabs.Root> { }
 
 export const Tab = forwardRef<ComponentRef<typeof RadixTabs.Root>, TabProps>(
   ({ className, ...props }, ref) => (
@@ -197,7 +199,7 @@ TabTrigger.displayName = 'TabTrigger';
 // ─── TabContent ─────────────────────────────────────────────────────────────
 
 export interface TabContentProps
-  extends ComponentPropsWithoutRef<typeof RadixTabs.Content> {}
+  extends ComponentPropsWithoutRef<typeof RadixTabs.Content> { }
 
 export const TabContent = forwardRef<
   ComponentRef<typeof RadixTabs.Content>,
