@@ -87,14 +87,19 @@ Every background token has a paired foreground token for contrast.
 
 | Token                        | CSS Variable             | Light              | Dark               | Tailwind Class              |
 | ---------------------------- | ------------------------ | ------------------ | ------------------ | --------------------------- |
-| `color.primary`              | `--primary`              | `oklch(0.205 0 0)` | `oklch(0.985 0 0)` | `bg-primary`                |
-| `color.primary-foreground`   | `--primary-foreground`   | `oklch(0.985 0 0)` | `oklch(0.205 0 0)` | `text-primary-foreground`   |
-| `color.secondary`            | `--secondary`            | `oklch(0.97 0 0)`  | `oklch(0.269 0 0)` | `bg-secondary`              |
-| `color.secondary-foreground` | `--secondary-foreground` | `oklch(0.205 0 0)` | `oklch(0.985 0 0)` | `text-secondary-foreground` |
-| `color.muted`                | `--muted`                | `oklch(0.97 0 0)`  | `oklch(0.269 0 0)` | `bg-muted`                  |
-| `color.muted-foreground`     | `--muted-foreground`     | `oklch(0.556 0 0)` | `oklch(0.708 0 0)` | `text-muted-foreground`     |
-| `color.accent`               | `--accent`               | `oklch(0.97 0 0)`  | `oklch(0.269 0 0)` | `bg-accent`                 |
-| `color.accent-foreground`    | `--accent-foreground`    | `oklch(0.205 0 0)` | `oklch(0.985 0 0)` | `text-accent-foreground`    |
+| `color.primary`              | `--primary`              | `#009ce0` | `#009ce0` | `bg-primary`                |
+| `color.primary-foreground`   | `--primary-foreground`   | `#ffffff` | `#ffffff` | `text-primary-foreground`   |
+| `color.secondary`            | `--secondary`            | `#ededed` | `#2a2a2a` | `bg-secondary`              |
+| `color.secondary-foreground` | `--secondary-foreground` | `#0f0f0f` | `#ededed` | `text-secondary-foreground` |
+| `color.muted`                | `--muted`                | `#f5f5f5` | `#2a2a2a` | `bg-muted`                  |
+| `color.muted-foreground`     | `--muted-foreground`     | `#595858` | `#c2c2c2` | `text-muted-foreground`     |
+| `color.accent`               | `--accent`               | `#f5f5f5` | `#2a2a2a` | `bg-accent`                 |
+| `color.accent-foreground`    | `--accent-foreground`    | `#0f0f0f` | `#ededed` | `text-accent-foreground`    |
+
+> These are the shadcn-inherited compatibility tokens. They are live — `bg-primary` /
+> `text-primary` reach 12 modules — but they are **not** what most components use. The brand
+> surface the majority of components render is `--color-brand` (`bg-brand`, 22 modules). If you
+> are theming, start there; see [Brand](#brand).
 
 #### Status / Semantic
 
@@ -161,11 +166,26 @@ Defined in `@theme` as `--color-{name}`. Used directly as Tailwind utilities.
 
 | Token                         | CSS Variable                    | Value       | Tailwind Class             |
 | ----------------------------- | ------------------------------- | ----------- | -------------------------- |
-| `color.surface.hover`         | `--color-surface-hover`         | `TODO`      | `bg-surface-hover`         |
-| `color.surface.pressed`       | `--color-surface-pressed`       | `TODO`      | `bg-surface-pressed`       |
+| `color.surface.hover`         | `--color-surface-hover`         | `#f5f5f5`   | `bg-surface-hover`         |
+| `color.surface.pressed`       | `--color-surface-pressed`       | `#ededed`   | `bg-surface-pressed`       |
 | `color.surface.success.muted` | `--color-surface-success-muted` | `#459f494d` | `bg-surface-success-muted` |
 | `color.surface.error.muted`   | `--color-surface-error-muted`   | `#de3d314d` | `bg-surface-error-muted`   |
 | `color.surface.error.subtle`  | `--color-surface-error-subtle`  | `#feeceb`   | `bg-surface-error-subtle` |
+
+> ⚠️ **These two were undefined until I-23** (2026-07-30). `Button` (ghost variant) and `Avatar`
+> referenced them anyway, and Tailwind emits no rule for an undefined token — so the ghost
+> button gave no hover or pressed feedback at all, silently. Both are defined now; the fix is a
+> **visual change** for those two components.
+>
+> Mind the off-by-one against the neutral ramp: `--color-surface-neutral-subtle` is `#f5f5f5`,
+> `-neutral-hover` is `#ededed`, `-neutral-pressed` is `#dadada`. So `surface-hover` shares a
+> value with `neutral-subtle`, not with `neutral-hover`. The names describe the **state**, the
+> ramp describes the **step** — they are one apart on purpose.
+>
+> These are flat `@theme` hex values, so they **do not follow dark mode**. `Popover` and
+> `Sidebar` were listed here as users but never actually were: they use the `@theme inline`
+> pair (`bg-muted` / `bg-secondary` / `bg-sidebar-accent`), identical in light mode and
+> dark-mode aware. Prefer that pair for any surface that must theme.
 
 > `surface.success.muted` / `surface.error.muted` are the Figma `color/semantic/{green,red}/600@30`
 > tints, added for the Calendar event badges. They pair with `text-success` / `text-destructive`.
@@ -1563,8 +1583,6 @@ steps already existed on the Tailwind spacing scale. See §2.3 for the scale tab
 
 | Token                              | Reason                                                                                                                    | Resolution                                                                                                                                          |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `color.surface.hover`              | Value not specified in Figma or source                                                                                    | Add hex to `@theme` and update here                                                                                                                 |
-| `color.surface.pressed`            | Value not specified in Figma or source                                                                                    | Add hex to `@theme` and update here                                                                                                                 |
 | `typography.fontFamily.pretendard` | `--font-sans` is `Pretendard, system-ui`, but no `@font-face` ships it — everything renders in the `system-ui` fallback   | Register `@font-face` (or a CDN import). No new variable needed: all four Figma families resolve to the same Pretendard binding `--font-sans` holds |
 | `color.status.reconciliation`      | Two status ramps coexist: shadcn `--success`/`--info`/`--warning`/`--destructive` (oklch) vs Figma `color/semantic/*`     | Decide which wins, then re-point the loser. A re-point, not an addition — see the ⚠ note under _Colors_                                             |
 | `component.progress.ring.stroke`   | Only `lg` has a Figma variable (`Border Width/200 = 8`); `md` (5px) and `sm` (~3.6px) were measured off the rendered node | Kept as an SVG `strokeWidth` constant in `progress/Progress.tsx` — SVG stroke is an attribute, not a Tailwind utility, so no `@theme` entry applies |
@@ -1573,6 +1591,8 @@ steps already existed on the Tailwind spacing scale. See §2.3 for the scale tab
 
 | Token                            | Figma Source                  | Added As                        | Used By    |
 | -------------------------------- | ----------------------------- | ------------------------------- | ---------- |
+| `color.surface.hover`            | `surface/neutral/secondary/hover`   | `--color-surface-hover`   | Button (ghost) · Avatar |
+| `color.surface.pressed`          | `surface/neutral/secondary/pressed` | `--color-surface-pressed` | Button (ghost) · Avatar |
 | `color.surface.snackbar.dark`    | `color/opacity/black/lg`      | `--color-surface-snackbar-dark` | Snackbar   |
 | `component.snackbar.width`       | `size/container/md`           | `--width-snackbar`              | Snackbar   |
 | `color.surface.success.muted`    | `color/semantic/green/600@30` | `--color-surface-success-muted` | Calendar   |

@@ -1,5 +1,5 @@
 import { forwardRef, type HTMLAttributes } from 'react';
-import { Avatar as RadixAvatar } from 'radix-ui';
+import * as RadixAvatar from '@radix-ui/react-avatar';
 import { cn } from '../../lib/utils';
 
 /*

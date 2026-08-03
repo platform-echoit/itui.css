@@ -250,7 +250,7 @@ export const InputDropdown = forwardRef<HTMLInputElement, InputDropdownProps>(
       open,
       onOpenChange,
       disabled = false,
-      placeholder = '선택해주세요',
+      placeholder = 'Select an option',
       fieldClassName,
       panelClassName,
       onKeyDown,

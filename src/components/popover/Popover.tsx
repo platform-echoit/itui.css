@@ -4,7 +4,6 @@ import {
   type HTMLAttributes,
   type ReactNode,
 } from 'react';
-import { ChevronRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { CaretRight } from '../../icons/ITUI/icons';
 
@@ -24,8 +23,10 @@ import { CaretRight } from '../../icons/ITUI/icons';
   height/popover/md  auto: p-2 + 20+4+16px   = 56px (description row)
 
   ITEM — interactive states (CSS-only, RSC compatible)
-  hover    surface/neutral/secondary/hover    #f5f5f5 → hover:bg-surface-hover
-  pressed  surface/neutral/secondary/pressed  #ededed → active:bg-surface-pressed
+  hover    surface/neutral/secondary/hover    #f5f5f5 → hover:bg-muted
+  pressed  surface/neutral/secondary/pressed  #ededed → active:bg-secondary
+  Deliberately the `@theme inline` pair, not --color-surface-hover/-pressed:
+  identical in light mode, but only these two follow dark mode.
 
   TYPOGRAPHY
   body/md/medium     14px 500 leading-5 0.20px → text-sm font-medium   leading-5 tracking-md
@@ -65,8 +66,14 @@ export interface PopoverItemProps
   description?: ReactNode;
   /** Trailing content (text or icon) rendered at the right edge */
   trailing?: ReactNode;
-  /** Appends a ChevronRight indicator for submenu items */
+  /** Appends a CaretRight indicator for submenu items */
   isSubmenu?: boolean;
+  /**
+   * Renders the item as `role="menuitem"`. Required for items inside
+   * `PopoverMenu` — that is the role it finds its items by, and it owns the
+   * `tabIndex` from then on. Has no effect outside a `PopoverMenu`.
+   */
+  asMenuItem?: boolean;
 }
 
 // ─── Popover ──────────────────────────────────────────────────────────────────
@@ -158,6 +165,7 @@ export const PopoverItem = forwardRef<HTMLButtonElement, PopoverItemProps>(
       description,
       trailing,
       isSubmenu = false,
+      asMenuItem = false,
       className,
       children,
       ...rest
@@ -167,6 +175,10 @@ export const PopoverItem = forwardRef<HTMLButtonElement, PopoverItemProps>(
     <button
       ref={ref}
       type="button"
+      role={asMenuItem ? 'menuitem' : undefined}
+      // Seeded at -1; PopoverMenu promotes exactly one item to 0 (roving
+      // tabindex). Static attributes only, so this file stays server-safe.
+      tabIndex={asMenuItem ? -1 : undefined}
       className={cn(
         'flex w-full items-center gap-2 p-2 rounded-lg cursor-pointer select-none leading-md',
         'bg-inverse hover:bg-muted active:bg-secondary',

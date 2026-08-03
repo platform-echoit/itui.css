@@ -3,7 +3,7 @@ import {
   type ComponentPropsWithoutRef,
   type ComponentRef,
 } from 'react';
-import { Slider as RadixSlider } from 'radix-ui';
+import * as RadixSlider from '@radix-ui/react-slider';
 import { cn } from '../../lib/utils';
 
 /*

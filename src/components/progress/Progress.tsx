@@ -1,5 +1,5 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
-import { Progress as RadixProgress } from 'radix-ui';
+import * as RadixProgress from '@radix-ui/react-progress';
 import { cn } from '../../lib/utils';
 import {
   CheckCircleFillIcon,

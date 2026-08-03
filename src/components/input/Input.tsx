@@ -43,6 +43,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       className = '',
       fieldClassName = '',
       boxClassName = '',
+      'aria-describedby': ariaDescribedBy,
       ...rest
     },
     ref,
@@ -52,6 +53,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const isDisabled = !!disabled;
     const isInputDisabled = isDisabled || disabledInput;
     const isError = !!error && !isDisabled;
+
+    // The error text is only reachable by a screen reader if the input points at
+    // it. Appended rather than replacing, so a consumer's own hint id survives.
+    const errorId = `${inputId}-error`;
+    const describedBy =
+      [ariaDescribedBy, isError ? errorId : null].filter(Boolean).join(' ') ||
+      undefined;
 
     /*
       Token → class map:
@@ -105,6 +113,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             disabled={isInputDisabled}
+            aria-invalid={isError || undefined}
+            aria-describedby={describedBy}
             className={[
               'flex-1 min-w-0 bg-transparent outline-none',
               'text-base leading-lg tracking-lg',
@@ -132,6 +142,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         {isError && (
           <p
+            id={errorId}
             className="text-sm font-normal leading-5 tracking-md text-destructive"
             role="alert"
           >

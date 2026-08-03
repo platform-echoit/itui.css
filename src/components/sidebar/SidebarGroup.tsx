@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, type ReactNode } from 'react';
 import { CaretDownRegularIcon } from '../../icons/ITUI';
 import { cn } from '../../lib/utils';

@@ -1,0 +1,180 @@
+{
+  "package": "@echoit/itui.css",
+  "version": "1.0.14",
+  "evaluatedOn": "2026-07-29",
+  "evaluator": "autonomous DX evaluator (CLAUDE.md protocol)",
+  "rubric": "scoring-rubric.md (authored by evaluator; file was missing from repo)",
+  "scenarios": [
+    {
+      "id": "S01",
+      "name": "Discover the API from public documentation",
+      "status": "PARTIAL",
+      "score": 4,
+      "timeToFirstSuccessMin": 25,
+      "unexpectedSteps": 3,
+      "note": "Documentation site itui.echoit.co.kr does not resolve (DNS ENOTFOUND). README documents 17 components; the package exports 56 component modules. TOKENS.md is high quality but only reachable via the GitHub repo, not from the npm page."
+    },
+    {
+      "id": "S02",
+      "name": "Install from npm into a fresh project",
+      "status": "PASS",
+      "score": 4,
+      "timeToFirstSuccessMin": 1,
+      "unexpectedSteps": 0,
+      "note": "npm install succeeded in 47s with 0 vulnerabilities and no peer warnings. Penalised for 98 MB / 16,129 files on disk, 40 MB of shipped sourcemaps, and shipping @types/react + tailwindcss as runtime dependencies."
+    },
+    {
+      "id": "S03",
+      "name": "Render the first component (time to first pixel)",
+      "status": "FAIL",
+      "score": 3,
+      "timeToFirstSuccessMin": 40,
+      "unexpectedSteps": 4,
+      "note": "The documented JS import path ('import \"@echoit/itui.css\"' in main.tsx) silently produces a completely unstyled component. Recovered only via the CSS @import path plus installing Tailwind v4 and its Vite plugin."
+    },
+    {
+      "id": "S04",
+      "name": "Build a realistic form",
+      "status": "PASS",
+      "score": 7,
+      "timeToFirstSuccessMin": 15,
+      "unexpectedSteps": 1,
+      "note": "Input/Select/Checkbox/Button composed cleanly and typechecked first try. Mixed paradigms: Checkbox uses native onChange while Select uses onValueChange. Error text is not programmatically associated with the input."
+    },
+    {
+      "id": "S05",
+      "name": "Modal / Dialog flow",
+      "status": "PARTIAL",
+      "score": 3,
+      "timeToFirstSuccessMin": 10,
+      "unexpectedSteps": 0,
+      "note": "Controlled and uncontrolled both work and Escape closes. But focus is never moved into the dialog, there is no focus trap, and aria-modal is absent: keyboard users tab through the page behind the open modal while the mouse is blocked."
+    },
+    {
+      "id": "S06",
+      "name": "Data table",
+      "status": "PARTIAL",
+      "score": 3,
+      "timeToFirstSuccessMin": 12,
+      "unexpectedSteps": 1,
+      "note": "The documented TableRow `disabled` prop has no functional effect: no aria-disabled, pointer-events:auto, and onClick still fires. No aria-sort, no th scope, and sortable headers are not buttons."
+    },
+    {
+      "id": "S07",
+      "name": "Overlay composition (Popover / Tooltip / Tabs)",
+      "status": "PASS",
+      "score": 5,
+      "timeToFirstSuccessMin": 20,
+      "unexpectedSteps": 2,
+      "note": "All render correctly. Popover's root is `PopoverRoot` while every sibling family uses the bare name; a different component is also exported as `Popover`. Tooltip requires a Provider, Popover does not, and this is undocumented."
+    },
+    {
+      "id": "S08",
+      "name": "Toasts",
+      "status": "PARTIAL",
+      "score": 5,
+      "timeToFirstSuccessMin": 8,
+      "unexpectedSteps": 1,
+      "note": "Works with aria-live=polite. Requires importing `toast` from `sonner`, which is neither a dependency of the consumer app nor a peerDependency — a phantom dependency that resolves only under npm hoisting."
+    },
+    {
+      "id": "S09",
+      "name": "Theming via design tokens",
+      "status": "PARTIAL",
+      "score": 6,
+      "timeToFirstSuccessMin": 30,
+      "unexpectedSteps": 2,
+      "note": "Dark mode via .dark works and scopes correctly. TOKENS.md is excellent. But the README's own theming example (--primary, --radius) is a silent no-op; the real tokens (--color-brand, --radius-lg) work perfectly."
+    },
+    {
+      "id": "S10",
+      "name": "Per-instance customization / className override",
+      "status": "PARTIAL",
+      "score": 4,
+      "timeToFirstSuccessMin": 15,
+      "unexpectedSteps": 2,
+      "note": "bg-purple-600 and px-10 override successfully but rounded-full silently loses to the library's rounded-lg. Classes are concatenated rather than merged despite tailwind-merge being a dependency, so overrides depend on stylesheet order."
+    },
+    {
+      "id": "S11",
+      "name": "TypeScript DX",
+      "status": "PASS",
+      "score": 8,
+      "timeToFirstSuccessMin": 5,
+      "unexpectedSteps": 0,
+      "note": "Strongest area. Named exported types, JSDoc on props, precise union errors, and a 'Did you mean label?' suggestion for a misspelled prop. A 7-file app using ~25 components typechecked clean on the first attempt."
+    },
+    {
+      "id": "S12",
+      "name": "Accessibility defaults",
+      "status": "FAIL",
+      "score": 3,
+      "timeToFirstSuccessMin": 45,
+      "unexpectedSteps": 5,
+      "note": "Good label association, visible focus rings, sane tab order, aria-busy and role=status. Undermined by the missing dialog focus trap, missing aria-invalid/aria-describedby, missing aria-sort, a non-functional disabled row, and 41 hardcoded Korean UI/a11y strings."
+    },
+    {
+      "id": "S13",
+      "name": "Error recovery / mistake tolerance",
+      "status": "PASS",
+      "score": 6,
+      "timeToFirstSuccessMin": 10,
+      "unexpectedSteps": 1,
+      "note": "TypeScript diagnostics are excellent and runtime composition errors are clear. Two failures: the Popover error names the wrong export, and forgetting the stylesheet produces no warning whatsoever."
+    },
+    {
+      "id": "S14",
+      "name": "Realistic application screen",
+      "status": "PASS",
+      "score": 7,
+      "timeToFirstSuccessMin": 35,
+      "unexpectedSteps": 1,
+      "note": "A full dashboard (Sidebar, Cards, Table, Dialog, Avatar, Badge, Spinner) composed without fighting the library and rendered correctly in light and dark mode."
+    },
+    {
+      "id": "S15",
+      "name": "Next.js App Router / SSR",
+      "status": "FAIL",
+      "score": 2,
+      "timeToFirstSuccessMin": 50,
+      "unexpectedSteps": 4,
+      "note": "Importing the package in a Server Component fails the production build with 'TypeError: (0, y.createContext) is not a function'. The dist carries no 'use client' directive. Adding 'use client' to every consumer file works and hydrates cleanly, but this is entirely undocumented."
+    },
+    {
+      "id": "S16",
+      "name": "Packaging, build output, tree-shaking",
+      "status": "FAIL",
+      "score": 1,
+      "timeToFirstSuccessMin": 20,
+      "unexpectedSteps": 0,
+      "note": "Importing only Button grows the bundle from 190 kB to 974 kB (+229 kB gzip) and pulls in Lexical, sonner, date-fns, calendar and carousel. Adding 24 more components costs only 67 kB more. The README's 'Tree-shakable' claim is false."
+    }
+  ],
+  "categories": {
+    "Documentation & Discovery": { "score": 4.0, "weight": 0.15, "scenarios": ["S01", "S10"] },
+    "Installation & Setup": { "score": 3.5, "weight": 0.15, "scenarios": ["S02", "S03"] },
+    "Core Component API": { "score": 4.5, "weight": 0.15, "scenarios": ["S04", "S05", "S06", "S07"] },
+    "Composition & Realism": { "score": 6.0, "weight": 0.10, "scenarios": ["S08", "S14"] },
+    "Customization & Theming": { "score": 5.0, "weight": 0.10, "scenarios": ["S09", "S10"] },
+    "TypeScript DX": { "score": 8.0, "weight": 0.10, "scenarios": ["S11"] },
+    "Accessibility": { "score": 3.0, "weight": 0.08, "scenarios": ["S12"] },
+    "Error Recovery": { "score": 6.0, "weight": 0.05, "scenarios": ["S13"] },
+    "SSR / Next.js": { "score": 2.0, "weight": 0.07, "scenarios": ["S15"] },
+    "Packaging & Performance": { "score": 1.0, "weight": 0.05, "scenarios": ["S16"] }
+  },
+  "finalScore": 4.4,
+  "releaseRecommendation": "NOT READY",
+  "criticalBlockers": [
+    "Next.js App Router: importing the package in a Server Component is a hard production build failure, with no documentation of the 'use client' requirement.",
+    "The only documented full-documentation site (https://itui.echoit.co.kr) does not resolve.",
+    "The README's documented stylesheet import silently yields completely unstyled components.",
+    "Dialog performs no focus management and has no focus trap, locking keyboard and screen-reader users out of modal content.",
+    "The documented TableRow `disabled` prop has no functional effect.",
+    "Tree-shaking does not work: one Button costs 229 kB gzip, contradicting the README."
+  ],
+  "evaluatorNotes": [
+    "test-scenarios.md and scoring-rubric.md were referenced by CLAUDE.md but absent from the repo; both were authored by the evaluator before testing.",
+    "Two failures were traced to evaluator error and excluded from scoring: an accidental '@ts-nocheck' string in a comment that suppressed all TypeScript diagnostics, and an initial dark-mode test that used bg-primary instead of the documented bg-background.",
+    "npm audit high-severity findings in the Next.js app originate from next/postcss/sharp, not from the target package, and were not counted against it."
+  ]
+}

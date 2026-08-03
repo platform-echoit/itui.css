@@ -1,3 +1,5 @@
+'use client';
+
 import {
   useEffect,
   useRef,
@@ -5,7 +7,7 @@ import {
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from 'react';
-import { Dialog as RadixDialog } from 'radix-ui';
+import * as RadixDialog from '@radix-ui/react-dialog';
 import { cn } from '../../lib/utils';
 import { Button } from '../button';
 
@@ -224,7 +226,7 @@ export function BottomSheet({
               title == null && 'sr-only',
             )}
           >
-            {title ?? '메뉴'}
+            {title ?? 'Menu'}
           </RadixDialog.Title>
 
           {children != null && (

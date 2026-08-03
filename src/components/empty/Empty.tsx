@@ -67,7 +67,7 @@ export const Empty = forwardRef<HTMLDivElement, EmptyProps>(
     {
       className,
       icon = <DefaultIcon />,
-      title = '콘텐츠 없음',
+      title = 'No content',
       description,
       children,
       ...props

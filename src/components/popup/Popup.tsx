@@ -1,5 +1,7 @@
+'use client';
+
 import { type ReactNode } from 'react';
-import { Dialog as RadixDialog } from 'radix-ui';
+import * as RadixDialog from '@radix-ui/react-dialog';
 import { cn } from '../../lib/utils';
 import { Button } from '../button';
 import { Checkbox } from '../checkbox';
@@ -78,7 +80,7 @@ export function Popup({
   showDontShowAgain = true,
   dontShowAgain,
   onDontShowAgainChange,
-  dontShowAgainLabel = '다시 보지 않기',
+  dontShowAgainLabel = "Don't show again",
   className,
 }: PopupProps) {
   const isImage = variant === 'image';
@@ -115,7 +117,7 @@ export function Popup({
         >
           {isImage ? (
             <div className={cn(CARD, 'flex flex-col')}>
-              <RadixDialog.Title className="sr-only">{title ?? '알림'}</RadixDialog.Title>
+              <RadixDialog.Title className="sr-only">{title ?? 'Notice'}</RadixDialog.Title>
               <div className="flex h-[460px] items-center justify-center bg-surface-neutral-subtle text-neutral-subtle">
                 {image ?? <ImagePlaceholder className="size-[140px]" />}
               </div>

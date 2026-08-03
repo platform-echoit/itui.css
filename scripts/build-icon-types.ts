@@ -1,56 +1,82 @@
 /**
- * Generates ALL DTS output that tsup's `dts: { resolve: true }` used to
- * produce — but without running TypeScript on the 6,600+ icon files.
+ * Collapses the icon declarations tsc emits into one self-contained file, and
+ * mirrors src/index.ts into dist/index.d.ts.
  *
- * Why this is safe:
- *   Every icon component follows the same pattern:
- *     const XxxIcon = ({ width, height, color, ...props }: IconProps) => <svg>…</svg>
- *   Their type is always `React.FC<IconProps>`, nothing to infer.
+ * Runs AFTER `tsc`, which matters: tsc pulls src/icons into its program anyway
+ * (20 components import icons, and `exclude` only filters the `include` globs —
+ * it does not stop import resolution), so it emits 7,869 declaration files and
+ * overwrites anything written before it. The previous version of this script ran
+ * first and had its icon output silently thrown away.
  *
- * What this script generates:
- *   dist/icons/ITUI/index.d.ts  — all icon declarations (this file)
- *   dist/index.d.ts             — re-export barrel (mirrors src/index.ts)
+ * Why collapse at all: every icon's type is the same shape, so 2.51 MB across
+ * 7,869 files says exactly what 51 kB in one file says (I-10). Consumers cannot
+ * deep-import an icon either — `exports` only exposes `./icons`.
  *
- * tsc (via build:dts:components) only sees ~46 component files.
+ * The name list is read from tsc's own emit rather than from source. Parsing
+ * source missed the 9 icons declared directly in `src/icons/ITUI/icons.ts`
+ * (`XIcon`, `CaretRight`, …) — which are the ones apps/ actually import.
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { readFileSync, rmSync, writeFileSync } from 'fs';
+import { existsSync, readdirSync } from 'fs';
 import { join, resolve } from 'path';
 
 // Works whether invoked from repo root or packages/ui
 const root = resolve(process.cwd());
+const ituiDist = join(root, 'dist/icons/ITUI');
+const barrel = join(ituiDist, 'index.d.ts');
 
-// ── 1. Generate dist/icons/ITUI/index.d.ts ───────────────────────────────────
-
-const ituiSrc = join(root, 'src/icons/ITUI');
-const mainBarrel = readFileSync(join(ituiSrc, 'index.ts'), 'utf-8');
-
-// `export * from './airplane';` → 'airplane'
-const subDirs = [
-  ...mainBarrel.matchAll(/^export \* from '\.\/([^']+)';?$/gm),
-].map((m) => m[1]);
-
-const iconNames: string[] = [];
-for (const dir of subDirs) {
-  let content: string;
-  try {
-    content = readFileSync(join(ituiSrc, dir, 'index.ts'), 'utf-8');
-  } catch {
-    continue;
-  }
-  // `export { default as AirplaneRegularIcon } from './…';`
-  const names = [
-    ...content.matchAll(/export \{ default as (\w+) \} from/g),
-  ].map((m) => m[1]);
-  iconNames.push(...names);
+if (!existsSync(barrel)) {
+  console.error(`✗ ${barrel} missing — run tsc (build:dts) before this script`);
+  process.exit(1);
 }
 
-const ituiOutDir = join(root, 'dist/icons/ITUI');
-mkdirSync(ituiOutDir, { recursive: true });
+// ── 1. Collect every exported name from tsc's emitted declaration tree ───────
+
+/** `export { default as StarIcon } from './StarIcon.js'` and `export declare const StarIcon` */
+const EXPORTED_NAME =
+  /export \{ default as (\w+) \}|export declare const (\w+)/g;
+
+const names = new Set<string>();
+
+/**
+ * Look the target up on disk instead of pasting an extension on. This runs
+ * before `build:paths`, so tsc's specifiers are still extensionless, and each
+ * one is either a file (`./icons`) or a directory (`./address-book`).
+ */
+function resolveDts(specifier: string): string | null {
+  const base = join(ituiDist, specifier.replace(/\.js$/, ''));
+  for (const candidate of [`${base}.d.ts`, join(base, 'index.d.ts')]) {
+    if (existsSync(candidate)) return candidate;
+  }
+  return null;
+}
+
+for (const match of readFileSync(barrel, 'utf-8').matchAll(
+  /export \* from '\.\/([^']+)'/g,
+)) {
+  const target = resolveDts(match[1]);
+  if (!target) {
+    console.error(
+      `✗ barrel re-exports ${match[1]} but no .d.ts for it exists under ${ituiDist}`,
+    );
+    process.exit(1);
+  }
+  for (const name of readFileSync(target, 'utf-8').matchAll(EXPORTED_NAME)) {
+    names.add(name[1] ?? name[2]);
+  }
+}
+
+// A wrong regex here would silently ship a package with no icon types.
+if (names.size < 6000) {
+  console.error(`✗ only ${names.size} icon names collected — expected 6,000+`);
+  process.exit(1);
+}
+
+// ── 2. Replace the tree with one self-contained declaration ──────────────────
 
 const iconsDts = [
-  `import type { SVGProps } from 'react';`,
-  `import type { FC } from 'react';`,
+  `import type { FC, SVGProps } from 'react';`,
   ``,
   `type IconProps = SVGProps<SVGSVGElement> & {`,
   `  width?: number;`,
@@ -58,26 +84,40 @@ const iconsDts = [
   `  color?: string;`,
   `};`,
   ``,
-  ...iconNames.map((name) => `export declare const ${name}: FC<IconProps>;`),
+  ...[...names]
+    .sort()
+    .map((name) => `export declare const ${name}: FC<IconProps>;`),
   ``,
 ].join('\n');
 
-writeFileSync(join(ituiOutDir, 'index.d.ts'), iconsDts);
-console.log(`✓ ${iconNames.length} icon types  →  dist/icons/ITUI/index.d.ts`);
+/** Declarations only — the icon .js files are the runtime and must stay. */
+function removeDeclarations(dir: string): number {
+  let removed = 0;
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) removed += removeDeclarations(full);
+    else if (/\.d\.ts(\.map)?$/.test(entry.name) && full !== barrel) {
+      rmSync(full);
+      removed++;
+    }
+  }
+  return removed;
+}
 
-// ── 2. Generate dist/index.d.ts  ─────────────────────────────────────────────
-//    Mirrors src/index.ts, stripping the CSS import and rewriting paths so
-//    TypeScript consumers resolve correctly from dist/.
+const removed = removeDeclarations(ituiDist);
+writeFileSync(barrel, iconsDts);
+console.log(
+  `✓ ${names.size} icon types  →  dist/icons/ITUI/index.d.ts  (${removed} .d.ts files removed)`,
+);
+
+// ── 3. Mirror src/index.ts into dist/index.d.ts ──────────────────────────────
+//    tsc never emits this one: nothing in its program imports src/index.ts.
 
 const srcIndex = readFileSync(join(root, 'src/index.ts'), 'utf-8');
 
 const distIndex = srcIndex
-  // drop `import './styles/global.css'`
+  // The CSS import is a runtime side effect; it has no place in a .d.ts.
   .replace(/^import '\.\/styles\/.*';?\n/gm, '')
-  // `export * from './components/button'`
-  // → `export * from './components/button/index'`
-  // (tsc emits individual files; index.d.ts is the barrel)
-  // Actually the re-export path is fine as-is — TypeScript resolves it
   .trim();
 
 writeFileSync(join(root, 'dist/index.d.ts'), distIndex + '\n');

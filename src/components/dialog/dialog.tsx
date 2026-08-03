@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { cn } from '../../lib/utils';
@@ -70,10 +72,7 @@ function DialogContent({
           'max-h-[90vh] overflow-hidden',
           className,
         )}
-        onOpenAutoFocus={(e) => {
-          e.preventDefault();
-          onOpenAutoFocus?.(e);
-        }}
+        onOpenAutoFocus={onOpenAutoFocus}
         {...props}
       >
         {header != null && (

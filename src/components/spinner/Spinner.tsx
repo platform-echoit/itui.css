@@ -8,6 +8,8 @@ export type SpinnerSize = 'sm' | 'md' | 'lg' | 'icon';
 export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement> {
   size?: SpinnerSize | number;
   description?: string;
+  /** Screen-reader name for the `role="status"` region. */
+  label?: string;
 }
 
 // ─── Token → class map ───────────────────────────────────────────────────────
@@ -44,7 +46,17 @@ const sizeClasses: Record<SpinnerSize, string> = {
 
 // ─── Spinner ──────────────────────────────────────────────────────────────────
 export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(
-  ({ size = 'md', description, className = '', style, ...rest }, ref) => {
+  (
+    {
+      size = 'md',
+      description,
+      label = 'Loading',
+      className = '',
+      style,
+      ...rest
+    },
+    ref,
+  ) => {
     const isNumeric = typeof size === 'number';
     const numericStyle = isNumeric
       ? { width: size, height: size, ...style }
@@ -59,7 +71,7 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(
       <span
         ref={ref}
         role="status"
-        aria-label="로딩 중"
+        aria-label={label}
         style={numericStyle}
         className={[
           'block shrink-0 rounded-full border-border-neutral-subtle border-t-brand animate-spin',

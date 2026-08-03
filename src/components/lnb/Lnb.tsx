@@ -6,7 +6,7 @@ import {
   type HTMLAttributes,
   type ReactNode,
 } from 'react';
-import { Collapsible as CollapsiblePrimitive } from 'radix-ui';
+import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
 import { Slot, Slottable } from '@radix-ui/react-slot';
 import { cn } from '../../lib/utils';
 import { Avatar } from '../avatar/Avatar';

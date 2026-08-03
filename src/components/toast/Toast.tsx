@@ -1,17 +1,18 @@
 'use client';
 
-import { Toaster as Sonner, type ToasterProps } from 'sonner';
+import { Toaster as Sonner, toast, type ToasterProps } from 'sonner';
 import {
   SuccessIcon,
   InfoIcon,
   WarningIcon,
   ErrorIcon,
 } from '../../icons/toast';
+import { cn } from '../../lib/utils';
 
-const Toaster = ({ ...props }: ToasterProps) => {
+const Toaster = ({ className, ...props }: ToasterProps) => {
   return (
     <Sonner
-      className="toaster group"
+      className={cn('toaster group', className)}
       icons={{
         success: <SuccessIcon className="size-4" />,
         info: <InfoIcon className="size-4" />,
@@ -40,6 +41,8 @@ const Toaster = ({ ...props }: ToasterProps) => {
   );
 };
 
-export { Toaster };
+// Re-exported so consumers never have to import `sonner` directly — it is our
+// dependency, not theirs, and a bare `from 'sonner'` only resolves by hoisting.
+export { Toaster, toast };
 
 export type { ToasterProps };

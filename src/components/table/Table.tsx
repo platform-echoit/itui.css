@@ -4,7 +4,8 @@ import {
   type ThHTMLAttributes,
   type TdHTMLAttributes,
 } from 'react';
-import {ArrowDown,ArrowUp} from 'lucide-react';
+import { ArrowDownRegularIcon } from '../../icons/ITUI/arrow-down';
+import { ArrowUpRegularIcon } from '../../icons/ITUI/arrow-up';
 import {cn} from '../../lib/utils';
 
 // ── Token → Tailwind map ─────────────────────────────────────────────────────
@@ -56,6 +57,11 @@ export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
 export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
   ref?: Ref<HTMLTableCellElement>;
   sortDirection?: SortDirection;
+  /**
+   * Marks a sortable column that is not currently sorted, so it still reports
+   * `aria-sort="none"` and stays keyboard-reachable. Implied by `sortDirection`.
+   */
+  sortable?: boolean;
 }
 export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
   ref?: Ref<HTMLTableCellElement>;
@@ -90,48 +96,85 @@ export const TableRow=({
   className,
   selected,
   disabled,
+  onClick,
+  onKeyDown,
   ...props
 }: TableRowProps) => (
   <tr
+    aria-disabled={disabled||undefined}
+    data-disabled={disabled? '':undefined}
     className={cn(
-      'border-b border-neutral-subtle overflow-x-auto w-full min-w-0 shadow-downwards-sm [&>div]:overflow-visible',
+      'border-b border-neutral-subtle',
       selected? 'bg-neutral-100':disabled? 'bg-neutral-subtle':'bg-white',
+      disabled&&'pointer-events-none text-neutral-disabled',
       className,
     )}
+    // pointer-events-none only stops the mouse, so drop the keyboard path too —
+    // otherwise a disabled row still fires the consumer's handlers via Enter.
+    onClick={disabled? undefined:onClick}
+    onKeyDown={disabled? undefined:onKeyDown}
     {...props}
   />
 );
 
 // ── TableHead ─────────────────────────────────────────────────────────────────
 
+const ARIA_SORT: Record<SortDirection,'ascending'|'descending'> = {
+  asc: 'ascending',
+  desc: 'descending',
+};
+
 export const TableHead=({
   className,
   sortDirection,
+  sortable,
   children,
   ...props
-}: TableHeadProps) => (
-  <th
-    className={cn(
-      'h-10 px-3 text-left align-middle',
-      'text-sm font-medium leading-6 tracking-md text-brand-secondary-900 whitespace-nowrap',
-      className,
-    )}
-    {...props}
-  >
-    {sortDirection!=null? (
-      <span className="inline-flex items-center gap-2">
-        {children}
-        {sortDirection==='asc'? (
-          <ArrowUp size={12} className="shrink-0" />
-        ):(
-          <ArrowDown size={12} className="shrink-0" />
-        )}
-      </span>
-    ):(
-      children
-    )}
-  </th>
-);
+}: TableHeadProps) => {
+  const isSortable=sortable||sortDirection!=null;
+
+  return (
+    <th
+      scope="col"
+      aria-sort={
+        sortDirection? ARIA_SORT[sortDirection]:isSortable? 'none':undefined
+      }
+      className={cn(
+        'h-10 px-3 text-left align-middle',
+        'text-sm font-medium leading-6 tracking-md text-brand-secondary-900 whitespace-nowrap',
+        className,
+      )}
+      {...props}
+    >
+      {isSortable? (
+        // A <th> can't take focus, so the sort control has to be a real button.
+        // Its click bubbles to the <th>, so an onClick already sitting there
+        // keeps working — and now fires on Enter/Space too.
+        <button
+          type="button"
+          className="inline-flex items-center gap-2 cursor-pointer rounded-sm text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+        >
+          {children}
+          {sortDirection==='asc'? (
+            <ArrowUpRegularIcon
+              width={12}
+              height={12}
+              className="shrink-0 [&_path]:fill-current"
+            />
+          ):sortDirection==='desc'? (
+            <ArrowDownRegularIcon
+              width={12}
+              height={12}
+              className="shrink-0 [&_path]:fill-current"
+            />
+          ):null}
+        </button>
+      ):(
+        children
+      )}
+    </th>
+  );
+};
 
 // ── TableCell ─────────────────────────────────────────────────────────────────
 

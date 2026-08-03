@@ -95,57 +95,116 @@ export type InputTextFormattingCommand = 'image' | 'video' | 'code' | 'more';
 
 type BlockType = 'paragraph' | Extract<HeadingTagType, 'h1' | 'h2' | 'h3'>;
 
-const BLOCK_TYPES: { type: BlockType; label: string }[] = [
-  { type: 'paragraph', label: 'Paragraph' },
-  { type: 'h1', label: 'Heading 1' },
-  { type: 'h2', label: 'Heading 2' },
-  { type: 'h3', label: 'Heading 3' },
+/**
+ * Every string the toolbar renders — as tooltips, `aria-label`s and the block
+ * dropdown's visible rows. One bag rather than 18 props: they are always
+ * translated together, and the component already takes 13 behavioural props.
+ */
+export interface InputTextFormattingLabels {
+  /** `aria-label` on the block-style trigger */
+  blockStyle: string;
+  paragraph: string;
+  heading1: string;
+  heading2: string;
+  heading3: string;
+  bold: string;
+  italic: string;
+  underline: string;
+  strikethrough: string;
+  alignLeft: string;
+  alignCenter: string;
+  alignRight: string;
+  alignJustify: string;
+  link: string;
+  image: string;
+  video: string;
+  code: string;
+  more: string;
+}
+
+const DEFAULT_LABELS: InputTextFormattingLabels = {
+  blockStyle: 'Paragraph style',
+  paragraph: 'Paragraph',
+  heading1: 'Heading 1',
+  heading2: 'Heading 2',
+  heading3: 'Heading 3',
+  bold: 'Bold',
+  italic: 'Italic',
+  underline: 'Underline',
+  strikethrough: 'Strikethrough',
+  alignLeft: 'Align left',
+  alignCenter: 'Align center',
+  alignRight: 'Align right',
+  alignJustify: 'Justify',
+  link: 'Link',
+  image: 'Image',
+  video: 'Video',
+  code: 'Code',
+  more: 'More',
+};
+
+/** Toolbar rows hold a label *key*; the text itself comes from `labels`. */
+type LabelKey = keyof InputTextFormattingLabels;
+
+const BLOCK_TYPES: { type: BlockType; labelKey: LabelKey }[] = [
+  { type: 'paragraph', labelKey: 'paragraph' },
+  { type: 'h1', labelKey: 'heading1' },
+  { type: 'h2', labelKey: 'heading2' },
+  { type: 'h3', labelKey: 'heading3' },
 ];
 
 const TEXT_FORMATS: {
   format: TextFormatType;
-  label: string;
+  labelKey: LabelKey;
   icon: ReactNode;
 }[] = [
-    { format: 'bold', label: '굵게', icon: <TextBRegularIcon /> },
-    { format: 'italic', label: '기울임', icon: <TextItalicRegularIcon /> },
-    { format: 'underline', label: '밑줄', icon: <TextUnderlineRegularIcon /> },
-    {
-      format: 'strikethrough',
-      label: '취소선',
-      icon: <TextStrikethroughRegularIcon />,
-    },
-  ];
+  { format: 'bold', labelKey: 'bold', icon: <TextBRegularIcon /> },
+  { format: 'italic', labelKey: 'italic', icon: <TextItalicRegularIcon /> },
+  {
+    format: 'underline',
+    labelKey: 'underline',
+    icon: <TextUnderlineRegularIcon />,
+  },
+  {
+    format: 'strikethrough',
+    labelKey: 'strikethrough',
+    icon: <TextStrikethroughRegularIcon />,
+  },
+];
 
 const ALIGNMENTS: {
   align: Extract<ElementFormatType, 'left' | 'center' | 'right' | 'justify'>;
-  label: string;
+  labelKey: LabelKey;
   icon: ReactNode;
 }[] = [
-    { align: 'left', label: '왼쪽 정렬', icon: <TextAlignLeftRegularIcon /> },
-    {
-      align: 'center',
-      label: '가운데 정렬',
-      icon: <TextAlignCenterRegularIcon />,
-    },
-    { align: 'right', label: '오른쪽 정렬', icon: <TextAlignRightRegularIcon /> },
-    {
-      align: 'justify',
-      label: '양쪽 정렬',
-      icon: <TextAlignJustifyRegularIcon />,
-    },
-  ];
+  { align: 'left', labelKey: 'alignLeft', icon: <TextAlignLeftRegularIcon /> },
+  {
+    align: 'center',
+    labelKey: 'alignCenter',
+    icon: <TextAlignCenterRegularIcon />,
+  },
+  {
+    align: 'right',
+    labelKey: 'alignRight',
+    icon: <TextAlignRightRegularIcon />,
+  },
+  {
+    align: 'justify',
+    labelKey: 'alignJustify',
+    icon: <TextAlignJustifyRegularIcon />,
+  },
+];
 
 const EXTRA_COMMANDS: {
   command: InputTextFormattingCommand;
-  label: string;
+  labelKey: LabelKey;
   icon: ReactNode;
 }[] = [
-    { command: 'image', label: '이미지', icon: <ImagesRegularIcon /> },
-    { command: 'video', label: '동영상', icon: <FilmStripRegularIcon /> },
-    { command: 'code', label: '코드', icon: <CodeRegularIcon /> },
-    { command: 'more', label: '더보기', icon: <DotsThreeRegularIcon /> },
-  ];
+  { command: 'image', labelKey: 'image', icon: <ImagesRegularIcon /> },
+  { command: 'video', labelKey: 'video', icon: <FilmStripRegularIcon /> },
+  { command: 'code', labelKey: 'code', icon: <CodeRegularIcon /> },
+  { command: 'more', labelKey: 'more', icon: <DotsThreeRegularIcon /> },
+];
 
 /**
  * Tailwind's preflight strips heading sizes, so every block and inline format
@@ -220,9 +279,10 @@ function ToolbarButton({ label, active, icon, onClick }: ToolbarButtonProps) {
 interface BlockTypeSelectProps {
   value: BlockType;
   onChange: (type: BlockType) => void;
+  labels: InputTextFormattingLabels;
 }
 
-function BlockTypeSelect({ value, onChange }: BlockTypeSelectProps) {
+function BlockTypeSelect({ value, onChange, labels }: BlockTypeSelectProps) {
   const [open, setOpen] = useState(false);
   const current = BLOCK_TYPES.find((item) => item.type === value);
 
@@ -231,7 +291,7 @@ function BlockTypeSelect({ value, onChange }: BlockTypeSelectProps) {
       <PopoverTrigger asChild>
         <button
           type="button"
-          aria-label="문단 스타일"
+          aria-label={labels.blockStyle}
           className={cn(
             'flex h-8 shrink-0 cursor-pointer items-center gap-1 rounded-lg px-2',
             'text-sm leading-md tracking-md text-foreground',
@@ -239,7 +299,9 @@ function BlockTypeSelect({ value, onChange }: BlockTypeSelectProps) {
             'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
           )}
         >
-          <span className="whitespace-nowrap">{current?.label}</span>
+          <span className="whitespace-nowrap">
+            {current && labels[current.labelKey]}
+          </span>
           <CaretDownRegularIcon
             width={16}
             height={16}
@@ -267,7 +329,7 @@ function BlockTypeSelect({ value, onChange }: BlockTypeSelectProps) {
               item.type === value ? 'text-primary' : 'text-foreground',
             )}
           >
-            {item.label}
+            {labels[item.labelKey]}
           </button>
         ))}
       </PopoverContent>
@@ -281,10 +343,17 @@ interface ToolbarProps {
   onCommand?: (command: InputTextFormattingCommand) => void;
   onLinkRequest?: () => string | null;
   linkPromptLabel: string;
+  labels?: Partial<InputTextFormattingLabels>;
 }
 
 /** Reads its active states from the live selection, not from props. */
-function Toolbar({ onCommand, onLinkRequest, linkPromptLabel }: ToolbarProps) {
+function Toolbar({
+  onCommand,
+  onLinkRequest,
+  linkPromptLabel,
+  labels,
+}: ToolbarProps) {
+  const text = { ...DEFAULT_LABELS, ...labels };
   const [editor] = useLexicalComposerContext();
   const [blockType, setBlockType] = useState<BlockType>('paragraph');
   const [formats, setFormats] = useState<TextFormatType[]>([]);
@@ -363,13 +432,17 @@ function Toolbar({ onCommand, onLinkRequest, linkPromptLabel }: ToolbarProps) {
 
   return (
     <div className="flex min-h-10 shrink-0 flex-wrap items-center gap-1 border-b border-input px-2 py-1">
-      <BlockTypeSelect value={blockType} onChange={applyBlockType} />
+      <BlockTypeSelect
+        value={blockType}
+        onChange={applyBlockType}
+        labels={text}
+      />
 
       <ToolbarDivider />
-      {TEXT_FORMATS.map(({ format, label, icon }) => (
+      {TEXT_FORMATS.map(({ format, labelKey, icon }) => (
         <ToolbarButton
           key={format}
-          label={label}
+          label={text[labelKey]}
           icon={icon}
           active={formats.includes(format)}
           onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, format)}
@@ -377,10 +450,10 @@ function Toolbar({ onCommand, onLinkRequest, linkPromptLabel }: ToolbarProps) {
       ))}
 
       <ToolbarDivider />
-      {ALIGNMENTS.map(({ align: value, label, icon }) => (
+      {ALIGNMENTS.map(({ align: value, labelKey, icon }) => (
         <ToolbarButton
           key={value}
-          label={label}
+          label={text[labelKey]}
           icon={icon}
           active={align === value}
           onClick={() => editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, value)}
@@ -389,7 +462,7 @@ function Toolbar({ onCommand, onLinkRequest, linkPromptLabel }: ToolbarProps) {
 
       <ToolbarDivider />
       <ToolbarButton
-        label="링크"
+        label={text.link}
         icon={<LinkSimpleRegularIcon />}
         active={isLink}
         onClick={toggleLink}
@@ -398,10 +471,10 @@ function Toolbar({ onCommand, onLinkRequest, linkPromptLabel }: ToolbarProps) {
       <ToolbarDivider />
       {/* Rendered, never wired: each needs a DecoratorNode plus an upload flow,
           so the app decides what happens. */}
-      {/* {EXTRA_COMMANDS.map(({ command, label, icon }) => (
+      {/* {EXTRA_COMMANDS.map(({ command, labelKey, icon }) => (
         <ToolbarButton
           key={command}
-          label={label}
+          label={text[labelKey]}
           icon={icon}
           onClick={() => onCommand?.(command)}
         />
@@ -431,6 +504,8 @@ export interface InputTextFormattingProps {
   onLinkRequest?: () => string | null;
   /** Prompt text used by that fallback */
   linkPromptLabel?: string;
+  /** Overrides for the toolbar's tooltips, `aria-label`s and dropdown rows */
+  labels?: Partial<InputTextFormattingLabels>;
   className?: string;
   /** Extra classes on the bordered box */
   boxClassName?: string;
@@ -453,12 +528,13 @@ export const InputTextFormatting = forwardRef<
       label,
       error,
       helperText,
-      placeholder = '내용을 입력하세요',
+      placeholder = 'Enter content',
       defaultValue,
       onChange,
       onCommand,
       onLinkRequest,
-      linkPromptLabel = '링크 주소를 입력하세요',
+      linkPromptLabel = 'Enter a link URL',
+      labels,
       className,
       boxClassName,
       editorClassName,
@@ -487,6 +563,7 @@ export const InputTextFormatting = forwardRef<
           onCommand={onCommand}
           onLinkRequest={onLinkRequest}
           linkPromptLabel={linkPromptLabel}
+          labels={labels}
         />
 
         {/* relative: the placeholder is absolutely positioned over the caret. */}

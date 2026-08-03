@@ -11,8 +11,10 @@ import { cn } from '../../lib/utils';
   ──────────────────────────────────────────────────────────────────────────────
   COLORS (from global.css @theme)
   surface/neutral/secondary/default  #fff     → bg-sidebar / bg-white
-  surface/neutral/secondary/hover    #f5f5f5  → bg-surface-hover     (--color-surface-hover)
-  surface/neutral/secondary/pressed  #ededed  → bg-surface-pressed   (--color-surface-pressed)
+  surface/neutral/secondary/hover    #f5f5f5  → bg-sidebar-accent    (--sidebar-accent)
+  surface/neutral/secondary/pressed  #ededed  → bg-secondary         (--secondary)
+  Deliberately the `@theme inline` pair, not --color-surface-hover/-pressed:
+  identical in light mode, but only these two follow dark mode.
   border/neutral/subtle              #ededed  → border-sidebar-border (--color-sidebar-border)
   text/neutral/default               #0f0f0f  → text-foreground             (--color-foreground)
   text/neutral/muted                 #595858  → text-neutral-muted       (--color-neutral-muted)
@@ -72,7 +74,7 @@ export interface SidebarMenuProps extends HTMLAttributes<HTMLUListElement> {
 
 export interface SidebarItemProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Selected/active state — bg-surface-pressed + text-foreground. */
+  /** Selected/active state — bg-secondary + text-foreground. */
   active?: boolean;
   /** Leading 20 px icon slot. Required in collapsed mode for visual identification. */
   icon?: ReactNode;

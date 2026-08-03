@@ -143,9 +143,9 @@ export const InputFileUploadItem = forwardRef<
       onRemove,
       onDownload,
       onPreview,
-      removeLabel = '삭제',
-      downloadLabel = '다운로드',
-      previewLabel = '바로보기',
+      removeLabel = 'Remove',
+      downloadLabel = 'Download',
+      previewLabel = 'Preview',
       className,
       ...rest
     },
@@ -271,6 +271,13 @@ export interface InputFileUploadProps
   onPreview?: (id: string) => void;
   /** Max bytes per file. A batch containing a bigger file is rejected whole. */
   maxSize?: number;
+  /** Shown when a picked file fails the `accept` filter. */
+  invalidTypeMessage?: string;
+  /**
+   * Shown when a picked file exceeds `maxSize`. A function rather than a
+   * string because the limit has to be interpolated in the caller's language.
+   */
+  maxSizeMessage?: (maxSizeMb: string) => string;
   /** First line in the dropzone */
   description?: ReactNode;
   /** Second line — the accepted formats hint */
@@ -314,8 +321,10 @@ export const InputFileUpload = forwardRef<
       onDownload,
       onPreview,
       maxSize,
-      description = '파일을 드래그하거나 클릭하여 업로드하세요',
-      hint = 'PDF, DOCX, XLSX (최대 10MB)',
+      invalidTypeMessage = 'Unsupported file type.',
+      maxSizeMessage = (maxSizeMb) => `Files must be under ${maxSizeMb}MB.`,
+      description = 'Drag and drop a file here, or click to upload',
+      hint = 'PDF, DOCX, XLSX (max 10MB)',
       accept,
       multiple = false,
       disabled = false,
@@ -342,13 +351,11 @@ export const InputFileUpload = forwardRef<
       if (picked.length === 0) return;
 
       if (accept && picked.some((file) => !matchesAccept(file, accept))) {
-        setRejection('지원하지 않는 파일 형식입니다.');
+        setRejection(invalidTypeMessage);
         return;
       }
       if (maxSize !== undefined && picked.some((file) => file.size > maxSize)) {
-        setRejection(
-          `파일 크기는 최대 ${toMegabytes(maxSize)}MB까지 업로드할 수 있습니다.`,
-        );
+        setRejection(maxSizeMessage(toMegabytes(maxSize)));
         return;
       }
 
