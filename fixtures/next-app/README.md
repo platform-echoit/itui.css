@@ -38,8 +38,28 @@ the real `files` / `exports` contract.
 - `.next/static/chunks/*.css` contains `--color-brand`, `--radius-lg`, `#009ce0`
   even though this app imports **no CSS at all** — proof that
   `import '@echoit/itui.css'` alone now delivers the stylesheet (I-03).
+- `Select` is **rendered** from the Server Component (I-27). It reaches the page
+  through a barrel, which is the only way the barrel's export shape becomes
+  observable — see the assertions below.
 
-## Measuring client-bundle weight with it
+## Client-bundle assertions (I-27)
+
+A green `next build` was never enough: for a whole milestone this fixture built
+fine while handing consumers the entire library. `check:rsc` now measures
+`.next/static/chunks/**/*.js` and fails on either count:
+
+- **Unrendered modules must be absent.** No page renders Lexical, date-fns or
+  sonner, so a marker for any of them in a *client* chunk means a barrel dragged
+  it across the boundary. This is the sharp instrument — it names the problem.
+- **Total client JS < 1,000,000 B.** The blunt safety net, for a leak through a
+  dependency nobody thought to name. Measured: **869,581 B** correct,
+  **1,336,571 B** while two barrels used `export *`.
+
+`pnpm check:barrels` catches the same defect statically, without a build. Both
+are worth keeping: the guard knows the *shape* that causes it, the fixture knows
+the *bytes* — and only the fixture would notice a new way to produce them.
+
+## Measuring client-bundle weight by hand
 
 `.next/static/chunks/*.js` is the whole client payload for `/`, so flipping one
 directive in the **installed** copy and rebuilding gives a clean before/after:
@@ -48,7 +68,14 @@ directive in the **installed** copy and rebuilding gives a clean before/after:
 find .next/static/chunks -name '*.js' | xargs wc -c | tail -1
 ```
 
-Reproducible to the byte across runs (845,026 with the A2 group server-rendered).
+Reproducible to the byte across runs (845,026 with the A2 group server-rendered
+and before `Select` was added to the page; `Select` itself accounts for 24.5 kB
+of the current 869,581).
+
+⚠️ **Hold every other variable fixed.** The `export *` model in the plan's §3.5
+was wrong because its "one variable" test left six other barrels spread in both
+arms — a single spread barrel does not leak; it takes two. If a measurement is
+meant to show that X causes Y, one arm has to differ *only* in X.
 
 ⚠️ `pnpm install` will **not** undo a hand-patch inside
 `node_modules/@echoit/itui.css`: the tarball's integrity hash still matches, so
@@ -69,7 +96,9 @@ A module-scope client API breaks on import; a hook only breaks when the
 component actually renders, and this fixture references most client components
 without rendering them (their prop shapes are not the fixture's business).
 
-So the two checks are complementary, and neither is sufficient alone:
+So the checks are complementary, and none is sufficient alone:
 
 - `pnpm check:client` — static, catches *any* client API without a directive
-- `pnpm check:rsc` — integration, catches boundary and packaging breakage
+- `pnpm check:barrels` — static, catches a barrel spreading a client module
+- `pnpm check:rsc` — integration, catches boundary and packaging breakage, and
+  is the only one that measures what a consumer actually downloads

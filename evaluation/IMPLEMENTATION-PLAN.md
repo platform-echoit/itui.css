@@ -7,7 +7,7 @@ và **verify trực tiếp trong source** tại commit `4bd31fb1` (branch `main`
 | --- | --- |
 | Điểm hiện tại | **4.4 / 10** — `NOT READY` |
 | Mục tiêu | **8.8 / 10** — `GOOD DX` sau 4 milestone |
-| Bản đánh giá | npm `1.0.14` · repo local `1.0.10` (xem I-22) |
+| Bản đánh giá | npm `1.0.14` · repo local `1.0.10` (xem I-22) → đã bump `1.0.15`, **chưa publish** |
 | Lập plan | 2026-07-29 |
 
 ---
@@ -79,6 +79,20 @@ trong ví dụ README không nằm trong số đó.
 | "8 file A2 **có thể** gỡ directive" (§3.3) | Gỡ được **8/9** — `Popup` phải giữ, đúng như ghi chú A3 của chính plan đã cảnh báo | Xem §3.4. Payoff lớn hơn dự kiến rất nhiều: client JS của fixture **1.359.225 → 845.026 byte (−38%)** |
 | Payoff của việc gỡ directive = "component server-renderable trở lại" | Đó chỉ là phần nhỏ. Phần lớn 514 kB tiết kiệm được **không phải** code của 8 component — mà là **cả thư viện** (Lexical + date-fns + toast + input) thôi bị kéo vào client bundle | Lộ ra **I-27** (§3.5): thủ phạm là `export *` ở barrel module, không phải directive. Gỡ directive chỉ *tình cờ* dập được 2 trong 6 đường dẫn tới lỗi đó |
 
+### 0.6 Đính chính vòng 7 (2026-08-03, lúc làm I-27)
+
+| Bản plan này nói | Thực tế | Hệ quả |
+| --- | --- | --- |
+| §3.5: **một** barrel `export *` chứa client module là đủ để rò cả thư viện. Bằng chứng: đổi mỗi `lnb` từ named sang `export *` → 846.819 B ↦ 1.347.221 B | **Sai — và sai vì cùng một lỗi phương pháp mà §0–§0.4 đã vấp 5 lần.** Bảng `lnb`/`avatar` tự nhận là "test một biến", nhưng ở **cả hai** nhánh thì 6 barrel kia vẫn đang `export *`; thứ được đổi chỉ là *biến thứ hai*. Đo lại có kiểm soát, 5 phép đo: `select` `export *` một mình (và `Select` **được render**) → **849,2 kB, không rò**; 5 barrel kia `export *` còn `select` named → **849,2 kB, không rò**; cả 6 → **1305,2 kB, rò** | Điều kiện thật là một **cặp**: cần (i) một client module **được render** đi qua `export *`, **cộng** (ii) ít nhất một barrel `export *` khác cũng chứa client module. Thiếu vế nào cũng không rò |
+| Suy ra từ đó: mỗi barrel trong 6 cái đóng góp một phần của 467 kB | Không cộng dồn. `select`+`modals` → **1305,2 kB**; `select`+`calendar` → **1305,2 kB**, byte-identical. 4 barrel còn lại đóng góp **0 byte** | Độ lớn **hằng số** vì thứ rò là *cả thư viện*, không phải dep của riêng barrel đó. Nên "barrel nào" không quan trọng — "có đủ hai hay không" mới quan trọng |
+| Blast radius: `select` rộng nhất vì hay dùng | Vẫn đúng, nhưng lý do khác: `select` nguy hiểm vì nó là loại **được render** (vế i), chứ không vì nó nặng | Cả 6 vẫn phải đổi: fixture chỉ render client module của **2/6** barrel, nên 4 cái kia im lặng ở đây mà vẫn rò với consumer render `Calendar` / `Tab` / `PopoverMenu` / `Grid` |
+
+⚠️ **Bài học phương pháp, lần thứ 6:** mọi kết luận sai trong tài liệu này đều cùng một hình dạng —
+*suy từ một phép đo mà nền chưa được giữ cố định* (grep không phân biệt comment với code §0.2 ·
+manifest không phải call-site §0.3 · danh sách chép tay bỏ sót 40% §0.3 · và lần này, "một biến"
+mà nền có 6 biến). Con số 1.359.225 → 845.026 B của §3.4 **không** bị ảnh hưởng — nó đo đúng thứ nó
+nói — nhưng lời giải thích gán cho nó thì phải đọc kèm mục này.
+
 Ba phát hiện phụ, không phải đính chính:
 
 - **`TxtIcon` lệch chuẩn cả bộ.** 36 icon còn lại trong [`src/icons/file-type/`](../src/icons/file-type/)
@@ -89,6 +103,17 @@ Ba phát hiện phụ, không phải đính chính:
   `#snackbar-1` mà GitHub sinh ra. Cả tài liệu chỉ có đúng 1 chỗ như vậy
 - **Không có name collision nào giữa 56 module** (verified) — nên mọi export đều thật sự tới được
   từ barrel, `export *` không âm thầm bỏ cái nào
+
+### 0.7 Đính chính vòng 8 (2026-08-03, lúc chốt M1–M3 và bump `1.0.15`)
+
+| Bản plan này nói | Thực tế | Hệ quả |
+| --- | --- | --- |
+| I-02 mục 3: tách `icons` khỏi barrel là breaking vì **8 file trong `apps/`** đang import icon qua barrel | **16 file / 37 named import** — `apps/web` **5**, `apps/storybook` **11**. Đo bằng cách dựng tập **6.604 tên export thật** của [`src/icons/ITUI/`](../src/icons/ITUI/) rồi đối chiếu từng named import, thay vì lọc theo hậu tố `Icon` | Con số 8 vừa **thừa** vừa **thiếu**: `FileIcon` / `FileTypeLogo` khớp hậu tố nhưng là component của module `file-type`, không phải icon; ngược lại toàn bộ 11 file `apps/storybook` bị bỏ sót. Lần thứ **7** của cùng một hình dạng lỗi (§0.6) — và lần này chính plan tự vấp lại sau khi đã viết cảnh báo |
+| §3.5 acceptance: trạng thái đã sửa = **869.581 B** client JS | Build sạch hôm nay đo **849,2 kB**, khớp với §0.6 (`849,2 kB, không rò`) chứ không khớp §3.5 | Hai mục trong cùng tài liệu ghi **hai số khác nhau cho cùng một trạng thái**, lệch ~20 kB. Chưa truy được nguyên nhân (không giữ lại điều kiện đo của §3.5) — ghi nhận số đo lại được, **không** dựng lời giải thích cho khoảng lệch. Budget 976,6 kB của gate không bị ảnh hưởng |
+
+Lần chạy lại đầy đủ khi chốt (build 3 stage + 5 gate, `dist` mới): `check:client` ✓ · `check:barrels` ✓
+(56 barrel, 16 `export *`) · `check:docs` ✓ (483 export / 56 module) · `check:rsc` ✓ (849,2 kB / 7 chunk,
+không module nào rò) · `check:bundle` ✓ (23,6 kB/Button; barrel 9.137 vs subpath 31 module transform).
 
 ---
 
@@ -124,7 +149,8 @@ Status: `TODO` · `WIP` · `DONE` · `SKIP`
 | **I-24** | `dist` trên đĩa là bản build dở (thiếu `build:paths`) | Implementation | **P1** | Không | M2 | **DONE** — đã build đủ 3 stage |
 | **I-25** | `build:dts` chết: `build-icon-types` giả định specifier có `.js` | Implementation | **P1** | Không | M2 | **DONE** — xem §3.2 |
 | **I-26** | I-13 làm vỡ gate RSC của I-01 — `Button` gắn `onClick` vô điều kiện | Implementation | **P0** | Không | M2 | **DONE** — 15/15 assertion, xem §3.3 |
-| **I-27** | Barrel `export *` chứa client module → consumer RSC nhận **cả thư viện** (+500 kB client JS) | Implementation | **P1** | Không | M3 | TODO — 6 barrel, xem §3.5 |
+| **I-27** | Barrel `export *` chứa client module → consumer RSC nhận **cả thư viện** (+500 kB client JS) | Implementation | **P1** | Không | M3 | **DONE** — 6 barrel, −467 kB, xem §3.5 |
+| **I-28** | `check:docs` so byte nên **luôn đỏ trên Windows** (CRLF) dù nội dung khớp | Implementation | P2 | Không | M3 | **DONE** — normalise EOL, xem §3.7 |
 
 ---
 
@@ -451,8 +477,9 @@ tốn thêm 67 kB — nghĩa là chi phí *nào cũng* là chi phí toàn bộ t
    vì liệt kê 49 dòng: `"./*"` → `./dist/components/*/index.js` (+ `types`). Component mới tự
    động có subpath, không phải sửa gì. Kèm `"./icons"` và `"./package.json"` (thiếu cái sau
    thì tool đọc manifest của dep bị `ERR_PACKAGE_PATH_NOT_EXPORTED` — I-11)
-3. ⬜ **Tách `icons` khỏi barrel** — **hoãn sang M4**: verified có **8 file trong `apps/`**
-   đang `import { XIcon, FileIcon } from '@echoit/itui.css'` → xoá
+3. ⬜ **Tách `icons` khỏi barrel** — **hoãn sang M4**: verified có **16 file trong `apps/`**
+   (5 `apps/web` + 11 `apps/storybook`, 37 named import — xem §0.7; con số 8 cũ sai cả hai
+   chiều) đang `import { MagnifyingGlassRegularIcon } from '@echoit/itui.css'` → xoá
    [`src/index.ts:59`](../src/index.ts#L59) là **breaking**. Và sau khi đo thì nó **không còn
    cần cho bundle size** (xem bảng dưới) — chỉ còn giá trị cho dev mode
 4. ✅ Giữ `sideEffects` — nhưng đã **thêm `"./dist/index.js"`**, xem I-01(b): thiếu nó thì
@@ -802,7 +829,7 @@ Kết quả đo trên fixture Next (client JS = tổng `.next/static/chunks/*.js
 (render 8 component, **không prop hàm nào** — Server Component không truyền được function xuống
 Client Component) · [`fixtures/next-app/README.md`](../fixtures/next-app/README.md)
 
-#### 3.5 · I-27 — barrel `export *` chứa client module kéo cả thư viện vào client bundle
+#### 3.5 · I-27 — barrel `export *` chứa client module kéo cả thư viện vào client bundle — ✅ DONE
 
 **Vấn đề** — Consumer render một client component qua barrel từ Server Component → client bundle
 nhận **toàn bộ** thư viện, kể cả module không hề được import: Lexical (`InputTextFormatting`),
@@ -824,8 +851,14 @@ client module bên trong biến **cả barrel** thành client, rồi `export * f
 **vô hại** (đã chứng minh: `avatar` đi qua đúng root barrel đó mà không rò) — chỉ tầng barrel
 module mới quyết định.
 
-**Blast radius — 6 barrel** `export *` đang chứa client module, và lỗi kích hoạt khi consumer
-render **chính** module client đó từ Server Component:
+> 🛑 **Đoạn trên đúng về cơ chế nhưng sai về điều kiện kích hoạt** — xem §0.6. Bảng `lnb` /
+> `avatar` ở trên **không** phải thí nghiệm một biến như nó tưởng: ở **cả hai** nhánh, 6 barrel
+> kia vẫn đang `export *`. Đo lại bằng 5 phép đo có kiểm soát thì **một** barrel `export *` không
+> bao giờ đủ để rò.
+
+**Blast radius — 6 barrel** `export *` đang chứa client module. Lỗi kích hoạt khi consumer render
+**chính** module client đó từ Server Component **và** còn ít nhất một barrel `export *` khác chứa
+client module (§0.6) — điều kiện thứ hai luôn thoả khi chưa sửa cái nào:
 
 | Barrel | Client module bên trong | Ai gặp |
 | --- | --- | --- |
@@ -844,15 +877,50 @@ thái `modal` không directive thì `resource-modal` (client, cùng barrel) **kh
 mà con số **không nhích một byte** (1.337.845 cả trước lẫn sau). Đây cũng là internal barrel import
 duy nhất trong package, vẫn nên sửa nhưng **không** vì lý do này.
 
-**Solution** — Đổi 6 barrel sang named re-export. Cơ học nhưng phải chính xác: `export *` gồm cả
-type, thiếu một cái là breaking. `pnpm check:docs` bắt được ngay (nó đếm export thật qua checker),
-nên có gate xác nhận không rơi export nào. 16 barrel `export *` còn lại hiện không chứa client
-module — nhưng chúng là **bẫy chờ**: thêm một `useState` vào bất kỳ file nào trong đó là lỗi này
-sống lại, im lặng. Cân nhắc quy ước "barrel luôn named" + guard.
+**Solution** — ✅ **Đã làm.** Đổi **6 barrel** sang named re-export: **76 export / 13 file module**
+(48 type + 28 value). Cơ học nhưng phải chính xác — `export *` gồm cả type, thiếu một cái là
+breaking, nên danh sách được liệt kê bằng `checker.getExportsOfModule` chứ không đọc bằng mắt.
+`isolatedModules` bắt buộc tách `export type { … }` khỏi `export { … }`.
 
-**Acceptance test** — Render `Select` từ Server Component trong fixture Next, assert client JS
-không chứa `data-lexical-slot`. Việc này **phải** nằm trong fixture: `check:bundle` (Vite) **không**
-thấy lỗi — nó không có RSC boundary, và số 23,6 kB/Button của nó vẫn xanh suốt thời gian lỗi tồn tại.
+**Không rơi export nào** — `pnpm check:docs` xanh với `API.md` **nguyên bản từ git**: 483 export,
+56 module, diff rỗng tuyệt đối. Đây đúng là lý do §3.6 dựng gate `--check`.
+
+16 barrel `export *` còn lại giữ nguyên — hiện không chứa client module, và giờ **có gì canh**:
+
+**Guard mới `pnpm check:barrels`** ([`scripts/check-barrel-exports.ts`](../scripts/check-barrel-exports.ts))
+— fail khi barrel component `export *` từ một module có `"use client"`, kể cả **bắc cầu** qua
+barrel lồng nhau. Cùng kỷ luật với `check-client-boundary`: suy từ dữ kiện (đọc directive tại chỗ),
+không từ danh sách chép tay. Cố ý **không** cấm `export *` nói chung — root barrel `export *` là vô
+hại (đã chứng minh), cấm hết chỉ tạo nhiễu; 16 barrel kia sẽ bị báo **đúng ngày** một `useState`
+land vào trong, tức đúng lúc hình dạng của chúng buộc phải đổi.
+
+Self-test 4 case, cả 4 đúng: `export *` từ client module → **đỏ** · bắc cầu barrel→barrel→client →
+**đỏ**, và nêu đúng tên file thủ phạm chứ không đổ cho barrel trung gian · `export *` từ module
+server-safe → **không báo oan** · `export * as ns` → **đỏ** (nhánh regex riêng). Wire vào
+`prebuild` + job CI `barrel-exports`.
+
+#### Acceptance test — ✅ gate mới đỏ đúng lúc, xanh đúng lúc
+
+Fixture Next giờ **render** `Select` từ Server Component (trước chỉ *reference*), và
+[`scripts/check-rsc.ts`](../scripts/check-rsc.ts) thôi chỉ hỏi exit code — nó assert 2 thứ mà §7 đã
+chỉ ra là lỗ hổng:
+
+- **Marker** — `lexical` / `date-fns` / `sonner` **không** được có mặt trong `.next/static/chunks`,
+  vì không trang nào render chúng. Đây là dụng cụ sắc; byte budget chỉ nói "nặng lên".
+- **Byte budget** — tổng client JS < 1.000.000 B (đo: 869.581 B sạch · 1.336.571 B lúc rò)
+
+| | rò | đã sửa |
+| --- | --- | --- |
+| Client JS | 1.336.571 B | **869.581 B** (−466.990 B, **−35%**) — ⚠️ đo lại trên build sạch ngày 2026-08-03 ra **849,2 kB**, xem §0.7 |
+| `lexical` / `date-fns` / `sonner` trong client chunk | có / có / có | **không / không / không** |
+| Chunk lớn nhất | 709.598 B | **243.325 B** |
+| `select-trigger` (phải **còn**) | có | **có** — boundary hẹp lại, không phải component bị shake mất |
+
+Đối chứng: §3.4 đo 845.026 B khi fixture *chưa* render `Select`; 869.581 B − 845.026 B = **24,5 kB**
+đúng bằng chi phí thật của `Select`.
+
+⚠️ `check:bundle` (Vite) vẫn **+23,6 kB/Button** xuyên suốt — nó không có RSC boundary nên không bao
+giờ thấy lỗi này. Hai gate đo hai thứ khác nhau, không thay được nhau.
 
 #### 3.6 · I-06 — API reference sinh từ type checker
 
@@ -896,6 +964,31 @@ không có gì so nó với source.
 link trong README phải là **absolute GitHub** — đúng quy ước I-19 đã đặt. Anchor viết tay dễ sai:
 7/17 link đầu tiên trỏ sai vì anchor module là `echoitituicss…` (`itui` + `css`) chứ không phải
 `echoititucss…`; bắt được bằng script so anchor với heading thật của API.md.
+
+#### 3.7 · I-28 — `check:docs` luôn đỏ trên Windows, dù nội dung khớp từng ký tự
+
+**Phát hiện khi chạy `pnpm check:docs` để xác nhận I-27 không rơi export.** Gate đỏ, nhưng
+regenerate xong thì `git diff` **rỗng** — vòng lặp không có lối ra.
+
+**Nguyên nhân** — Generator ghi `\n`; repo không có `.gitattributes` và `core.autocrlf=true`, nên
+file trên đĩa là `\r\n`. `--check` so **byte**, nên hai chuỗi cùng nội dung vẫn khác nhau.
+`pnpm docs:api` không cứu được: git normalise bản ghi đè về đúng như cũ.
+
+**Vì sao chưa ai thấy** — job CI chạy `ubuntu-latest`, ở đó `autocrlf` tắt nên gate xanh. Lỗi này
+chỉ tồn tại trên máy dev Windows, tức đúng chỗ không có ai đo. Cùng họ với I-26 và I-27: **gate nói
+sai về thực tế**, chỉ khác chiều — I-26/I-27 là xanh mà hỏng, I-28 là đỏ mà lành. Chiều này rẻ hơn
+nhưng bào mòn niềm tin vào gate nhanh hơn, vì nó dạy dev bỏ qua màu đỏ.
+
+**Solution** — ✅ So nội dung, không so line ending: normalise `\r\n` → `\n` **cả hai vế** trước khi
+so. Không đổi thứ ghi ra đĩa (vẫn LF), nên CI giữ nguyên hành vi.
+
+Cân nhắc kèm theo, **chưa làm**: thêm `.gitattributes` với `* text=auto eol=lf` để chuẩn hoá ở tầng
+git. Sửa tận gốc nhưng đụng **toàn repo** (mọi file renormalise ở lần checkout sau) — lớn hơn phạm
+vi I-27 nhiều, tách ra để user quyết.
+
+**File** — [`scripts/generate-api-docs.ts`](../scripts/generate-api-docs.ts)
+
+---
 
 ### I-07 · Ví dụ theming trong README là no-op
 
@@ -1278,9 +1371,16 @@ Toàn bộ là fix nhỏ, không đổi API. Effort mỗi item: **S**.
       nguồn thật + cảnh báo `Badge` vs `Tag`/`Chip`
 - [x] **I-23** Thêm 2 token `--color-surface-hover/pressed` — 2 component đổi hiển thị
       (`Button` ghost, `Avatar`), không phải 4
-- [ ] Bump version trước khi publish `1.0.15` (`pnpm build` đầy đủ: đã chạy, xem I-24/I-25)
+- [x] Bump version `1.0.10` → **`1.0.15`** (`pnpm build` đầy đủ: đã chạy, xem I-24/I-25).
+      Bump **trong repo thôi, chưa publish npm** — user chốt không chạy `publish:latest`.
+      ⚠️ `1.0.15` là **patch** so với `1.0.14` đang ở npm, trong khi đợt này có breaking thật
+      (ESM-only, `tailwindcss` thành peer bắt buộc, default Hàn → Anh, Dialog trap focus,
+      `TableRow disabled` có tác dụng, `Button` merge className). Trước khi thật sự publish
+      phải chọn lại số hoặc ship changelog nêu đủ 6 mục trên
+- [x] Sửa version bằng cách **edit `package.json`**, không dùng `pnpm version` — script đó
+      commit **và tag**, mà tag khi chưa publish thì trỏ vào một bản không tồn tại trên npm
 
-**Điểm dự kiến ~6.0** · Còn lại của M1: **version bump**.
+**Điểm dự kiến ~6.0** · M1 **đóng**.
 
 ### M2 — `1.1.0` (minor · ~1–2 tuần) — phần khó
 
@@ -1297,8 +1397,9 @@ Toàn bộ là fix nhỏ, không đổi API. Effort mỗi item: **S**.
   - [x] **I-02** Subpath exports pattern `"./*"` + `"./icons"` + `"./package.json"`
   - [x] Fixture Vite + job CI `bundle-size` — **1 Button = 23,5 kB raw / 7,8 kB gzip**
         (trước +229 kB gzip)
-  - [ ] Tách `icons` khỏi barrel → **M4**, vì breaking (8 file trong `apps/` đang import icon
-        qua barrel) và không còn giúp bundle size, chỉ giúp dev mode (15.407 → 31 module)
+  - [ ] Tách `icons` khỏi barrel → **M4**, vì breaking (**16** file trong `apps/` đang import
+        icon qua barrel — §0.7, không phải 8) và không còn giúp bundle size, chỉ giúp dev mode
+        (barrel 9.137 → subpath 31 module)
 - [x] **I-13** Hoàn thiện ARIA form/table — **41/41 assertion**. 3 chỗ lệch plan, xem §0.2:
       `Button` dùng `aria-disabled` chứ không native `disabled`; `PopoverMenu` là component mới
       chứ không phải gắn role trần lên `PopoverItem`; `<th>` bọc `<button>` là opt-in
@@ -1333,8 +1434,12 @@ không chỉ sau thay đổi build config. I-13 sửa `Button` và làm đỏ ga
 - [x] **I-09b** Prop hoá 4 nhóm hardcode còn lại: `Spinner label` · `InputTextFormattingLabels`
       (18 nhãn trong **một** bag, không phải 18 prop) · `ResourceModalLabels` ·
       `invalidTypeMessage`/`maxSizeMessage`. Grep Hangul trên `src` giờ chỉ còn hit trong comment
-- [ ] **I-27** Đổi 6 barrel `export *` sang named re-export — **P1, mới**, xem §3.5. Kèm
-      acceptance test render `Select` từ Server Component trong fixture Next
+- [x] **I-27** Đổi 6 barrel `export *` sang named re-export — 76 export / 13 file, `check:docs`
+      xác nhận 483 export không rơi cái nào. Fixture Next giờ **render** `Select`; `check:rsc` thêm
+      marker + byte assertion. Client JS **1.336.571 → 869.581 B (−35%)**. Guard mới
+      `check:barrels` + job CI `barrel-exports`. ⚠️ Mô hình nhân quả ở §3.5 **sai** — đọc §0.6:
+      cần một **cặp** barrel, không phải một
+- [x] **I-28** `check:docs` báo oan trên Windows (CRLF vs LF) — xem §3.7
 - [ ] **I-06b** Deploy docs site (cân nhắc dùng `apps/storybook`) — M–L
 - [ ] **I-09c** `ITUIProvider locale` — tuỳ chọn, chỉ làm nếu định làm i18n đầy đủ
 - [ ] **I-10b** Tách icon package (nếu chọn) — M
@@ -1372,7 +1477,8 @@ runtime của consumer):
 | RSC thật chưa được xác nhận | `next build` fail ở một file B2 | ✅ Fixture Next pass, kể cả 5 file B2, **không cần** `transpilePackages` |
 | **Còn lại** — hook render-time thiếu directive | Vỡ lúc render, fixture không thấy | ⬜ Chỉ `check:client` bắt được → **không được bỏ job static** khi đã có fixture |
 | **Đã thành sự thật** — sửa component làm vỡ gate build | `next build` fail ở consumer, repo vẫn xanh | ⚠️ I-26 (§3.3): I-13 sửa `Button` → gate RSC đỏ suốt 1 milestone. Guard `check:client` **không** bắt được (nó soi directive, không soi prop truyền xuống DOM). CI có job `rsc-fixture` nên PR sẽ chặn — nhưng chỉ khi PR đó land ở **repo submodule**, xem cảnh báo ở I-01(a) |
-| **Đã thành sự thật** — client bundle phình mà **mọi gate vẫn xanh** | Consumer RSC nhận cả thư viện, `check:bundle` vẫn báo 23,6 kB | ⚠️ I-27 (§3.5): `export *` + client module. Không gate nào đo *client bundle sau RSC boundary* — `check:bundle` chạy trên Vite nên **không có** boundary đó, còn `check:rsc` chỉ hỏi "build có xanh không", không hỏi "nặng bao nhiêu". ⇒ `check:rsc` cần thêm assertion về byte, không chỉ exit code |
+| ~~**Đã thành sự thật** — client bundle phình mà **mọi gate vẫn xanh**~~ | Consumer RSC nhận cả thư viện, `check:bundle` vẫn báo 23,6 kB | ✅ **Đã đóng** (I-27, §3.5). `check:rsc` giờ assert **marker + byte budget** chứ không chỉ exit code, và `check:barrels` bắt được hình dạng barrel **trước cả khi** phải build. Đã xác minh gate đỏ đúng lúc rò (1305,2 kB) và xanh khi sạch (849,2 kB) |
+| **Còn lại** — kết luận rút từ phép đo mà **nền chưa cố định** | Tài liệu ghi một nhân quả sai, lần sau có người sửa nhầm chỗ | ⚠️ Đã xảy ra **6 lần** (§0–§0.4, §0.6). Chỉ có một cách chặn: mỗi lần đo, nêu rõ *cái gì được giữ nguyên*, và nếu kết luận là "X gây ra Y" thì phải có nhánh **không có X** trong cùng điều kiện. §0.6 tốn 5 lần build để phát hiện §3.5 sai |
 
 Giảm thiểu chung:
 - Làm trên branch riêng, tách khỏi các fix M1

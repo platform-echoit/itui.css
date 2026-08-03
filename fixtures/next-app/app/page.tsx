@@ -48,6 +48,16 @@ import {
   ScrollArea,
   Slider,
   Toggle,
+  // I-27 — `Select` is a client module reached through a barrel. Rendering it
+  // (not just referencing it) is what makes the barrel's own export shape
+  // observable: with `export *` the whole barrel turns client and drags the
+  // rest of the library across the boundary. See the byte budget in
+  // scripts/check-rsc.ts.
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
   // Bảng A1 + A3 — client modules that stay client. Importing them from a
   // Server Component is legal; what must not happen is their client-only APIs
   // running on the server.
@@ -172,6 +182,25 @@ export default function Page() {
 
         <Toggle defaultChecked aria-label="toggle" />
         <Toggle size="sm" aria-label="small toggle" />
+      </section>
+
+      {/*
+        I-27 — rendered, not referenced. `defaultValue` keeps it uncontrolled so
+        no function crosses the boundary, which a Server Component could not do
+        anyway.
+      */}
+      <section>
+        <Typography variant="heading-xl">I-27</Typography>
+
+        <Select defaultValue="one">
+          <SelectTrigger label="barrel export shape">
+            <SelectValue placeholder="pick one" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="one">one</SelectItem>
+            <SelectItem value="two">two</SelectItem>
+          </SelectContent>
+        </Select>
       </section>
 
       <p>{Object.keys(clientModules).length} client modules loaded</p>

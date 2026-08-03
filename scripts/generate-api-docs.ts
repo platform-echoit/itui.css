@@ -722,9 +722,15 @@ const output = `${lines.join('\n').replace(/\n{3,}/g, '\n\n').trimEnd()}\n`;
 
 // ── Write, or compare
 
+// The generator always emits LF, but a Windows checkout with `core.autocrlf=true`
+// has CRLF on disk — so a byte comparison fails on a file whose content is
+// identical, and `pnpm docs:api` cannot fix it (git normalises the rewrite right
+// back). Compare content, not line endings; CI on Linux never saw this.
+const normaliseEol = (text: string) => text.replace(/\r\n/g, '\n');
+
 if (check) {
   const current = existsSync(outFile) ? readFileSync(outFile, 'utf-8') : '';
-  if (current === output) {
+  if (normaliseEol(current) === normaliseEol(output)) {
     console.log(
       `✓ API.md is in sync (${exportCount} exports, ${modules.length} modules)`,
     );

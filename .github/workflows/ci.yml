@@ -31,6 +31,29 @@ jobs:
       - name: Check "use client" boundary
         run: pnpm check:client
 
+  # A barrel that spreads a client module with `export *` hands a consumer's RSC
+  # client bundle the whole library (I-27) — measured at +467 kB. Static and
+  # cheap: it reads source only, and it is the only gate that sees the defect
+  # before the byte budget in rsc-fixture does.
+  barrel-exports:
+    name: Barrel export shape
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check barrel export shape
+        run: pnpm check:barrels
+
   # API.md is generated from the type checker, so a PR that adds a prop or a
   # component without regenerating it turns the reference into fiction — which is
   # how the README came to advertise 5 Button variants against the source's 7.

@@ -1,7 +1,7 @@
 {
   "name": "@echoit/itui.css",
   "description": "React component library built on Tailwind CSS v4 tokens. ESM-only, tree-shakable, TypeScript-first.",
-  "version": "1.0.10",
+  "version": "1.0.15",
   "publishConfig": {
     "access": "public"
   },
@@ -68,9 +68,10 @@
     "docs:api": "tsx scripts/generate-api-docs.ts",
     "check:docs": "tsx scripts/generate-api-docs.ts --check",
     "check:client": "tsx scripts/check-client-boundary.ts",
+    "check:barrels": "tsx scripts/check-barrel-exports.ts",
     "check:rsc": "tsx scripts/check-rsc.ts",
     "check:bundle": "tsx scripts/check-bundle.ts",
-    "prebuild": "pnpm check:client",
+    "prebuild": "pnpm check:client && pnpm check:barrels",
     "build": "pnpm build:js && pnpm build:dts && pnpm build:paths",
     "dev": "tsup --watch",
     "build:js": "tsup",
