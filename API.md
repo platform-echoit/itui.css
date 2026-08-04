@@ -4,13 +4,14 @@
 
 **483 exports** across **56 modules**, 245 of them components. Every type, default and description below is read out of the source that ships, so this file cannot drift from the code — CI fails if it does.
 
-The 6,613 icon components exported from `@echoit/itui.css` are summarised rather than listed: they share one generated shape — `width`, `height` and every `svg` attribute — and their paths hardcode `fill="#101010"`, so tinting one needs `className="[&_path]:fill-current"` rather than a text colour.
+The 6,615 ITUI icon components live behind their own subpath, `@echoit/itui.css/icons`, and are summarised rather than listed: they share one generated shape — `width`, `height` and every `svg` attribute — and their paths hardcode `fill="#101010"`, so tinting one needs `className="[&_path]:fill-current"` rather than a text colour.
 
 Every module is importable two ways:
 
 ```tsx
 import { Button } from '@echoit/itui.css';          // barrel, tree-shakes in production
 import { Button } from '@echoit/itui.css/button';   // subpath, also fast in dev
+import { XIcon } from '@echoit/itui.css/icons';     // icons, subpath only
 ```
 
 The barrel pulls the stylesheet in with it; a subpath does not, so a consumer who only ever imports subpaths has to `@import '@echoit/itui.css/dist/index.css'` as well. See the [README](./README.md) for setup.

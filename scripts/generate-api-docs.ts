@@ -32,10 +32,11 @@
  *      component instead, so looking up `ButtonProps` still lands somewhere.
  *
  * Two export groups are summarised rather than expanded, because a table each
- * would drown the document: the `src/icons/ITUI` barrel line (6,613 components
- * of one generated shape), and any run of five or more exports in a module whose
- * only own prop is `className` — that is the generated-logo shape, and
- * `file-type` alone ships 43 of them.
+ * would drown the document: the `src/icons` entry (6,615 components of one
+ * generated shape, published as `@echoit/itui.css/icons` and no longer part of
+ * the root barrel), and any run of five or more exports in a module whose only
+ * own prop is `className` — that is the generated-logo shape, and `file-type`
+ * alone ships 43 of them.
  *
  * Usage:  tsx scripts/generate-api-docs.ts           # writes API.md
  *         tsx scripts/generate-api-docs.ts --check    # CI: fails if API.md is stale
@@ -52,8 +53,12 @@ const outFile = join(pkgRoot, 'API.md');
 
 const PKG_NAME = '@echoit/itui.css';
 
-/** The one barrel line that is summarised instead of expanded. */
-const ICONS_MODULE = './icons/ITUI';
+/**
+ * The second entry point, summarised instead of expanded. Icons left the root
+ * barrel (see src/index.ts), so this has to be a program root of its own —
+ * counting them off a barrel line would now report zero.
+ */
+const iconsEntry = join(srcDir, 'icons/index.ts');
 
 /** How many identical `className`-only exports it takes to collapse the group. */
 const LOGO_GROUP_MIN = 5;
@@ -72,13 +77,20 @@ if (config.error) {
 }
 const { options } = ts.parseJsonConfigFileContent(config.config, ts.sys, pkgRoot);
 
-const program = ts.createProgram([entry], options);
+const program = ts.createProgram([entry, iconsEntry], options);
 const checker = program.getTypeChecker();
-const entrySource = program.getSourceFile(entry);
-if (!entrySource) {
-  console.error(`✗ ${relative(pkgRoot, entry)} is not part of the program`);
-  process.exit(1);
+
+function rootSource(file: string): ts.SourceFile {
+  const source = program.getSourceFile(file);
+  if (!source) {
+    console.error(`✗ ${relative(pkgRoot, file)} is not part of the program`);
+    process.exit(1);
+  }
+  return source;
 }
+
+const entrySource = rootSource(entry);
+const iconsSource = rootSource(iconsEntry);
 
 const posix = (file: string) => file.replace(/\\/g, '/');
 const isOwnFile = (file: string) => posix(file).startsWith(`${posix(srcDir)}/`);
@@ -389,7 +401,11 @@ interface ModuleDoc {
 }
 
 const modules: ModuleDoc[] = [];
-let iconCount = 0;
+
+const iconsSymbol = checker.getSymbolAtLocation(iconsSource);
+const iconCount = iconsSymbol
+  ? checker.getExportsOfModule(iconsSymbol).length
+  : 0;
 
 for (const statement of entrySource.statements) {
   if (
@@ -409,11 +425,6 @@ for (const statement of entrySource.statements) {
 
   const exported = checker.getExportsOfModule(moduleSymbol);
 
-  if (specifier === ICONS_MODULE) {
-    iconCount = exported.length;
-    continue;
-  }
-
   modules.push({
     name: specifier.split('/').at(-1)!,
     exports: exported
@@ -427,8 +438,8 @@ modules.sort((a, b) => a.name.localeCompare(b.name));
 
 if (iconCount === 0) {
   console.error(
-    `✗ no barrel line matched \`${ICONS_MODULE}\` — src/index.ts changed shape, so this\n` +
-      '  script is silently under-reporting. Update ICONS_MODULE.',
+    `✗ ${relative(pkgRoot, iconsEntry)} exports nothing — the icon entry changed shape,\n` +
+      '  so this script is silently under-reporting. Update iconsEntry.',
   );
   process.exit(1);
 }
@@ -562,10 +573,11 @@ put(
 );
 put();
 put(
-  `The ${iconCount.toLocaleString('en-US')} icon components exported from \`${PKG_NAME}\` are ` +
-    'summarised rather than listed: they share one generated shape — `width`, `height` and every ' +
-    '`svg` attribute — and their paths hardcode `fill="#101010"`, so tinting one needs ' +
-    '`className="[&_path]:fill-current"` rather than a text colour.',
+  `The ${iconCount.toLocaleString('en-US')} ITUI icon components live behind their own subpath, ` +
+    `\`${PKG_NAME}/icons\`, and are summarised rather than listed: they share one generated ` +
+    'shape — `width`, `height` and every `svg` attribute — and their paths hardcode ' +
+    '`fill="#101010"`, so tinting one needs `className="[&_path]:fill-current"` rather than a ' +
+    'text colour.',
 );
 put();
 put('Every module is importable two ways:');
@@ -573,6 +585,7 @@ put();
 put('```tsx');
 put(`import { Button } from '${PKG_NAME}';          // barrel, tree-shakes in production`);
 put(`import { Button } from '${PKG_NAME}/button';   // subpath, also fast in dev`);
+put(`import { XIcon } from '${PKG_NAME}/icons';     // icons, subpath only`);
 put('```');
 put();
 put(

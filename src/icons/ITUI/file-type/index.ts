@@ -34,6 +34,10 @@ export { default as ExeTextLineLogo } from './ExeTextLineLogo';
 export { default as FigTextColorLogo } from './FigTextColorLogo';
 export { default as FigTextFlatLogo } from './FigTextFlatLogo';
 export { default as FigTextLineLogo } from './FigTextLineLogo';
+// The two folder logos shipped as files but were never listed here, so the only
+// way to reach them was a deep import that `exports` does not publish.
+export { default as FolderColorLogo } from './FolderColorLogo';
+export { default as FolderColorOpenLogo } from './FolderColorOpenLogo';
 export { default as GifTextColorLogo } from './GifTextColorLogo';
 export { default as GifTextFlatLogo } from './GifTextFlatLogo';
 export { default as GifTextLineLogo } from './GifTextLineLogo';

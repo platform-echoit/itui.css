@@ -225,6 +225,25 @@ extension. [Props →][api-filetype]
 
 ---
 
+### Icons
+
+```tsx
+import { MagnifyingGlassRegularIcon } from '@echoit/itui.css/icons';
+```
+
+The 6,615 ITUI icons ship from their own subpath — they are **not** on the main barrel, because a
+dev server does not tree-shake and one `Button` import would otherwise load the whole set on every
+page load. Production bundles are unaffected either way.
+
+Each icon takes `width` / `height` plus any `svg` attribute. Their paths hardcode
+`fill="#101010"`, so a text colour does not tint them:
+
+```tsx
+<MagnifyingGlassRegularIcon width={20} height={20} className="[&_path]:fill-current" />
+```
+
+---
+
 ### Input
 
 ```tsx

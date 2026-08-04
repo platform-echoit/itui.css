@@ -18,13 +18,22 @@ import { existsSync, readFileSync, statSync } from 'fs';
 import { join, resolve } from 'path';
 import { gzipSync } from 'zlib';
 
-import { packTarball, requireBuild, run } from './pack-tarball';
+import { packTarball, requireBuild, run, runCapture } from './pack-tarball';
 
 const root = resolve(process.cwd());
 const fixture = join(root, 'fixtures/vite-app');
 
 /** From the plan: one Button must stay under this, measured raw. */
 const BUDGET_RAW = 260_000;
+
+/**
+ * How many modules the barrel entry may make a consumer's bundler transform.
+ * Production bytes cannot see this: importing an icon through the ITUI barrel
+ * cost 7,912 extra modules (9,137 vs 1,517) while shipping a byte-identical
+ * bundle (I-29). The budget sits between the two, so a regression is unmissable
+ * and adding a component is not.
+ */
+const BUDGET_MODULES = 3_000;
 
 const ENTRIES = ['baseline', 'barrel', 'subpath'] as const;
 
@@ -50,20 +59,28 @@ packTarball(root, fixture);
 run('pnpm install --ignore-workspace --no-frozen-lockfile', fixture);
 
 const results = new Map<string, Measured>();
+const modules = new Map<string, number>();
 for (const entry of ENTRIES) {
-  run('pnpm build', fixture, { ENTRY: entry });
+  const output = runCapture('pnpm build', fixture, { ENTRY: entry });
+  const count = output.match(/(\d[\d,]*) modules transformed/);
+  if (!count) {
+    console.error(`\n✗ ${entry}: Vite printed no module count to assert on`);
+    process.exit(1);
+  }
+  modules.set(entry, Number(count[1].replace(/,/g, '')));
   results.set(entry, measure(entry));
 }
 
 const baseline = results.get('baseline')!;
 
-console.log('\n  entry      JS raw      JS gzip     vs baseline (raw)   CSS');
-console.log('  ' + '-'.repeat(64));
+console.log('\n  entry      JS raw      JS gzip     vs baseline (raw)   CSS        modules');
+console.log('  ' + '-'.repeat(74));
 for (const entry of ENTRIES) {
   const m = results.get(entry)!;
   const d = entry === 'baseline' ? '—' : delta(m.raw - baseline.raw);
   console.log(
-    `  ${entry.padEnd(10)} ${kb(m.raw).padStart(9)} ${kb(m.gzip).padStart(11)} ${d.padStart(19)}   ${kb(m.css)}`,
+    `  ${entry.padEnd(10)} ${kb(m.raw).padStart(9)} ${kb(m.gzip).padStart(11)} ${d.padStart(19)}   ` +
+      `${kb(m.css).padEnd(9)}  ${String(modules.get(entry)).padStart(6)}`,
   );
 }
 
@@ -72,8 +89,25 @@ console.log(
   `\n  library cost for one Button: ${kb(cost)} raw (budget ${kb(BUDGET_RAW)})`,
 );
 
+let failed = false;
+
 if (cost > BUDGET_RAW) {
   console.error('\n✗ over budget — tree-shaking is not reaching the library');
-  process.exit(1);
+  failed = true;
 }
+
+const barrelModules = modules.get('barrel')!;
+console.log(
+  `  modules through the barrel:  ${barrelModules} (budget ${BUDGET_MODULES})`,
+);
+if (barrelModules > BUDGET_MODULES) {
+  console.error(
+    '\n✗ over module budget — something re-exports a set instead of a file.\n' +
+      '  Production bytes will not show this; a dev server pays it on every page\n' +
+      '  load. `pnpm check:barrels` names the import if it is the ITUI barrel (I-29).',
+  );
+  failed = true;
+}
+
+if (failed) process.exit(1);
 console.log('✓ within budget');

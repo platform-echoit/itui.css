@@ -28,6 +28,30 @@ export function run(
   if (status !== 0) process.exit(status ?? 1);
 }
 
+/**
+ * Same, but hands back what the command printed. Used where the build log itself
+ * carries a number worth asserting on — Vite's module count (I-29). The output is
+ * echoed either way, so a failing build still reads the same in CI.
+ */
+export function runCapture(
+  command: string,
+  cwd: string,
+  env?: Record<string, string>,
+): string {
+  console.log(`\n$ ${command}`);
+  const result = spawnSync(command, {
+    cwd,
+    encoding: 'utf-8',
+    stdio: ['inherit', 'pipe', 'pipe'],
+    shell: true,
+    env: { ...process.env, ...env },
+  });
+  const output = `${result.stdout ?? ''}${result.stderr ?? ''}`;
+  process.stdout.write(output);
+  if (result.status !== 0) process.exit(result.status ?? 1);
+  return output;
+}
+
 export function requireBuild(root: string): void {
   if (!existsSync(join(root, 'dist/index.js'))) {
     console.error('✗ dist/index.js missing — run `pnpm build` first');

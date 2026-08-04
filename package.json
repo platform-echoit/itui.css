@@ -26,8 +26,8 @@
       "import": "./dist/index.js"
     },
     "./icons": {
-      "types": "./dist/icons/ITUI/index.d.ts",
-      "import": "./dist/icons/ITUI/index.js"
+      "types": "./dist/icons/index.d.ts",
+      "import": "./dist/icons/index.js"
     },
     "./dist/index.css": {
       "style": "./dist/index.css",

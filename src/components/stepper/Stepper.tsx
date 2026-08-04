@@ -12,7 +12,7 @@ import {
   type ReactNode,
 } from 'react';
 import { cn } from '../../lib/utils';
-import { CheckRegularIcon } from '../../icons/ITUI';
+import CheckRegularIcon from '../../icons/ITUI/check/CheckRegularIcon';
 
 /*
   Token → Tailwind map (Figma node 26973:412 "Stepper")

@@ -1,6 +1,10 @@
 /**
- * Fails the build when a component barrel re-exports a client module with
- * `export *`.
+ * Two rules about barrels, both of which cost the consumer something real:
+ *
+ *   R1 — a component barrel must not re-export a client module with `export *`.
+ *   R2 — a component must not import an icon through the ITUI barrel.
+ *
+ * ── R1: `export *` over a client module (I-27)
  *
  * Why this is a build error and not a style preference (I-27):
  *   A barrel cannot state its own exports without evaluating the modules it
@@ -26,6 +30,18 @@
  *   left alone for the same reason — this guard reports them the day a
  *   `useState` lands inside, which is exactly when the shape has to change.
  *
+ * ── R2: importing an icon through the ITUI barrel (I-29)
+ *
+ *   `src/icons/ITUI/index.ts` is 1,263 `export *` lines, so a bundler has to load
+ *   all 7,912 icon modules to resolve one name from it. Seven components did, and
+ *   that alone was 83% of every module a consumer's build had to transform:
+ *   9,137 modules through the barrel entry, 1,517 once each icon is imported from
+ *   the file that declares it. Production output is byte-identical — this is a
+ *   dev-server and build-time cost, which is exactly why no size gate saw it.
+ *
+ *   Icons leaving the root barrel (I-02) did *not* fix this on its own: components
+ *   reach the ITUI barrel directly, so the whole set kept arriving by that route.
+ *
  * Usage:  tsx scripts/check-barrel-exports.ts
  */
 
@@ -43,6 +59,15 @@ const STAR_EXPORT = /export\s+\*(?:\s+as\s+[A-Za-z_$][\w$]*)?\s+from\s*['"]([^'"
 
 /** Any `from './X'` — used to follow a named re-export chain. */
 const ANY_EXPORT_FROM = /export\s+(?:type\s+)?(?:\*|\{[\s\S]*?\})(?:\s+as\s+[A-Za-z_$][\w$]*)?\s+from\s*['"]([^'"]+)['"]/g;
+
+/** Any `import … from './X'`, including a bare side-effect import. */
+const ANY_IMPORT_FROM = /import\s+(?:[\s\S]*?\s+from\s*)?['"]([^'"]+)['"]/g;
+
+/** The barrels R2 forbids: both spread the whole 6,615-icon set. */
+const ICON_BARRELS = [
+  join(root, 'src/icons/ITUI/index.ts'),
+  join(root, 'src/icons/index.ts'),
+];
 
 // ── Resolution ───────────────────────────────────────────────────────────────
 
@@ -93,6 +118,17 @@ function collectBarrels(dir: string, acc: string[] = []): string[] {
   return acc;
 }
 
+function collectSources(dir: string, acc: string[] = []): string[] {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) collectSources(full, acc);
+    else if (/\.tsx?$/.test(entry.name) && !entry.name.endsWith('.d.ts')) {
+      acc.push(full);
+    }
+  }
+  return acc;
+}
+
 const rel = (file: string) => file.slice(root.length + 1).split(sep).join('/');
 
 // ── Check ────────────────────────────────────────────────────────────────────
@@ -126,27 +162,67 @@ for (const barrel of collectBarrels(componentsDir)) {
   }
 }
 
-if (!violations.length) {
+// ── R2: no component may import an icon through the ITUI barrel ─────────────
+
+type IconImport = { file: string; statement: string };
+
+const iconImports: IconImport[] = [];
+const sources = collectSources(componentsDir);
+
+for (const file of sources) {
+  const source = readFileSync(file, 'utf-8');
+  for (const match of source.matchAll(ANY_IMPORT_FROM)) {
+    const target = resolveRelative(file, match[1]);
+    if (target && ICON_BARRELS.includes(target)) {
+      iconImports.push({ file: rel(file), statement: match[0].replace(/\s+/g, ' ') });
+    }
+  }
+}
+
+// ── Report ───────────────────────────────────────────────────────────────────
+
+if (!violations.length && !iconImports.length) {
   console.log(
     `✓ barrel exports: no client module is spread with \`export *\` ` +
-      `(${barrelCount} barrels, ${starCount} \`export *\` remaining)`,
+      `(${barrelCount} barrels, ${starCount} \`export *\` remaining), and no ` +
+      `component imports the ITUI barrel (${sources.length} files)`,
   );
   process.exit(0);
 }
 
-console.error(
-  `\n✗ ${violations.length} \`export *\` re-export(s) pull a client module ` +
-    `into a barrel:\n`,
-);
-for (const { barrel, statement, client } of violations) {
-  console.error(`  ${barrel}`);
-  console.error(`      ${statement}  →  ${client} is "use client"`);
+if (violations.length) {
+  console.error(
+    `\n✗ ${violations.length} \`export *\` re-export(s) pull a client module ` +
+      `into a barrel:\n`,
+  );
+  for (const { barrel, statement, client } of violations) {
+    console.error(`  ${barrel}`);
+    console.error(`      ${statement}  →  ${client} is "use client"`);
+  }
+  console.error(
+    '\nReplace the `export *` with named re-exports, splitting types out:\n' +
+      "    export { Thing } from './Thing';\n" +
+      "    export type { ThingProps } from './Thing';\n" +
+      '\n`isolatedModules` requires the `export type` half. `pnpm check:docs`\n' +
+      'confirms afterwards that no export was dropped in the rewrite (I-27).\n',
+  );
 }
-console.error(
-  '\nReplace the `export *` with named re-exports, splitting types out:\n' +
-    "    export { Thing } from './Thing';\n" +
-    "    export type { ThingProps } from './Thing';\n" +
-    '\n`isolatedModules` requires the `export type` half. `pnpm check:docs`\n' +
-    'confirms afterwards that no export was dropped in the rewrite (I-27).\n',
-);
+
+if (iconImports.length) {
+  console.error(
+    `\n✗ ${iconImports.length} component import(s) reach an icon through the ` +
+      'ITUI barrel, which loads all 7,912 icon modules:\n',
+  );
+  for (const { file, statement } of iconImports) {
+    console.error(`  ${file}`);
+    console.error(`      ${statement}`);
+  }
+  console.error(
+    '\nImport the file that declares the icon instead — it is a default export:\n' +
+      "    import XRegularIcon from '../../icons/ITUI/x/XRegularIcon';\n" +
+      '\nThe folder name is the icon name in kebab-case; the 9 hand-written ones\n' +
+      "live in `icons/ITUI/icons` and stay named imports (I-29).\n",
+  );
+}
+
 process.exit(1);

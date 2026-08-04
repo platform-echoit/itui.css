@@ -115,6 +115,18 @@ Lần chạy lại đầy đủ khi chốt (build 3 stage + 5 gate, `dist` mới
 (56 barrel, 16 `export *`) · `check:docs` ✓ (483 export / 56 module) · `check:rsc` ✓ (849,2 kB / 7 chunk,
 không module nào rò) · `check:bundle` ✓ (23,6 kB/Button; barrel 9.137 vs subpath 31 module transform).
 
+### 0.8 Đính chính vòng 9 (2026-08-04, lúc tách `icons` khỏi barrel)
+
+| Bản plan này nói | Thực tế | Hệ quả |
+| --- | --- | --- |
+| §I-02 mục 3 + M2: gỡ `export * from './icons/ITUI'` ở [`src/index.ts`](../src/index.ts) là thứ chặn 6.613 icon khỏi dev graph — "lý do thật để tách `icons`" | Gỡ xong, đo lại: **9.137 module, không nhích một byte**. Bucket theo nguồn cho biết **7.912** module vẫn là icon. Chúng vào bằng **đường khác**: 7 file component `import { … } from '../../icons/ITUI'`, mà barrel đó là 1.263 dòng `export *` | Dòng barrel gốc **không phải** đòn bẩy. Đổi 7 file sang import thẳng file khai báo: **9.137 → 1.517 (−83%)**, `bundle.js` **byte-identical** (217,93 kB). Đây là **I-29** |
+| §0.7 đo được **18 file / 41 import** icon qua barrel trong `apps/` (số cũ 16/37) | Đúng 18/41, nhưng còn **2 spelling deep-import** mà không grep nào bắt: [`Icons.stories.tsx`](../../../apps/storybook/src/stories/Icons.stories.tsx) `import * as ITUIIcons from '…/icons/ITUI'` và [`folder-tree.tsx`](../../../apps/web/screen/main/my-drive/folder-tree.tsx) import 1 file lẻ | Cả hai chỉ chạy nhờ tsconfig `paths` / alias Vite trỏ vào `src`, **không** qua `exports`. Đã đưa về một spelling `@echoit/itui.css/icons` |
+| — (không có trong plan) | `FolderColorLogo` và `FolderColorOpenLogo` **có file** trong [`icons/ITUI/file-type/`](../src/icons/ITUI/file-type/) nhưng **không** được `index.ts` của thư mục re-export | Nên `/icons` không với tới được, và đó là lý do `apps/web` phải deep-import. Đã thêm 2 dòng → **6.613 → 6.615 icon**. Cùng họ với lỗi "`FileTypeLogo` thiếu `folder`" mà §0.4 đã bắt |
+
+⚠️ **Lần thứ 7 của cùng một hình dạng lỗi** (§0.6): kết luận "tách icons khỏi barrel sẽ giảm dev graph"
+được suy từ bảng 15.407 → 9.137 của I-11, mà bảng đó **không** có nhánh nào tách icons để so. Lần này
+phát hiện sớm vì đo **trước** khi ghi công, và đo bằng bucket theo nguồn chứ không chỉ tổng số.
+
 ---
 
 ## 1. Bảng theo dõi
@@ -124,7 +136,7 @@ Status: `TODO` · `WIP` · `DONE` · `SKIP`
 | # | Issue | Loại | P | Breaking | M | Status |
 | --- | --- | --- | --- | --- | --- | --- |
 | I-01 | RSC build failure | Implementation | P0 | Không | M2 | **DONE** — fixture Next pass |
-| I-02 | Tree-shaking chết | Implementation | P0 | Không | M2 | **DONE** — 23,5 kB/Button |
+| I-02 | Tree-shaking chết | Implementation | P0 | Không | M2/M3 | **DONE** — 23,6 kB/Button; icons đã tách khỏi barrel |
 | I-03 | README setup → UI trắng trơn | Documentation | P0 | Không | M1 | **DONE** — §1–2 viết lại |
 | I-04 | Dialog không trap focus | Accessibility | P0 | Có (hành vi) | M1 | **DONE** — QA browser pass |
 | I-05 | `TableRow disabled` vô tác dụng | Implementation | P0 | Có (hành vi) | M1 | **DONE** — 19/19 assertion |
@@ -151,6 +163,7 @@ Status: `TODO` · `WIP` · `DONE` · `SKIP`
 | **I-26** | I-13 làm vỡ gate RSC của I-01 — `Button` gắn `onClick` vô điều kiện | Implementation | **P0** | Không | M2 | **DONE** — 15/15 assertion, xem §3.3 |
 | **I-27** | Barrel `export *` chứa client module → consumer RSC nhận **cả thư viện** (+500 kB client JS) | Implementation | **P1** | Không | M3 | **DONE** — 6 barrel, −467 kB, xem §3.5 |
 | **I-28** | `check:docs` so byte nên **luôn đỏ trên Windows** (CRLF) dù nội dung khớp | Implementation | P2 | Không | M3 | **DONE** — normalise EOL, xem §3.7 |
+| **I-29** | 7 component import icon qua barrel ITUI → consumer transform **+7.912 module** mà bundle byte-identical | Implementation | **P1** | Không | M3 | **DONE** — 9.137 → 1.517, xem §3.8 |
 
 ---
 
@@ -477,11 +490,12 @@ tốn thêm 67 kB — nghĩa là chi phí *nào cũng* là chi phí toàn bộ t
    vì liệt kê 49 dòng: `"./*"` → `./dist/components/*/index.js` (+ `types`). Component mới tự
    động có subpath, không phải sửa gì. Kèm `"./icons"` và `"./package.json"` (thiếu cái sau
    thì tool đọc manifest của dep bị `ERR_PACKAGE_PATH_NOT_EXPORTED` — I-11)
-3. ⬜ **Tách `icons` khỏi barrel** — **hoãn sang M4**: verified có **16 file trong `apps/`**
-   (5 `apps/web` + 11 `apps/storybook`, 37 named import — xem §0.7; con số 8 cũ sai cả hai
-   chiều) đang `import { MagnifyingGlassRegularIcon } from '@echoit/itui.css'` → xoá
-   [`src/index.ts:59`](../src/index.ts#L59) là **breaking**. Và sau khi đo thì nó **không còn
-   cần cho bundle size** (xem bảng dưới) — chỉ còn giá trị cho dev mode
+3. ✅ **Tách `icons` khỏi barrel** — **đã làm ở M3** (2026-08-04). Icons ship qua subpath
+   `@echoit/itui.css/icons`, entry mới là [`src/icons/index.ts`](../src/icons/index.ts) để
+   **một cách viết** resolve giống nhau qua cả 3 đường: `exports` của npm, `paths` tsconfig của
+   `apps/web`, alias Vite của `apps/storybook`. Breaking: **20 file trong `apps/`** đã đổi
+   (41 named import + 2 deep-import — xem §0.8). ⚠️ Bản thân việc gỡ dòng barrel **không** giảm
+   được module nào — đòn bẩy thật là **I-29** (§3.8)
 4. ✅ Giữ `sideEffects` — nhưng đã **thêm `"./dist/index.js"`**, xem I-01(b): thiếu nó thì
    bundler drop import CSS của barrel khi tree-shake
 
@@ -990,6 +1004,68 @@ vi I-27 nhiều, tách ra để user quyết.
 
 ---
 
+#### 3.8 · I-29 — component import icon qua barrel ITUI kéo cả bộ icon vào graph của consumer — ✅ DONE
+
+**Phát hiện khi tách `icons` khỏi root barrel.** Gỡ [`src/index.ts`](../src/index.ts) dòng
+`export * from './icons/ITUI'` xong, `check:bundle` báo **9.137 module** — **đúng bằng số cũ**, không
+nhích một byte. Trước khi kết luận gì, đếm lại 9.137 module đó theo nguồn (plugin `load()` gom theo
+thư mục, cùng fixture, cùng entry):
+
+| Nguồn | Module |
+| --- | --- |
+| `itui:icons` | **7.912** |
+| `dep:date-fns` | 826 |
+| `itui:components` | 141 |
+| `dep:react-day-picker` | 106 |
+| còn lại (react, react-dom, lexical, …) | ~150 |
+
+**Nguyên nhân** — 7 file component import icon qua **barrel ITUI**
+(`import { XRegularIcon } from '../../icons/ITUI'`). Barrel đó là **1.263 dòng `export *`**, nên
+bundler phải nạp cả 7.912 module chỉ để biết `XRegularIcon` nằm ở đâu. Root barrel có liệt kê icons
+hay không **không liên quan**: đường vào là từ component, không phải từ `src/index.ts`.
+
+**Solution** — ✅ Mỗi icon import thẳng file khai báo nó:
+
+```tsx
+import XRegularIcon from '../../icons/ITUI/x/XRegularIcon';   // default export
+```
+
+50 icon ở 7 file: `dialog` 1 · `DateHeader` 2 · `DatePicker` 4 · `FileType` 37 · `Progress` 4 ·
+`SidebarGroup` 1 · `Stepper` 1.
+
+| Đo (fixture Vite, entry `barrel`) | Trước | Sau |
+| --- | --- | --- |
+| Module transform | 9.137 | **1.517 (−83%)** |
+| `bundle.js` | 217,93 kB | **217,93 kB — byte-identical** |
+| `bundle.css` | 98,1 kB | **98,1 kB** |
+| Chi phí 1 Button | +23,6 kB | **+23,6 kB** |
+
+⚠️ **Vì sao không gate nào thấy:** production output **không đổi một byte** — Rollup vẫn shake sạch.
+Cái phải trả là thời gian transform ở dev server và ở mỗi lần build. Cùng họ với I-27 (gate xanh mà
+hỏng), nhưng lần này ngay cả `check:bundle` — gate *đo bằng byte* — cũng không thể thấy, vì byte là
+thứ duy nhất **không** đổi.
+
+**2 guard mới, cả hai đều bắt được lỗi này:**
+
+- **`check:barrels` rule R2** ([`scripts/check-barrel-exports.ts`](../scripts/check-barrel-exports.ts))
+  — fail khi bất kỳ file nào trong `src/components` import từ `icons/ITUI` hoặc `icons`. Static, chạy
+  trong `prebuild`, không cần build. Negative control: dựng file probe import cả 2 barrel → **đỏ, nêu
+  đúng 2 dòng**; xoá đi → xanh (136 file quét)
+- **Module budget trong `check:bundle`** — đọc số `modules transformed` của Vite và fail nếu barrel
+  vượt **3.000**. Ngưỡng nằm giữa 1.517 (sạch) và 9.137 (rò) nên thêm component không bao giờ chạm,
+  còn regression thì vượt gấp 3
+
+**Phát hiện kèm theo** — `FolderColorLogo` / `FolderColorOpenLogo` có file trong
+[`icons/ITUI/file-type/`](../src/icons/ITUI/file-type/) mà `index.ts` của thư mục **không** re-export,
+nên `@echoit/itui.css/icons` không với tới được. Đã thêm: **6.613 → 6.615 icon**.
+
+**File** — 7 file component · [`src/icons/ITUI/file-type/index.ts`](../src/icons/ITUI/file-type/index.ts) ·
+[`scripts/check-barrel-exports.ts`](../scripts/check-barrel-exports.ts) ·
+[`scripts/check-bundle.ts`](../scripts/check-bundle.ts) ·
+[`scripts/pack-tarball.ts`](../scripts/pack-tarball.ts) (`runCapture`)
+
+---
+
 ### I-07 · Ví dụ theming trong README là no-op
 
 **Vấn đề** — [`README.md:419-424`](../README.md#L419-L424) bảo override `--primary` /
@@ -1102,8 +1178,9 @@ quốc tế.
 - ✅ **3,2 MB `.d.ts.map`** (8.052 file) — đã tắt `declarationMap` trong
   [`tsconfig.json`](../tsconfig.json#L21) (`tsconfig.components.json` extends nó nên không cần
   sửa 2 chỗ). `files: ["dist"]` không ship source, nên map chẳng trỏ được vào đâu
-- ⬜ **M3** — icon vẫn là **23,0 MB / 98%** của dist (component chỉ 0,5 MB). Tách package
-  riêng hoặc subpath export; xử lý chung với I-02
+- ⬜ **M4** — icon vẫn là **~17 MB / 95%** của dist (component chỉ ~0,8 MB). Subpath export
+  **đã có** (`/icons`, M3) nhưng không giảm dung lượng tarball: consumer vẫn tải cả bộ. Chỉ tách
+  package riêng mới giảm được — quyết định ở M4
 
 **File** — [`tsup.config.ts`](../tsup.config.ts) · [`scripts/build-icon-types.ts`](../scripts/build-icon-types.ts)
 
@@ -1375,8 +1452,9 @@ Toàn bộ là fix nhỏ, không đổi API. Effort mỗi item: **S**.
       Bump **trong repo thôi, chưa publish npm** — user chốt không chạy `publish:latest`.
       ⚠️ `1.0.15` là **patch** so với `1.0.14` đang ở npm, trong khi đợt này có breaking thật
       (ESM-only, `tailwindcss` thành peer bắt buộc, default Hàn → Anh, Dialog trap focus,
-      `TableRow disabled` có tác dụng, `Button` merge className). Trước khi thật sự publish
-      phải chọn lại số hoặc ship changelog nêu đủ 6 mục trên
+      `TableRow disabled` có tác dụng, `Button` merge className, và từ M3 là **icon rời khỏi
+      barrel** → `import { XIcon } from '@echoit/itui.css'` không còn compile). Trước khi thật
+      sự publish phải chọn lại số hoặc ship changelog nêu đủ 7 mục trên
 - [x] Sửa version bằng cách **edit `package.json`**, không dùng `pnpm version` — script đó
       commit **và tag**, mà tag khi chưa publish thì trỏ vào một bản không tồn tại trên npm
 
@@ -1397,9 +1475,9 @@ Toàn bộ là fix nhỏ, không đổi API. Effort mỗi item: **S**.
   - [x] **I-02** Subpath exports pattern `"./*"` + `"./icons"` + `"./package.json"`
   - [x] Fixture Vite + job CI `bundle-size` — **1 Button = 23,5 kB raw / 7,8 kB gzip**
         (trước +229 kB gzip)
-  - [ ] Tách `icons` khỏi barrel → **M4**, vì breaking (**16** file trong `apps/` đang import
-        icon qua barrel — §0.7, không phải 8) và không còn giúp bundle size, chỉ giúp dev mode
-        (barrel 9.137 → subpath 31 module)
+  - [x] Tách `icons` khỏi barrel → **đã làm ở M3** (không phải M4). Breaking với **20** file
+        trong `apps/` (§0.8, không phải 16). ⚠️ Dự đoán "sẽ giảm dev mode" **sai**: gỡ dòng
+        barrel xong vẫn đúng 9.137 module — xem I-29 (§3.8)
 - [x] **I-13** Hoàn thiện ARIA form/table — **41/41 assertion**. 3 chỗ lệch plan, xem §0.2:
       `Button` dùng `aria-disabled` chứ không native `disabled`; `PopoverMenu` là component mới
       chứ không phải gắn role trần lên `PopoverItem`; `<th>` bọc `<button>` là opt-in
@@ -1440,9 +1518,16 @@ không chỉ sau thay đổi build config. I-13 sửa `Button` và làm đỏ ga
       `check:barrels` + job CI `barrel-exports`. ⚠️ Mô hình nhân quả ở §3.5 **sai** — đọc §0.6:
       cần một **cặp** barrel, không phải một
 - [x] **I-28** `check:docs` báo oan trên Windows (CRLF vs LF) — xem §3.7
+- [x] **I-02 mục 3** Tách `icons` khỏi root barrel → subpath `@echoit/itui.css/icons`, entry mới
+      [`src/icons/index.ts`](../src/icons/index.ts). 20 file `apps/` đổi import; `tsc --noEmit`
+      xanh ở cả `apps/web` lẫn `apps/storybook`, storybook build xanh. Xem §0.8
+- [x] **I-29** 7 component thôi import icon qua barrel ITUI — **9.137 → 1.517 module (−83%)**,
+      `bundle.js` byte-identical. 2 guard mới: `check:barrels` rule R2 + module budget 3.000
+      trong `check:bundle`. Xem §3.8
 - [ ] **I-06b** Deploy docs site (cân nhắc dùng `apps/storybook`) — M–L
 - [ ] **I-09c** `ITUIProvider locale` — tuỳ chọn, chỉ làm nếu định làm i18n đầy đủ
-- [ ] **I-10b** Tách icon package (nếu chọn) — M
+- [ ] **I-10b** Tách icon package (nếu chọn) — M. Subpath `/icons` đã có, nên việc còn lại thuần
+      về *dung lượng tarball*, không còn về bundle hay dev graph
 
 **Điểm dự kiến ~8.2**
 
@@ -1478,7 +1563,8 @@ runtime của consumer):
 | **Còn lại** — hook render-time thiếu directive | Vỡ lúc render, fixture không thấy | ⬜ Chỉ `check:client` bắt được → **không được bỏ job static** khi đã có fixture |
 | **Đã thành sự thật** — sửa component làm vỡ gate build | `next build` fail ở consumer, repo vẫn xanh | ⚠️ I-26 (§3.3): I-13 sửa `Button` → gate RSC đỏ suốt 1 milestone. Guard `check:client` **không** bắt được (nó soi directive, không soi prop truyền xuống DOM). CI có job `rsc-fixture` nên PR sẽ chặn — nhưng chỉ khi PR đó land ở **repo submodule**, xem cảnh báo ở I-01(a) |
 | ~~**Đã thành sự thật** — client bundle phình mà **mọi gate vẫn xanh**~~ | Consumer RSC nhận cả thư viện, `check:bundle` vẫn báo 23,6 kB | ✅ **Đã đóng** (I-27, §3.5). `check:rsc` giờ assert **marker + byte budget** chứ không chỉ exit code, và `check:barrels` bắt được hình dạng barrel **trước cả khi** phải build. Đã xác minh gate đỏ đúng lúc rò (1305,2 kB) và xanh khi sạch (849,2 kB) |
-| **Còn lại** — kết luận rút từ phép đo mà **nền chưa cố định** | Tài liệu ghi một nhân quả sai, lần sau có người sửa nhầm chỗ | ⚠️ Đã xảy ra **6 lần** (§0–§0.4, §0.6). Chỉ có một cách chặn: mỗi lần đo, nêu rõ *cái gì được giữ nguyên*, và nếu kết luận là "X gây ra Y" thì phải có nhánh **không có X** trong cùng điều kiện. §0.6 tốn 5 lần build để phát hiện §3.5 sai |
+| **Còn lại** — kết luận rút từ phép đo mà **nền chưa cố định** | Tài liệu ghi một nhân quả sai, lần sau có người sửa nhầm chỗ | ⚠️ Đã xảy ra **7 lần** (§0–§0.4, §0.6, §0.8). Chỉ có một cách chặn: mỗi lần đo, nêu rõ *cái gì được giữ nguyên*, và nếu kết luận là "X gây ra Y" thì phải có nhánh **không có X** trong cùng điều kiện. §0.6 tốn 5 lần build để phát hiện §3.5 sai; §0.8 rẻ hơn vì đo **trước** khi ghi công |
+| ~~**Đã thành sự thật** — chi phí mà **mọi gate đo bằng byte** đều mù~~ | Consumer transform 7.912 module thừa, `bundle.js` byte-identical | ✅ **Đã đóng** (I-29, §3.8). Bài học: byte không phải thước đo duy nhất — dev server trả bằng *thời gian transform*. `check:bundle` giờ assert cả **module count**, `check:barrels` bắt hình dạng import trước cả khi build |
 
 Giảm thiểu chung:
 - Làm trên branch riêng, tách khỏi các fix M1

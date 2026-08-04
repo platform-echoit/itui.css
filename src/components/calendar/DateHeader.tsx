@@ -1,6 +1,7 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../../lib/utils';
-import { CaretLeftRegularIcon, CaretRightRegularIcon } from '../../icons/ITUI';
+import CaretLeftRegularIcon from '../../icons/ITUI/caret-left/CaretLeftRegularIcon';
+import CaretRightRegularIcon from '../../icons/ITUI/caret-right/CaretRightRegularIcon';
 
 /*
   Token → Tailwind class reference (Figma node 27193:2381 "Date Header")
