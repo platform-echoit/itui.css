@@ -155,6 +155,19 @@ sai khi suy ra "46 module còn lại an toàn" — vì đơn vị nó đếm (mo
 Cùng họ với §0.1 ("vắng `cn()` ≠ có lỗi") nhưng **ngược chiều**: **có `cn()` ≠ không có lỗi**. Một file
 gọi `cn()` ở nhánh này và `.join(' ')` ở nhánh kia thì grep nào cũng cho nó qua.
 
+### 0.11 Đính chính vòng 12 (2026-08-04, lúc làm I-30)
+
+| Bản plan này nói | Thực tế | Hệ quả |
+| --- | --- | --- |
+| Bảng §4.2: `Input` được dùng ở **3 file** `apps/web`, `InputText` **0** | **11 site / 9 file.** `apps/web` **4** (§4.2 quên [`controled-input.tsx:66`](../../../apps/web/components/ui/controled-input.tsx#L66) — chỗ bọc react-hook-form, tức chỗ *rộng* nhất); **`packages/ui` nội bộ 4 site / 2 file** ([`resource-modal.tsx`](../src/components/modals/resource-modal.tsx#L205) ×3 · [`InputGroup.tsx:100`](../src/components/input-group/InputGroup.tsx#L100)); `apps/storybook` **3 file** | Bảng §4.2 có cột tên là *"`apps/web` dùng"* nên nó **đo đúng cái nó hỏi** — nhưng câu hỏi cần trả lời trước một breaking là *"ai dùng"*, không phải *"`apps/web` dùng bao nhiêu"*. Cùng họ §0.7 (bỏ sót cả `apps/storybook`) và §0.8 |
+| Breaking của I-30 = "hộp đổi `bg-white` → `bg-inverse`" | Thiếu **2 thứ nặng hơn**, cả hai đều không nằm trong bảng so prop: **(i) chiều rộng** — `Input` mặc định `block=false` nên **không** `w-full`, còn [`InputFieldShell:85`](../src/components/input/InputFieldShell.tsx#L85) để `w-full` **cứng**; alias thẳng là mọi `Input` không-block đột nhiên full-width. **(ii) `aria-describedby`** — [`Input.tsx:59-62`](../src/components/input/Input.tsx) (bản cũ) nối `<p>` lỗi vào field, shell **không** làm; alias thẳng là **regression a11y**, không phải đổi hiển thị | Bảng §4.2 so **prop với prop**, mà cả hai khác biệt này sống ở **markup**. Cùng hình dạng §0.10 (đơn vị đo to hơn đơn vị bug sống), chỉ khác trục: ở đó là module vs site, ở đây là prop vs cây DOM |
+| — (không có trong plan) | `twMerge` **không** gộp `w-full` với `w-container-md`: scale `--container-*` nằm ngoài width group mặc định của nó, nên cả hai class cùng emit | Nên không được trông vào merge để `Gnb.stories` (`className="w-container-md"`) tự thắng. Đó là lý do `Input` phải **giữ `block=false`** chứ không phải "cứ để shell `w-full` rồi consumer override" |
+
+⚠️ **Lần thứ 10.** Điểm khác lần này: cả 2 sai sót đều tới từ **một bảng so sánh** — mà bảng so sánh
+đọc như thể nó đã liệt kê đủ khác biệt, trong khi nó chỉ liệt kê đủ *những khác biệt có tên prop*.
+Bắt được vì trước khi sửa có đọc cả 3 file dựng (`Input`, `InputText`, `InputFieldShell`) thay vì
+đọc lại bảng.
+
 ---
 
 ## 1. Bảng theo dõi
@@ -192,7 +205,7 @@ Status: `TODO` · `WIP` · `DONE` · `SKIP`
 | **I-27** | Barrel `export *` chứa client module → consumer RSC nhận **cả thư viện** (+500 kB client JS) | Implementation | **P1** | Không | M3 | **DONE** — 6 barrel, −467 kB, xem §3.5 |
 | **I-28** | `check:docs` so byte nên **luôn đỏ trên Windows** (CRLF) dù nội dung khớp | Implementation | P2 | Không | M3 | **DONE** — normalise EOL, xem §3.7 |
 | **I-29** | 7 component import icon qua barrel ITUI → consumer transform **+7.912 module** mà bundle byte-identical | Implementation | **P1** | Không | M3 | **DONE** — 9.137 → 1.517, xem §3.8 |
-| **I-30** | `Input` và `InputText` chồng lấn — cùng field 1 dòng + label/error/prefix/suffix, hai bản dựng khác nhau | API | P2 | Có | M4 | **TODO** — đã đo, chưa sửa; xem §4.3 |
+| **I-30** | `Input` và `InputText` chồng lấn — cùng field 1 dòng + label/error/prefix/suffix, hai bản dựng khác nhau | API | P2 | Có | M4 | **DONE** — `Input` thành alias, 21/21 assertion; xem §4.2 |
 | **I-31** | I-08 còn sống ở **3 file / 4 site**: class của consumer bị **nối** thay vì `twMerge` | Implementation | **P1** | Có (hành vi) | M4 | **DONE** — 4 site + guard `check:classes`, xem §4.3 |
 
 ---
@@ -1548,7 +1561,7 @@ nhóm) thì đi kèm `Grid`.
 
 **Solution** — Sửa metadata; link tuyệt đối GitHub; điền `description`. · **Breaking** Không
 
-#### 4.2 · I-30 — `Input` và `InputText` là cặp trùng thật, không phải `Input`/`InputV2`
+#### 4.2 · I-30 — `Input` và `InputText` là cặp trùng thật, không phải `Input`/`InputV2` — ✅ DONE
 
 **Phát hiện khi verify I-17.** Plan xếp `Input`/`InputV2` thành một cặp; đo ra thì `InputV2` là
 facade định tuyến (§0.10), còn cặp thật nằm ở chỗ plan không nhìn tới.
@@ -1561,7 +1574,7 @@ facade định tuyến (§0.10), còn cặp thật nằm ở chỗ plan không n
 | Chỉ bên này có | `block` · `disabledInput` (khoá field mà giữ prefix/suffix sống) | `helperText` · `onBoxClick` · `boxRef` |
 | Merge `fieldClassName` | ❌ `.join(' ')` — **I-31** | ✅ `cn()` |
 | Trong barrel | có | có |
-| `apps/web` dùng | **3 file** | **0** |
+| Ai dùng | **11 site / 9 file** — xem §0.11, không phải "3 file `apps/web`" | **0** |
 | Trong union của `InputV2` | ❌ không | ✅ nhánh `variant="text"` (mặc định) |
 
 **Vì sao đáng xử lý** — `InputText` là thứ `InputV2` gọi tới, tức là **đường chính thức** của cả họ
@@ -1570,12 +1583,37 @@ input; `Input` là bản cũ đứng ngoài họ đó, và đang mang thêm 2 de
 Nhưng `Input` lại là cái duy nhất có `disabledInput` và `block`, nên **không** gộp được bằng một
 alias — phải port 2 prop đó sang `InputText` trước.
 
-⚠️ **Chưa làm gì cả** — user chốt *"điều tra rồi báo, chưa sửa"*. Ghi lại ở đây để lần sau không
-phải đo lại, và để đừng ai vô tình "dọn" `Input` mà quên 3 call-site + 2 prop độc quyền.
+**Đã làm** — đúng hình dạng đề xuất (port 2 prop, `Input` thành alias `@deprecated`, giữ export tới
+major kế tiếp), cộng 2 thứ §0.11 phát hiện mà bảng so prop ở trên không thấy:
 
-**Đề xuất khi làm** — port `block` + `disabledInput` sang `InputText`, đổi `Input` thành alias mỏng
-trỏ vào đó, `@deprecated` kèm JSDoc; giữ export tới major kế tiếp. **Breaking** Có (hiển thị: hộp
-đổi từ `bg-white` sang token `bg-inverse` = `#fafafa`).
+| File | Đổi |
+| --- | --- |
+| [`InputFieldShell.tsx`](../src/components/input/InputFieldShell.tsx) | `block?: boolean` (**default `true`** — 10 variant hiện có không đổi một byte) gate `w-full`; `<p>` message nhận `id`; 2 helper mới `inputMessage()` + `inputMessageId()` để shell và control hỏi **cùng một câu** thay vì truyền id qua nhau |
+| [`InputText.tsx`](../src/components/input/InputText.tsx) | `block` · `disabledInput` (khoá field, hộp + slot vẫn sống); `aria-describedby` trỏ vào message, **cộng dồn** với id consumer truyền |
+| [`Input.tsx`](../src/components/input/Input.tsx) | 156 dòng → **26**: alias `forwardRef` sang `InputText`, `block = false` để 11 call-site không dịch layout; `InputProps` thành alias type (nới thêm `helperText`/`onBoxClick`/`boxRef` — không breaking) |
+
+**Breaking (hiển thị)** — hộp `bg-white` → `bg-inverse` `#fafafa` · `gap-2` → `gap-1` · token disabled
+(`bg-neutral-100 border-input` → `bg-surface-neutral-subtle border-neutral-disabled`) · thêm
+`transition-colors duration-150` · slot bỏ `aria-hidden` (đúng hơn: `suffix` vẫn được tài liệu ghi là
+có thể là **button**) và thêm `[&_path]:fill-current` · `<p>` lỗi `font-normal leading-5` →
+`leading-md`. Vào changelog `2.0`, mục thứ 10.
+
+**Không breaking, được thêm miễn phí** — `Input` giờ hưởng luôn 3 thứ của shell: `fieldClassName`
+thật sự merge (I-31 vốn chỉ sửa `Input.tsx` bản cũ), `helperText`, và `aria-describedby` cho **cả**
+helper text chứ không riêng error.
+
+**Acceptance — 21/21 assertion** trên `dist` (`renderToStaticMarkup`, import qua subpath vì barrel
+kéo `dist/index.css` mà Node không load được): 4 width · 4 `disabledInput`/`disabled` · 7
+`aria-describedby` · 2 merge class · 4 cấu trúc. **Negative control**: dựng bản alias ngây thơ
+(không cắm `block`, gỡ `aria-describedby`) → probe đỏ **đúng 5** assertion, đúng 5 cái mà bản ngây
+thơ phá. Cộng `tsc --noEmit` xanh ở `packages/ui` · `apps/web` · `apps/storybook`, và **6 gate**:
+`check:client` ✓ · `check:barrels` ✓ · `check:classes` ✓ (136 file) · `check:docs` ✓ (**484** export
+/ 56 module, không rơi export nào) · `check:rsc` ✓ (**849,2 kB** / 7 chunk — không nhích so với đợt
+trước) · `check:bundle` ✓ (23,6 kB/Button, **1.517** module qua barrel).
+
+⚠️ **Chưa QA browser.** 11 call-site đều được `tsc` xác nhận compile và probe xác nhận markup, nhưng
+6 khác biệt hiển thị ở trên là *hiển thị* — cần mắt người trên Storybook (`UI/Input`, `UI/Gnb`,
+`UI/Modal`) và 4 màn `apps/web` (rename · version-rename · tag · form dùng `controled-input`).
 
 #### 4.3 · I-31 — I-08 vẫn còn sống ở 3 file: class của consumer bị **nối**, không `twMerge` — ✅ DONE
 
@@ -1792,7 +1830,11 @@ không chỉ sau thay đổi build config. I-13 sửa `Button` và làm đỏ ga
       thay (§0.10). **11/11 assertion** trên DOM thật + negative control: gắn handler vô điều kiện
       → `check:rsc` **đỏ** đúng lỗi I-26, gắn có điều kiện → **xanh, 849,3 kB**
 - [x] **I-21** Select placeholder — prop chết được nối vào `SelectValue`, **5/5 assertion**
-- [ ] **I-30** `Input` vs `InputText` — đã đo, **chưa sửa** theo yêu cầu; xem §4.2
+- [x] **I-30** `Input` thành alias mỏng trên `InputText` (156 → 26 dòng); `block` + `disabledInput`
+      port sang, `block` xuống tới shell, `aria-describedby` được nối. **21/21 assertion** +
+      negative control đỏ **đúng 5/5**. Số call-site thật là **11 site / 9 file**, không phải 3 —
+      và breaking thật gồm cả **chiều rộng** lẫn một **regression a11y** mà bảng so prop không
+      thấy; xem §0.11 và §4.2
 - [x] **I-31** 4 site còn nối class thay vì `twMerge` → `cn()`. **3/3 assertion** trên `dist` (override
       của consumer giờ thắng ở cả `Input.fieldClassName` · `Spinner.className` ·
       `SyncProgressBar.className`). Guard mới `check:classes`: self-test 7/7, negative control bắt
@@ -1806,14 +1848,17 @@ Chạy lại đầy đủ khi chốt đợt này (build 3 stage + **6** gate, `d
 `check:bundle` ✓ (23,6 kB/Button, 1.517 module qua barrel). Cộng `tsc --noEmit` xanh ở `packages/ui`,
 `apps/web` và `apps/storybook`.
 
-Ghi chú số đo: `check:rsc` đi 849,2 → 849,3 → **849,2 kB** qua 3 lần chạy của đợt này. +0,1 kB là
-`<Checkbox />` mà fixture giờ render thêm; −0,1 kB là I-31 gỡ `.filter(Boolean).join(' ')`. Cả hai
-đều dưới mức nhiễu của budget 976,6 kB — nêu ra để lần sau không ai đi tìm nguyên nhân cho một dao
-động 100 byte.
+Ghi chú số đo: `check:rsc` đi 849,2 → 849,3 → 849,2 → **849,2 kB** qua 4 lần chạy của đợt này.
++0,1 kB là `<Checkbox />` mà fixture giờ render thêm; −0,1 kB là I-31 gỡ `.filter(Boolean).join(' ')`;
+I-30 **không nhích byte nào** (`Input` mất 130 dòng nhưng chúng chỉ là markup trùng với shell mà
+fixture vốn đã kéo vào). Cả ba đều dưới mức nhiễu của budget 976,6 kB — nêu ra để lần sau không ai
+đi tìm nguyên nhân cho một dao động 100 byte.
 
 ⚠️ **Còn mở sau đợt này:** I-06b (docs site) · I-09c (`ITUIProvider locale`, vốn tuỳ chọn) ·
-I-10b (tách icon package) · I-11 (dòng "hoàn tất peer deps" — bảng theo dõi ghi **DONE** từ M2,
-dòng checklist này là sót) · **I-30** và **I-31**, cả hai đã đo xong và chờ chốt (§4.2, §4.3).
+I-10b (tách icon package — **SKIP**, nhưng đòn bẩy rẻ hơn ở mục I-10 thì chưa làm: bỏ 3 weight icon
+0 call-site = **−55% dung lượng**) · I-11 (dòng "hoàn tất peer deps" — bảng theo dõi ghi **DONE** từ
+M2, dòng checklist này là sót) · **QA browser cho I-30** (6 khác biệt hiển thị trên 11 call-site,
+§4.2).
 
 ---
 
@@ -1836,7 +1881,7 @@ runtime của consumer):
 | **Còn lại** — hook render-time thiếu directive | Vỡ lúc render, fixture không thấy | ⬜ Chỉ `check:client` bắt được → **không được bỏ job static** khi đã có fixture |
 | **Đã thành sự thật** — sửa component làm vỡ gate build | `next build` fail ở consumer, repo vẫn xanh | ⚠️ I-26 (§3.3): I-13 sửa `Button` → gate RSC đỏ suốt 1 milestone. Guard `check:client` **không** bắt được (nó soi directive, không soi prop truyền xuống DOM). CI có job `rsc-fixture` nên PR sẽ chặn — nhưng chỉ khi PR đó land ở **repo submodule**, xem cảnh báo ở I-01(a) |
 | ~~**Đã thành sự thật** — client bundle phình mà **mọi gate vẫn xanh**~~ | Consumer RSC nhận cả thư viện, `check:bundle` vẫn báo 23,6 kB | ✅ **Đã đóng** (I-27, §3.5). `check:rsc` giờ assert **marker + byte budget** chứ không chỉ exit code, và `check:barrels` bắt được hình dạng barrel **trước cả khi** phải build. Đã xác minh gate đỏ đúng lúc rò (1305,2 kB) và xanh khi sạch (849,2 kB) |
-| **Còn lại** — kết luận rút từ phép đo mà **nền chưa cố định**, từ phép đo **không đầy đủ**, hoặc đo ở **sai độ mịn** | Tài liệu ghi một nhân quả sai, lần sau có người sửa nhầm chỗ | ⚠️ Đã xảy ra **9 lần** (§0–§0.4, §0.6, §0.8, §0.9, §0.10). Chỉ có một cách chặn: mỗi lần đo, nêu rõ *cái gì được giữ nguyên*, và nếu kết luận là "X gây ra Y" thì phải có nhánh **không có X** trong cùng điều kiện. §0.6 tốn 5 lần build để phát hiện §3.5 sai; §0.8 rẻ hơn vì đo **trước** khi ghi công. §0.9 thêm một biến thể: grep bị **cắt ở `head_limit`** mà vẫn được đọc như kết quả đầy đủ — "0 file dùng" hoá ra là 5. §0.10 thêm biến thể thứ ba, khó thấy nhất: phép đo **đúng** nhưng đơn vị đếm (module) **to hơn** đơn vị mà bug sống (site ghép class) ⇒ I-08 "46 module còn lại đã dùng đúng" bỏ sót 4 site |
+| **Còn lại** — kết luận rút từ phép đo mà **nền chưa cố định**, từ phép đo **không đầy đủ**, hoặc đo ở **sai độ mịn** | Tài liệu ghi một nhân quả sai, lần sau có người sửa nhầm chỗ | ⚠️ Đã xảy ra **10 lần** (§0–§0.4, §0.6, §0.8–§0.11). Chỉ có một cách chặn: mỗi lần đo, nêu rõ *cái gì được giữ nguyên*, và nếu kết luận là "X gây ra Y" thì phải có nhánh **không có X** trong cùng điều kiện. §0.6 tốn 5 lần build để phát hiện §3.5 sai; §0.8 rẻ hơn vì đo **trước** khi ghi công. §0.9 thêm một biến thể: grep bị **cắt ở `head_limit`** mà vẫn được đọc như kết quả đầy đủ — "0 file dùng" hoá ra là 5. §0.10 thêm biến thể thứ ba, khó thấy nhất: phép đo **đúng** nhưng đơn vị đếm (module) **to hơn** đơn vị mà bug sống (site ghép class) ⇒ I-08 "46 module còn lại đã dùng đúng" bỏ sót 4 site. §0.11 là biến thể thứ tư: một **bảng so sánh** đọc như thể đã liệt kê đủ khác biệt, trong khi nó chỉ đủ *những khác biệt có tên prop* — 2 breaking nặng nhất của I-30 sống ở markup nên không có dòng nào |
 | ~~**Đã thành sự thật** — chi phí mà **mọi gate đo bằng byte** đều mù~~ | Consumer transform 7.912 module thừa, `bundle.js` byte-identical | ✅ **Đã đóng** (I-29, §3.8). Bài học: byte không phải thước đo duy nhất — dev server trả bằng *thời gian transform*. `check:bundle` giờ assert cả **module count**, `check:barrels` bắt hình dạng import trước cả khi build |
 
 Giảm thiểu chung:

@@ -132,7 +132,8 @@ so here is the whole list — reach for the **Use** column unless the note appli
 | --- | --- | --- |
 | `Tab` · `Tabs` | **`Tab`** (with `TabList` / `TabTrigger` / `TabContent`) | `Tab` is the design-system component: four `type`s (`default` · `line` · `segment` · `pill`) drawn from the Figma spec, ITUI tokens throughout. `Tabs` predates it and still paints itself with raw `slate-*` palette classes, so it ignores your theme and your dark mode. |
 | `Navigation` · `NavigationV2` | **`NavigationV2`** | Both implement the same mobile bars. V2 is the current one — richer top-bar slots, `asChild` support via Slot. V1 stays exported so existing screens keep working. |
-| `Input` · `InputV2` | **`InputV2`** for anything with a `variant`; **`Input`** for a plain field | Not a v1/v2 pair. `InputV2` is one entry point to the whole field family — `variant="date" \| "tag" \| "upload" \| "text-formatting"` and six more, each type-checked against its own props. `Input` is the standalone single-line box with `prefix` / `suffix` slots. |
+| `Input` · `InputV2` | **`InputV2`** | Not a v1/v2 pair. `InputV2` is one entry point to the whole field family — `variant="date" \| "tag" \| "upload" \| "text-formatting"` and six more, each type-checked against its own props. With no `variant` it gives you the plain single-line field. |
+| `Input` · `InputText` | **`InputText`** | This one *is* a real duplicate. `InputText` is the field every other variant is built from, so it stays in step with the family. `Input` is now a thin deprecated alias over it — same props, except it defaults to shrink-to-content instead of full width. Pass `block` to choose either way. |
 | `Dialog` · `Modal` · `Popup` · `BottomSheet` | **whichever matches the job** | Four different designs, not four versions of one. `Dialog` is the primitive you compose freely. `Modal` is the ready-made title + body + two-button confirm. `Popup` is the announcement card with an image slot and "don't show again". `BottomSheet` is the mobile sheet that slides up from the bottom edge. |
 | `Toast` · `Snackbar` | **both, together** | They are designed to coexist: `Snackbar` renders into its own sonner viewport, so the app-wide `<Toaster />` never picks up a snackbar and vice versa. `toast()` is the top-centre notification; `snackbar()` is the bottom-centre bar with an optional action link. Mount `<Toaster />` and `<SnackbarToaster />` both. |
 
@@ -277,11 +278,13 @@ Each icon takes `width` / `height` plus any `svg` attribute. Their paths hardcod
 ### Input
 
 ```tsx
-import { Input } from '@echoit/itui.css';
+import { InputText, InputV2 } from '@echoit/itui.css';
 ```
 
-`Input` is the base field. The same module ships the composed ones — search, date, phone number,
-file upload, dropdown, tag, textarea and rich text — each with props of its own.
+`InputText` is the base field — the one every other variant is built from. The same module ships
+the composed ones — search, date, phone number, file upload, dropdown, tag, textarea and rich
+text — each with props of its own, all reachable through `InputV2` and its `variant`.
+`Input` is a deprecated alias over `InputText`; see the table above.
 [Props →][api-input]
 
 ---

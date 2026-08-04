@@ -44,7 +44,7 @@ The barrel pulls the stylesheet in with it; a subpath does not, so a consumer wh
 | **floating-button** | `@echoit/itui.css/floating-button` | [FloatingButton](#floatingbutton) | 1 type |
 | **gnb** | `@echoit/itui.css/gnb` | [Gnb](#gnb), [GnbMenu](#gnbmenu), [GnbMenuItem](#gnbmenuitem) | 1 type |
 | **grid** | `@echoit/itui.css/grid` | [Grid](#grid), [GridItem](#griditem), [GridOverlay](#gridoverlay) | 6 types |
-| **input** | `@echoit/itui.css/input` | [Input](#input), [InputDate](#inputdate), [InputDropdown](#inputdropdown), [InputDropdownItem](#inputdropdownitem), [InputDropdownSub](#inputdropdownsub), [InputFileUpload](#inputfileupload), [InputFileUploadItem](#inputfileuploaditem), [InputPhoneNumber](#inputphonenumber), [InputSearch](#inputsearch), [InputTag](#inputtag), [InputText](#inputtext), [InputTextarea](#inputtextarea), [InputTextFormatting](#inputtextformatting), [InputV2](#inputv2), [InputWithButton](#inputwithbutton) | 4 types |
+| **input** | `@echoit/itui.css/input` | [Input](#input), [InputDate](#inputdate), [InputDropdown](#inputdropdown), [InputDropdownItem](#inputdropdownitem), [InputDropdownSub](#inputdropdownsub), [InputFileUpload](#inputfileupload), [InputFileUploadItem](#inputfileuploaditem), [InputPhoneNumber](#inputphonenumber), [InputSearch](#inputsearch), [InputTag](#inputtag), [InputText](#inputtext), [InputTextarea](#inputtextarea), [InputTextFormatting](#inputtextformatting), [InputV2](#inputv2), [InputWithButton](#inputwithbutton) | 5 types |
 | **input-group** | `@echoit/itui.css/input-group` | [InputGroup](#inputgroup), [InputGroupAddon](#inputgroupaddon), [InputGroupButton](#inputgroupbutton), [InputGroupInput](#inputgroupinput), [InputGroupText](#inputgrouptext) | — |
 | **label** | `@echoit/itui.css/label` | [Label](#label) | 2 types |
 | **list** | `@echoit/itui.css/list` | [List](#list), [ListItem](#listitem) | 1 type |
@@ -1052,18 +1052,25 @@ type Responsive = T | Partial<Record<GridBreakpoint, T>>;
 
 ### Input
 
-Props: `InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'>`
+> ⚠️ **Deprecated** — Use `InputText`, or `<InputV2 />` with no `variant`.
+
+The original single-line field, now a thin alias over `InputText`.
+
+Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'>`
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `label?` | `string` | — | — |
 | `error?` | `string` | — | — |
-| `prefix?` | `ReactNode` | — | Slot rendered on the left — icon, text, or any ReactNode |
-| `suffix?` | `ReactNode` | — | Slot rendered on the right — icon, button, or any ReactNode |
-| `block?` | `boolean` | `false` | — |
-| `fieldClassName?` | `string` | `''` | Extra classes applied to the native <input> element |
-| `boxClassName?` | `string` | `''` | Extra classes applied to the inner box wrapper — useful for overriding focus-within border color |
-| `disabledInput?` | `boolean` | `false` | Disables only the <input> field; box styling and prefix/suffix remain interactive |
+| `helperText?` | `string` | — | — |
+| `prefix?` | `ReactNode` | — | Slot rendered on the left of the field — icon, text, or any ReactNode |
+| `suffix?` | `ReactNode` | — | Slot rendered on the right of the field — icon, button, or any ReactNode |
+| `block?` | `boolean` | `false` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | Disables only the `<input>`; the box and its slots stay interactive |
+| `fieldClassName?` | `string` | — | Extra classes applied to the native `<input>` |
+| `boxClassName?` | `string` | — | Extra classes applied to the bordered box |
+| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | Click anywhere on the box — note that clicks on the field bubble here too |
+| `boxRef?` | `InputFieldShellProps['boxRef']` | — | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
 ### InputDate
 
@@ -1087,9 +1094,11 @@ Props: `InputDateProps extends Omit<
 | `prefix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode |
 | `label?` | `string` | — | `InputTextProps` | — |
 | `error?` | `string` | — | `InputTextProps` | — |
+| `helperText?` | `string` | — | `InputTextProps` | — |
+| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
 | `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
 | `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
-| `helperText?` | `string` | — | `InputTextProps` | — |
 | `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
 | `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
@@ -1114,9 +1123,11 @@ Props: `InputDropdownProps extends Omit<
 | `prefix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode |
 | `label?` | `string` | — | `InputTextProps` | — |
 | `error?` | `string` | — | `InputTextProps` | — |
+| `helperText?` | `string` | — | `InputTextProps` | — |
+| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
 | `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
 | `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
-| `helperText?` | `string` | — | `InputTextProps` | — |
 | `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
 | `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
@@ -1206,10 +1217,12 @@ Props: `InputPhoneNumberProps extends Omit<InputTextProps, 'value' | 'defaultVal
 | `prefix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode |
 | `label?` | `string` | — | `InputTextProps` | — |
 | `error?` | `string` | — | `InputTextProps` | — |
+| `helperText?` | `string` | — | `InputTextProps` | — |
 | `suffix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the right of the field — icon, button, or any ReactNode |
+| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
 | `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
 | `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
-| `helperText?` | `string` | — | `InputTextProps` | — |
 | `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
 | `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
@@ -1226,9 +1239,11 @@ Props: `InputSearchProps extends Omit<InputTextProps, 'prefix' | 'suffix' | 'typ
 | `clearLabel?` | `string` | `'Clear search'` | `InputSearchProps` | Accessible name of the clear button |
 | `label?` | `string` | — | `InputTextProps` | — |
 | `error?` | `string` | — | `InputTextProps` | — |
+| `helperText?` | `string` | — | `InputTextProps` | — |
+| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
 | `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
 | `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
-| `helperText?` | `string` | — | `InputTextProps` | — |
 | `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
 | `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
@@ -1267,6 +1282,8 @@ Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'pref
 | `helperText?` | `string` | — | — |
 | `prefix?` | `ReactNode` | — | Slot rendered on the left of the field — icon, text, or any ReactNode |
 | `suffix?` | `ReactNode` | — | Slot rendered on the right of the field — icon, button, or any ReactNode |
+| `block?` | `boolean` | `true` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | `false` | Disables only the `<input>`; the box and its slots stay interactive |
 | `fieldClassName?` | `string` | — | Extra classes applied to the native `<input>` |
 | `boxClassName?` | `string` | — | Extra classes applied to the bordered box |
 | `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | Click anywhere on the box — note that clicks on the field bubble here too |
@@ -1340,9 +1357,11 @@ Props: `InputWithButtonProps extends Omit<InputTextProps, 'suffix'>`
 | `prefix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode |
 | `label?` | `string` | — | `InputTextProps` | — |
 | `error?` | `string` | — | `InputTextProps` | — |
+| `helperText?` | `string` | — | `InputTextProps` | — |
+| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
 | `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
 | `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
-| `helperText?` | `string` | — | `InputTextProps` | — |
 | `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
 | `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
@@ -1350,6 +1369,7 @@ Props: `InputWithButtonProps extends Omit<InputTextProps, 'suffix'>`
 
 ```ts
 type InputFileUploadStatus = 'uploading' | 'success' | 'error' | 'done';
+type InputProps = InputTextProps;
 type InputTextFormattingCommand = 'image' | 'video' | 'code' | 'more';
 type InputV2Props = ({ variant?: 'text' } & InputTextProps) | ({ variant: 'search' } & InputSearchProps) | ({ variant: 'phone' } & InputPhoneNumberProps) | ({ variant: 'date' } & InputDateProps) | ({ variant: 'dropdown' } & InputDropdownProps) | ({ variant: 'tag' } & InputTagProps) | ({ variant: 'textarea' } & InputTextareaProps) | ({ variant: 'button' } & InputWithButtonProps) | ({ variant: 'upload' } & InputFileUploadProps) | ({ variant: 'text-formatting' } & InputTextFormattingProps);
 type InputV2Variant = 'text' | 'search' | 'phone' | 'date' | 'dropdown' | 'tag' | 'textarea' | 'button' | 'upload' | 'text-formatting';
@@ -1384,18 +1404,21 @@ Props: `ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
 ### InputGroupInput
 
-Props: `InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'>`
+Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'>`
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `label?` | `string` | — | — |
 | `error?` | `string` | — | — |
-| `prefix?` | `ReactNode` | — | Slot rendered on the left — icon, text, or any ReactNode |
-| `suffix?` | `ReactNode` | — | Slot rendered on the right — icon, button, or any ReactNode |
-| `block?` | `boolean` | — | — |
-| `fieldClassName?` | `string` | — | Extra classes applied to the native <input> element |
-| `boxClassName?` | `string` | — | Extra classes applied to the inner box wrapper — useful for overriding focus-within border color |
-| `disabledInput?` | `boolean` | — | Disables only the <input> field; box styling and prefix/suffix remain interactive |
+| `helperText?` | `string` | — | — |
+| `prefix?` | `ReactNode` | — | Slot rendered on the left of the field — icon, text, or any ReactNode |
+| `suffix?` | `ReactNode` | — | Slot rendered on the right of the field — icon, button, or any ReactNode |
+| `block?` | `boolean` | — | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | Disables only the `<input>`; the box and its slots stay interactive |
+| `fieldClassName?` | `string` | — | Extra classes applied to the native `<input>` |
+| `boxClassName?` | `string` | — | Extra classes applied to the bordered box |
+| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | Click anywhere on the box — note that clicks on the field bubble here too |
+| `boxRef?` | `InputFieldShellProps['boxRef']` | — | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
 ### InputGroupText
 

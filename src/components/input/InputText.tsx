@@ -9,6 +9,8 @@ import {
 import {
   InputFieldShell,
   inputFieldClass,
+  inputMessage,
+  inputMessageId,
   inputSlotClass,
   type InputFieldShellProps,
 } from './InputFieldShell';
@@ -28,6 +30,10 @@ export interface InputTextProps
   prefix?: ReactNode;
   /** Slot rendered on the right of the field — icon, button, or any ReactNode */
   suffix?: ReactNode;
+  /** Stretch to the container width — see `InputFieldShellProps.block` */
+  block?: boolean;
+  /** Disables only the `<input>`; the box and its slots stay interactive */
+  disabledInput?: boolean;
   /** Extra classes applied to the native `<input>` */
   fieldClassName?: string;
   /** Extra classes applied to the bordered box */
@@ -48,12 +54,15 @@ export const InputText = forwardRef<HTMLInputElement, InputTextProps>(
       prefix,
       suffix,
       disabled = false,
+      disabledInput = false,
+      block = true,
       id,
       className,
       fieldClassName,
       boxClassName,
       onBoxClick,
       boxRef,
+      'aria-describedby': ariaDescribedBy,
       ...rest
     },
     ref,
@@ -62,12 +71,25 @@ export const InputText = forwardRef<HTMLInputElement, InputTextProps>(
     const inputId = id ?? generatedId;
     const isError = !!error && !disabled;
 
+    // The message is only reachable by a screen reader if the field points at
+    // it. Appended rather than replacing, so a consumer's own hint id survives.
+    const describedBy =
+      [
+        ariaDescribedBy,
+        inputMessage({ error, helperText, disabled })
+          ? inputMessageId(inputId)
+          : null,
+      ]
+        .filter(Boolean)
+        .join(' ') || undefined;
+
     return (
       <InputFieldShell
         label={label}
         error={error}
         helperText={helperText}
         disabled={disabled}
+        block={block}
         className={className}
         boxClassName={boxClassName}
         htmlFor={inputId}
@@ -79,9 +101,10 @@ export const InputText = forwardRef<HTMLInputElement, InputTextProps>(
         <input
           ref={ref}
           id={inputId}
-          disabled={disabled}
+          disabled={disabled || disabledInput}
           aria-invalid={isError || undefined}
-          className={inputFieldClass(disabled, fieldClassName)}
+          aria-describedby={describedBy}
+          className={inputFieldClass(disabled || disabledInput, fieldClassName)}
           {...rest}
         />
 
