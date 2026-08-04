@@ -20,7 +20,7 @@ import { cn } from '../../lib/utils';
   is worse than the plain `role="dialog"` Radix gives a popover. So the role and
   the roving tabindex ship together, here, and never on PopoverGroup alone.
 
-  Why a separate file: keyboard handling needs hooks, and Popover.tsx is
+  Why a separate file: keyboard handling needs hooks, and PopoverPanel.tsx is
   deliberately hook-free so it stays renderable from a Server Component. Only
   consumers that actually need a menu pay the 'use client' cost.
 

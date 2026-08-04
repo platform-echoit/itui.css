@@ -127,6 +127,20 @@ không module nào rò) · `check:bundle` ✓ (23,6 kB/Button; barrel 9.137 vs s
 được suy từ bảng 15.407 → 9.137 của I-11, mà bảng đó **không** có nhánh nào tách icons để so. Lần này
 phát hiện sớm vì đo **trước** khi ghi công, và đo bằng bucket theo nguồn chứ không chỉ tổng số.
 
+### 0.9 Đính chính vòng 10 (2026-08-04, lúc làm I-14 + I-18 + I-21)
+
+| Bản plan này nói | Thực tế | Hệ quả |
+| --- | --- | --- |
+| I-18: `colors` · `radius` · `shadow` · `spacing` · `typography` · `grid` là **token showcase export như component thật**, "nhiễu autocomplete, phình bundle" → gỡ khỏi public API | **Không cái nào là showcase.** [`Grid`](../src/components/grid/Grid.tsx) là layout responsive kiểu MUI (`size={{xs:12, md:6}}`, 12 track, 3 breakpoint); [`Typography`](../src/components/typography/Typography.tsx) là component text 10 variant kèm `typographyClass`/`TYPOGRAPHY_SPEC`; `Radius`/`Colors`/`Shadow`/`Spacing` là primitive `forwardRef` + `asChild` kèm map hằng số (`RADIUS_PX`, `COLOR_HEX`, `SPACING_PX`) — đúng thứ một hệ token-driven phải export. Chỉ `GridOverlay` là dev aid | **I-18 → `SKIP`.** Cả 2 Impact cũng đã bị chính tài liệu này bác từ trước: "phình bundle" — §I-02 đo barrel và subpath cho bundle **byte-identical**, §3.8 còn 1.517 module; "nhiễu autocomplete" có thật nhưng không đáng một breaking change. `git diff 4bd31fb1 HEAD` trên 6 thư mục: **byte-identical** (trừ `grid/index.ts` do I-27), nên đây là misread chứ không phải code đã đổi từ lúc đánh giá |
+| I-21: `Select` placeholder "**phải truyền 2 lần**" (`SelectTrigger` + `SelectValue`) | Nặng hơn: [`Select.tsx:53,73`](../src/components/select/Select.tsx#L53) **khai** `placeholder`, **destructure** nó ra khỏi props rồi **không dùng vào đâu cả**. Nó là prop **chết** — cùng họ I-05, không phải bất tiện. Bằng chứng consumer đã tự vá: [`controled-select.tsx:62-68`](../../../apps/web/components/ui/controled-select.tsx#L62-L68) đọc `props.placeholder` rồi tự bơm xuống `SelectValue` | Fix không phải "cho `SelectTrigger` truyền xuống `SelectValue`" mà là **cho prop có nghĩa lần đầu tiên**. Truyền cả hai vẫn hợp lệ (children thắng), nên không breaking |
+| I-14 chỉ nói về tên `PopoverRoot`, **không** nói ai đang dùng panel `Popover` | Panel được dùng ở **5 file `apps/web`** làm surface context-menu (`trash-screen` · `version-history-sidebar` · `bulk-context-menu` · `drive-blank-context-menu` · `file-context-menu`) + 1 story. Cả 5 đều truyền `className` | Đây mới là nhóm gặp breaking nguy hiểm nhất, chứ không phải người dùng `PopoverRoot` (đã có alias `@deprecated`). Xem cách chặn ở §4.1 |
+
+⚠️ **Lần thứ 8 — và lần này chính lượt làm việc đang đọc bạn cũng vấp.** Câu đầu tiên tôi kết luận về
+I-14 là *"`apps/web` không hề dùng panel `Popover`"*, suy từ một lần grep bị **cắt ở 60 dòng đầu**. Con
+số thật là 5 file. Cùng hình dạng lỗi mà §0–§0.8 đã ghi 7 lần: *đọc kết quả một phép đo mà không kiểm
+xem phép đo có đầy đủ không*. Bắt được vì bước sau đó (kiểm collision `Popover` trước khi rename) buộc
+phải grep lại — tức là quy trình cứu, không phải trí nhớ.
+
 ---
 
 ## 1. Bảng theo dõi
@@ -148,14 +162,14 @@ Status: `TODO` · `WIP` · `DONE` · `SKIP`
 | I-11 | Phân loại dependency sai | API | P1 | Có | M2 | **DONE** — 2 gate xanh, xem §0.3 |
 | I-12 | `sonner` phantom dependency | API | P1 | Không | M1 | **DONE** — 4/4 assertion |
 | I-13 | Thiếu ARIA ở form/table | Accessibility | P1 | Không | M2 | **DONE** — 41/41 assertion |
-| I-14 | `PopoverRoot` lệch quy ước | API | P2 | Có | M4 | TODO |
+| I-14 | `PopoverRoot` lệch quy ước | API | P2 | Có | M4 | **DONE** — 10/10 assertion, 5 gate xanh |
 | I-15 | TOKENS.md lỗi thời | Documentation | P2 | Không | M1 | **DONE** — 8 dòng, không phải 2 |
 | I-16 | Class rác trên `<tr>` | Implementation | P2 | Không | M1 | **DONE** |
 | I-17 | Component trùng lặp | API | P2 | Có | M4 | TODO |
-| I-18 | Token showcase export như component | API | P2 | Có | M4 | TODO |
+| I-18 | Token showcase export như component | API | P2 | Có | M4 | **SKIP** — tiền đề sai, xem §0.9 |
 | I-19 | Metadata README/npm sai | Documentation | P2 | Không | M1 | **DONE** |
 | I-20 | Checkbox vs Select khác event model | API | P3 | Có | M4 | TODO |
-| I-21 | `Select` placeholder truyền 2 lần | API | P3 | Không | M4 | TODO |
+| I-21 | `Select` placeholder truyền 2 lần | API | P3 | Không | M4 | **DONE** — prop chết, không phải bất tiện |
 | I-22 | Version drift 1.0.10 ↔ 1.0.14 | Implementation | P3 | Không | M1 | **DONE** — tìm ra root cause |
 | **I-23** | `--color-surface-hover/pressed` không tồn tại, 2 component dùng | Implementation | **P1** | Có (hiển thị) | M2 | **DONE** — 2 token, không phải 4 component |
 | **I-24** | `dist` trên đĩa là bản build dở (thiếu `build:paths`) | Implementation | **P1** | Không | M2 | **DONE** — đã build đủ 3 stage |
@@ -951,6 +965,7 @@ suy từ dữ kiện, không từ danh sách chép tay.
 | 2 | Lọc props về **những cái khai báo trong package** | Checker báo **296 prop** cho `Button`: 6 của ta + 290 của lib.dom/`@types/react`. Liệt kê đủ 296 thì chôn mất 6 cái thật. Phần thừa hưởng được nêu **một lần**, dưới dạng clause `extends` |
 | 3 | Group theo **dòng barrel**, không theo file khai báo | `toast` re-export từ `sonner` (I-12) → group theo declaration sẽ xếp nó vào `node_modules/` thay vì module `toast` nơi người đọc tìm |
 | 4 | `XxxProps` **không** có section riêng | Nó lặp lại y nguyên bảng của component, chỉ thiếu cột default. Index trỏ tên đó về component |
+| 5 | `@deprecated` render thành callout riêng *(thêm ở M4)* | `@deprecated` là **tag**, không phải thân docblock, nên `getDocumentationComment` bỏ qua — alias `PopoverRoot` của I-14 tự mô tả mình như một export bình thường, đúng cái duy nhất nó không được phép làm. Đọc bằng `getJsDocTags`. Bắt được vì I-14 là chỗ đầu tiên trong package dùng tag này |
 
 **Chỗ khó nhất là props type có 2 hình dạng.** Một nửa là `interface XProps extends Y`, nửa còn
 lại là `type XProps = Y & { … }` (10 component). Phải resolve cả hai về cùng một cặp *tên +
@@ -1352,15 +1367,57 @@ infra vào package (xem "Nợ kỹ thuật" ở §6). Nghĩa là I-13 **hiện k
 
 ## 4. P2 — Nhất quán API (gom vào 2.0)
 
-### I-14 · `PopoverRoot` lệch quy ước, error message chỉ sai chỗ
+### I-14 · `PopoverRoot` lệch quy ước, error message chỉ sai chỗ — ✅ DONE
 
 `PopoverRoot` là root, còn `Popover` là component **khác** — lệch với `Dialog`/`Tabs`/`Tooltip`.
 Runtime error lại nói ``must be used within `Popover` ``.
 
 **Impact** — Dev đọc error đi import `Popover`, lỗi vẫn còn, bế tắc.
-**Solution** — Rename `PopoverRoot`→`Popover`, đổi tên component đang chiếm `Popover`; giữ
-alias `@deprecated` 1 minor version.
-**File** [`popover/`](../src/components/popover/) · **Breaking** Có
+**Solution** — ✅ Rename theo đúng plan, kèm 1 quyết định không có trong plan (§4.1):
+
+| Trước | Sau |
+| --- | --- |
+| `PopoverRoot` (Radix root) | **`Popover`** — error message của Radix tự đúng, không phải sửa gì |
+| — | `PopoverRoot` giữ làm alias **`@deprecated`**, gỡ ở minor kế tiếp |
+| `Popover` (panel `<div>` có style) | **`PopoverPanel`** + `PopoverPanelProps` |
+
+File đổi tên theo export chính: `Popover.tsx` → [`PopoverPanel.tsx`](../src/components/popover/PopoverPanel.tsx),
+`PopoverRoot.tsx` → [`Popover.tsx`](../src/components/popover/Popover.tsx) (`git mv`, giữ history).
+
+**File** — [`popover/`](../src/components/popover/) 4 file · 3 file [`input/`](../src/components/input/)
+import thẳng `'../popover/PopoverRoot'` · [`README.md`](../README.md) §Popover ·
+[`API.md`](../API.md) regenerate (**483 → 484** export: `PopoverPanel` + `PopoverPanelProps` vào,
+`PopoverProps` ra, alias `PopoverRoot` ở lại) ·
+[`scripts/generate-api-docs.ts`](../scripts/generate-api-docs.ts) (callout `@deprecated`, xem §3.6
+mục 5) · **16 file `apps/`** (13 `PopoverRoot`, 5 panel, 2 file nằm ở cả hai nhóm; +1 story) ·
+**Breaking** Có
+
+#### 4.1 · Vì sao gỡ `className` khỏi root — biến breaking im lặng thành lỗi compile
+
+Rủi ro thật của I-14 **không** nằm ở người dùng `PopoverRoot` — họ có alias. Nó nằm ở **5 file
+`apps/web`** đang dùng panel `Popover` làm surface context-menu (§0.9). Với họ, cái tên `Popover`
+**đổi nghĩa**: từ một `<div>` có style thành Radix Root, mà Root **không render DOM nào**. Panel
+biến mất, không lỗi, không warning.
+
+Root cũ nhận `ComponentProps<Root> & { className?: string }` — và **thả `className` xuống đất**, vì
+nó không có element nào để gắn. Cái intersection đó chính là thứ làm breaking này im lặng: `<Popover
+className="w-56">` vẫn typecheck ngon lành rồi render ra hư không. Đã gỡ nó. Verified bằng negative
+control (file probe tạm trong `apps/storybook`, xoá sau khi chạy):
+
+```
+error TS2322: Property 'className' does not exist on type 'IntrinsicAttributes & PopoverProps'.
+```
+
+⚠️ Không phải mọi call site cũ đều được chặn — panel không truyền `className` thì vẫn compile và vẫn
+biến mất. Trong repo cả 5 file đều có `className` nên đều bị chặn, nhưng consumer npm thì không đo
+được từ trong repo ⇒ **phải vào changelog `2.0`**, đây là mục thứ 8 sau 7 mục đã liệt kê ở M1.
+
+#### Acceptance test — **10/10 assertion**, cộng 5 gate
+
+Chạy trên `dist` đã build (`renderToStaticMarkup` + subpath import), script throwaway không commit:
+`PopoverRoot === Popover` · root render **rỗng** đúng như Radix · `PopoverPanel` giữ class surface,
+merge `className` của consumer, vẫn chứa `PopoverItem` được. `tsc --noEmit` xanh ở **cả**
+`apps/web` lẫn `apps/storybook`.
 
 ### I-15 · TOKENS.md lỗi thời
 
@@ -1388,14 +1445,20 @@ wrapper, vô nghĩa trên table row.
 **Solution** — Chọn winner mỗi cặp, `@deprecated` + JSDoc trỏ sang thay thế, viết migration guide.
 **File** [`src/index.ts`](../src/index.ts) + 10 module · **Breaking** Có
 
-### I-18 · Token showcase export như component thật
+### I-18 · Token showcase export như component thật — 🚫 SKIP
 
 `colors`, `radius`, `shadow`, `spacing`, `typography`, `grid` export từ entry chính, đứng
 cạnh component UI thật.
 
 **Impact** — Nhiễu autocomplete, phình bundle.
-**Solution** — Nếu là Storybook aid → chuyển ra khỏi public API.
-**File** [`src/index.ts:53-58`](../src/index.ts#L53-L58) · **Breaking** Có
+**Solution** — 🚫 **Không làm. Tiền đề sai — xem §0.9.** Không cái nào là showcase: `Grid` là
+layout responsive thật, `Typography` là component text 10 variant, 4 cái còn lại là primitive
+`forwardRef` + `asChild` kèm map hằng số mà một hệ token-driven **phải** export. "Phình bundle" thì
+chính §I-02 (barrel ≡ subpath, byte-identical) và §3.8 (1.517 module) đã bác. Còn lại đúng mỗi
+"nhiễu autocomplete" — không đáng một breaking change, và `GridOverlay` (dev aid duy nhất trong
+nhóm) thì đi kèm `Grid`.
+
+**File** — không đổi file nào · **Breaking** Không còn
 
 ### I-19 · Metadata README/npm sai
 
@@ -1413,7 +1476,7 @@ cạnh component UI thật.
 | # | Vấn đề | Solution | Breaking |
 | --- | --- | --- | --- |
 | **I-20** | `Checkbox` dùng `onChange(e.target.checked)`, `Select` dùng `onValueChange(value)` — 2 paradigm trong 1 form | Chọn 1 quy ước, hoặc **document rõ** để đọc như quyết định chứ không phải tai nạn | Có |
-| **I-21** | `Select` placeholder phải truyền 2 lần (`SelectTrigger` + `SelectValue`) | Cho `SelectTrigger` truyền xuống `SelectValue` | Không |
+| **I-21** ✅ | `SelectTrigger.placeholder` được khai, được destructure, rồi **không dùng vào đâu** — prop chết chứ không phải "truyền 2 lần" (§0.9) | ✅ Không children → trigger tự render `<SelectValue placeholder={…} />`. Có children thì children thắng, prop thành không dùng. Kiểu nới `string` → `ReactNode` cho khớp Radix. **5/5 assertion** | Không |
 | **I-22** | [`package.json`](../package.json#L4) local là `1.0.10`, npm đang ở `1.0.14` — repo không khớp bản published | Xác minh publish flow có commit version bump không; nếu không, thêm bước vào [`DEVELOPMENT.md`](../DEVELOPMENT.md) | Không |
 
 ---
@@ -1452,9 +1515,10 @@ Toàn bộ là fix nhỏ, không đổi API. Effort mỗi item: **S**.
       Bump **trong repo thôi, chưa publish npm** — user chốt không chạy `publish:latest`.
       ⚠️ `1.0.15` là **patch** so với `1.0.14` đang ở npm, trong khi đợt này có breaking thật
       (ESM-only, `tailwindcss` thành peer bắt buộc, default Hàn → Anh, Dialog trap focus,
-      `TableRow disabled` có tác dụng, `Button` merge className, và từ M3 là **icon rời khỏi
-      barrel** → `import { XIcon } from '@echoit/itui.css'` không còn compile). Trước khi thật
-      sự publish phải chọn lại số hoặc ship changelog nêu đủ 7 mục trên
+      `TableRow disabled` có tác dụng, `Button` merge className, từ M3 là **icon rời khỏi
+      barrel** → `import { XIcon } from '@echoit/itui.css'` không còn compile, và từ M4 là
+      **`Popover` đổi nghĩa** → panel cũ giờ là `PopoverPanel`, §4.1). Trước khi thật sự publish
+      phải chọn lại số hoặc ship changelog nêu đủ 8 mục trên
 - [x] Sửa version bằng cách **edit `package.json`**, không dùng `pnpm version` — script đó
       commit **và tag**, mà tag khi chưa publish thì trỏ vào một bản không tồn tại trên npm
 
@@ -1533,14 +1597,21 @@ không chỉ sau thay đổi build config. I-13 sửa `Button` và làm đỏ ga
 
 ### M4 — `2.0.0` (breaking)
 
-- [ ] **I-14** Rename Popover
-- [ ] **I-17** Dọn component trùng lặp
-- [ ] **I-18** Gỡ token showcase khỏi public API
+- [x] **I-14** Rename Popover — root thành `Popover`, panel thành `PopoverPanel`, `PopoverRoot`
+      còn lại làm alias `@deprecated`. 16 file `apps/` đã migrate. Gỡ `className` khỏi root để
+      breaking của panel **fail compile** thay vì biến mất im lặng — xem §4.1
+- [ ] **I-17** Dọn component trùng lặp — cần chốt winner từng cặp trước khi code
+- [x] ~~**I-18** Gỡ token showcase khỏi public API~~ → **SKIP**, tiền đề sai (§0.9)
 - [ ] **I-11** Hoàn tất chuyển peer deps
 - [ ] **I-20** Thống nhất event model
-- [ ] **I-21** Select placeholder
+- [x] **I-21** Select placeholder — prop chết được nối vào `SelectValue`, **5/5 assertion**
 
 **Điểm dự kiến ~8.8**
+
+Chạy lại đầy đủ khi chốt đợt này (build 3 stage + 5 gate, `dist` mới): `check:client` ✓ ·
+`check:barrels` ✓ (56 barrel, 16 `export *`) · `check:docs` ✓ (**484** export / 56 module) ·
+`check:rsc` ✓ (849,2 kB / 7 chunk, không module nào rò) · `check:bundle` ✓ (23,6 kB/Button,
+1.517 module qua barrel). Cộng `tsc --noEmit` xanh ở `apps/web` và `apps/storybook`.
 
 ---
 
@@ -1563,7 +1634,7 @@ runtime của consumer):
 | **Còn lại** — hook render-time thiếu directive | Vỡ lúc render, fixture không thấy | ⬜ Chỉ `check:client` bắt được → **không được bỏ job static** khi đã có fixture |
 | **Đã thành sự thật** — sửa component làm vỡ gate build | `next build` fail ở consumer, repo vẫn xanh | ⚠️ I-26 (§3.3): I-13 sửa `Button` → gate RSC đỏ suốt 1 milestone. Guard `check:client` **không** bắt được (nó soi directive, không soi prop truyền xuống DOM). CI có job `rsc-fixture` nên PR sẽ chặn — nhưng chỉ khi PR đó land ở **repo submodule**, xem cảnh báo ở I-01(a) |
 | ~~**Đã thành sự thật** — client bundle phình mà **mọi gate vẫn xanh**~~ | Consumer RSC nhận cả thư viện, `check:bundle` vẫn báo 23,6 kB | ✅ **Đã đóng** (I-27, §3.5). `check:rsc` giờ assert **marker + byte budget** chứ không chỉ exit code, và `check:barrels` bắt được hình dạng barrel **trước cả khi** phải build. Đã xác minh gate đỏ đúng lúc rò (1305,2 kB) và xanh khi sạch (849,2 kB) |
-| **Còn lại** — kết luận rút từ phép đo mà **nền chưa cố định** | Tài liệu ghi một nhân quả sai, lần sau có người sửa nhầm chỗ | ⚠️ Đã xảy ra **7 lần** (§0–§0.4, §0.6, §0.8). Chỉ có một cách chặn: mỗi lần đo, nêu rõ *cái gì được giữ nguyên*, và nếu kết luận là "X gây ra Y" thì phải có nhánh **không có X** trong cùng điều kiện. §0.6 tốn 5 lần build để phát hiện §3.5 sai; §0.8 rẻ hơn vì đo **trước** khi ghi công |
+| **Còn lại** — kết luận rút từ phép đo mà **nền chưa cố định**, hoặc từ phép đo **không đầy đủ** | Tài liệu ghi một nhân quả sai, lần sau có người sửa nhầm chỗ | ⚠️ Đã xảy ra **8 lần** (§0–§0.4, §0.6, §0.8, §0.9). Chỉ có một cách chặn: mỗi lần đo, nêu rõ *cái gì được giữ nguyên*, và nếu kết luận là "X gây ra Y" thì phải có nhánh **không có X** trong cùng điều kiện. §0.6 tốn 5 lần build để phát hiện §3.5 sai; §0.8 rẻ hơn vì đo **trước** khi ghi công. §0.9 thêm một biến thể: grep bị **cắt ở `head_limit`** mà vẫn được đọc như kết quả đầy đủ — "0 file dùng" hoá ra là 5 |
 | ~~**Đã thành sự thật** — chi phí mà **mọi gate đo bằng byte** đều mù~~ | Consumer transform 7.912 module thừa, `bundle.js` byte-identical | ✅ **Đã đóng** (I-29, §3.8). Bài học: byte không phải thước đo duy nhất — dev server trả bằng *thời gian transform*. `check:bundle` giờ assert cả **module count**, `check:barrels` bắt hình dạng import trước cả khi build |
 
 Giảm thiểu chung:

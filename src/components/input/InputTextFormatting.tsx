@@ -43,10 +43,10 @@ import { $isLinkNode, LinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
 import { cn } from '../../lib/utils';
 import { Divider } from '../divider/Divider';
 import {
+  Popover,
   PopoverContent,
-  PopoverRoot,
   PopoverTrigger,
-} from '../popover/PopoverRoot';
+} from '../popover/Popover';
 import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
 import { TextBRegularIcon } from '../../icons/ITUI/text-b';
 import { TextItalicRegularIcon } from '../../icons/ITUI/text-italic';
@@ -287,7 +287,7 @@ function BlockTypeSelect({ value, onChange, labels }: BlockTypeSelectProps) {
   const current = BLOCK_TYPES.find((item) => item.type === value);
 
   return (
-    <PopoverRoot open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <button
           type="button"
@@ -333,7 +333,7 @@ function BlockTypeSelect({ value, onChange, labels }: BlockTypeSelectProps) {
           </button>
         ))}
       </PopoverContent>
-    </PopoverRoot>
+    </Popover>
   );
 }
 

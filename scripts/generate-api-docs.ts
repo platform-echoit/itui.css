@@ -139,6 +139,21 @@ function summary(symbol: ts.Symbol): string {
   return `${lastStop > 120 ? cut.slice(0, lastStop + 1) : cut}…`;
 }
 
+/**
+ * `@deprecated` is a JSDoc *tag*, so `getDocumentationComment` never returns it —
+ * an alias kept alive for one minor (I-14) would document itself as a perfectly
+ * ordinary export, which is the one thing it must not do. Rendered as a callout
+ * above the summary instead.
+ */
+function deprecation(symbol: ts.Symbol): string {
+  const tag = symbol
+    .getJsDocTags(checker)
+    .find((entry) => entry.name === 'deprecated');
+  if (!tag) return '';
+  const text = flat(ts.displayPartsToString(tag.text));
+  return `> ⚠️ **Deprecated** — ${text || 'scheduled for removal.'}`;
+}
+
 // ── Extraction
 
 /** The `XxxProps` a member was declared on, and what that type builds upon. */
@@ -322,7 +337,9 @@ function describe(exported: ts.Symbol): ExportDoc | null {
   if (!declaration) return null;
 
   const name = exported.getName();
-  const doc = summary(symbol);
+  const note = deprecation(symbol);
+  const body = summary(symbol);
+  const doc = [note, body].filter(Boolean).join('\n\n');
   const file = declaration.getSourceFile().fileName;
 
   // Straight re-export of a dependency's API: it has no props table to build,

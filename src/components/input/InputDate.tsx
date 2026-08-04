@@ -15,11 +15,11 @@ import type { Matcher } from '@daypicker/react';
 import { useForwardedRef } from '../../lib/use-forwarded-ref';
 import { CalendarBlankRegularIcon } from '../../icons/ITUI/calendar-blank';
 import {
+  Popover,
   PopoverAnchor,
   PopoverContent,
-  PopoverRoot,
   PopoverTrigger,
-} from '../popover/PopoverRoot';
+} from '../popover/Popover';
 import { DatePicker } from '../calendar/DatePicker';
 import { InputText, type InputTextProps } from './InputText';
 
@@ -170,7 +170,7 @@ export const InputDate = forwardRef<HTMLInputElement, InputDateProps>(
     const selected = parseDate(text) ?? undefined;
 
     return (
-      <PopoverRoot open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={setOpen}>
         {/* virtualRef: positions against the box without rendering a wrapper. */}
         <PopoverAnchor virtualRef={boxRef} />
 
@@ -212,7 +212,7 @@ export const InputDate = forwardRef<HTMLInputElement, InputDateProps>(
             disabled={disabledDays.length > 0 ? disabledDays : undefined}
           />
         </PopoverContent>
-      </PopoverRoot>
+      </Popover>
     );
   },
 );

@@ -276,10 +276,10 @@ import {
 
 ```tsx
 import {
-  PopoverRoot,
+  Popover,
   PopoverTrigger,
   PopoverContent,
-  Popover,
+  PopoverPanel,
   PopoverHeader,
   PopoverGroup,
   PopoverSeparator,
@@ -287,8 +287,14 @@ import {
 } from '@echoit/itui.css';
 ```
 
-Note the naming: `PopoverRoot` is the root and `Popover` is the panel inside it, which is
-inverted relative to `Dialog` / `Tabs` / `Tooltip`. A rename is planned for `2.0`.
+`Popover` is the root, like `Dialog` / `Tabs` / `Tooltip`. `PopoverContent` is the floating
+panel it opens — that is what holds the items. `PopoverPanel` is the same surface without
+the popover machinery, for a panel something else already positions.
+
+> ⚠️ **Renamed in `2.0`.** `Popover` used to be the standalone panel and the root was
+> `PopoverRoot`. `PopoverRoot` still works as a `@deprecated` alias, but the panel moved to
+> `PopoverPanel` — a `<Popover className="…">` left over from `1.x` no longer typechecks,
+> deliberately, because the root has no element to put a `className` on.
 
 Wrap the items in `PopoverMenu` when the popover is a menu — it adds `role="menu"` and
 arrow-key navigation, which `PopoverItem` alone does not. [Props →][api-popover]
