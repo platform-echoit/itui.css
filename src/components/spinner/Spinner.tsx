@@ -73,13 +73,11 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(
         role="status"
         aria-label={label}
         style={numericStyle}
-        className={[
+        className={cn(
           'block shrink-0 rounded-full border-border-neutral-subtle border-t-brand animate-spin',
           isNumeric ? borderClass : sizeClasses[size as SpinnerSize],
           !description ? className : '',
-        ]
-          .filter(Boolean)
-          .join(' ')}
+        )}
         {...rest}
       />
     );

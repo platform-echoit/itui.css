@@ -141,6 +141,20 @@ số thật là 5 file. Cùng hình dạng lỗi mà §0–§0.8 đã ghi 7 lầ
 xem phép đo có đầy đủ không*. Bắt được vì bước sau đó (kiểm collision `Popover` trước khi rename) buộc
 phải grep lại — tức là quy trình cứu, không phải trí nhớ.
 
+### 0.10 Đính chính vòng 11 (2026-08-04, lúc làm I-17 + I-20)
+
+| Bản plan này nói | Thực tế | Hệ quả |
+| --- | --- | --- |
+| I-17: **5 cặp** component trùng lặp, "mọi consumer tung đồng xu chọn API" | **2 cặp** là trùng thật. `tab`/`tabs` — [`tabs.tsx`](../src/components/tabs/tabs.tsx#L15) là shadcn boilerplate nguyên bản, tô bằng `slate-*` **không một token ITUI nào**, còn [`Tab.tsx`](../src/components/tab/Tab.tsx) là bản Figma node 27754:55 (4 `type`). `navigation`/`navigation-v2` — cùng Figma node 28390:4665, [comment của V2](../src/components/navigation-v2/NavigationV2.tsx#L13) tự khai "V1 stays untouched — hence the V2 suffix". Ba nhóm còn lại **không** trùng: `InputV2` là **facade định tuyến theo `variant`** cho cả họ 10 thành viên chứ không phải bản kế nhiệm `Input`; `dialog`/`modals`/`popup`/`bottom-sheet` là **4 Figma node khác nhau** (primitive · preset confirm · popup announcement · sheet mobile); `toast`/`snackbar` **cố ý cùng tồn tại** — [`Snackbar.tsx:196-200`](../src/components/snackbar/Snackbar.tsx#L196-L200) scope viewport sonner riêng đúng để `<Toaster>` app-wide không nuốt nó | Cùng loại tiền đề sai đã dẹp I-18 (§0.9): report đếm theo **tên giống nhau**, không theo **hành vi**. Solution đổi từ "chọn winner + `@deprecated` + migration guide" sang **chỉ tài liệu** — xem §4.2 |
+| I-20: `Checkbox` vs `Select` = "2 paradigm trong 1 form" | **1 outlier trên 12.** `Radio` · `Toggle` · `Select` · `Slider` · `Rating` · `InputDropdown` · `InputTag` · `InputPhoneNumber` · `InputDate` đều đã là `on*Change(value)`. `Checkbox` lẻ vì [nó `extends InputHTMLAttributes`](../src/components/checkbox/Checkbox.tsx#L41). **Nhưng model DOM đó là load-bearing**: [`controled-checkbox.tsx:21-24`](../../../apps/web/components/ui/controled-checkbox.tsx#L21-L24) spread thẳng `{...field}` của react-hook-form vào nó | Fix không phải "chọn 1 quy ước" mà là **cộng thêm**: `onCheckedChange` chạy song song `onChange`. **Breaking: Có → Không.** Bỏ native `onChange` sẽ phá đúng chỗ `apps/web` đang dùng |
+| I-08: "audit đã xong, chỉ **3 module** thiếu, **46 module còn lại đã dùng đúng**" | **3 file / 4 site còn nguyên bug**, đo được: [`Input.tsx:118-129`](../src/components/input/Input.tsx#L118-L129) ghép `fieldClassName` bằng `.join(' ')` → probe cho ra **cả `text-base` lẫn `text-sm`** trong một class attr; [`Spinner.tsx:76-82`](../src/components/spinner/Spinner.tsx#L76-L82) y vậy với `className` ở nhánh không có `description`; [`SyncProgressBar.tsx:22,44`](../src/components/progress/SyncProgressBar.tsx#L22) nội suy `className` vào template literal và **không import `cn` một lần nào** | Audit của I-08 đo theo **module** (49 dòng barrel), mà bug sống theo **site ghép class**. `progress/` có `Progress.tsx` dùng `cn` nên cả thư mục được tha, `SyncProgressBar.tsx` cùng thư mục lọt; `input/` 14 file và `spinner/` cũng vậy. Đây là **I-31** |
+| — (không có trong plan) | Fixture Next **chưa render `Checkbox`** bao giờ — nó không nằm trong 8 component A2 mà §3.4 thêm | Nên I-20 nếu gắn handler vô điều kiện sẽ tái diễn **đúng I-26** mà không gate nào thấy. Đã thêm `<Checkbox />` trần vào [`page.tsx`](../fixtures/next-app/app/page.tsx) trước khi sửa component |
+
+⚠️ **Lần thứ 9, và lần này lỗi nằm ở *granularity của phép đo*:** I-08 đúng khi nói "chỉ 3 module",
+sai khi suy ra "46 module còn lại an toàn" — vì đơn vị nó đếm (module) to hơn đơn vị bug sống (site).
+Cùng họ với §0.1 ("vắng `cn()` ≠ có lỗi") nhưng **ngược chiều**: **có `cn()` ≠ không có lỗi**. Một file
+gọi `cn()` ở nhánh này và `.join(' ')` ở nhánh kia thì grep nào cũng cho nó qua.
+
 ---
 
 ## 1. Bảng theo dõi
@@ -158,17 +172,17 @@ Status: `TODO` · `WIP` · `DONE` · `SKIP`
 | I-07 | Ví dụ theming sai token | Documentation | P1 | Không | M1 | **DONE** |
 | I-08 | `Button` không merge className | Implementation | P1 | Có (hành vi) | M1 | **DONE** — 12/12 assertion |
 | I-09 | 41 chuỗi Hàn hardcode | Missing feature | P1 | Có (hiển thị) | M2/M3 | **DONE (a+b)** — 17 default + 4 nhóm prop hoá; (c) provider vẫn tuỳ chọn |
-| I-10 | Package 98 MB | Implementation | P1 | Không | M1/M3 | **WIP** — 18,6 MB, còn icon |
+| I-10 | Package 98 MB | Implementation | P1 | Không | M1/M3 | **DONE** — 98 MB → 17,8 MB (3,93 MB packed); tách icon package **SKIP**, xem I-10 |
 | I-11 | Phân loại dependency sai | API | P1 | Có | M2 | **DONE** — 2 gate xanh, xem §0.3 |
 | I-12 | `sonner` phantom dependency | API | P1 | Không | M1 | **DONE** — 4/4 assertion |
 | I-13 | Thiếu ARIA ở form/table | Accessibility | P1 | Không | M2 | **DONE** — 41/41 assertion |
 | I-14 | `PopoverRoot` lệch quy ước | API | P2 | Có | M4 | **DONE** — 10/10 assertion, 5 gate xanh |
 | I-15 | TOKENS.md lỗi thời | Documentation | P2 | Không | M1 | **DONE** — 8 dòng, không phải 2 |
 | I-16 | Class rác trên `<tr>` | Implementation | P2 | Không | M1 | **DONE** |
-| I-17 | Component trùng lặp | API | P2 | Có | M4 | TODO |
+| I-17 | Component trùng lặp | API | P2 | ~~Có~~ **Không** | M4 | **DONE** — 2/5 cặp là thật, chốt tài liệu |
 | I-18 | Token showcase export như component | API | P2 | Có | M4 | **SKIP** — tiền đề sai, xem §0.9 |
 | I-19 | Metadata README/npm sai | Documentation | P2 | Không | M1 | **DONE** |
-| I-20 | Checkbox vs Select khác event model | API | P3 | Có | M4 | TODO |
+| I-20 | Checkbox vs Select khác event model | API | P3 | ~~Có~~ **Không** | M4 | **DONE** — `onCheckedChange` cộng thêm, 11/11 assertion |
 | I-21 | `Select` placeholder truyền 2 lần | API | P3 | Không | M4 | **DONE** — prop chết, không phải bất tiện |
 | I-22 | Version drift 1.0.10 ↔ 1.0.14 | Implementation | P3 | Không | M1 | **DONE** — tìm ra root cause |
 | **I-23** | `--color-surface-hover/pressed` không tồn tại, 2 component dùng | Implementation | **P1** | Có (hiển thị) | M2 | **DONE** — 2 token, không phải 4 component |
@@ -178,6 +192,8 @@ Status: `TODO` · `WIP` · `DONE` · `SKIP`
 | **I-27** | Barrel `export *` chứa client module → consumer RSC nhận **cả thư viện** (+500 kB client JS) | Implementation | **P1** | Không | M3 | **DONE** — 6 barrel, −467 kB, xem §3.5 |
 | **I-28** | `check:docs` so byte nên **luôn đỏ trên Windows** (CRLF) dù nội dung khớp | Implementation | P2 | Không | M3 | **DONE** — normalise EOL, xem §3.7 |
 | **I-29** | 7 component import icon qua barrel ITUI → consumer transform **+7.912 module** mà bundle byte-identical | Implementation | **P1** | Không | M3 | **DONE** — 9.137 → 1.517, xem §3.8 |
+| **I-30** | `Input` và `InputText` chồng lấn — cùng field 1 dòng + label/error/prefix/suffix, hai bản dựng khác nhau | API | P2 | Có | M4 | **TODO** — đã đo, chưa sửa; xem §4.3 |
+| **I-31** | I-08 còn sống ở **3 file / 4 site**: class của consumer bị **nối** thay vì `twMerge` | Implementation | **P1** | Có (hành vi) | M4 | **DONE** — 4 site + guard `check:classes`, xem §4.3 |
 
 ---
 
@@ -1114,11 +1130,20 @@ chạy nên tin cả `rounded-*` cũng chạy.
 **Loại** Implementation · **P1** · **Breaking** **Có (hành vi)** ở edge case — consumer đang
 vô tình dựa vào class thư viện thắng
 
-**Solution** — Đổi sang `cn(...)`. Audit đã xong: chỉ **3 module** thiếu, 46 module còn lại
-đã dùng đúng.
+**Solution** — Đổi sang `cn(...)`. ~~Audit đã xong: chỉ **3 module** thiếu, 46 module còn lại
+đã dùng đúng.~~
+
+> 🛑 **Câu audit trên sai, và đã trả giá** — xem **I-31** (§4.3). Nó đếm theo **module**, mà bug
+> sống theo **site ghép class**: **4 site / 3 file** sống sót qua audit này (`Input.fieldClassName`,
+> `Spinner.className`, `SyncProgressBar.className` ×2). Một file gọi `cn()` ở nhánh này và
+> `.join(' ')` ở nhánh kia thì `grep cn(` cho nó qua. Giờ đã sửa cả 4, và có
+> `pnpm check:classes` canh nên câu "audit đã xong" không còn phải tin bằng lời.
 
 **File** — [`button/Button.tsx`](../src/components/button/Button.tsx) ·
-[`file-type/`](../src/components/file-type/) · [`toast/`](../src/components/toast/)
+[`file-type/`](../src/components/file-type/) · [`toast/`](../src/components/toast/) ·
+*(I-31)* [`input/Input.tsx`](../src/components/input/Input.tsx) ·
+[`spinner/Spinner.tsx`](../src/components/spinner/Spinner.tsx) ·
+[`progress/SyncProgressBar.tsx`](../src/components/progress/SyncProgressBar.tsx)
 
 ---
 
@@ -1193,9 +1218,44 @@ quốc tế.
 - ✅ **3,2 MB `.d.ts.map`** (8.052 file) — đã tắt `declarationMap` trong
   [`tsconfig.json`](../tsconfig.json#L21) (`tsconfig.components.json` extends nó nên không cần
   sửa 2 chỗ). `files: ["dist"]` không ship source, nên map chẳng trỏ được vào đâu
-- ⬜ **M4** — icon vẫn là **~17 MB / 95%** của dist (component chỉ ~0,8 MB). Subpath export
-  **đã có** (`/icons`, M3) nhưng không giảm dung lượng tarball: consumer vẫn tải cả bộ. Chỉ tách
-  package riêng mới giảm được — quyết định ở M4
+- 🚫 **M4 — tách icon package: SKIP.** Đo lại khi chốt M4 (`npm pack --dry-run --json` + duyệt
+  `dist`): **3,93 MB packed / 17,84 MB unpacked / 8.495 file**, trong đó `dist/icons` là
+  **17,4 MB = 98%**, component chỉ **0,5 MB**.
+
+  Lý do skip, theo thứ tự quan trọng:
+
+  1. **Việc còn lại thuần là dung lượng đĩa.** Subpath `/icons` đã dẹp phần bundle (I-02: barrel
+     ≡ subpath, byte-identical) và phần dev graph (I-29: 1.517 module). 3,93 MB packed đã dưới
+     MUI từ lâu.
+  2. **Tách package có thể tiết kiệm đúng 0 byte.** Nếu `@echoit/itui.css` khai package icon là
+     `dependency` thường thì npm cài nó bất kể — dung lượng y nguyên, chỉ thêm một manifest phải
+     version. Muốn giảm thật thì icons phải là peer/optional, tức **mọi consumer dùng icon đều
+     phải tự thêm dep**. Đó là chi phí thật đổi lấy một khoản tiết kiệm mà mục 1 nói là không cấp
+     thiết. Thêm nữa publish flow của package này **đã** từng trôi version một lần (I-22) — nhân
+     đôi số package là nhân đôi bề mặt cho đúng lỗi đó.
+
+  **Phát hiện kèm theo — đòn bẩy rẻ hơn nhiều, ghi lại cho lần sau.** Icon không phải 6.615 thứ
+  khác nhau mà là **~1.248 icon gốc × 6 weight**, và **3 weight không có một call-site nào** trong
+  toàn bộ source của repo (`packages/ui/src/components` · `apps/web` · `apps/storybook/src`):
+
+  | Weight | file | dist | call-site trong repo |
+  | --- | --- | --- | --- |
+  | Duotone | 1.248 | 3,49 MB | **0** |
+  | Thin | 1.248 | 3,09 MB | **0** |
+  | Light | 1.237 | 3,05 MB | **0** |
+  | Regular | 1.248 | 2,83 MB | 186 |
+  | Fill | 1.248 | 2,55 MB | 48 |
+  | Bold + index | 1.979 | 2,34 MB | 5 |
+
+  Bỏ 3 weight đó: **17,84 → 8,18 MB (−55%)**, một package, không consumer nào trong repo phải đổi
+  một dòng import. Rẻ hơn hẳn việc tách package và giải quyết đúng cái mà tách package nhắm tới.
+  ⚠️ Vẫn là **breaking với consumer npm ngoài** đang dùng Thin/Light/Duotone — không đo được từ
+  trong repo, cùng caveat mà I-01c và §4.1 đã ghi. Để dành cho một đợt có changelog `2.0`.
+
+  ⚠️ Số ở bảng trên là **lần đo thứ ba**. Lần một (PowerShell) lỗi đọc 11 file ⇒ bỏ vì không đầy
+  đủ; lần hai dính 1,5 MB rác từ `apps/storybook/storybook-static` (build output, không phải
+  source). Ghi lại vì đây đúng hình dạng lỗi §0.9 — và lần này bắt được nhờ đọc *cảnh báo* của
+  phép đo chứ không chỉ đọc kết quả.
 
 **File** — [`tsup.config.ts`](../tsup.config.ts) · [`scripts/build-icon-types.ts`](../scripts/build-icon-types.ts)
 
@@ -1436,14 +1496,33 @@ wrapper, vô nghĩa trên table row.
 
 **Solution** — Xoá; làm chung PR với I-05. · **Breaking** Không
 
-### I-17 · Component trùng lặp
+### I-17 · Component trùng lặp — ✅ DONE (tài liệu)
 
-5 cặp không có hướng dẫn chọn: `Input`/`InputV2` · `navigation`/`navigation-v2` ·
-`tab`/`tabs` · `dialog`/`modals`/`popup`/`bottom-sheet` · `toast`/`snackbar`.
+5 cặp bị báo là trùng. Đo từng cặp bằng *hành vi* thay vì tên: **2 trùng thật, 3 không** (§0.10).
 
-**Impact** — Mọi consumer tung đồng xu chọn API.
-**Solution** — Chọn winner mỗi cặp, `@deprecated` + JSDoc trỏ sang thay thế, viết migration guide.
-**File** [`src/index.ts`](../src/index.ts) + 10 module · **Breaking** Có
+| Nhóm | Trùng? | Bằng chứng | `apps/web` dùng |
+| --- | --- | --- | --- |
+| `tab` / `tabs` | ✅ | [`tabs.tsx:15,30`](../src/components/tabs/tabs.tsx#L15) tô bằng `bg-slate-100` / `text-slate-500` / `dark:bg-slate-800` — **0 token ITUI**, không theo theme, không theo dark mode của package. [`Tab.tsx`](../src/components/tab/Tab.tsx) là bản Figma node 27754:55, 4 `type`, token suốt | `Tabs` **2 file**, `Tab` **0** |
+| `navigation` / `navigation-v2` | ✅ | Cùng Figma node **28390:4665**. [Comment V2](../src/components/navigation-v2/NavigationV2.tsx#L13) tự khai: *"Deliberately separate from navigation/Navigation.tsx (V1), which stays untouched"* | **0 / 0** (chỉ story) |
+| `Input` / `InputV2` | ❌ | `InputV2` là **facade**: union 10 nhánh discriminate bằng `variant`, mỗi nhánh type-check theo props riêng ([`InputV2.tsx:46-56`](../src/components/input/InputV2.tsx#L46-L56)). `Input` là field đơn độc lập. Không ai thay thế ai — nhưng **`Input` vs `InputText` thì có**, xem **I-30** | `Input` 3 file, `InputV2` 0 |
+| `dialog` / `modals` / `popup` / `bottom-sheet` | ❌ | 4 Figma node khác nhau: `Dialog` primitive · `Modal` **27260:2855** (preset title + body + 2 nút) · `Popup` **28500:5020** (card thông báo, có slot ảnh + "không xem lại") · `BottomSheet` sheet mobile | `Dialog` 9 file, `BottomSheet` 9, `Modal`/`Popup` 0 |
+| `toast` / `snackbar` | ❌ | Cố ý cùng tồn tại và **source đã ghi rõ**: [`Snackbar.tsx:195-200`](../src/components/snackbar/Snackbar.tsx#L195-L200) tạo viewport sonner riêng qua `SNACKBAR_TOASTER_ID`, *"so the app-wide `<Toaster>` used by `Toast` never picks these up (and vice versa)"* | `Toaster` 1 file, `Snackbar` 0 |
+
+**Impact** — Vẫn thật, nhưng hẹp hơn nhiều so với "mọi consumer tung đồng xu": chỉ 2 cặp thật sự
+mơ hồ, và ở **cả hai** thì cái autocomplete gợi ý trước (`Tabs`, `Navigation`) lại là cái **không**
+nên dùng.
+
+**Solution** — ✅ **Chốt: chỉ tài liệu, không đụng code.** Thêm mục
+[*Picking between similar names*](../README.md) vào README ngay dưới cảnh báo `Badge` vs `Tag`/`Chip`
+đã có sẵn — cùng chỗ, cùng giọng, vì đó đúng là *"phần một generator không viết được"* mà chính
+README tự nhận. Bảng nêu cả 5 nhóm: 2 nhóm có cột **Use**, 3 nhóm giải thích **vì sao không phải chọn**.
+
+Lý do **không** `@deprecated`: `tabs` là thứ `apps/web` đang thật sự dùng (2 file) còn `Tab` thì
+không, nên deprecate là đánh dấu bản-đang-chạy là sai trước khi có ai migrate. `navigation` thì
+không ai dùng, deprecate cũng chẳng cứu được ai. Cả hai đều đáng làm ở một đợt có ngân sách migrate
+— không phải ở một đợt tài liệu.
+
+**File** — [`README.md`](../README.md) · **Breaking** Không
 
 ### I-18 · Token showcase export như component thật — 🚫 SKIP
 
@@ -1469,13 +1548,114 @@ nhóm) thì đi kèm `Grid`.
 
 **Solution** — Sửa metadata; link tuyệt đối GitHub; điền `description`. · **Breaking** Không
 
+#### 4.2 · I-30 — `Input` và `InputText` là cặp trùng thật, không phải `Input`/`InputV2`
+
+**Phát hiện khi verify I-17.** Plan xếp `Input`/`InputV2` thành một cặp; đo ra thì `InputV2` là
+facade định tuyến (§0.10), còn cặp thật nằm ở chỗ plan không nhìn tới.
+
+| | [`Input`](../src/components/input/Input.tsx) | [`InputText`](../src/components/input/InputText.tsx) |
+| --- | --- | --- |
+| Vai trò | field 1 dòng + label + error | field 1 dòng + label + error |
+| Dựng bởi | **markup riêng**, class hardcode tại chỗ | [`InputFieldShell`](../src/components/input/InputFieldShell.tsx) — khung dùng chung của cả 10 variant |
+| Prop chung | `label` `error` `prefix` `suffix` `fieldClassName` `boxClassName` | y hệt |
+| Chỉ bên này có | `block` · `disabledInput` (khoá field mà giữ prefix/suffix sống) | `helperText` · `onBoxClick` · `boxRef` |
+| Merge `fieldClassName` | ❌ `.join(' ')` — **I-31** | ✅ `cn()` |
+| Trong barrel | có | có |
+| `apps/web` dùng | **3 file** | **0** |
+| Trong union của `InputV2` | ❌ không | ✅ nhánh `variant="text"` (mặc định) |
+
+**Vì sao đáng xử lý** — `InputText` là thứ `InputV2` gọi tới, tức là **đường chính thức** của cả họ
+input; `Input` là bản cũ đứng ngoài họ đó, và đang mang thêm 2 defect: fieldClassName không merge
+(I-31) và hộp của nó tô `bg-white`/`border-input` cứng trong khi shell dùng token `bg-inverse`.
+Nhưng `Input` lại là cái duy nhất có `disabledInput` và `block`, nên **không** gộp được bằng một
+alias — phải port 2 prop đó sang `InputText` trước.
+
+⚠️ **Chưa làm gì cả** — user chốt *"điều tra rồi báo, chưa sửa"*. Ghi lại ở đây để lần sau không
+phải đo lại, và để đừng ai vô tình "dọn" `Input` mà quên 3 call-site + 2 prop độc quyền.
+
+**Đề xuất khi làm** — port `block` + `disabledInput` sang `InputText`, đổi `Input` thành alias mỏng
+trỏ vào đó, `@deprecated` kèm JSDoc; giữ export tới major kế tiếp. **Breaking** Có (hiển thị: hộp
+đổi từ `bg-white` sang token `bg-inverse` = `#fafafa`).
+
+#### 4.3 · I-31 — I-08 vẫn còn sống ở 3 file: class của consumer bị **nối**, không `twMerge` — ✅ DONE
+
+**Phát hiện khi so `Input` với `InputText` (I-30).** I-08 kết luận *"chỉ 3 module thiếu, 46 module
+còn lại đã dùng đúng"*. Đo lại theo **site ghép class** thay vì theo module: còn **4 site / 3 file**.
+
+| Site | Prop bị nuốt | Cách ghép |
+| --- | --- | --- |
+| [`Input.tsx:118-129`](../src/components/input/Input.tsx#L118-L129) | `fieldClassName` | `[...].filter(Boolean).join(' ')` |
+| [`Spinner.tsx:76-82`](../src/components/spinner/Spinner.tsx#L76-L82) | `className` (nhánh **không** có `description`) | `[...].filter(Boolean).join(' ')` |
+| [`SyncProgressBar.tsx:22`](../src/components/progress/SyncProgressBar.tsx#L22) | `className` | template literal, **không import `cn`** |
+| [`SyncProgressBar.tsx:44`](../src/components/progress/SyncProgressBar.tsx#L44) | `className` | template literal, **không import `cn`** |
+
+**Đo, không suy luận** — probe chạy đúng 2 code path chép nguyên văn từ source, consumer truyền
+`fieldClassName="text-sm"`:
+
+```
+Input      text-base kept: true   | text-sm kept: true   → CONFLICT (cả hai cùng emit)
+InputText  text-base kept: false  | text-sm kept: true   → merged
+```
+
+Cả hai class cùng specificity, nên thứ tự trong **stylesheet** quyết định chứ không phải thứ tự
+trong attribute ⇒ consumer đặt `text-sm` mà nhận về `text-base`, **im lặng**. Đúng hình dạng I-08.
+
+**Vì sao audit của I-08 cho qua** — nó đo theo **module** (49 dòng barrel), mà bug sống theo
+**site**. `progress/` được tha vì `Progress.tsx` cùng thư mục *có* gọi `cn`; `SyncProgressBar.tsx`
+thì không import `cn` một lần nào. `input/` (14 file) và `spinner/` y vậy: file gọi `cn` ở nhánh
+này, `.join(' ')` ở nhánh kia. Xem §0.10 — **có `cn()` ≠ không có lỗi**.
+
+⚠️ Nặng hơn I-08 gốc một bậc: `fieldClassName` và `boxClassName` được [§8](#8-không-được-đụng-vào)
+của chính tài liệu này nêu tên là *"escape hatch đặt tên tốt, đúng kiểu van xả ngăn `!important`
+phía consumer"* — mà van xả thì hỏng.
+
+**Solution** — ✅ Cả 4 site đổi sang `cn()`. Cơ học, nhưng là **thay đổi hành vi** giống I-08
+(consumer đang vô tình dựa vào class thư viện thắng thì giờ thua) ⇒ vào changelog `2.0`, mục thứ 9.
+
+#### Guard mới `pnpm check:classes` — vì audit một lần đã thất bại một lần rồi
+
+[`scripts/check-class-merge.ts`](../scripts/check-class-merge.ts) — dùng compiler API, thuần cú
+pháp (không cần type checker, nên **không cần build**). Hai rule:
+
+- **R1** — prop `*[cC]lassName` nội suy vào template literal mà **không** nằm trong `cn()`
+- **R2** — prop đó nằm trong array literal được `.join(...)` mà **không** trong `cn()`
+
+Chủ thể phải là **binding của tham số hàm**, tức prop consumer truyền vào — `const rowClassName =
+cn(...)` là biến cục bộ *đã merge rồi*, không tính. Trong `cn(...)` thì luôn qua, kể cả
+`cn(\`… ${className}\`)`: đã đo, twMerge giải quyết xung đột trong **một** chuỗi cũng tốt như nhiều
+đối số. Forward trần (`className={className}`) cũng qua — component con merge.
+
+**Self-test 7 case, cả 7 đúng:** template literal không `cn` → **đỏ** · template literal *trong*
+`cn` → không báo oan · `.join(' ')` không `cn` → **đỏ** · `cn()` cùng danh sách → xanh · forward
+trần → xanh · biến cục bộ tên `…ClassName` → **không** bị coi là chủ thể · 2 site trong 1 file →
+báo đủ 2.
+
+**Negative control** — dựng lại 3 file từ `HEAD` rồi cho guard quét: **đỏ đúng 4/4 site**, đúng
+`file:line`, đúng phân loại R1/R2:
+
+```
+src/components/input/Input.tsx:126             fieldClassName  [R2]
+src/components/progress/SyncProgressBar.tsx:22 className       [R1]
+src/components/progress/SyncProgressBar.tsx:44 className       [R1]
+src/components/spinner/Spinner.tsx:79          className       [R2]
+```
+
+Wire vào `prebuild` + job CI [`class-merge`](../.github/workflows/ci.yml) — job chạy `--self-test`
+**trước** khi quét, vì một guard xanh mà rule không còn bắn thì cũng xanh y hệt.
+
+**File** — [`input/Input.tsx`](../src/components/input/Input.tsx) ·
+[`spinner/Spinner.tsx`](../src/components/spinner/Spinner.tsx) ·
+[`progress/SyncProgressBar.tsx`](../src/components/progress/SyncProgressBar.tsx) (thêm `import { cn }`) ·
+[`scripts/check-class-merge.ts`](../scripts/check-class-merge.ts) **(mới)** ·
+[`package.json`](../package.json) · [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
+
 ---
 
 ## 5. P3 — Đánh bóng
 
 | # | Vấn đề | Solution | Breaking |
 | --- | --- | --- | --- |
-| **I-20** | `Checkbox` dùng `onChange(e.target.checked)`, `Select` dùng `onValueChange(value)` — 2 paradigm trong 1 form | Chọn 1 quy ước, hoặc **document rõ** để đọc như quyết định chứ không phải tai nạn | Có |
+| **I-20** ✅ | Không phải "2 paradigm" mà là **1 outlier trên 12** (§0.10): `Checkbox` là control duy nhất còn dùng DOM event, 11 cái kia đã là `on*Change(value)`. Nhưng model DOM đó **load-bearing** — `{...field}` của react-hook-form ở [`controled-checkbox.tsx`](../../../apps/web/components/ui/controled-checkbox.tsx) dựa vào nó | ✅ **Cộng thêm** `onCheckedChange?: (checked: boolean) => void`, chạy **sau** `onChange` native chứ không thay. Handler chỉ gắn khi có gì để gọi (`onChange \|\| onCheckedChange ? handleChange : undefined`) — bài học I-26, vì `Checkbox` không có `'use client'`. **11/11 assertion** + negative control | ~~Có~~ **Không** |
 | **I-21** ✅ | `SelectTrigger.placeholder` được khai, được destructure, rồi **không dùng vào đâu** — prop chết chứ không phải "truyền 2 lần" (§0.9) | ✅ Không children → trigger tự render `<SelectValue placeholder={…} />`. Có children thì children thắng, prop thành không dùng. Kiểu nới `string` → `ReactNode` cho khớp Radix. **5/5 assertion** | Không |
 | **I-22** | [`package.json`](../package.json#L4) local là `1.0.10`, npm đang ở `1.0.14` — repo không khớp bản published | Xác minh publish flow có commit version bump không; nếu không, thêm bước vào [`DEVELOPMENT.md`](../DEVELOPMENT.md) | Không |
 
@@ -1590,8 +1770,11 @@ không chỉ sau thay đổi build config. I-13 sửa `Button` và làm đỏ ga
       trong `check:bundle`. Xem §3.8
 - [ ] **I-06b** Deploy docs site (cân nhắc dùng `apps/storybook`) — M–L
 - [ ] **I-09c** `ITUIProvider locale` — tuỳ chọn, chỉ làm nếu định làm i18n đầy đủ
-- [ ] **I-10b** Tách icon package (nếu chọn) — M. Subpath `/icons` đã có, nên việc còn lại thuần
-      về *dung lượng tarball*, không còn về bundle hay dev graph
+- [x] ~~**I-10b** Tách icon package~~ → **SKIP**. Đo khi chốt M4: 3,93 MB packed / 17,84 MB
+      unpacked, icon là 98%. Nhưng tách package chỉ giảm thật nếu icons thành peer/optional, tức
+      đẩy việc sang mọi consumer — trong khi phần bundle và dev graph đã do I-02/I-29 lo xong.
+      Đòn bẩy rẻ hơn được ghi lại tại mục I-10: **3 weight icon không có call-site nào**
+      (Thin/Light/Duotone = 9,64 MB = 55%)
 
 **Điểm dự kiến ~8.2**
 
@@ -1600,18 +1783,37 @@ không chỉ sau thay đổi build config. I-13 sửa `Button` và làm đỏ ga
 - [x] **I-14** Rename Popover — root thành `Popover`, panel thành `PopoverPanel`, `PopoverRoot`
       còn lại làm alias `@deprecated`. 16 file `apps/` đã migrate. Gỡ `className` khỏi root để
       breaking của panel **fail compile** thay vì biến mất im lặng — xem §4.1
-- [ ] **I-17** Dọn component trùng lặp — cần chốt winner từng cặp trước khi code
+- [x] **I-17** Dọn component trùng lặp → **chỉ 2/5 cặp là trùng thật** (§0.10). User chốt
+      **tài liệu, không đụng code**: bảng *Picking between similar names* trong README nêu cả 5
+      nhóm — 2 nhóm có cột **Use**, 3 nhóm giải thích vì sao chúng **không** phải chọn
 - [x] ~~**I-18** Gỡ token showcase khỏi public API~~ → **SKIP**, tiền đề sai (§0.9)
 - [ ] **I-11** Hoàn tất chuyển peer deps
-- [ ] **I-20** Thống nhất event model
+- [x] **I-20** Event model — `Checkbox.onCheckedChange` **cộng thêm** vào `onChange` native, không
+      thay (§0.10). **11/11 assertion** trên DOM thật + negative control: gắn handler vô điều kiện
+      → `check:rsc` **đỏ** đúng lỗi I-26, gắn có điều kiện → **xanh, 849,3 kB**
 - [x] **I-21** Select placeholder — prop chết được nối vào `SelectValue`, **5/5 assertion**
+- [ ] **I-30** `Input` vs `InputText` — đã đo, **chưa sửa** theo yêu cầu; xem §4.2
+- [x] **I-31** 4 site còn nối class thay vì `twMerge` → `cn()`. **3/3 assertion** trên `dist` (override
+      của consumer giờ thắng ở cả `Input.fieldClassName` · `Spinner.className` ·
+      `SyncProgressBar.className`). Guard mới `check:classes`: self-test 7/7, negative control bắt
+      **đúng 4/4** site gốc; wire `prebuild` + job CI `class-merge`. Xem §4.3
 
 **Điểm dự kiến ~8.8**
 
-Chạy lại đầy đủ khi chốt đợt này (build 3 stage + 5 gate, `dist` mới): `check:client` ✓ ·
-`check:barrels` ✓ (56 barrel, 16 `export *`) · `check:docs` ✓ (**484** export / 56 module) ·
-`check:rsc` ✓ (849,2 kB / 7 chunk, không module nào rò) · `check:bundle` ✓ (23,6 kB/Button,
-1.517 module qua barrel). Cộng `tsc --noEmit` xanh ở `apps/web` và `apps/storybook`.
+Chạy lại đầy đủ khi chốt đợt này (build 3 stage + **6** gate, `dist` mới): `check:client` ✓ ·
+`check:barrels` ✓ (56 barrel, 16 `export *`) · **`check:classes` ✓ (136 file)** · `check:docs` ✓
+(**484** export / 56 module) · `check:rsc` ✓ (**849,2 kB** / 7 chunk, không module nào rò) ·
+`check:bundle` ✓ (23,6 kB/Button, 1.517 module qua barrel). Cộng `tsc --noEmit` xanh ở `packages/ui`,
+`apps/web` và `apps/storybook`.
+
+Ghi chú số đo: `check:rsc` đi 849,2 → 849,3 → **849,2 kB** qua 3 lần chạy của đợt này. +0,1 kB là
+`<Checkbox />` mà fixture giờ render thêm; −0,1 kB là I-31 gỡ `.filter(Boolean).join(' ')`. Cả hai
+đều dưới mức nhiễu của budget 976,6 kB — nêu ra để lần sau không ai đi tìm nguyên nhân cho một dao
+động 100 byte.
+
+⚠️ **Còn mở sau đợt này:** I-06b (docs site) · I-09c (`ITUIProvider locale`, vốn tuỳ chọn) ·
+I-10b (tách icon package) · I-11 (dòng "hoàn tất peer deps" — bảng theo dõi ghi **DONE** từ M2,
+dòng checklist này là sót) · **I-30** và **I-31**, cả hai đã đo xong và chờ chốt (§4.2, §4.3).
 
 ---
 
@@ -1634,7 +1836,7 @@ runtime của consumer):
 | **Còn lại** — hook render-time thiếu directive | Vỡ lúc render, fixture không thấy | ⬜ Chỉ `check:client` bắt được → **không được bỏ job static** khi đã có fixture |
 | **Đã thành sự thật** — sửa component làm vỡ gate build | `next build` fail ở consumer, repo vẫn xanh | ⚠️ I-26 (§3.3): I-13 sửa `Button` → gate RSC đỏ suốt 1 milestone. Guard `check:client` **không** bắt được (nó soi directive, không soi prop truyền xuống DOM). CI có job `rsc-fixture` nên PR sẽ chặn — nhưng chỉ khi PR đó land ở **repo submodule**, xem cảnh báo ở I-01(a) |
 | ~~**Đã thành sự thật** — client bundle phình mà **mọi gate vẫn xanh**~~ | Consumer RSC nhận cả thư viện, `check:bundle` vẫn báo 23,6 kB | ✅ **Đã đóng** (I-27, §3.5). `check:rsc` giờ assert **marker + byte budget** chứ không chỉ exit code, và `check:barrels` bắt được hình dạng barrel **trước cả khi** phải build. Đã xác minh gate đỏ đúng lúc rò (1305,2 kB) và xanh khi sạch (849,2 kB) |
-| **Còn lại** — kết luận rút từ phép đo mà **nền chưa cố định**, hoặc từ phép đo **không đầy đủ** | Tài liệu ghi một nhân quả sai, lần sau có người sửa nhầm chỗ | ⚠️ Đã xảy ra **8 lần** (§0–§0.4, §0.6, §0.8, §0.9). Chỉ có một cách chặn: mỗi lần đo, nêu rõ *cái gì được giữ nguyên*, và nếu kết luận là "X gây ra Y" thì phải có nhánh **không có X** trong cùng điều kiện. §0.6 tốn 5 lần build để phát hiện §3.5 sai; §0.8 rẻ hơn vì đo **trước** khi ghi công. §0.9 thêm một biến thể: grep bị **cắt ở `head_limit`** mà vẫn được đọc như kết quả đầy đủ — "0 file dùng" hoá ra là 5 |
+| **Còn lại** — kết luận rút từ phép đo mà **nền chưa cố định**, từ phép đo **không đầy đủ**, hoặc đo ở **sai độ mịn** | Tài liệu ghi một nhân quả sai, lần sau có người sửa nhầm chỗ | ⚠️ Đã xảy ra **9 lần** (§0–§0.4, §0.6, §0.8, §0.9, §0.10). Chỉ có một cách chặn: mỗi lần đo, nêu rõ *cái gì được giữ nguyên*, và nếu kết luận là "X gây ra Y" thì phải có nhánh **không có X** trong cùng điều kiện. §0.6 tốn 5 lần build để phát hiện §3.5 sai; §0.8 rẻ hơn vì đo **trước** khi ghi công. §0.9 thêm một biến thể: grep bị **cắt ở `head_limit`** mà vẫn được đọc như kết quả đầy đủ — "0 file dùng" hoá ra là 5. §0.10 thêm biến thể thứ ba, khó thấy nhất: phép đo **đúng** nhưng đơn vị đếm (module) **to hơn** đơn vị mà bug sống (site ghép class) ⇒ I-08 "46 module còn lại đã dùng đúng" bỏ sót 4 site |
 | ~~**Đã thành sự thật** — chi phí mà **mọi gate đo bằng byte** đều mù~~ | Consumer transform 7.912 module thừa, `bundle.js` byte-identical | ✅ **Đã đóng** (I-29, §3.8). Bài học: byte không phải thước đo duy nhất — dev server trả bằng *thời gian transform*. `check:bundle` giờ assert cả **module count**, `check:barrels` bắt hình dạng import trước cả khi build |
 
 Giảm thiểu chung:

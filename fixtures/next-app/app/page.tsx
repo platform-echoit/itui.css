@@ -41,6 +41,11 @@ import {
   LnbItem,
   LnbFooter,
   LnbUser,
+  // I-20 — `Checkbox` gained `onCheckedChange`, which needs an `onChange` on the
+  // native input. It carries no directive, so that handler must stay off the
+  // element until a consumer actually passes one; rendering a bare `<Checkbox />`
+  // here is what proves it. Same failure mode as I-26 on `Button`.
+  Checkbox,
   Modal,
   Progress,
   RadioGroup,
@@ -96,6 +101,8 @@ export default function Page() {
       <Typography variant="heading-2xl">RSC fixture</Typography>
 
       <Button>server-rendered button</Button>
+
+      <Checkbox label="server-rendered checkbox" />
 
       <List>
         <ListItem>server-safe list item</ListItem>

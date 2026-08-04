@@ -673,6 +673,7 @@ Props: `CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'
 | --- | --- | --- | --- |
 | `size?` | `CheckboxSize` | `'md'` | — |
 | `label?` | `ReactNode` | — | — |
+| `onCheckedChange?` | `(checked: boolean) => void` | — | Fires with the next checked state — the same shape as `Radio`, `Toggle`, `Select` and `Rating`, so a form does not switch paradigms mid-way. |
 
 **Types**
 

@@ -115,7 +115,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             disabled={isInputDisabled}
             aria-invalid={isError || undefined}
             aria-describedby={describedBy}
-            className={[
+            className={cn(
               'flex-1 min-w-0 bg-transparent outline-none',
               'text-base leading-lg tracking-lg',
               isDisabled
@@ -124,9 +124,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                   ? 'bg-transparent text-neutral-disabled placeholder:text-neutral-disabled cursor-not-allowed'
                   : 'bg-transparent text-foreground placeholder:text-neutral-muted',
               fieldClassName,
-            ]
-              .filter(Boolean)
-              .join(' ')}
+            )}
             {...rest}
           />
 
