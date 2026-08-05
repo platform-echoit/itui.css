@@ -1,5 +1,11 @@
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import {
+  forwardRef,
+  type ButtonHTMLAttributes,
+  type MouseEventHandler,
+  type ReactNode,
+} from 'react';
 import { Spinner } from '../spinner/Spinner';
+import { cn } from '../../lib/utils';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -159,6 +165,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className = '',
       children,
       type = 'button',
+      onClick,
       ...rest
     },
     ref,
@@ -166,7 +173,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const isIconOnly = !children && (!!iconLeft || !!iconRight);
     const sz = sizeConfig[size];
 
-    const classes = [
+    const classes = cn(
       'inline-flex items-center justify-center shrink-0 cursor-pointer',
       'font-semibold rounded-lg whitespace-nowrap select-none',
       'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
@@ -176,11 +183,33 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       fullWidth && !isIconOnly ? 'w-full' : '',
       loading ? 'pointer-events-none opacity-75' : '',
       className,
-    ]
-      .filter(Boolean)
-      .join(' ');
+    );
 
     const iconClass = `shrink-0 ${sz.icon}`;
+
+    /*
+      While loading the button stays focusable — a native `disabled` would drop
+      it out of the tab order right after the user pressed Enter, so focus falls
+      to <body> and the aria-busy announcement is never heard.
+
+      `pointer-events-none` only stops the mouse, so cancel the click itself:
+      preventDefault kills the submit that Enter/Space (and a form's implicit
+      submission) would otherwise trigger, and the consumer's handler is skipped.
+
+      The handler is attached only when there is something to guard, because
+      Button carries no "use client" (Bảng B1) and a Server Component may not
+      pass a function to a DOM element — attaching it unconditionally fails
+      `next build` on a plain <Button>. Demoting to `type="button"` while loading
+      is NOT an alternative: a form left without any submit button falls back to
+      submitting directly on Enter, dispatching no click for us to cancel.
+    */
+    const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+      if (loading) {
+        event.preventDefault();
+        return;
+      }
+      onClick?.(event);
+    };
 
     return (
       <button
@@ -188,6 +217,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         type={type}
         disabled={disabled}
         aria-busy={loading || undefined}
+        aria-disabled={loading || undefined}
+        onClick={loading || onClick ? handleClick : undefined}
         className={classes}
         {...rest}
       >

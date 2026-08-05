@@ -1,7 +1,8 @@
 'use client';
 
-import { Select as SelectPrimitive } from 'radix-ui';
-import { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react';
+import * as SelectPrimitive from '@radix-ui/react-select';
+import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
+import { CaretUpRegularIcon } from '../../icons/ITUI/caret-up';
 import { cn } from '../../lib/utils';
 
 // ─── Select ───────────────────────────────────────────────────────────────────
@@ -49,7 +50,13 @@ export interface SelectTriggerProps
   size?: 'sm' | 'default';
   label?: string;
   error?: string;
-  placeholder?: string;
+  /**
+   * Shorthand for the common trigger body: with no `children`, the trigger
+   * renders `<SelectValue placeholder={placeholder} />` for you. Pass your own
+   * children when the body needs anything else — they win, and this prop is
+   * then unused.
+   */
+  placeholder?: React.ReactNode;
 }
 
 const triggerBase =
@@ -95,9 +102,15 @@ function SelectTrigger({
         className={cn(triggerBase, variant, className)}
         {...props}
       >
-        {children}
+        {/*
+          `placeholder` used to be declared, destructured and then dropped — the
+          trigger rendered nothing for it, so every caller had to repeat the
+          string on a `SelectValue` of their own. Defaulting the body here is
+          what makes the prop mean something (I-21).
+        */}
+        {children ?? <SelectValue placeholder={placeholder} />}
         <SelectPrimitive.Icon asChild>
-          <CaretDownIcon className="text-muted-foreground size-4 pointer-events-none transition-transform duration-100 ease-out group-data-[state=open]:rotate-180" />
+          <CaretDownRegularIcon className="text-muted-foreground size-4 pointer-events-none transition-transform duration-100 ease-out group-data-[state=open]:rotate-180 [&_path]:fill-current" />
         </SelectPrimitive.Icon>
       </SelectPrimitive.Trigger>
 
@@ -224,7 +237,7 @@ function SelectScrollUpButton({
       )}
       {...props}
     >
-      <CaretUpIcon />
+      <CaretUpRegularIcon className="size-4 [&_path]:fill-current" />
     </SelectPrimitive.ScrollUpButton>
   );
 }
@@ -244,7 +257,7 @@ function SelectScrollDownButton({
       )}
       {...props}
     >
-      <CaretDownIcon />
+      <CaretDownRegularIcon className="size-4 [&_path]:fill-current" />
     </SelectPrimitive.ScrollDownButton>
   );
 }

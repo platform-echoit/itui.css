@@ -4,7 +4,7 @@ import {
   type ElementRef,
   type ReactNode,
 } from 'react';
-import { ScrollArea as ScrollAreaPrimitive } from 'radix-ui';
+import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
 import { cn } from '../../lib/utils';
 import { CaretUpFillIcon } from '../../icons/ITUI/caret-up';
 import { CaretDownFillIcon } from '../../icons/ITUI/caret-down';

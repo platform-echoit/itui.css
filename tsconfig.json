@@ -6,13 +6,19 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "strict": true,
+    // Required by the bundleless build: esbuild transpiles one file at a time,
+    // so anything that needs cross-file type info must be illegal.
+    // NOT verbatimModuleSyntax — 6,607 icons write `import { SVGProps }`.
+    "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "types": ["node"],
     "outDir": "dist",
     "rootDir": "src",
     "declaration": true,
-    "declarationMap": true,
+    // Off on purpose: `files: ["dist"]` ships no sources, so a declaration map
+    // has nothing to point at. It was 3.2 MB across 7,912 files (I-10).
+    "declarationMap": false,
     "sourceMap": true
   },
   "include": ["src/**/*", "global.d.ts"],

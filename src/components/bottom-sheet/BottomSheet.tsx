@@ -1,3 +1,5 @@
+'use client';
+
 import {
   useEffect,
   useRef,
@@ -5,7 +7,7 @@ import {
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from 'react';
-import { Dialog as RadixDialog } from 'radix-ui';
+import * as RadixDialog from '@radix-ui/react-dialog';
 import { cn } from '../../lib/utils';
 import { Button } from '../button';
 
@@ -21,15 +23,20 @@ const DRAG_CLOSE_THRESHOLD = 80;
   TITLE  heading/2xl/semibold 20px/32/-0.24 → text-xl leading-2xl tracking-2xl font-semibold · h-[54px]
   FOOTER stacked buttons gap-3 · pt-4 pb-8 (spacing/3xl 32px) px-4 · Button size md
   OVERLAY dim/black → bg-dim-black
-  SIZE   Full / Tall / Regular → sheet height (dvh)
+  SIZE   Full / Tall / Regular → see sizeMap
   ─────────────────────────────────────────────────────────────────────────────
 */
 
 export type BottomSheetSize = 'full' | 'tall' | 'regular';
 
+// Measured off the Figma frames (390×812 canvas): Full is a fixed 731px panel
+// starting 81px down — 90dvh, so the scrim stays tappable above it — while Tall
+// (476px) and Regular (296px) are both exactly the sum of their children, i.e.
+// they hug their content. What separates those two is only how far they may
+// grow before the body starts scrolling.
 const sizeMap: Record<BottomSheetSize, string> = {
-  full: 'h-[100dvh]',
-  tall: 'h-[90dvh]',
+  full: 'h-[90dvh]',
+  tall: 'max-h-[90dvh]',
   regular: 'max-h-[75dvh]',
 };
 
@@ -224,7 +231,7 @@ export function BottomSheet({
               title == null && 'sr-only',
             )}
           >
-            {title ?? '메뉴'}
+            {title ?? 'Menu'}
           </RadixDialog.Title>
 
           {children != null && (

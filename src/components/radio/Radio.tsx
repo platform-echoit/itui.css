@@ -4,7 +4,7 @@ import {
   type ComponentRef,
   type ReactNode,
 } from 'react';
-import { RadioGroup as RadixRadioGroup } from 'radix-ui';
+import * as RadixRadioGroup from '@radix-ui/react-radio-group';
 import { cn } from '../../lib/utils';
 
 /*

@@ -56,4 +56,8 @@ export * from './components/colors';
 export * from './components/shadow';
 export * from './components/spacing';
 export * from './components/typography';
-export * from './icons/ITUI';
+
+// Icons are deliberately NOT re-exported here. The 6,615 ITUI icons dwarf the 483
+// component exports, and a dev server does not tree-shake: importing a single Button
+// through this barrel used to load the whole icon set on every page load.
+// Import them from '@echoit/itui.css/icons' instead.

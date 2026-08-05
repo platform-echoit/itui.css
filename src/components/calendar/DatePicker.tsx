@@ -13,12 +13,10 @@ import {
 import { format } from 'date-fns';
 import type { Locale } from 'date-fns/locale';
 import { cn } from '../../lib/utils';
-import {
-  CaretDownRegularIcon,
-  CaretLeftRegularIcon,
-  CaretRightRegularIcon,
-  CaretUpRegularIcon,
-} from '../../icons/ITUI';
+import CaretDownRegularIcon from '../../icons/ITUI/caret-down/CaretDownRegularIcon';
+import CaretLeftRegularIcon from '../../icons/ITUI/caret-left/CaretLeftRegularIcon';
+import CaretRightRegularIcon from '../../icons/ITUI/caret-right/CaretRightRegularIcon';
+import CaretUpRegularIcon from '../../icons/ITUI/caret-up/CaretUpRegularIcon';
 import {
   BaseDate,
   BaseDateButton,

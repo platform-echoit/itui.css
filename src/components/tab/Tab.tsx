@@ -8,7 +8,7 @@ import {
   type ComponentRef,
   type ReactNode,
 } from 'react';
-import { Tabs as RadixTabs } from 'radix-ui';
+import * as RadixTabs from '@radix-ui/react-tabs';
 import { cn } from '../../lib/utils';
 
 /*

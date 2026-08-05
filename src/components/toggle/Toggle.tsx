@@ -3,7 +3,7 @@ import {
   type ComponentPropsWithoutRef,
   type ComponentRef,
 } from 'react';
-import { Switch as RadixSwitch } from 'radix-ui';
+import * as RadixSwitch from '@radix-ui/react-switch';
 import { cn } from '../../lib/utils';
 
 /*

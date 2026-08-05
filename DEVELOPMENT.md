@@ -23,6 +23,13 @@ Always build before publishing to ensure the `dist` folder contains the latest c
 pnpm build
 ```
 
+⚠️ Run the **full** `pnpm build`, never `pnpm build:js` on its own. `build` is three stages —
+`build:js && build:dts && build:paths` — and `build:paths` is the one that makes `dist`
+loadable: it adds file extensions to every relative import (Node ESM refuses
+`./Button`), repoints the barrel's CSS import at `./index.css`, and narrows the
+stylesheet's `@source` so Tailwind does not crawl the 23k icon files. A `dist` built
+without it looks complete and fails at the consumer.
+
 ### 2. Increment Version
 
 Use `pnpm version` to bump the version number. This will also update `package.json`.
@@ -32,6 +39,12 @@ pnpm version patch # 1.0.3 -> 1.0.4
 # or
 pnpm version minor # 1.0.3 -> 1.1.0
 ```
+
+⚠️ **Do not use the `publish:latest` / `publish:beta` shortcuts to release.** They run
+`pnpm build && npm publish` and skip this step entirely, so `package.json` in git keeps the
+old number while npm moves on. That is how the repo ended up pinned at `1.0.10` while npm
+served `1.0.14` — four releases with no bump commit. Bump with `pnpm version` (which commits
+and tags), then publish.
 
 ### 3. Publish to npm
 

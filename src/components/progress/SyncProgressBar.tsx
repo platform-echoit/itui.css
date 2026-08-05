@@ -1,4 +1,5 @@
 import { forwardRef, type HTMLAttributes } from 'react';
+import { cn } from '../../lib/utils';
 
 export interface SyncProgressBarProps extends HTMLAttributes<HTMLDivElement> {
   value?: number;
@@ -19,7 +20,10 @@ export const SyncProgressBar = forwardRef<HTMLDivElement, SyncProgressBarProps>(
 
     const content = (
       <div
-        className={`flex flex-col items-center gap-2 w-[331px] ${overlay ? '' : className}`}
+        className={cn(
+          'flex flex-col items-center gap-2 w-[331px]',
+          overlay ? '' : className,
+        )}
         {...rest}
       >
         {/* Progress Track */}
@@ -41,7 +45,10 @@ export const SyncProgressBar = forwardRef<HTMLDivElement, SyncProgressBarProps>(
       return (
         <div
           ref={ref}
-          className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black/20 [backdrop-filter:blur(2px)] animate-in fade-in duration-500 ${className}`}
+          className={cn(
+            'fixed inset-0 z-[9999] flex items-center justify-center bg-black/20 [backdrop-filter:blur(2px)] animate-in fade-in duration-500',
+            className,
+          )}
         >
           {content}
         </div>

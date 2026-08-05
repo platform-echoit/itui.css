@@ -1,0 +1,158 @@
+# Runs in this repo (platform-echoit/itui.css), not in the parent monorepo:
+# component PRs land here, while the parent only ever sees a submodule pointer
+# bump — a guard wired into the parent's CI would never see the actual change.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  client-boundary:
+    name: Client boundary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # No version pin: action-setup reads `packageManager` from package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+          cache: pnpm
+
+      # The check resolves each dependency's ESM entry to see whether it ships
+      # its own "use client", so node_modules has to be present.
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check "use client" boundary
+        run: pnpm check:client
+
+  # A barrel that spreads a client module with `export *` hands a consumer's RSC
+  # client bundle the whole library (I-27) — measured at +467 kB. Static and
+  # cheap: it reads source only, and it is the only gate that sees the defect
+  # before the byte budget in rsc-fixture does.
+  barrel-exports:
+    name: Barrel export shape
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check barrel export shape
+        run: pnpm check:barrels
+
+  # A consumer's `className` that gets concatenated instead of passed to `cn()`
+  # loses its tailwind-merge, so the override silently does nothing (I-08, I-31).
+  # No other gate can see it: the bundle stays byte-identical and nothing throws.
+  # It also outlives audits — I-08 fixed this once and four sites survived,
+  # because an audit counts modules while the bug lives per merge site.
+  class-merge:
+    name: Consumer classes reach cn()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check the rules still fire
+        run: pnpm check:classes --self-test
+
+      - name: Check class merging
+        run: pnpm check:classes
+
+  # API.md is generated from the type checker, so a PR that adds a prop or a
+  # component without regenerating it turns the reference into fiction — which is
+  # how the README came to advertise 5 Button variants against the source's 7.
+  # Reads src/, so unlike the jobs below it needs no build.
+  api-docs:
+    name: API reference in sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check API.md is up to date
+        run: pnpm check:docs
+
+  # Integration counterpart to client-boundary: the static check cannot tell
+  # whether the *packaging* still delivers those directives, and this cannot see
+  # a hook that only runs at render time. Both are needed — see
+  # fixtures/next-app/README.md.
+  rsc-fixture:
+    name: RSC fixture (Next App Router)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # `prebuild` runs check:client, so a missing directive fails before pack.
+      - name: Build dist
+        run: pnpm build
+
+      # Packs dist/ into a tarball, installs it into fixtures/next-app,
+      # runs `next build` against it.
+      - name: Build Next App Router fixture
+        run: pnpm check:rsc
+
+  # Guards the tree-shaking claim in the README: one Button must not drag the
+  # library along. Fails if the delta over a React-only baseline exceeds budget.
+  bundle-size:
+    name: Bundle size (Vite)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build dist
+        run: pnpm build
+
+      - name: Measure bundle
+        run: pnpm check:bundle

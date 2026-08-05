@@ -1,146 +1,25 @@
 'use client';
 
-import {
-  forwardRef,
-  useId,
-  type InputHTMLAttributes,
-  type ReactNode,
-} from 'react';
-import { cn } from '../../lib/utils';
+import { forwardRef } from 'react';
+import { InputText, type InputTextProps } from './InputText';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+export type InputProps = InputTextProps;
 
-export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
-  label?: string;
-  error?: string;
-  /** Slot rendered on the left — icon, text, or any ReactNode */
-  prefix?: ReactNode;
-  /** Slot rendered on the right — icon, button, or any ReactNode */
-  suffix?: ReactNode;
-  block?: boolean;
-  /** Extra classes applied to the native <input> element */
-  fieldClassName?: string;
-  /** Extra classes applied to the inner box wrapper — useful for overriding focus-within border color */
-  boxClassName?: string;
-  /** Disables only the <input> field; box styling and prefix/suffix remain interactive */
-  disabledInput?: boolean;
-}
-
-// ─── Input ────────────────────────────────────────────────────────────────────
-
+/**
+ * The original single-line field, now a thin alias over `InputText`.
+ *
+ * It used to carry its own copy of the markup, which had drifted from the rest
+ * of the family: hard-coded `bg-white` instead of the `bg-inverse` token, and
+ * `fieldClassName` appended rather than merged. Only the default width still
+ * differs — `Input` shrinks to its content, `InputText` fills the container —
+ * so pass `block` to pick explicitly.
+ *
+ * @deprecated Use `InputText`, or `<InputV2 />` with no `variant`.
+ */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      label,
-      error,
-      prefix,
-      suffix,
-      block = false,
-      disabled,
-      disabledInput = false,
-      id,
-      className = '',
-      fieldClassName = '',
-      boxClassName = '',
-      ...rest
-    },
-    ref,
-  ) => {
-    const generatedId = useId();
-    const inputId = id ?? generatedId;
-    const isDisabled = !!disabled;
-    const isInputDisabled = isDisabled || disabledInput;
-    const isError = !!error && !isDisabled;
-
-    /*
-      Token → class map:
-        surface/neutral/secondary/default → bg-white
-        border/neutral/subtle      #ededed → border-neutral-subtle   (@theme)
-        border/primary/default     #009ce0 → border-brand            (@theme)
-        border/neutral/disabled    #c2c2c2 → border-neutral-disabled (@theme)
-        surface/neutral/disabled   #f5f5f5 → bg-neutral-100          (@theme)
-        text/neutral/default       #0f0f0f → text-foreground                (@theme)
-        text/neutral/muted         #595858 → text-neutral-muted          (@theme)
-        text/neutral/disabled      #c2c2c2 → text-neutral-disabled   (@theme)
-        border/semantic/error      #f44336 → border-red-500
-        text/semantic/error        #f44336 → text-red-500
-    */
-    const boxClass = cn(
-      'flex items-center gap-2 h-12 px-3 rounded-lg border overflow-hidden',
-      isDisabled
-        ? 'bg-neutral-100 border-input pointer-events-none'
-        : isError
-          ? 'bg-white border-destructive'
-          : 'bg-white border-input focus-within:border-ring',
-      boxClassName,
-    );
-
-    return (
-      <div
-        className={cn(`flex flex-col gap-2 ${className}`, {
-          'w-full': block,
-        })}
-      >
-        {label && (
-          <label
-            htmlFor={inputId}
-            className="shrink-0 text-sm font-medium leading-6 tracking-md text-foreground"
-          >
-            {label}
-          </label>
-        )}
-
-        <div className={boxClass}>
-          {prefix && (
-            <span
-              className="shrink-0 flex items-center text-neutral-muted"
-              aria-hidden="true"
-            >
-              {prefix}
-            </span>
-          )}
-
-          <input
-            ref={ref}
-            id={inputId}
-            disabled={isInputDisabled}
-            className={[
-              'flex-1 min-w-0 bg-transparent outline-none',
-              'text-base leading-lg tracking-lg',
-              isDisabled
-                ? 'bg-neutral-100 border-neutral-subtle text-neutral-disabled placeholder:text-neutral-disabled cursor-not-allowed'
-                : disabledInput
-                  ? 'bg-transparent text-neutral-disabled placeholder:text-neutral-disabled cursor-not-allowed'
-                  : 'bg-transparent text-foreground placeholder:text-neutral-muted',
-              fieldClassName,
-            ]
-              .filter(Boolean)
-              .join(' ')}
-            {...rest}
-          />
-
-          {suffix && (
-            <span
-              className="shrink-0 flex items-center text-neutral-muted"
-              aria-hidden="true"
-            >
-              {suffix}
-            </span>
-          )}
-        </div>
-
-        {isError && (
-          <p
-            className="text-sm font-normal leading-5 tracking-md text-destructive"
-            role="alert"
-          >
-            {error}
-          </p>
-        )}
-      </div>
-    );
-  },
+  ({ block = false, ...rest }, ref) => (
+    <InputText ref={ref} block={block} {...rest} />
+  ),
 );
 
 Input.displayName = 'Input';

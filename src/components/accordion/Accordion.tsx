@@ -1,3 +1,5 @@
+'use client';
+
 import {
   createContext,
   forwardRef,
@@ -6,7 +8,7 @@ import {
   type ComponentRef,
   type ReactNode,
 } from 'react';
-import { Accordion as RadixAccordion } from 'radix-ui';
+import * as RadixAccordion from '@radix-ui/react-accordion';
 import { cn } from '../../lib/utils';
 
 /*

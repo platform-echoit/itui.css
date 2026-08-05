@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { Dialog as RadixDialog } from 'radix-ui';
+import * as RadixDialog from '@radix-ui/react-dialog';
 import { cn } from '../../lib/utils';
 import { Button } from '../button';
 
@@ -46,8 +46,8 @@ export function Modal({
   trigger,
   title,
   children,
-  cancelText = '취소',
-  confirmText = '확인',
+  cancelText = 'Cancel',
+  confirmText = 'Confirm',
   onCancel,
   onConfirm,
   singleButton = false,

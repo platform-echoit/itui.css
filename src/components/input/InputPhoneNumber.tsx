@@ -54,7 +54,7 @@ export const InputPhoneNumber = forwardRef<
       onBlur,
       format = 'raw',
       error,
-      invalidMessage = '올바른 휴대폰 번호를 입력해주세요.',
+      invalidMessage = 'Please enter a valid mobile number.',
       ...rest
     },
     ref,

@@ -1,12 +1,10 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
-import { Progress as RadixProgress } from 'radix-ui';
+import * as RadixProgress from '@radix-ui/react-progress';
 import { cn } from '../../lib/utils';
-import {
-  CheckCircleFillIcon,
-  CheckRegularIcon,
-  XCircleFillIcon,
-  XRegularIcon,
-} from '../../icons/ITUI';
+import CheckCircleFillIcon from '../../icons/ITUI/check-circle/CheckCircleFillIcon';
+import CheckRegularIcon from '../../icons/ITUI/check/CheckRegularIcon';
+import XCircleFillIcon from '../../icons/ITUI/xcircle/XCircleFillIcon';
+import XRegularIcon from '../../icons/ITUI/x/XRegularIcon';
 
 /*
   Token → Tailwind map (Figma node 27280:1270 "progress bar")

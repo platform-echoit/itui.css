@@ -41,6 +41,12 @@ export interface InputFieldShellProps {
   /** Hint under the box; replaced by `error` when the field is invalid */
   helperText?: string;
   disabled?: boolean;
+  /**
+   * Stretch to the container width. `false` shrinks the frame to its content —
+   * the shape the deprecated `Input` shipped with, kept so aliasing it here does
+   * not silently widen every call-site.
+   */
+  block?: boolean;
   /** Extra classes on the outer wrapper (label + box + message) */
   className?: string;
   /** Extra classes on the bordered box */
@@ -71,6 +77,7 @@ export function InputFieldShell({
   error,
   helperText,
   disabled = false,
+  block = true,
   className,
   boxClassName,
   htmlFor,
@@ -79,10 +86,10 @@ export function InputFieldShell({
   children,
 }: InputFieldShellProps) {
   const isError = !!error && !disabled;
-  const message = isError ? error : helperText;
+  const message = inputMessage({ error, helperText, disabled });
 
   return (
-    <div className={cn('flex w-full flex-col gap-2', className)}>
+    <div className={cn('flex flex-col gap-2', block && 'w-full', className)}>
       {label && (
         <label
           htmlFor={htmlFor}
@@ -111,6 +118,7 @@ export function InputFieldShell({
 
       {message && (
         <p
+          id={inputMessageId(htmlFor)}
           role={isError ? 'alert' : undefined}
           className={cn(
             'text-sm leading-md tracking-md',
@@ -122,6 +130,28 @@ export function InputFieldShell({
       )}
     </div>
   );
+}
+
+/**
+ * The message actually rendered under the box: `error` wins while the field is
+ * enabled, otherwise `helperText`. Exported so a control can ask the same
+ * question the shell asks — a control must only point `aria-describedby` at the
+ * message when one is on screen.
+ */
+export function inputMessage({
+  error,
+  helperText,
+  disabled = false,
+}: Pick<InputFieldShellProps, 'error' | 'helperText' | 'disabled'>) {
+  return !!error && !disabled ? error : helperText;
+}
+
+/**
+ * id of the message paragraph, derived from the control id so the shell and the
+ * control agree without passing anything between them.
+ */
+export function inputMessageId(htmlFor?: string) {
+  return htmlFor ? `${htmlFor}-message` : undefined;
 }
 
 /**

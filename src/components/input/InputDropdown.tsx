@@ -17,10 +17,10 @@ import { useForwardedRef } from '../../lib/use-forwarded-ref';
 import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
 import { CaretRightRegularIcon } from '../../icons/ITUI/caret-right';
 import {
+  Popover,
   PopoverAnchor,
   PopoverContent,
-  PopoverRoot,
-} from '../popover/PopoverRoot';
+} from '../popover/Popover';
 import { Radio, RadioGroup } from '../radio/Radio';
 import { InputText, type InputTextProps } from './InputText';
 
@@ -141,7 +141,7 @@ export const InputDropdownSub = forwardRef<
     };
 
     return (
-      <PopoverRoot open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverAnchor asChild>
           <button
             ref={setRowRef}
@@ -191,7 +191,7 @@ export const InputDropdownSub = forwardRef<
         >
           {children}
         </PopoverContent>
-      </PopoverRoot>
+      </Popover>
     );
   },
 );
@@ -250,7 +250,7 @@ export const InputDropdown = forwardRef<HTMLInputElement, InputDropdownProps>(
       open,
       onOpenChange,
       disabled = false,
-      placeholder = '선택해주세요',
+      placeholder = 'Select an option',
       fieldClassName,
       panelClassName,
       onKeyDown,
@@ -293,7 +293,7 @@ export const InputDropdown = forwardRef<HTMLInputElement, InputDropdownProps>(
     };
 
     return (
-      <PopoverRoot open={isOpen} onOpenChange={setIsOpen}>
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
         {/* virtualRef: positions against the box without rendering a wrapper. */}
         <PopoverAnchor virtualRef={boxRef} />
 
@@ -359,7 +359,7 @@ export const InputDropdown = forwardRef<HTMLInputElement, InputDropdownProps>(
             {children}
           </RadioGroup>
         </PopoverContent>
-      </PopoverRoot>
+      </Popover>
     );
   },
 );

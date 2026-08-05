@@ -1,15 +1,17 @@
 import { forwardRef, type HTMLAttributes } from 'react';
-import { Avatar as RadixAvatar } from 'radix-ui';
+import * as RadixAvatar from '@radix-ui/react-avatar';
 import { cn } from '../../lib/utils';
 
 /*
   Token → Tailwind class reference
   ─────────────────────────────────────────────────────────────────────────────
   COLORS (from global.css @theme)
-  color/semantic/red/700          #ad3026 → bg-semantic-red-700  (--color-semantic-red-700)
-  text/sematic/inverse            #ffffff → text-white
-  border/neutral/inverse          #ffffff → border-white
-  surface/neutral/subtle/default  #f5f5f5 → bg-surface-hover     (--color-surface-hover)
+  icon/neutral/subtle             #9e9e9e → bg-neutral-subtle         (Initial, "+N" badge)
+  surface/neutral/subtle/default  #f5f5f5 → bg-surface-neutral-subtle (Default placeholder)
+  icon/neutral/subtle             #9e9e9e → text-icon-neutral-subtle  (placeholder silhouette)
+  text/sematic/inverse            #fafafa → text-inverse
+  border/neutral/inverse          #fafafa → border-inverse
+  color/semantic/red/700          #ad3026 → bg-semantic-red-700  (opt-in via backgroundColor)
 
   RADIUS
   radius/full  999px → rounded-full
@@ -36,7 +38,7 @@ import { cn } from '../../lib/utils';
 
   AVATAR GROUP
   static/space/8  8px → -mr-2 (overlap) / pr-2 (container right padding)
-  stroke/sm       2px → border-2 (white outline between overlapping avatars)
+  stroke/sm       2px → border-2 (inverse outline between overlapping avatars)
   ─────────────────────────────────────────────────────────────────────────────
 */
 
@@ -49,10 +51,10 @@ export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
   src?: string;
   alt?: string;
   /**
-   * Background color for initial/icon mode.
+   * Background color for initial/placeholder mode.
    * Pass a valid @theme color token name — e.g. 'semantic-red-700', 'brand'.
-   * Raw hex values (#fff) and CSS variables are not accepted.
-   * @default 'semantic-red-700'
+   * Anything else is applied as a raw CSS color, so a per-user hex also works.
+   * @default 'neutral-subtle' with initials, 'surface-neutral-subtle' without
    */
   backgroundColor?: string;
 }
@@ -92,6 +94,8 @@ const textSizeMap: Record<AvatarSize, string> = {
  * Values are the full Tailwind bg-* class to keep the scanner happy.
  */
 const BG_CLASS: Record<string, string> = {
+  'neutral-subtle': 'bg-neutral-subtle',
+  'surface-neutral-subtle': 'bg-surface-neutral-subtle',
   'semantic-red-700': 'bg-semantic-red-700',
   brand: 'bg-brand',
   'brand-hover': 'bg-brand-hover',
@@ -102,6 +106,31 @@ const BG_CLASS: Record<string, string> = {
   ink: 'bg-foreground',
 };
 
+// ─── Placeholder ──────────────────────────────────────────────────────────────
+
+/**
+ * Figma's "Default" avatar: a head circle over a shoulders ellipse whose bottom
+ * is clipped by the avatar's round edge.
+ *
+ * Coordinates are the exported mask geometry re-expressed in the avatar's own
+ * 72×72 box, so one viewBox scales to every size: the 47×61 leaf sits 13px from
+ * the left (18.06%) with its centre 12.5px below the middle, which puts the
+ * shoulders' bottom edge at y=78.5 — outside the circle, hence the flush clip.
+ */
+function AvatarPlaceholder() {
+  return (
+    <svg
+      viewBox="0 0 72 72"
+      fill="currentColor"
+      aria-hidden="true"
+      className="size-full text-icon-neutral-subtle"
+    >
+      <circle cx="36.5" cy="31" r="12.6" />
+      <ellipse cx="36.5" cy="62.5" rx="23" ry="16" />
+    </svg>
+  );
+}
+
 // ─── Avatar ───────────────────────────────────────────────────────────────────
 
 export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
@@ -110,25 +139,35 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
       size = 'md',
       src,
       alt = '',
-      backgroundColor = 'semantic-red-700',
+      backgroundColor,
       className,
       children,
       ...rest
     },
     ref,
   ) => {
-    const bgClass = BG_CLASS[backgroundColor ?? ''];
-    const bgStyle =
-      !src && !bgClass && backgroundColor ? { backgroundColor } : undefined;
+    const hasInitials = children != null && children !== '';
+    // Figma puts initials on icon/neutral/subtle and the placeholder on the
+    // lighter surface/neutral/subtle. An explicit backgroundColor always wins.
+    const bgToken =
+      backgroundColor ??
+      (hasInitials ? 'neutral-subtle' : 'surface-neutral-subtle');
+    const bgClass = BG_CLASS[bgToken];
+    // Token names outside the map fall through to a raw CSS color, which is how
+    // callers pass a per-user hex.
+    const bgStyle = !src && !bgClass ? { backgroundColor: bgToken } : undefined;
+    const initial =
+      typeof children === 'string'
+        ? children.charAt(0).toUpperCase()
+        : children;
+
     return (
       <RadixAvatar.Root
         ref={ref}
         className={cn(
-          'shrink-0 rounded-full overflow-hidden flex items-center justify-center text-white',
+          'relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full text-inverse',
           containerSizeMap[size],
-          !src && (bgClass ?? 'bg-semantic-red-700'),
-          !src &&
-            'relative inline-flex items-center justify-center overflow-hidden',
+          !src && bgClass,
           className,
         )}
         style={bgStyle}
@@ -138,19 +177,17 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
           <RadixAvatar.Image
             src={src}
             alt={alt}
-            className="w-full h-full object-cover"
+            className="size-full object-cover"
           />
         )}
         <RadixAvatar.Fallback
           delayMs={0}
           className={cn(
-            'relative flex items-center justify-center overflow-hidden font-semibold text-white',
+            'flex size-full items-center justify-center overflow-hidden font-semibold',
             textSizeMap[size],
           )}
         >
-          {typeof children === 'string'
-            ? children.charAt(0).toUpperCase()
-            : children}
+          {hasInitials ? initial : !src && <AvatarPlaceholder />}
         </RadixAvatar.Fallback>
       </RadixAvatar.Root>
     );
@@ -166,7 +203,7 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
       ref={ref}
       className={cn(
         'flex items-center pr-2',
-        '[&>*]:-mr-2 [&>*]:border-2 [&>*]:border-white',
+        '[&>*]:-mr-2 [&>*]:border-2 [&>*]:border-inverse',
         className,
       )}
       {...rest}
@@ -175,15 +212,17 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
       {!!count && (
         <div
           className={cn(
-            'shrink-0 rounded-full flex items-center justify-center',
-            'bg-semantic-red-700 border-2 border-white',
+            // `relative` keeps the badge on top of the stack: Avatar is itself
+            // positioned, so a static badge would paint *under* its neighbour.
+            'relative shrink-0 rounded-full flex items-center justify-center',
+            'bg-neutral-subtle border-2 border-inverse',
             containerSizeMap[size],
           )}
           aria-label={`${count} more`}
         >
           <span
             className={cn(
-              'font-semibold text-white select-none',
+              'font-semibold text-inverse select-none',
               textSizeMap[size],
             )}
           >
