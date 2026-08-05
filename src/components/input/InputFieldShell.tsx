@@ -6,7 +6,7 @@ import { cn } from '../../lib/utils';
 /*
   Token → Tailwind map (Figma node 27096:9849 `Input` · 28361:2330 `InputWithLabel`)
   ─────────────────────────────────────────────────────────────────────────────
-  The frame every input variant is built from — label, bordered box, message.
+  The frame every input field type is built from — label, bordered box, message.
 
   BOX  (height/input 48px → h-12 · spacing/md 12px → px-3 · spacing/xs 4px → gap-1
         radius/sm 8px → rounded-lg · stroke/xs 1px → border)
@@ -66,11 +66,11 @@ export interface InputFieldShellProps {
 }
 
 /**
- * Label + bordered box + message frame shared by every input variant.
+ * Label + bordered box + message frame shared by every input field type.
  *
  * Not exported from the barrel on purpose: it is an internal building block for
  * the input family (`InputText`, `InputTextarea`, `InputTag`…), not a public
- * component. Consumers reach every variant through `InputV2`.
+ * component. Consumers reach every field type through `InputV2`.
  */
 export function InputFieldShell({
   label,
@@ -166,7 +166,7 @@ export function inputSlotClass(disabled: boolean, className?: string) {
   );
 }
 
-/** Field classes, shared so `<input>` and `<textarea>` variants stay in sync. */
+/** Field classes, shared so the `<input>` and `<textarea>` fields stay in sync. */
 export function inputFieldClass(disabled: boolean, className?: string) {
   return cn(
     'flex-1 min-w-0 bg-transparent outline-none',
