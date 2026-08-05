@@ -1,31 +1,42 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../../lib/utils';
 
-// ── Token → Tailwind map ─────────────────────────────────────────────────────
+// ── Token → Tailwind map (Figma node 27901:915) ──────────────────────────────
 /*
   static/spacing/8 (8px)         → gap-2
   text/neutral/subtle (#9e9e9e)  → text-icon-neutral-subtle  (@theme)
-  icon/neutral/subtle (#9e9e9e)  → text-icon-neutral-subtle  (@theme)
+  icon/neutral/subtle (#9e9e9e)  → hardcoded #9E9E9E on the icon strokes
   font/size/14 (14px)            → text-sm
   font/weight/regular (400)      → font-normal
-  font/line-height/md (24px)     → leading-6
   font/letter-spacing/md (0.2px) → tracking-md               (@theme)
-  icon 60×60px                   → size-15  (15 × 4px = 60px)
+  icon 60×60px                   → width/height 60 on the svg
 
+  DEVIATION: font/line-height/md is 24px (leading-6); the text ships leading-5
+  (20px) so the caption hugs the icon. Kept deliberately.
   ASSUMPTION: description prop — not in Figma; uses same text tokens as title.
+
+  The Figma `Type` axis is the `type` prop: each value carries its own 60px icon
+  and caption. `icon` / `title` override the pair for one-off copy.
 */
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
+export type EmptyType = 'NoContents' | 'NoSearchResults';
+
 export interface EmptyProps extends HTMLAttributes<HTMLDivElement> {
+  /** Figma `Type` — picks the icon and default caption. */
+  type?: EmptyType;
+  /** Overrides the icon the `type` would render. */
   icon?: ReactNode;
+  /** Overrides the caption the `type` would render. Pass `''` to hide it. */
   title?: string;
   description?: string;
 }
 
-// ── Default icon ──────────────────────────────────────────────────────────────
+// ── Icons ─────────────────────────────────────────────────────────────────────
 
-const DefaultIcon = () => (
+/** Figma `package-open`, node 28183:1007. */
+const PackageOpenIcon = () => (
   <svg
     width="60"
     height="60"
@@ -49,6 +60,45 @@ const DefaultIcon = () => (
   </svg>
 );
 
+/** Figma `search-remove`, node 28183:1010. */
+const SearchRemoveIcon = () => (
+  <svg
+    width="60"
+    height="60"
+    viewBox="0 0 60 60"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M42.5 42.5L52.5 52.5"
+      stroke="#9E9E9E"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M47.5 27.5C47.5 16.4543 38.5458 7.5 27.5 7.5C16.4543 7.5 7.5 16.4543 7.5 27.5C7.5 38.5458 16.4543 47.5 27.5 47.5C38.5458 47.5 47.5 38.5458 47.5 27.5Z"
+      stroke="#9E9E9E"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M21.5 21.5L27.5 27.5M27.5 27.5L33.5 33.5M27.5 27.5L33.5 21.5M27.5 27.5L21.5 33.5"
+      stroke="#9E9E9E"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+/** The two Figma variants, each an icon paired with its caption. */
+const TYPES: Record<EmptyType, { icon: ReactNode; title: string }> = {
+  NoContents: { icon: <PackageOpenIcon />, title: '콘텐츠 없음' },
+  NoSearchResults: { icon: <SearchRemoveIcon />, title: '검색 결과 없음' },
+};
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 // Splits on literal "\n" (JSX attr string) and actual newline (JS expression).
@@ -66,32 +116,38 @@ export const Empty = forwardRef<HTMLDivElement, EmptyProps>(
   (
     {
       className,
-      icon = <DefaultIcon />,
-      title = 'No content',
+      type = 'NoContents',
+      icon,
+      title,
       description,
       children,
       ...props
     },
     ref,
-  ) => (
-    <div
-      ref={ref}
-      className={cn('flex flex-col items-center gap-2', className)}
-      {...props}
-    >
-      {icon}
-      {title && (
-        <p className="text-sm font-normal leading-5 tracking-md text-icon-neutral-subtle text-center">
-          {renderLines(title)}
-        </p>
-      )}
-      {description && (
-        <p className="text-sm font-normal leading-5 tracking-md text-icon-neutral-subtle text-center">
-          {renderLines(description)}
-        </p>
-      )}
-      {children}
-    </div>
-  ),
+  ) => {
+    const variant = TYPES[type];
+    const resolvedTitle = title ?? variant.title;
+
+    return (
+      <div
+        ref={ref}
+        className={cn('flex flex-col items-center gap-2', className)}
+        {...props}
+      >
+        {icon ?? variant.icon}
+        {resolvedTitle && (
+          <p className="text-sm font-normal leading-5 tracking-md text-icon-neutral-subtle text-center">
+            {renderLines(resolvedTitle)}
+          </p>
+        )}
+        {description && (
+          <p className="text-sm font-normal leading-5 tracking-md text-icon-neutral-subtle text-center">
+            {renderLines(description)}
+          </p>
+        )}
+        {children}
+      </div>
+    );
+  },
 );
 Empty.displayName = 'Empty';

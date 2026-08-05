@@ -18,6 +18,7 @@ export type {
   CardWithImageProps,
   CardImagePosition,
   CardWithActionProps,
+  CardActionTone,
   PricingCardProps,
   PricingFeature,
 } from './CardTemplates';
