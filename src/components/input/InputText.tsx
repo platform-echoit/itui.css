@@ -18,7 +18,7 @@ import {
 /*
   Figma node 27096:9849 `Input` · 28361:2330 `InputWithLabel`.
   Styling lives in InputFieldShell; this file only adds the single-line control
-  and its two slots. Every other variant is this component plus behaviour.
+  and its two slots. Every other field type is this component plus behaviour.
 */
 
 export interface InputTextProps
@@ -44,7 +44,7 @@ export interface InputTextProps
   boxRef?: InputFieldShellProps['boxRef'];
 }
 
-/** The plain single-line field — `<InputV2 />` with no variant. */
+/** The plain single-line field — `<InputV2 />` with no `fieldType`. */
 export const InputText = forwardRef<HTMLInputElement, InputTextProps>(
   (
     {

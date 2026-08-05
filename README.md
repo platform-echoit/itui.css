@@ -128,14 +128,14 @@ and which name to reach for.
 Several names look interchangeable and are not. Autocomplete cannot tell you which is which,
 so here is the whole list — reach for the **Use** column unless the note applies to you.
 
-| Looks like a pair | Use | Because |
-| --- | --- | --- |
-| `Tab` · `Tabs` | **`Tab`** (with `TabList` / `TabTrigger` / `TabContent`) | `Tab` is the design-system component: four `type`s (`default` · `line` · `segment` · `pill`) drawn from the Figma spec, ITUI tokens throughout. `Tabs` predates it and still paints itself with raw `slate-*` palette classes, so it ignores your theme and your dark mode. |
-| `Navigation` · `NavigationV2` | **`NavigationV2`** | Both implement the same mobile bars. V2 is the current one — richer top-bar slots, `asChild` support via Slot. V1 stays exported so existing screens keep working. |
-| `Input` · `InputV2` | **`InputV2`** | Not a v1/v2 pair. `InputV2` is one entry point to the whole field family — `variant="date" \| "tag" \| "upload" \| "text-formatting"` and six more, each type-checked against its own props. With no `variant` it gives you the plain single-line field. |
-| `Input` · `InputText` | **`InputText`** | This one *is* a real duplicate. `InputText` is the field every other variant is built from, so it stays in step with the family. `Input` is now a thin deprecated alias over it — same props, except it defaults to shrink-to-content instead of full width. Pass `block` to choose either way. |
-| `Dialog` · `Modal` · `Popup` · `BottomSheet` | **whichever matches the job** | Four different designs, not four versions of one. `Dialog` is the primitive you compose freely. `Modal` is the ready-made title + body + two-button confirm. `Popup` is the announcement card with an image slot and "don't show again". `BottomSheet` is the mobile sheet that slides up from the bottom edge. |
-| `Toast` · `Snackbar` | **both, together** | They are designed to coexist: `Snackbar` renders into its own sonner viewport, so the app-wide `<Toaster />` never picks up a snackbar and vice versa. `toast()` is the top-centre notification; `snackbar()` is the bottom-centre bar with an optional action link. Mount `<Toaster />` and `<SnackbarToaster />` both. |
+| Looks like a pair                            | Use                                                      | Because                                                                                                                                                                                                                                                                                                                                                                                               |
+| -------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Tab` · `Tabs`                               | **`Tab`** (with `TabList` / `TabTrigger` / `TabContent`) | `Tab` is the design-system component: four `type`s (`default` · `line` · `segment` · `pill`) drawn from the Figma spec, ITUI tokens throughout. `Tabs` predates it and still paints itself with raw `slate-*` palette classes, so it ignores your theme and your dark mode.                                                                                                                           |
+| `Navigation` · `NavigationV2`                | **`NavigationV2`**                                       | Both implement the same mobile bars. V2 is the current one — richer top-bar slots, `asChild` support via Slot. V1 stays exported so existing screens keep working.                                                                                                                                                                                                                                    |
+| `Input` · `InputV2`                          | **`InputV2`**                                            | Not a v1/v2 pair. `InputV2` is one entry point to the whole field family — `fieldType="date" \| "tag" \| "upload" \| "text-formatting"` and six more, each type-checked against its own props. With no `fieldType` it gives you the plain single-line field. It is `fieldType` rather than `variant` because it swaps the field itself, not its look, and `type` stays free for the native attribute. |
+| `Input` · `InputText`                        | **`InputText`**                                          | This one _is_ a real duplicate. `InputText` is the field every other field type is built from, so it stays in step with the family. `Input` is now a thin deprecated alias over it — same props, except it defaults to shrink-to-content instead of full width. Pass `block` to choose either way.                                                                                                    |
+| `Dialog` · `Modal` · `Popup` · `BottomSheet` | **whichever matches the job**                            | Four different designs, not four versions of one. `Dialog` is the primitive you compose freely. `Modal` is the ready-made title + body + two-button confirm. `Popup` is the announcement card with an image slot and "don't show again". `BottomSheet` is the mobile sheet that slides up from the bottom edge.                                                                                       |
+| `Toast` · `Snackbar`                         | **both, together**                                       | They are designed to coexist: `Snackbar` renders into its own sonner viewport, so the app-wide `<Toaster />` never picks up a snackbar and vice versa. `toast()` is the top-centre notification; `snackbar()` is the bottom-centre bar with an optional action link. Mount `<Toaster />` and `<SnackbarToaster />` both.                                                                              |
 
 ### Button
 
@@ -270,7 +270,11 @@ Each icon takes `width` / `height` plus any `svg` attribute. Their paths hardcod
 `fill="#101010"`, so a text colour does not tint them:
 
 ```tsx
-<MagnifyingGlassRegularIcon width={20} height={20} className="[&_path]:fill-current" />
+<MagnifyingGlassRegularIcon
+  width={20}
+  height={20}
+  className="[&_path]:fill-current"
+/>
 ```
 
 ---
@@ -281,9 +285,9 @@ Each icon takes `width` / `height` plus any `svg` attribute. Their paths hardcod
 import { InputText, InputV2 } from '@echoit/itui.css';
 ```
 
-`InputText` is the base field — the one every other variant is built from. The same module ships
+`InputText` is the base field — the one every other field type is built from. The same module ships
 the composed ones — search, date, phone number, file upload, dropdown, tag, textarea and rich
-text — each with props of its own, all reachable through `InputV2` and its `variant`.
+text — each with props of its own, all reachable through `InputV2` and its `fieldType`.
 `Input` is a deprecated alias over `InputText`; see the table above.
 [Props →][api-input]
 
@@ -421,7 +425,9 @@ scope — declare them **after** the library import so the cascade favours yours
 @import '@echoit/itui.css';
 
 :root {
-  --color-brand: oklch(0.55 0.2 260); /* buttons, links, focus rings, active states */
+  --color-brand: oklch(
+    0.55 0.2 260
+  ); /* buttons, links, focus rings, active states */
   --radius-lg: 0.75rem; /* the radius 72 call sites use */
 }
 ```
@@ -483,7 +489,7 @@ Requires support for CSS custom properties and `oklch()` color.
   will tell you when it is missing. See [step 1](#1-install-tailwind-css-v4). v3 is not supported.
   The bundler integration (`@tailwindcss/vite`, `@tailwindcss/postcss`, …) is **your** choice —
   this package does not depend on any of them
-- **`@types/react`** — an *optional* peer dependency. It is only needed if you use TypeScript, and
+- **`@types/react`** — an _optional_ peer dependency. It is only needed if you use TypeScript, and
   keeping it a peer means you get one copy of the React types, not a second one nested here
 - **Node.js 18+**
 - **An ESM-capable bundler.** The package is `"type": "module"` and ships **ESM only** — there

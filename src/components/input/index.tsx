@@ -1,12 +1,12 @@
 export { Input } from './Input';
 export type { InputProps } from './Input';
 
-// The entry point: <InputV2 variant="phone" … />. Its props are a union
-// discriminated by `variant`, so each variant keeps its own typed props.
+// The entry point: <InputV2 fieldType="phone" … />. Its props are a union
+// discriminated by `fieldType`, so each field keeps its own typed props.
 export { InputV2 } from './InputV2';
-export type { InputV2Props, InputV2Variant } from './InputV2';
+export type { InputV2Props, InputV2FieldType } from './InputV2';
 
-// The variants behind it, exported for callers who prefer a direct import.
+// The field types behind it, exported for callers who prefer a direct import.
 // (InputFieldShell stays internal — it is a building block, not a component.)
 export { InputText } from './InputText';
 export type { InputTextProps } from './InputText';

@@ -14,7 +14,7 @@ export type InputProps = InputTextProps;
  * differs — `Input` shrinks to its content, `InputText` fills the container —
  * so pass `block` to pick explicitly.
  *
- * @deprecated Use `InputText`, or `<InputV2 />` with no `variant`.
+ * @deprecated Use `InputText`, or `<InputV2 />` with no `fieldType`.
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ block = false, ...rest }, ref) => (
