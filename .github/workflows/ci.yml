@@ -28,6 +28,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # R3 has no positive case left in src/ once its findings are fixed — a
+      # silently broken rule would look exactly like a clean tree (I-15/I-16).
+      - name: Check the rules still fire
+        run: pnpm check:client --self-test
+
       - name: Check "use client" boundary
         run: pnpm check:client
 

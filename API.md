@@ -9,9 +9,9 @@ The 6,615 ITUI icon components live behind their own subpath, `@echoit/itui.css/
 Every module is importable two ways:
 
 ```tsx
-import { Button } from '@echoit/itui.css'; // barrel, tree-shakes in production
-import { Button } from '@echoit/itui.css/button'; // subpath, also fast in dev
-import { XIcon } from '@echoit/itui.css/icons'; // icons, subpath only
+import { Button } from '@echoit/itui.css';          // barrel, tree-shakes in production
+import { Button } from '@echoit/itui.css/button';   // subpath, also fast in dev
+import { XIcon } from '@echoit/itui.css/icons';     // icons, subpath only
 ```
 
 The barrel pulls the stylesheet in with it; a subpath does not, so a consumer who only ever imports subpaths has to `@import '@echoit/itui.css/dist/index.css'` as well. See the [README](./README.md) for setup.
@@ -20,64 +20,64 @@ The barrel pulls the stylesheet in with it; a subpath does not, so a consumer wh
 
 ## Index
 
-| Module              | Subpath                            | Components                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Also exports           |
-| ------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
-| **accordion**       | `@echoit/itui.css/accordion`       | [Accordion](#accordion), [AccordionContent](#accordioncontent), [AccordionItem](#accordionitem), [AccordionTrigger](#accordiontrigger)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | 3 types                |
-| **avatar**          | `@echoit/itui.css/avatar`          | [Avatar](#avatar), [AvatarGroup](#avatargroup)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | 1 type                 |
-| **backdrop**        | `@echoit/itui.css/backdrop`        | [Backdrop](#backdrop)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | 2 types                |
-| **badge**           | `@echoit/itui.css/badge`           | [Badge](#badge)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 1 type                 |
-| **bottom-sheet**    | `@echoit/itui.css/bottom-sheet`    | [BottomSheet](#bottomsheet)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | 1 type                 |
-| **breadcrumb**      | `@echoit/itui.css/breadcrumb`      | [Breadcrumb](#breadcrumb), [BreadcrumbItem](#breadcrumbitem), [BreadcrumbSeparator](#breadcrumbseparator)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | 1 type                 |
-| **bubble**          | `@echoit/itui.css/bubble`          | [Bubble](#bubble)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 type                 |
-| **button**          | `@echoit/itui.css/button`          | [Button](#button)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 2 types                |
-| **calendar**        | `@echoit/itui.css/calendar`        | [BaseDate](#basedate), [BaseDateButton](#basedatebutton), [baseDateRangeEdgeFromModifiers](#basedaterangeedgefrommodifiers), [baseDateStateFromModifiers](#basedatestatefrommodifiers), [Calendar](#calendar), [DateFooter](#datefooter), [DateHeader](#dateheader), [DatePicker](#datepicker), [DateWheelPicker](#datewheelpicker), [WheelPicker](#wheelpicker)                                                                                                                                                                                                                                                                                                                                  | 12 types               |
-| **card**            | `@echoit/itui.css/card`            | [Card](#card), [CardAction](#cardaction), [CardContent](#cardcontent), [CardDescription](#carddescription), [CardFooter](#cardfooter), [CardHeader](#cardheader), [CardTitle](#cardtitle), [CardWithAction](#cardwithaction), [CardWithImage](#cardwithimage), [PricingCard](#pricingcard)                                                                                                                                                                                                                                                                                                                                                                                                        | 3 types                |
-| **carousel**        | `@echoit/itui.css/carousel`        | [Carousel](#carousel), [CarouselContent](#carouselcontent), [CarouselIndicator](#carouselindicator), [CarouselItem](#carouselitem), [CarouselNext](#carouselnext), [CarouselPrevious](#carouselprevious), [useCarousel](#usecarousel)                                                                                                                                                                                                                                                                                                                                                                                                                                                             | 5 types                |
-| **checkbox**        | `@echoit/itui.css/checkbox`        | [Checkbox](#checkbox)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | 1 type                 |
-| **chip**            | `@echoit/itui.css/chip`            | [Chip](#chip)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | 2 types                |
-| **colors**          | `@echoit/itui.css/colors`          | [colorName](#colorname), [Colors](#colors)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | 4 types · 3 values     |
-| **dialog**          | `@echoit/itui.css/dialog`          | [Dialog](#dialog), [DialogClose](#dialogclose), [DialogContent](#dialogcontent), [DialogDescription](#dialogdescription), [DialogFooter](#dialogfooter), [DialogHeader](#dialogheader), [DialogOverlay](#dialogoverlay), [DialogPortal](#dialogportal), [DialogTitle](#dialogtitle), [DialogTrigger](#dialogtrigger)                                                                                                                                                                                                                                                                                                                                                                              | —                      |
-| **divider**         | `@echoit/itui.css/divider`         | [Divider](#divider)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 1 type                 |
-| **dropdown-menu**   | `@echoit/itui.css/dropdown-menu`   | [DropdownMenu](#dropdownmenu), [DropdownMenuCheckboxItem](#dropdownmenucheckboxitem), [DropdownMenuContent](#dropdownmenucontent), [DropdownMenuGroup](#dropdownmenugroup), [DropdownMenuItem](#dropdownmenuitem), [DropdownMenuLabel](#dropdownmenulabel), [DropdownMenuPortal](#dropdownmenuportal), [DropdownMenuRadioGroup](#dropdownmenuradiogroup), [DropdownMenuRadioItem](#dropdownmenuradioitem), [DropdownMenuSeparator](#dropdownmenuseparator), [DropdownMenuShortcut](#dropdownmenushortcut), [DropdownMenuSub](#dropdownmenusub), [DropdownMenuSubContent](#dropdownmenusubcontent), [DropdownMenuSubTrigger](#dropdownmenusubtrigger), [DropdownMenuTrigger](#dropdownmenutrigger) | —                      |
-| **empty**           | `@echoit/itui.css/empty`           | [Empty](#empty)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 1 type                 |
-| **file-type**       | `@echoit/itui.css/file-type`       | [FileIcon](#fileicon), [FileType](#filetype), [TxtIcon](#txticon)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 36 logos · 2 types     |
-| **floating-button** | `@echoit/itui.css/floating-button` | [FloatingButton](#floatingbutton)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 type                 |
-| **gnb**             | `@echoit/itui.css/gnb`             | [Gnb](#gnb), [GnbMenu](#gnbmenu), [GnbMenuItem](#gnbmenuitem)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | 1 type                 |
-| **grid**            | `@echoit/itui.css/grid`            | [Grid](#grid), [GridItem](#griditem), [GridOverlay](#gridoverlay)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 6 types                |
-| **input**           | `@echoit/itui.css/input`           | [Input](#input), [InputDate](#inputdate), [InputDropdown](#inputdropdown), [InputDropdownItem](#inputdropdownitem), [InputDropdownSub](#inputdropdownsub), [InputFileUpload](#inputfileupload), [InputFileUploadItem](#inputfileuploaditem), [InputPhoneNumber](#inputphonenumber), [InputSearch](#inputsearch), [InputTag](#inputtag), [InputText](#inputtext), [InputTextarea](#inputtextarea), [InputTextFormatting](#inputtextformatting), [InputV2](#inputv2), [InputWithButton](#inputwithbutton)                                                                                                                                                                                           | 5 types                |
-| **input-group**     | `@echoit/itui.css/input-group`     | [InputGroup](#inputgroup), [InputGroupAddon](#inputgroupaddon), [InputGroupButton](#inputgroupbutton), [InputGroupInput](#inputgroupinput), [InputGroupText](#inputgrouptext)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | —                      |
-| **label**           | `@echoit/itui.css/label`           | [Label](#label)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 2 types                |
-| **list**            | `@echoit/itui.css/list`            | [List](#list), [ListItem](#listitem)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | 1 type                 |
-| **lnb**             | `@echoit/itui.css/lnb`             | [Lnb](#lnb), [LnbFooter](#lnbfooter), [LnbGroup](#lnbgroup), [LnbGroupContent](#lnbgroupcontent), [LnbGroupTrigger](#lnbgrouptrigger), [LnbHeader](#lnbheader), [LnbItem](#lnbitem), [LnbLogo](#lnblogo), [LnbMenu](#lnbmenu), [LnbToggle](#lnbtoggle), [LnbUser](#lnbuser)                                                                                                                                                                                                                                                                                                                                                                                                                       | 5 types                |
-| **modals**          | `@echoit/itui.css/modals`          | [Modal](#modal), [ResourceModal](#resourcemodal)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | 2 types                |
-| **navigation**      | `@echoit/itui.css/navigation`      | [BottomNavigation](#bottomnavigation), [BottomNavigationItem](#bottomnavigationitem), [TopNavigation](#topnavigation)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | 1 type                 |
-| **navigation-v2**   | `@echoit/itui.css/navigation-v2`   | [BottomNavigationItemV2](#bottomnavigationitemv2), [BottomNavigationV2](#bottomnavigationv2), [TopNavigationV2](#topnavigationv2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 type                 |
-| **overflow-menu**   | `@echoit/itui.css/overflow-menu`   | [OverflowMenu](#overflowmenu), [OverflowMenuContent](#overflowmenucontent), [OverflowMenuItem](#overflowmenuitem), [OverflowMenuPortal](#overflowmenuportal), [OverflowMenuTrigger](#overflowmenutrigger)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | 1 type                 |
-| **pagination**      | `@echoit/itui.css/pagination`      | [Pagination](#pagination)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | —                      |
-| **popover**         | `@echoit/itui.css/popover`         | [Popover](#popover), [PopoverAnchor](#popoveranchor), [PopoverClose](#popoverclose), [PopoverContent](#popovercontent), [PopoverGroup](#popovergroup), [PopoverHeader](#popoverheader), [PopoverItem](#popoveritem), [PopoverMenu](#popovermenu), [PopoverPanel](#popoverpanel), [PopoverPortal](#popoverportal), [PopoverRoot](#popoverroot), [PopoverSeparator](#popoverseparator), [PopoverTrigger](#popovertrigger)                                                                                                                                                                                                                                                                           | 5 types                |
-| **popup**           | `@echoit/itui.css/popup`           | [Popup](#popup)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 1 type                 |
-| **progress**        | `@echoit/itui.css/progress`        | [Progress](#progress), [SyncProgressBar](#syncprogressbar)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | 4 types                |
-| **radio**           | `@echoit/itui.css/radio`           | [Radio](#radio), [RadioGroup](#radiogroup)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | 2 types                |
-| **radius**          | `@echoit/itui.css/radius`          | [Radius](#radius)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 type · 2 values      |
-| **rating**          | `@echoit/itui.css/rating`          | [Rating](#rating), [RatingStar](#ratingstar)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | 1 type                 |
-| **scroll**          | `@echoit/itui.css/scroll`          | [ScrollArea](#scrollarea), [ScrollAreaCorner](#scrollareacorner), [ScrollAreaRoot](#scrollarearoot), [ScrollAreaScrollbar](#scrollareascrollbar), [ScrollAreaThumb](#scrollareathumb), [ScrollAreaViewport](#scrollareaviewport)                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | 7 types                |
-| **select**          | `@echoit/itui.css/select`          | [Select](#select), [SelectContent](#selectcontent), [SelectGroup](#selectgroup), [SelectItem](#selectitem), [SelectLabel](#selectlabel), [SelectScrollDownButton](#selectscrolldownbutton), [SelectScrollUpButton](#selectscrollupbutton), [SelectSeparator](#selectseparator), [SelectTrigger](#selecttrigger), [SelectValue](#selectvalue)                                                                                                                                                                                                                                                                                                                                                      | —                      |
-| **shadow**          | `@echoit/itui.css/shadow`          | [Shadow](#shadow)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 2 types · 3 values     |
-| **sidebar**         | `@echoit/itui.css/sidebar`         | [Sidebar](#sidebar), [SidebarFooter](#sidebarfooter), [SidebarGroup](#sidebargroup), [SidebarHeader](#sidebarheader), [SidebarItem](#sidebaritem), [SidebarMenu](#sidebarmenu)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | —                      |
-| **skeleton**        | `@echoit/itui.css/skeleton`        | [Skeleton](#skeleton), [SkeletonText](#skeletontext)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | 2 types                |
-| **slider**          | `@echoit/itui.css/slider`          | [Slider](#slider)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 type                 |
-| **snackbar**        | `@echoit/itui.css/snackbar`        | [snackbar](#snackbar), [Snackbar](#snackbar-1), [SnackbarAction](#snackbaraction), [SnackbarDescription](#snackbardescription), [SnackbarTitle](#snackbartitle), [SnackbarToaster](#snackbartoaster)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | 5 types · 1 value      |
-| **spacing**         | `@echoit/itui.css/spacing`         | [Spacing](#spacing)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 2 types · 2 values     |
-| **spinner**         | `@echoit/itui.css/spinner`         | [Spinner](#spinner)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 1 type                 |
-| **stepper**         | `@echoit/itui.css/stepper`         | [Stepper](#stepper), [StepperIndicator](#stepperindicator), [StepperItem](#stepperitem)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | 3 types                |
-| **tab**             | `@echoit/itui.css/tab`             | [Tab](#tab), [TabContent](#tabcontent), [TabList](#tablist), [TabTrigger](#tabtrigger)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | 3 types                |
-| **table**           | `@echoit/itui.css/table`           | [Table](#table), [TableBody](#tablebody), [TableCell](#tablecell), [TableHead](#tablehead), [TableHeader](#tableheader), [TableRow](#tablerow)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | 1 type                 |
-| **tabs**            | `@echoit/itui.css/tabs`            | [Tabs](#tabs), [TabsContent](#tabscontent), [TabsList](#tabslist), [TabsTrigger](#tabstrigger)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | —                      |
-| **tag**             | `@echoit/itui.css/tag`             | [Tag](#tag)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | 2 types                |
-| **toast**           | `@echoit/itui.css/toast`           | [Toast](#toast), [Toaster](#toaster)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | 2 types · 2 re-exports |
-| **toggle**          | `@echoit/itui.css/toggle`          | [Toggle](#toggle)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 type                 |
-| **tooltip**         | `@echoit/itui.css/tooltip`         | [Tooltip](#tooltip), [TooltipContent](#tooltipcontent), [TooltipProvider](#tooltipprovider), [TooltipTrigger](#tooltiptrigger)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | —                      |
-| **typography**      | `@echoit/itui.css/typography`      | [Typography](#typography)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | 3 types · 3 values     |
+| Module | Subpath | Components | Also exports |
+| --- | --- | --- | --- |
+| **accordion** | `@echoit/itui.css/accordion` | [Accordion](#accordion), [AccordionContent](#accordioncontent), [AccordionItem](#accordionitem), [AccordionTrigger](#accordiontrigger) | 3 types |
+| **avatar** | `@echoit/itui.css/avatar` | [Avatar](#avatar), [AvatarGroup](#avatargroup) | 1 type |
+| **backdrop** | `@echoit/itui.css/backdrop` | [Backdrop](#backdrop) | 2 types |
+| **badge** | `@echoit/itui.css/badge` | [Badge](#badge) | 1 type |
+| **bottom-sheet** | `@echoit/itui.css/bottom-sheet` | [BottomSheet](#bottomsheet) | 1 type |
+| **breadcrumb** | `@echoit/itui.css/breadcrumb` | [Breadcrumb](#breadcrumb), [BreadcrumbItem](#breadcrumbitem), [BreadcrumbSeparator](#breadcrumbseparator) | 1 type |
+| **bubble** | `@echoit/itui.css/bubble` | [Bubble](#bubble) | 1 type |
+| **button** | `@echoit/itui.css/button` | [Button](#button) | 2 types |
+| **calendar** | `@echoit/itui.css/calendar` | [BaseDate](#basedate), [BaseDateButton](#basedatebutton), [baseDateRangeEdgeFromModifiers](#basedaterangeedgefrommodifiers), [baseDateStateFromModifiers](#basedatestatefrommodifiers), [Calendar](#calendar), [DateFooter](#datefooter), [DateHeader](#dateheader), [DatePicker](#datepicker), [DateWheelPicker](#datewheelpicker), [WheelPicker](#wheelpicker) | 12 types |
+| **card** | `@echoit/itui.css/card` | [Card](#card), [CardAction](#cardaction), [CardContent](#cardcontent), [CardDescription](#carddescription), [CardFooter](#cardfooter), [CardHeader](#cardheader), [CardTitle](#cardtitle), [CardWithAction](#cardwithaction), [CardWithImage](#cardwithimage), [PricingCard](#pricingcard) | 3 types |
+| **carousel** | `@echoit/itui.css/carousel` | [Carousel](#carousel), [CarouselContent](#carouselcontent), [CarouselIndicator](#carouselindicator), [CarouselItem](#carouselitem), [CarouselNext](#carouselnext), [CarouselPrevious](#carouselprevious), [useCarousel](#usecarousel) | 5 types |
+| **checkbox** | `@echoit/itui.css/checkbox` | [Checkbox](#checkbox) | 1 type |
+| **chip** | `@echoit/itui.css/chip` | [Chip](#chip) | 2 types |
+| **colors** | `@echoit/itui.css/colors` | [colorName](#colorname), [Colors](#colors) | 4 types · 3 values |
+| **dialog** | `@echoit/itui.css/dialog` | [Dialog](#dialog), [DialogClose](#dialogclose), [DialogContent](#dialogcontent), [DialogDescription](#dialogdescription), [DialogFooter](#dialogfooter), [DialogHeader](#dialogheader), [DialogOverlay](#dialogoverlay), [DialogPortal](#dialogportal), [DialogTitle](#dialogtitle), [DialogTrigger](#dialogtrigger) | — |
+| **divider** | `@echoit/itui.css/divider` | [Divider](#divider) | 1 type |
+| **dropdown-menu** | `@echoit/itui.css/dropdown-menu` | [DropdownMenu](#dropdownmenu), [DropdownMenuCheckboxItem](#dropdownmenucheckboxitem), [DropdownMenuContent](#dropdownmenucontent), [DropdownMenuGroup](#dropdownmenugroup), [DropdownMenuItem](#dropdownmenuitem), [DropdownMenuLabel](#dropdownmenulabel), [DropdownMenuPortal](#dropdownmenuportal), [DropdownMenuRadioGroup](#dropdownmenuradiogroup), [DropdownMenuRadioItem](#dropdownmenuradioitem), [DropdownMenuSeparator](#dropdownmenuseparator), [DropdownMenuShortcut](#dropdownmenushortcut), [DropdownMenuSub](#dropdownmenusub), [DropdownMenuSubContent](#dropdownmenusubcontent), [DropdownMenuSubTrigger](#dropdownmenusubtrigger), [DropdownMenuTrigger](#dropdownmenutrigger) | — |
+| **empty** | `@echoit/itui.css/empty` | [Empty](#empty) | 1 type |
+| **file-type** | `@echoit/itui.css/file-type` | [FileIcon](#fileicon), [FileType](#filetype), [TxtIcon](#txticon) | 36 logos · 2 types |
+| **floating-button** | `@echoit/itui.css/floating-button` | [FloatingButton](#floatingbutton) | 1 type |
+| **gnb** | `@echoit/itui.css/gnb` | [Gnb](#gnb), [GnbMenu](#gnbmenu), [GnbMenuItem](#gnbmenuitem) | 1 type |
+| **grid** | `@echoit/itui.css/grid` | [Grid](#grid), [GridItem](#griditem), [GridOverlay](#gridoverlay) | 6 types |
+| **input** | `@echoit/itui.css/input` | [Input](#input), [InputDate](#inputdate), [InputDropdown](#inputdropdown), [InputDropdownItem](#inputdropdownitem), [InputDropdownSub](#inputdropdownsub), [InputFileUpload](#inputfileupload), [InputFileUploadItem](#inputfileuploaditem), [InputPhoneNumber](#inputphonenumber), [InputSearch](#inputsearch), [InputTag](#inputtag), [InputText](#inputtext), [InputTextarea](#inputtextarea), [InputTextFormatting](#inputtextformatting), [InputV2](#inputv2), [InputWithButton](#inputwithbutton) | 5 types |
+| **input-group** | `@echoit/itui.css/input-group` | [InputGroup](#inputgroup), [InputGroupAddon](#inputgroupaddon), [InputGroupButton](#inputgroupbutton), [InputGroupInput](#inputgroupinput), [InputGroupText](#inputgrouptext) | — |
+| **label** | `@echoit/itui.css/label` | [Label](#label) | 2 types |
+| **list** | `@echoit/itui.css/list` | [List](#list), [ListItem](#listitem) | 1 type |
+| **lnb** | `@echoit/itui.css/lnb` | [Lnb](#lnb), [LnbFooter](#lnbfooter), [LnbGroup](#lnbgroup), [LnbGroupContent](#lnbgroupcontent), [LnbGroupTrigger](#lnbgrouptrigger), [LnbHeader](#lnbheader), [LnbItem](#lnbitem), [LnbLogo](#lnblogo), [LnbMenu](#lnbmenu), [LnbToggle](#lnbtoggle), [LnbUser](#lnbuser) | 5 types |
+| **modals** | `@echoit/itui.css/modals` | [Modal](#modal), [ResourceModal](#resourcemodal) | 2 types |
+| **navigation** | `@echoit/itui.css/navigation` | [BottomNavigation](#bottomnavigation), [BottomNavigationItem](#bottomnavigationitem), [TopNavigation](#topnavigation) | 1 type |
+| **navigation-v2** | `@echoit/itui.css/navigation-v2` | [BottomNavigationItemV2](#bottomnavigationitemv2), [BottomNavigationV2](#bottomnavigationv2), [TopNavigationV2](#topnavigationv2) | 1 type |
+| **overflow-menu** | `@echoit/itui.css/overflow-menu` | [OverflowMenu](#overflowmenu), [OverflowMenuContent](#overflowmenucontent), [OverflowMenuItem](#overflowmenuitem), [OverflowMenuPortal](#overflowmenuportal), [OverflowMenuTrigger](#overflowmenutrigger) | 1 type |
+| **pagination** | `@echoit/itui.css/pagination` | [Pagination](#pagination) | — |
+| **popover** | `@echoit/itui.css/popover` | [Popover](#popover), [PopoverAnchor](#popoveranchor), [PopoverClose](#popoverclose), [PopoverContent](#popovercontent), [PopoverGroup](#popovergroup), [PopoverHeader](#popoverheader), [PopoverItem](#popoveritem), [PopoverMenu](#popovermenu), [PopoverPanel](#popoverpanel), [PopoverPortal](#popoverportal), [PopoverRoot](#popoverroot), [PopoverSeparator](#popoverseparator), [PopoverTrigger](#popovertrigger) | 5 types |
+| **popup** | `@echoit/itui.css/popup` | [Popup](#popup) | 1 type |
+| **progress** | `@echoit/itui.css/progress` | [Progress](#progress), [SyncProgressBar](#syncprogressbar) | 4 types |
+| **radio** | `@echoit/itui.css/radio` | [Radio](#radio), [RadioGroup](#radiogroup) | 2 types |
+| **radius** | `@echoit/itui.css/radius` | [Radius](#radius) | 1 type · 2 values |
+| **rating** | `@echoit/itui.css/rating` | [Rating](#rating), [RatingStar](#ratingstar) | 1 type |
+| **scroll** | `@echoit/itui.css/scroll` | [ScrollArea](#scrollarea), [ScrollAreaCorner](#scrollareacorner), [ScrollAreaRoot](#scrollarearoot), [ScrollAreaScrollbar](#scrollareascrollbar), [ScrollAreaThumb](#scrollareathumb), [ScrollAreaViewport](#scrollareaviewport) | 7 types |
+| **select** | `@echoit/itui.css/select` | [Select](#select), [SelectContent](#selectcontent), [SelectGroup](#selectgroup), [SelectItem](#selectitem), [SelectLabel](#selectlabel), [SelectScrollDownButton](#selectscrolldownbutton), [SelectScrollUpButton](#selectscrollupbutton), [SelectSeparator](#selectseparator), [SelectTrigger](#selecttrigger), [SelectValue](#selectvalue) | — |
+| **shadow** | `@echoit/itui.css/shadow` | [Shadow](#shadow) | 2 types · 3 values |
+| **sidebar** | `@echoit/itui.css/sidebar` | [Sidebar](#sidebar), [SidebarFooter](#sidebarfooter), [SidebarGroup](#sidebargroup), [SidebarHeader](#sidebarheader), [SidebarItem](#sidebaritem), [SidebarMenu](#sidebarmenu) | — |
+| **skeleton** | `@echoit/itui.css/skeleton` | [Skeleton](#skeleton), [SkeletonText](#skeletontext) | 2 types |
+| **slider** | `@echoit/itui.css/slider` | [Slider](#slider) | 1 type |
+| **snackbar** | `@echoit/itui.css/snackbar` | [snackbar](#snackbar), [Snackbar](#snackbar-1), [SnackbarAction](#snackbaraction), [SnackbarDescription](#snackbardescription), [SnackbarTitle](#snackbartitle), [SnackbarToaster](#snackbartoaster) | 5 types · 1 value |
+| **spacing** | `@echoit/itui.css/spacing` | [Spacing](#spacing) | 2 types · 2 values |
+| **spinner** | `@echoit/itui.css/spinner` | [Spinner](#spinner) | 1 type |
+| **stepper** | `@echoit/itui.css/stepper` | [Stepper](#stepper), [StepperIndicator](#stepperindicator), [StepperItem](#stepperitem) | 3 types |
+| **tab** | `@echoit/itui.css/tab` | [Tab](#tab), [TabContent](#tabcontent), [TabList](#tablist), [TabTrigger](#tabtrigger) | 3 types |
+| **table** | `@echoit/itui.css/table` | [Table](#table), [TableBody](#tablebody), [TableCell](#tablecell), [TableHead](#tablehead), [TableHeader](#tableheader), [TableRow](#tablerow) | 1 type |
+| **tabs** | `@echoit/itui.css/tabs` | [Tabs](#tabs), [TabsContent](#tabscontent), [TabsList](#tabslist), [TabsTrigger](#tabstrigger) | — |
+| **tag** | `@echoit/itui.css/tag` | [Tag](#tag) | 2 types |
+| **toast** | `@echoit/itui.css/toast` | [Toast](#toast), [Toaster](#toaster) | 2 types · 2 re-exports |
+| **toggle** | `@echoit/itui.css/toggle` | [Toggle](#toggle) | 1 type |
+| **tooltip** | `@echoit/itui.css/tooltip` | [Tooltip](#tooltip), [TooltipContent](#tooltipcontent), [TooltipProvider](#tooltipprovider), [TooltipTrigger](#tooltiptrigger) | — |
+| **typography** | `@echoit/itui.css/typography` | [Typography](#typography) | 3 types · 3 values |
 
 ---
 
@@ -89,9 +89,9 @@ Props: `AccordionProps extends ComponentPropsWithoutRef< typeof RadixAccordion.R
 
 > Props are a union, so the table lists only what every arm has in common. The rest depend on the discriminant — set it and autocomplete narrows to them.
 
-| Prop       | Type               | Default     | Description |
-| ---------- | ------------------ | ----------- | ----------- |
-| `variant?` | `AccordionVariant` | `'default'` | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `AccordionVariant` | `'default'` | — |
 
 Also accepts the props of `@radix-ui/react-accordion`, `@radix-ui/react-primitive`.
 
@@ -107,9 +107,9 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-acc
 
 Props: `AccordionTriggerProps extends ComponentPropsWithoutRef<typeof RadixAccordion.Trigger>`
 
-| Prop    | Type        | Default | Description                   |
-| ------- | ----------- | ------- | ----------------------------- |
-| `icon?` | `ReactNode` | —       | Optional leading icon (20px). |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon?` | `ReactNode` | — | Optional leading icon (20px). |
 
 Also accepts the props of `@radix-ui/react-primitive`.
 
@@ -135,21 +135,21 @@ type AccordionVariant = 'default' | 'filled' | 'line' | 'outline';
 
 Props: `AvatarProps extends HTMLAttributes<HTMLSpanElement>`
 
-| Prop               | Type         | Default | Description                                                 |
-| ------------------ | ------------ | ------- | ----------------------------------------------------------- |
-| `size?`            | `AvatarSize` | `'md'`  | —                                                           |
-| `src?`             | `string`     | —       | —                                                           |
-| `alt?`             | `string`     | `''`    | —                                                           |
-| `backgroundColor?` | `string`     | —       | Background color for initial/placeholder mode. Pass a valid |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `AvatarSize` | `'md'` | — |
+| `src?` | `string` | — | — |
+| `alt?` | `string` | `''` | — |
+| `backgroundColor?` | `string` | — | Background color for initial/placeholder mode. Pass a valid |
 
 ### AvatarGroup
 
 Props: `AvatarGroupProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop     | Type         | Default | Description                                                                        |
-| -------- | ------------ | ------- | ---------------------------------------------------------------------------------- |
-| `count?` | `number`     | —       | Total overflow count rendered as a "+N" badge. Omit or set to 0 to hide the badge. |
-| `size?`  | `AvatarSize` | `'md'`  | Size of the overflow badge — should match the Avatar children.                     |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `count?` | `number` | — | Total overflow count rendered as a "+N" badge. Omit or set to 0 to hide the badge. |
+| `size?` | `AvatarSize` | `'md'` | Size of the overflow badge — should match the Avatar children. |
 
 **Types**
 
@@ -165,11 +165,11 @@ type AvatarSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 
 Props: `BackdropProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop        | Type               | Default   | Description                                                                                                                                                                          |
-| ----------- | ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `variant?`  | `BackdropVariant`  | `'dim'`   | Figma `Shape` — `dim` is a flat scrim, `blur` tints and blurs what it covers.                                                                                                        |
-| `position?` | `BackdropPosition` | `'fixed'` | `fixed` covers the viewport; `absolute` fills the nearest positioned ancestor.                                                                                                       |
-| `asChild?`  | `boolean`          | `false`   | Paint the scrim onto the child instead of a `div`, so an already-behaving element keeps its own logic — e.g. a Radix `Dialog.Overlay`, or a `<button>` that closes a panel on click. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `BackdropVariant` | `'dim'` | Figma `Shape` — `dim` is a flat scrim, `blur` tints and blurs what it covers. |
+| `position?` | `BackdropPosition` | `'fixed'` | `fixed` covers the viewport; `absolute` fills the nearest positioned ancestor. |
+| `asChild?` | `boolean` | `false` | Paint the scrim onto the child instead of a `div`, so an already-behaving element keeps its own logic — e.g. a Radix `Dialog.Overlay`, or a `<button>` that closes a panel on click. |
 
 **Types**
 
@@ -186,11 +186,11 @@ type BackdropVariant = 'dim' | 'blur';
 
 Props: `BadgeProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop         | Type           | Default    | Description |
-| ------------ | -------------- | ---------- | ----------- |
-| `variant?`   | `BadgeVariant` | `'circle'` | —           |
-| `children?`  | `ReactNode`    | —          | —           |
-| `className?` | `string`       | `''`       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `BadgeVariant` | `'circle'` | — |
+| `children?` | `ReactNode` | — | — |
+| `className?` | `string` | `''` | — |
 
 **Types**
 
@@ -206,23 +206,23 @@ type BadgeVariant = 'circle' | 'overflow' | 'dot';
 
 Props: `BottomSheetProps`
 
-| Prop                | Type                      | Default     | Description                                                                                                                                                                                                                           |
-| ------------------- | ------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `open?`             | `boolean`                 | —           | —                                                                                                                                                                                                                                     |
-| `defaultOpen?`      | `boolean`                 | —           | —                                                                                                                                                                                                                                     |
-| `onOpenChange?`     | `(open: boolean) => void` | —           | —                                                                                                                                                                                                                                     |
-| `trigger?`          | `ReactNode`               | —           | —                                                                                                                                                                                                                                     |
-| `size?`             | `BottomSheetSize`         | `'regular'` | —                                                                                                                                                                                                                                     |
-| `title?`            | `ReactNode`               | —           | —                                                                                                                                                                                                                                     |
-| `showHandle?`       | `boolean`                 | `true`      | Show the drag handle affordance at the top.                                                                                                                                                                                           |
-| `children?`         | `ReactNode`               | —           | —                                                                                                                                                                                                                                     |
-| `footer?`           | `ReactNode`               | —           | Replace the default footer entirely.                                                                                                                                                                                                  |
-| `primaryText?`      | `ReactNode`               | —           | Convenience footer: primary button.                                                                                                                                                                                                   |
-| `onPrimary?`        | `() => void`              | —           | —                                                                                                                                                                                                                                     |
-| `secondaryText?`    | `ReactNode`               | —           | Convenience footer: secondary (cancel) button — its presence makes it a two-button footer.                                                                                                                                            |
-| `onSecondary?`      | `() => void`              | —           | —                                                                                                                                                                                                                                     |
-| `className?`        | `string`                  | —           | —                                                                                                                                                                                                                                     |
-| `onCloseAutoFocus?` | `(event: Event) => void`  | —           | Forwarded to the underlying Radix Dialog.Content. Call `event.preventDefault()` to stop Radix from restoring focus to the trigger on close — lets the caller decide where focus lands (e.g. back into an editor at a specific caret). |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open?` | `boolean` | — | — |
+| `defaultOpen?` | `boolean` | — | — |
+| `onOpenChange?` | `(open: boolean) => void` | — | — |
+| `trigger?` | `ReactNode` | — | — |
+| `size?` | `BottomSheetSize` | `'regular'` | — |
+| `title?` | `ReactNode` | — | — |
+| `showHandle?` | `boolean` | `true` | Show the drag handle affordance at the top. |
+| `children?` | `ReactNode` | — | — |
+| `footer?` | `ReactNode` | — | Replace the default footer entirely. |
+| `primaryText?` | `ReactNode` | — | Convenience footer: primary button. |
+| `onPrimary?` | `() => void` | — | — |
+| `secondaryText?` | `ReactNode` | — | Convenience footer: secondary (cancel) button — its presence makes it a two-button footer. |
+| `onSecondary?` | `() => void` | — | — |
+| `className?` | `string` | — | — |
+| `onCloseAutoFocus?` | `(event: Event) => void` | — | Forwarded to the underlying Radix Dialog.Content. Call `event.preventDefault()` to stop Radix from restoring focus to the trigger on close — lets the caller decide where focus lands (e.g. back into an editor at a specific caret). |
 
 **Types**
 
@@ -238,29 +238,29 @@ type BottomSheetSize = 'full' | 'tall' | 'regular';
 
 Props: `BreadcrumbProps extends HTMLAttributes<HTMLElement>`
 
-| Prop         | Type                      | Default   | Description                                                      |
-| ------------ | ------------------------- | --------- | ---------------------------------------------------------------- |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
 | `separator?` | `BreadcrumbSeparatorType` | `'slash'` | Defaults to `'slash'`. Inherited by every separator in the list. |
 
 ### BreadcrumbItem
 
 Props: `BreadcrumbItemProps extends HTMLAttributes<HTMLElement>`
 
-| Prop       | Type        | Default | Description                                                                     |
-| ---------- | ----------- | ------- | ------------------------------------------------------------------------------- |
-| `href?`    | `string`    | —       | Turns the crumb into a link. Omit it for a crumb that only labels a level.      |
-| `icon?`    | `ReactNode` | —       | Leading 16×16 icon — Figma's `Icon=Yes` variant.                                |
-| `current?` | `boolean`   | `false` | The page you are on: medium weight, not interactive. Figma's `State=Selected`.  |
-| `asChild?` | `boolean`   | `false` | Render the crumb as its single child (e.g. a router `<Link>`) instead of `<a>`. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `href?` | `string` | — | Turns the crumb into a link. Omit it for a crumb that only labels a level. |
+| `icon?` | `ReactNode` | — | Leading 16×16 icon — Figma's `Icon=Yes` variant. |
+| `current?` | `boolean` | `false` | The page you are on: medium weight, not interactive. Figma's `State=Selected`. |
+| `asChild?` | `boolean` | `false` | Render the crumb as its single child (e.g. a router `<Link>`) instead of `<a>`. |
 
 ### BreadcrumbSeparator
 
 Props: `BreadcrumbSeparatorProps extends Omit<LiHTMLAttributes<HTMLLIElement>, 'type'>`
 
-| Prop        | Type                      | Default | Description                                                 |
-| ----------- | ------------------------- | ------- | ----------------------------------------------------------- |
-| `type?`     | `BreadcrumbSeparatorType` | —       | Overrides the type inherited from `<Breadcrumb separator>`. |
-| `children?` | `ReactNode`               | —       | Replaces the default glyph.                                 |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type?` | `BreadcrumbSeparatorType` | — | Overrides the type inherited from `<Breadcrumb separator>`. |
+| `children?` | `ReactNode` | — | Replaces the default glyph. |
 
 **Types**
 
@@ -276,11 +276,11 @@ type BreadcrumbSeparatorType = 'slash' | 'arrow';
 
 Props: `BubbleProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop       | Type           | Default      | Description                                       |
-| ---------- | -------------- | ------------ | ------------------------------------------------- |
-| `sender?`  | `BubbleSender` | `'outgoing'` | —                                                 |
-| `tail?`    | `boolean`      | `false`      | Show the speech-bubble tail at the bottom corner. |
-| `children` | `ReactNode`    | —            | —                                                 |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `sender?` | `BubbleSender` | `'outgoing'` | — |
+| `tail?` | `boolean` | `false` | Show the speech-bubble tail at the bottom corner. |
+| `children` | `ReactNode` | — | — |
 
 **Types**
 
@@ -296,27 +296,20 @@ type BubbleSender = 'outgoing' | 'incoming';
 
 Props: `ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop         | Type            | Default     | Description        |
-| ------------ | --------------- | ----------- | ------------------ |
-| `variant?`   | `ButtonVariant` | `'primary'` | —                  |
-| `size?`      | `ButtonSize`    | `'md'`      | —                  |
-| `iconLeft?`  | `ReactNode`     | —           | Leading icon slot  |
-| `iconRight?` | `ReactNode`     | —           | Trailing icon slot |
-| `loading?`   | `boolean`       | `false`     | —                  |
-| `fullWidth?` | `boolean`       | `false`     | —                  |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `ButtonVariant` | `'primary'` | — |
+| `size?` | `ButtonSize` | `'md'` | — |
+| `iconLeft?` | `ReactNode` | — | Leading icon slot |
+| `iconRight?` | `ReactNode` | — | Trailing icon slot |
+| `loading?` | `boolean` | `false` | — |
+| `fullWidth?` | `boolean` | `false` | — |
 
 **Types**
 
 ```ts
 type ButtonSize = 'lg' | 'md' | 'sm' | 'icon';
-type ButtonVariant =
-  | 'primary'
-  | 'alternative'
-  | 'secondary'
-  | 'link'
-  | 'link-underline'
-  | 'ghost'
-  | 'destructive';
+type ButtonVariant = 'primary' | 'alternative' | 'secondary' | 'link' | 'link-underline' | 'ghost' | 'destructive';
 ```
 
 ---
@@ -329,11 +322,11 @@ One cell of a date grid: the 36px circle plus the range band behind it.
 
 Props: `BaseDateOwnProps`
 
-| Prop         | Type                   | Default     | Description                                                                     |
-| ------------ | ---------------------- | ----------- | ------------------------------------------------------------------------------- |
-| `state?`     | `BaseDateState`        | `'default'` | —                                                                               |
-| `rangeEdge?` | `BaseDateRangeEdge`    | —           | —                                                                               |
-| `marker?`    | `boolean \| ReactNode` | —           | `true` renders the 4px dot from the design; a node renders your own marker row. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state?` | `BaseDateState` | `'default'` | — |
+| `rangeEdge?` | `BaseDateRangeEdge` | — | — |
+| `marker?` | `boolean \| ReactNode` | — | `true` renders the 4px dot from the design; a node renders your own marker row. |
 
 ### BaseDateButton
 
@@ -341,11 +334,11 @@ Props: `BaseDateOwnProps`
 
 Props: `BaseDateOwnProps`
 
-| Prop         | Type                   | Default     | Description                                                                     |
-| ------------ | ---------------------- | ----------- | ------------------------------------------------------------------------------- |
-| `state?`     | `BaseDateState`        | `'default'` | —                                                                               |
-| `rangeEdge?` | `BaseDateRangeEdge`    | —           | —                                                                               |
-| `marker?`    | `boolean \| ReactNode` | —           | `true` renders the 4px dot from the design; a node renders your own marker row. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state?` | `BaseDateState` | `'default'` | — |
+| `rangeEdge?` | `BaseDateRangeEdge` | — | — |
+| `marker?` | `boolean \| ReactNode` | — | `true` renders the 4px dot from the design; a node renders your own marker row. |
 
 ### baseDateRangeEdgeFromModifiers
 
@@ -367,11 +360,11 @@ Props: `CalendarProps extends DayPickerProps`
 
 > Props are a union, so the table lists only what every arm has in common. The rest depend on the discriminant — set it and autocomplete narrows to them.
 
-| Prop                | Type             | Default | Description                                                                        |
-| ------------------- | ---------------- | ------- | ---------------------------------------------------------------------------------- |
-| `size?`             | `CalendarSize`   | `'lg'`  | —                                                                                  |
-| `events?`           | `CalendarEvents` | —       | —                                                                                  |
-| `maxVisibleEvents?` | `number`         | `1`     | Badges rendered per day before the rest collapse into a `+N` row (size `lg` only). |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `CalendarSize` | `'lg'` | — |
+| `events?` | `CalendarEvents` | — | — |
+| `maxVisibleEvents?` | `number` | `1` | Badges rendered per day before the rest collapse into a `+N` row (size `lg` only). |
 
 Also accepts the props of `react-day-picker`.
 
@@ -379,15 +372,15 @@ Also accepts the props of `react-day-picker`.
 
 Props: `DateFooterProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>`
 
-| Prop               | Type                  | Default    | Description                                                                  |
-| ------------------ | --------------------- | ---------- | ---------------------------------------------------------------------------- |
-| `alignment?`       | `DateFooterAlignment` | `'center'` | —                                                                            |
-| `confirmText?`     | `ReactNode`           | —          | —                                                                            |
-| `cancelText?`      | `ReactNode`           | —          | —                                                                            |
-| `onConfirm?`       | `() => void`          | —          | —                                                                            |
-| `onCancel?`        | `() => void`          | —          | —                                                                            |
-| `confirmDisabled?` | `boolean`             | —          | —                                                                            |
-| `children?`        | `ReactNode`           | —          | Left slot of the `right` alignment — the design puts the range summary here. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `alignment?` | `DateFooterAlignment` | `'center'` | — |
+| `confirmText?` | `ReactNode` | — | — |
+| `cancelText?` | `ReactNode` | — | — |
+| `onConfirm?` | `() => void` | — | — |
+| `onCancel?` | `() => void` | — | — |
+| `confirmDisabled?` | `boolean` | — | — |
+| `children?` | `ReactNode` | — | Left slot of the `right` alignment — the design puts the range summary here. |
 
 ### DateHeader
 
@@ -395,17 +388,17 @@ The month navigation row: previous · caption · next.
 
 Props: `DateHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>`
 
-| Prop                | Type         | Default            | Description                                                 |
-| ------------------- | ------------ | ------------------ | ----------------------------------------------------------- |
-| `children?`         | `ReactNode`  | —                  | Center slot: the caption text, or the year/month dropdowns. |
-| `onPrevious?`       | `() => void` | —                  | —                                                           |
-| `onNext?`           | `() => void` | —                  | —                                                           |
-| `previousDisabled?` | `boolean`    | —                  | —                                                           |
-| `nextDisabled?`     | `boolean`    | —                  | —                                                           |
-| `showPrevious?`     | `boolean`    | `true`             | —                                                           |
-| `showNext?`         | `boolean`    | `true`             | —                                                           |
-| `previousLabel?`    | `string`     | `'Previous month'` | —                                                           |
-| `nextLabel?`        | `string`     | `'Next month'`     | —                                                           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children?` | `ReactNode` | — | Center slot: the caption text, or the year/month dropdowns. |
+| `onPrevious?` | `() => void` | — | — |
+| `onNext?` | `() => void` | — | — |
+| `previousDisabled?` | `boolean` | — | — |
+| `nextDisabled?` | `boolean` | — | — |
+| `showPrevious?` | `boolean` | `true` | — |
+| `showNext?` | `boolean` | `true` | — |
+| `previousLabel?` | `string` | `'Previous month'` | — |
+| `nextLabel?` | `string` | `'Next month'` | — |
 
 ### DatePicker
 
@@ -415,16 +408,16 @@ Props: `DatePickerProps extends DayPickerProps`
 
 > Props are a union, so the table lists only what every arm has in common. The rest depend on the discriminant — set it and autocomplete narrows to them.
 
-| Prop                  | Type                              | Default | Description                                                                |
-| --------------------- | --------------------------------- | ------- | -------------------------------------------------------------------------- |
-| `confirmText?`        | `ReactNode`                       | —       | Renders the confirm button; omit it and no confirm button appears.         |
-| `cancelText?`         | `ReactNode`                       | —       | Renders the cancel button; omit it and no cancel button appears.           |
-| `onConfirm?`          | `() => void`                      | —       | —                                                                          |
-| `onCancel?`           | `() => void`                      | —       | —                                                                          |
-| `confirmDisabled?`    | `boolean`                         | —       | —                                                                          |
-| `footerAlignment?`    | `DateFooterAlignment`             | —       | —                                                                          |
-| `summary?`            | `ReactNode`                       | —       | Left slot of the inline footer. Defaults to the selected range, formatted. |
-| `formatRangeSummary?` | `(range: DateRange) => ReactNode` | —       | —                                                                          |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `confirmText?` | `ReactNode` | — | Renders the confirm button; omit it and no confirm button appears. |
+| `cancelText?` | `ReactNode` | — | Renders the cancel button; omit it and no cancel button appears. |
+| `onConfirm?` | `() => void` | — | — |
+| `onCancel?` | `() => void` | — | — |
+| `confirmDisabled?` | `boolean` | — | — |
+| `footerAlignment?` | `DateFooterAlignment` | — | — |
+| `summary?` | `ReactNode` | — | Left slot of the inline footer. Defaults to the selected range, formatted. |
+| `formatRangeSummary?` | `(range: DateRange) => ReactNode` | — | — |
 
 Also accepts the props of `react-day-picker`.
 
@@ -434,17 +427,17 @@ Also accepts the props of `react-day-picker`.
 
 Props: `DateWheelPickerProps extends Omit<WheelPickerProps, 'columns' | 'value' | 'onChange'>`
 
-| Prop           | Type                           | Default                      | Description                            |
-| -------------- | ------------------------------ | ---------------------------- | -------------------------------------- |
-| `type?`        | `DateWheelPickerType`          | `'date'`                     | —                                      |
-| `value`        | `Date`                         | —                            | —                                      |
-| `onChange?`    | `(value: Date) => void`        | —                            | —                                      |
-| `fromYear?`    | `number`                       | —                            | —                                      |
-| `toYear?`      | `number`                       | —                            | —                                      |
-| `formatYear?`  | `(year: number) => ReactNode`  | `String`                     | —                                      |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type?` | `DateWheelPickerType` | `'date'` | — |
+| `value` | `Date` | — | — |
+| `onChange?` | `(value: Date) => void` | — | — |
+| `fromYear?` | `number` | — | — |
+| `toYear?` | `number` | — | — |
+| `formatYear?` | `(year: number) => ReactNode` | `String` | — |
 | `formatMonth?` | `(month: number) => ReactNode` | `(month) => pad2(month + 1)` | `month` is 0-indexed, matching `Date`. |
-| `formatDay?`   | `(day: number) => ReactNode`   | `pad2`                       | —                                      |
-| `formatHour?`  | `(hour: number) => ReactNode`  | `defaultFormatHour`          | `hour` is 0–23.                        |
+| `formatDay?` | `(day: number) => ReactNode` | `pad2` | — |
+| `formatHour?` | `(hour: number) => ReactNode` | `defaultFormatHour` | `hour` is 0–23. |
 
 ### WheelPicker
 
@@ -452,61 +445,55 @@ Scroll-snapping wheels, one per column. Each column scrolls independently and re
 
 Props: `WheelPickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>`
 
-| Prop        | Type                                      | Default | Description                                                       |
-| ----------- | ----------------------------------------- | ------- | ----------------------------------------------------------------- |
-| `columns`   | `WheelPickerColumn[]`                     | —       | —                                                                 |
-| `value`     | `Record<string, string>`                  | —       | Selected option value per column, keyed by `column.key`.          |
-| `onChange?` | `(value: Record<string, string>) => void` | —       | Receives the full next selection, not just the column that moved. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `columns` | `WheelPickerColumn[]` | — | — |
+| `value` | `Record<string, string>` | — | Selected option value per column, keyed by `column.key`. |
+| `onChange?` | `(value: Record<string, string>) => void` | — | Receives the full next selection, not just the column that moved. |
 
 ### BaseDateButtonProps
 
-| Prop         | Type                   | Default | Description                                                                     |
-| ------------ | ---------------------- | ------- | ------------------------------------------------------------------------------- |
-| `state?`     | `BaseDateState`        | —       | —                                                                               |
-| `rangeEdge?` | `BaseDateRangeEdge`    | —       | —                                                                               |
-| `marker?`    | `boolean \| ReactNode` | —       | `true` renders the 4px dot from the design; a node renders your own marker row. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state?` | `BaseDateState` | — | — |
+| `rangeEdge?` | `BaseDateRangeEdge` | — | — |
+| `marker?` | `boolean \| ReactNode` | — | `true` renders the 4px dot from the design; a node renders your own marker row. |
 
 ### BaseDateProps
 
-| Prop         | Type                   | Default | Description                                                                     |
-| ------------ | ---------------------- | ------- | ------------------------------------------------------------------------------- |
-| `state?`     | `BaseDateState`        | —       | —                                                                               |
-| `rangeEdge?` | `BaseDateRangeEdge`    | —       | —                                                                               |
-| `marker?`    | `boolean \| ReactNode` | —       | `true` renders the 4px dot from the design; a node renders your own marker row. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `state?` | `BaseDateState` | — | — |
+| `rangeEdge?` | `BaseDateRangeEdge` | — | — |
+| `marker?` | `boolean \| ReactNode` | — | `true` renders the 4px dot from the design; a node renders your own marker row. |
 
 ### CalendarEvent
 
-| Prop    | Type                | Default | Description |
-| ------- | ------------------- | ------- | ----------- |
-| `label` | `string`            | —       | —           |
-| `tone?` | `CalendarEventTone` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` | — | — |
+| `tone?` | `CalendarEventTone` | — | — |
 
 ### WheelPickerColumn
 
-| Prop          | Type                  | Default | Description |
-| ------------- | --------------------- | ------- | ----------- |
-| `key`         | `string`              | —       | —           |
-| `options`     | `WheelPickerOption[]` | —       | —           |
-| `aria-label?` | `string`              | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `key` | `string` | — | — |
+| `options` | `WheelPickerOption[]` | — | — |
+| `aria-label?` | `string` | — | — |
 
 ### WheelPickerOption
 
-| Prop    | Type        | Default | Description |
-| ------- | ----------- | ------- | ----------- |
-| `value` | `string`    | —       | —           |
-| `label` | `ReactNode` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | — |
+| `label` | `ReactNode` | — | — |
 
 **Types**
 
 ```ts
 type BaseDateRangeEdge = 'start' | 'end';
-type BaseDateState =
-  | 'default'
-  | 'primary'
-  | 'error'
-  | 'disabled'
-  | 'selected'
-  | 'range';
+type BaseDateState = 'default' | 'primary' | 'error' | 'disabled' | 'selected' | 'range';
 type CalendarEvents = Record<string, CalendarEvent[]>;
 type CalendarEventTone = 'primary' | 'success' | 'error';
 type CalendarSize = 'md' | 'lg';
@@ -550,42 +537,42 @@ Declares no props of its own beyond the standard DOM attributes.
 
 Props: `CardWithActionProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>`
 
-| Prop           | Type             | Default   | Description                                                                      |
-| -------------- | ---------------- | --------- | -------------------------------------------------------------------------------- |
-| `title`        | `ReactNode`      | —         | —                                                                                |
-| `description?` | `ReactNode`      | —         | —                                                                                |
-| `actions?`     | `ReactNode`      | —         | Footer actions (e.g. Buttons). Rendered in a bordered footer, stretched equally. |
-| `tone?`        | `CardActionTone` | `'light'` | `dark` drops the card onto an image and reads through a translucent scrim.       |
-| `image?`       | `ReactNode`      | —         | Image behind the `dark` scrim. Falls back to a placeholder. Unused when `light`. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | — |
+| `description?` | `ReactNode` | — | — |
+| `actions?` | `ReactNode` | — | Footer actions (e.g. Buttons). Rendered in a bordered footer, stretched equally. |
+| `tone?` | `CardActionTone` | `'light'` | `dark` drops the card onto an image and reads through a translucent scrim. |
+| `image?` | `ReactNode` | — | Image behind the `dark` scrim. Falls back to a placeholder. Unused when `light`. |
 
 ### CardWithImage
 
 Props: `CardWithImageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>`
 
-| Prop             | Type                | Default | Description                                                           |
-| ---------------- | ------------------- | ------- | --------------------------------------------------------------------- |
-| `title`          | `ReactNode`         | —       | —                                                                     |
-| `description?`   | `ReactNode`         | —       | —                                                                     |
-| `image?`         | `ReactNode`         | —       | Image element (e.g. <img>). Falls back to a placeholder when omitted. |
-| `imagePosition?` | `CardImagePosition` | `'top'` | Where the image sits relative to the text.                            |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `ReactNode` | — | — |
+| `description?` | `ReactNode` | — | — |
+| `image?` | `ReactNode` | — | Image element (e.g. <img>). Falls back to a placeholder when omitted. |
+| `imagePosition?` | `CardImagePosition` | `'top'` | Where the image sits relative to the text. |
 
 ### PricingCard
 
 Props: `PricingCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>`
 
-| Prop       | Type               | Default | Description                                    |
-| ---------- | ------------------ | ------- | ---------------------------------------------- |
-| `badge?`   | `ReactNode`        | —       | Optional highlight badge, e.g. "Most Popular". |
-| `title`    | `ReactNode`        | —       | —                                              |
-| `price`    | `ReactNode`        | —       | —                                              |
-| `features` | `PricingFeature[]` | —       | —                                              |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `badge?` | `ReactNode` | — | Optional highlight badge, e.g. "Most Popular". |
+| `title` | `ReactNode` | — | — |
+| `price` | `ReactNode` | — | — |
+| `features` | `PricingFeature[]` | — | — |
 
 ### PricingFeature
 
-| Prop        | Type        | Default | Description                                                       |
-| ----------- | ----------- | ------- | ----------------------------------------------------------------- |
-| `label`     | `ReactNode` | —       | —                                                                 |
-| `included?` | `boolean`   | —       | false → shown muted with a disabled check (feature not included). |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | — |
+| `included?` | `boolean` | — | false → shown muted with a disabled check (feature not included). |
 
 **Types**
 
@@ -602,12 +589,12 @@ type CardImagePosition = 'top' | 'bottom' | 'center' | 'left';
 
 Props: `CarouselProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop           | Type                         | Default        | Description                                                             |
-| -------------- | ---------------------------- | -------------- | ----------------------------------------------------------------------- |
-| `opts?`        | `CarouselOptions`            | —              | Embla options, e.g. `{ loop: true, align: 'start' }`.                   |
-| `plugins?`     | `CarouselPlugin`             | —              | Embla plugins, e.g. autoplay.                                           |
-| `orientation?` | `CarouselOrientation`        | `'horizontal'` | —                                                                       |
-| `setApi?`      | `(api: CarouselApi) => void` | —              | Receives the Embla api once ready, for imperative control from outside. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `opts?` | `CarouselOptions` | — | Embla options, e.g. `{ loop: true, align: 'start' }`. |
+| `plugins?` | `CarouselPlugin` | — | Embla plugins, e.g. autoplay. |
+| `orientation?` | `CarouselOrientation` | `'horizontal'` | — |
+| `setApi?` | `(api: CarouselApi) => void` | — | Receives the Embla api once ready, for imperative control from outside. |
 
 ### CarouselContent
 
@@ -615,9 +602,9 @@ Props: `CarouselProps extends HTMLAttributes<HTMLDivElement>`
 
 Props: `CarouselContentProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop                 | Type     | Default | Description                                                                |
-| -------------------- | -------- | ------- | -------------------------------------------------------------------------- |
-| `viewportClassName?` | `string` | —       | Class for the overflow viewport Embla measures — use it for outer padding. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `viewportClassName?` | `string` | — | Class for the overflow viewport Embla measures — use it for outer padding. |
 
 ### CarouselIndicator
 
@@ -625,13 +612,13 @@ Pagination indicator. Inside a `<Carousel>` it binds to Embla automatically; `co
 
 Props: `CarouselIndicatorProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>`
 
-| Prop           | Type                      | Default  | Description                                                                 |
-| -------------- | ------------------------- | -------- | --------------------------------------------------------------------------- |
-| `type?`        | `CarouselType`            | `'pill'` | —                                                                           |
-| `background?`  | `boolean`                 | `false`  | Render the pill-shaped surface behind the indicators.                       |
-| `count?`       | `number`                  | —        | Indicator count. Defaults to the parent `<Carousel>`'s snap count.          |
-| `activeIndex?` | `number`                  | —        | Active index. Defaults to the parent `<Carousel>`'s selected snap.          |
-| `onSelect?`    | `(index: number) => void` | —        | Click handler. Defaults to scrolling the parent `<Carousel>` to that slide. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type?` | `CarouselType` | `'pill'` | — |
+| `background?` | `boolean` | `false` | Render the pill-shaped surface behind the indicators. |
+| `count?` | `number` | — | Indicator count. Defaults to the parent `<Carousel>`'s snap count. |
+| `activeIndex?` | `number` | — | Active index. Defaults to the parent `<Carousel>`'s selected snap. |
+| `onSelect?` | `(index: number) => void` | — | Click handler. Defaults to scrolling the parent `<Carousel>` to that slide. |
 
 ### CarouselItem
 
@@ -641,27 +628,27 @@ Declares no props of its own beyond the standard DOM attributes.
 
 Props: `ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop         | Type            | Default       | Description        |
-| ------------ | --------------- | ------------- | ------------------ |
-| `variant?`   | `ButtonVariant` | `'secondary'` | —                  |
-| `size?`      | `ButtonSize`    | `'icon'`      | —                  |
-| `iconLeft?`  | `ReactNode`     | —             | Leading icon slot  |
-| `iconRight?` | `ReactNode`     | —             | Trailing icon slot |
-| `loading?`   | `boolean`       | —             | —                  |
-| `fullWidth?` | `boolean`       | —             | —                  |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `ButtonVariant` | `'secondary'` | — |
+| `size?` | `ButtonSize` | `'icon'` | — |
+| `iconLeft?` | `ReactNode` | — | Leading icon slot |
+| `iconRight?` | `ReactNode` | — | Trailing icon slot |
+| `loading?` | `boolean` | — | — |
+| `fullWidth?` | `boolean` | — | — |
 
 ### CarouselPrevious
 
 Props: `ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop         | Type            | Default       | Description        |
-| ------------ | --------------- | ------------- | ------------------ |
-| `variant?`   | `ButtonVariant` | `'secondary'` | —                  |
-| `size?`      | `ButtonSize`    | `'icon'`      | —                  |
-| `iconLeft?`  | `ReactNode`     | —             | Leading icon slot  |
-| `iconRight?` | `ReactNode`     | —             | Trailing icon slot |
-| `loading?`   | `boolean`       | —             | —                  |
-| `fullWidth?` | `boolean`       | —             | —                  |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `ButtonVariant` | `'secondary'` | — |
+| `size?` | `ButtonSize` | `'icon'` | — |
+| `iconLeft?` | `ReactNode` | — | Leading icon slot |
+| `iconRight?` | `ReactNode` | — | Trailing icon slot |
+| `loading?` | `boolean` | — | — |
+| `fullWidth?` | `boolean` | — | — |
 
 ### useCarousel
 
@@ -685,11 +672,11 @@ type CarouselType = 'pill' | 'dot';
 
 Props: `CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'>`
 
-| Prop               | Type                         | Default | Description                                                                                                                                  |
-| ------------------ | ---------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `size?`            | `CheckboxSize`               | `'md'`  | —                                                                                                                                            |
-| `label?`           | `ReactNode`                  | —       | —                                                                                                                                            |
-| `onCheckedChange?` | `(checked: boolean) => void` | —       | Fires with the next checked state — the same shape as `Radio`, `Toggle`, `Select` and `Rating`, so a form does not switch paradigms mid-way. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `CheckboxSize` | `'md'` | — |
+| `label?` | `ReactNode` | — | — |
+| `onCheckedChange?` | `(checked: boolean) => void` | — | Fires with the next checked state — the same shape as `Radio`, `Toggle`, `Select` and `Rating`, so a form does not switch paradigms mid-way. |
 
 **Types**
 
@@ -705,18 +692,18 @@ type CheckboxSize = 'sm' | 'md';
 
 Props: `ChipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'>`
 
-| Prop          | Type          | Default     | Description                                                                                                                                                 |
-| ------------- | ------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `variant?`    | `ChipVariant` | `'outline'` | —                                                                                                                                                           |
-| `size?`       | `ChipSize`    | `'md'`      | —                                                                                                                                                           |
-| `selected?`   | `boolean`     | `false`     | —                                                                                                                                                           |
-| `disabled?`   | `boolean`     | `false`     | —                                                                                                                                                           |
-| `leading?`    | `ReactNode`   | —           | Leading 16px icon — Figma `Type=CheckLabel`. SVG children are sized to 16px and recoloured to the label colour, so the glyph greys out with `disabled`.     |
-| `avatar?`     | `ReactNode`   | —           | Leading avatar — Figma `Type=AvatarLabel`. Sized to the chip (24/22/20px for lg/md/sm) whatever size the avatar asks for, and inset tighter than `leading`. |
-| `onClick?`    | `() => void`  | —           | When provided, the chip behaves as a button (e.g. a filter chip).                                                                                           |
-| `onClose?`    | `() => void`  | —           | When provided, renders a trailing close (X) button that calls this handler.                                                                                 |
-| `closeLabel?` | `string`      | `'Remove'`  | Accessible label for the close button.                                                                                                                      |
-| `children`    | `ReactNode`   | —           | —                                                                                                                                                           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `ChipVariant` | `'outline'` | — |
+| `size?` | `ChipSize` | `'md'` | — |
+| `selected?` | `boolean` | `false` | — |
+| `disabled?` | `boolean` | `false` | — |
+| `leading?` | `ReactNode` | — | Leading 16px icon — Figma `Type=CheckLabel`. SVG children are sized to 16px and recoloured to the label colour, so the glyph greys out with `disabled`. |
+| `avatar?` | `ReactNode` | — | Leading avatar — Figma `Type=AvatarLabel`. Sized to the chip (24/22/20px for lg/md/sm) whatever size the avatar asks for, and inset tighter than `leading`. |
+| `onClick?` | `() => void` | — | When provided, the chip behaves as a button (e.g. a filter chip). |
+| `onClose?` | `() => void` | — | When provided, renders a trailing close (X) button that calls this handler. |
+| `closeLabel?` | `string` | `'Remove'` | Accessible label for the close button. |
+| `children` | `ReactNode` | — | — |
 
 **Types**
 
@@ -739,48 +726,32 @@ Declares no props of its own beyond the standard DOM attributes.
 
 Props: `ColorsProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop       | Type        | Default           | Description                                                                                                                                        |
-| ---------- | ----------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name?`    | `ColorName` | `'brand-sky-500'` | Which swatch to paint, e.g. `"brand-sky-500"`.                                                                                                     |
-| `asChild?` | `boolean`   | `false`           | Paint the child instead of a `div`, so an element that already behaves — a `<button>`, an `<img>`, another component's root — keeps its own logic. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name?` | `ColorName` | `'brand-sky-500'` | Which swatch to paint, e.g. `"brand-sky-500"`. |
+| `asChild?` | `boolean` | `false` | Paint the child instead of a `div`, so an element that already behaves — a `<button>`, an `<img>`, another component's root — keeps its own logic. |
 
 ### ColorRampSpec
 
 One ramp as the boards present it: its display name and its steps, in order.
 
-| Prop    | Type                   | Default | Description                                    |
-| ------- | ---------------------- | ------- | ---------------------------------------------- |
-| `ramp`  | `ColorRamp`            | —       | —                                              |
-| `label` | `string`               | —       | The heading Figma gives the ramp on its board. |
-| `steps` | `readonly ColorStep[]` | —       | —                                              |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ramp` | `ColorRamp` | — | — |
+| `label` | `string` | — | The heading Figma gives the ramp on its board. |
+| `steps` | `readonly ColorStep[]` | — | — |
 
 **Types**
 
 ```ts
 type ColorName = keyof typeof COLOR_HEX;
-type ColorRamp =
-  | 'brand-sky'
-  | 'brand-neutral'
-  | 'semantic-green'
-  | 'semantic-blue'
-  | 'semantic-red'
-  | 'semantic-orange'
-  | 'scheme-blue-grey'
-  | 'scheme-indigo'
-  | 'scheme-deep-purple'
-  | 'scheme-teal'
-  | 'scheme-cyan'
-  | 'scheme-light-green'
-  | 'scheme-lime'
-  | 'scheme-yellow'
-  | 'scheme-orange'
-  | 'scheme-pink';
+type ColorRamp = 'brand-sky' | 'brand-neutral' | 'semantic-green' | 'semantic-blue' | 'semantic-red' | 'semantic-orange' | 'scheme-blue-grey' | 'scheme-indigo' | 'scheme-deep-purple' | 'scheme-teal' | 'scheme-cyan' | 'scheme-light-green' | 'scheme-lime' | 'scheme-yellow' | 'scheme-orange' | 'scheme-pink';
 type ColorStep = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
 ```
 
 **Values**
 
-- `COLOR_HEX`: `{ readonly 'brand-sky-50': "#e6f5fc"; readonly 'brand-sky-100': "#b0e0f5"; readonly 'brand-sky-200': "#8ad1f1"; readonly 'brand-sky-300': "#54bdea"; readonly 'b…` — Every swatch on the three boards, `"{ramp}-{step}"` → hex. Exported so callers that need to _measure_ a colour rather than paint one — a canvas fill, an inline SVG attribute, a chart series — read the same values the classes below paint, and the two can never drift apart.
+- `COLOR_HEX`: `{ readonly 'brand-sky-50': "#e6f5fc"; readonly 'brand-sky-100': "#b0e0f5"; readonly 'brand-sky-200': "#8ad1f1"; readonly 'brand-sky-300': "#54bdea"; readonly 'b…` — Every swatch on the three boards, `"{ramp}-{step}"` → hex. Exported so callers that need to *measure* a colour rather than paint one — a canvas fill, an inline SVG attribute, a chart series — read the same values the classes below paint, and the two can never drift apart.
 - `COLOR_RAMPS`: `readonly ColorRampSpec[]` — The three boards in Figma's own order, so a caller can render a ramp without hardcoding which steps it has.
 - `colorBgClass`: `Record<"brand-sky-50" \| "brand-sky-100" \| "brand-sky-200" \| "brand-sky-300" \| "brand-sky-400" \| "brand-sky-500" \| "brand-sky-600" \| "brand-sky-700" \| "brand-sky…` — The same keys → their literal `bg-*` utility.
 
@@ -798,11 +769,11 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 
 ### DialogContent
 
-| Prop                | Type      | Default | Description |
-| ------------------- | --------- | ------- | ----------- |
-| `showCloseButton?`  | `boolean` | `true`  | —           |
-| `hideHeaderBorder?` | `boolean` | `true`  | —           |
-| `contentClassName?` | `string`  | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showCloseButton?` | `boolean` | `true` | — |
+| `hideHeaderBorder?` | `boolean` | `true` | — |
+| `contentClassName?` | `string` | — | — |
 
 Also accepts the props of `@radix-ui/react-dialog`, `@radix-ui/react-dismissable-layer`, `@radix-ui/react-primitive`.
 
@@ -842,10 +813,10 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 
 Props: `DividerProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop        | Type             | Default    | Description                                                                        |
-| ----------- | ---------------- | ---------- | ---------------------------------------------------------------------------------- |
-| `variant?`  | `DividerVariant` | `'normal'` | Line thickness — `normal` (1px) or `thick` (12px). Ignored when `children` is set. |
-| `children?` | `ReactNode`      | —          | When provided, renders a labeled divider (line · text · line).                     |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `DividerVariant` | `'normal'` | Line thickness — `normal` (1px) or `thick` (12px). Ignored when `children` is set. |
+| `children?` | `ReactNode` | — | When provided, renders a labeled divider (line · text · line). |
 
 **Types**
 
@@ -875,17 +846,17 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 
 ### DropdownMenuItem
 
-| Prop     | Type      | Default | Description |
-| -------- | --------- | ------- | ----------- |
-| `inset?` | `boolean` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset?` | `boolean` | — | — |
 
 Also accepts the props of `@radix-ui/react-menu`, `@radix-ui/react-primitive`.
 
 ### DropdownMenuLabel
 
-| Prop     | Type      | Default | Description |
-| -------- | --------- | ------- | ----------- |
-| `inset?` | `boolean` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset?` | `boolean` | — | — |
 
 Also accepts the props of `@radix-ui/react-primitive`.
 
@@ -919,9 +890,9 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-men
 
 ### DropdownMenuSubTrigger
 
-| Prop     | Type      | Default | Description |
-| -------- | --------- | ------- | ----------- |
-| `inset?` | `boolean` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inset?` | `boolean` | — | — |
 
 Also accepts the props of `@radix-ui/react-menu`, `@radix-ui/react-primitive`.
 
@@ -937,12 +908,12 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 
 Props: `EmptyProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop           | Type        | Default        | Description                                                          |
-| -------------- | ----------- | -------------- | -------------------------------------------------------------------- |
-| `type?`        | `EmptyType` | `'NoContents'` | Figma `Type` — picks the icon and default caption.                   |
-| `icon?`        | `ReactNode` | —              | Overrides the icon the `type` would render.                          |
-| `title?`       | `string`    | —              | Overrides the caption the `type` would render. Pass `''` to hide it. |
-| `description?` | `string`    | —              | —                                                                    |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type?` | `EmptyType` | `'NoContents'` | Figma `Type` — picks the icon and default caption. |
+| `icon?` | `ReactNode` | — | Overrides the icon the `type` would render. |
+| `title?` | `string` | — | Overrides the caption the `type` would render. Pass `''` to hide it. |
+| `description?` | `string` | — | — |
 
 **Types**
 
@@ -958,24 +929,24 @@ type EmptyType = 'NoContents' | 'NoSearchResults';
 
 Props: `FileIconProps`
 
-| Prop         | Type     | Default | Description |
-| ------------ | -------- | ------- | ----------- |
-| `width?`     | `number` | —       | —           |
-| `height?`    | `number` | —       | —           |
-| `iconType?`  | `string` | —       | —           |
-| `className?` | `string` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `width?` | `number` | — | — |
+| `height?` | `number` | — | — |
+| `iconType?` | `string` | — | — |
+| `className?` | `string` | — | — |
 
 ### FileType
 
 Props: `FileTypeProps extends Omit<SVGAttributes<SVGSVGElement>, 'width' | 'height'>`
 
-| Prop      | Type                 | Default  | Description |
-| --------- | -------------------- | -------- | ----------- |
-| `logo?`   | `FileTypeLogo`       | `'zip'`  | —           |
-| `type?`   | `FileTypeVariant`    | `'line'` | —           |
-| `ref?`    | `Ref<SVGSVGElement>` | —        | —           |
-| `width?`  | `number`             | `32`     | —           |
-| `height?` | `number`             | `32`     | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `logo?` | `FileTypeLogo` | `'zip'` | — |
+| `type?` | `FileTypeVariant` | `'line'` | — |
+| `ref?` | `Ref<SVGSVGElement>` | — | — |
+| `width?` | `number` | `32` | — |
+| `height?` | `number` | `32` | — |
 
 ### TxtIcon
 
@@ -990,45 +961,7 @@ Declares no props of its own beyond the standard DOM attributes.
 **Types**
 
 ```ts
-type FileTypeLogo =
-  | 'aep'
-  | 'ai'
-  | 'avi'
-  | 'blend'
-  | 'c4d'
-  | 'cdr'
-  | 'css'
-  | 'csv'
-  | 'dmg'
-  | 'doc'
-  | 'exe'
-  | 'fig'
-  | 'gif'
-  | 'html'
-  | 'ico'
-  | 'java'
-  | 'jpeg'
-  | 'jpg'
-  | 'js'
-  | 'json'
-  | 'mov'
-  | 'mp3'
-  | 'mp4'
-  | 'mpg'
-  | 'pdf'
-  | 'png'
-  | 'ppt'
-  | 'psd'
-  | 'rar'
-  | 'skt'
-  | 'svg'
-  | 'tiff'
-  | 'txt'
-  | 'wav'
-  | 'webp'
-  | 'xls'
-  | 'zip'
-  | 'folder';
+type FileTypeLogo = 'aep' | 'ai' | 'avi' | 'blend' | 'c4d' | 'cdr' | 'css' | 'csv' | 'dmg' | 'doc' | 'exe' | 'fig' | 'gif' | 'html' | 'ico' | 'java' | 'jpeg' | 'jpg' | 'js' | 'json' | 'mov' | 'mp3' | 'mp4' | 'mpg' | 'pdf' | 'png' | 'ppt' | 'psd' | 'rar' | 'skt' | 'svg' | 'tiff' | 'txt' | 'wav' | 'webp' | 'xls' | 'zip' | 'folder';
 type FileTypeVariant = 'line' | 'flat' | 'color';
 ```
 
@@ -1040,10 +973,10 @@ type FileTypeVariant = 'line' | 'flat' | 'color';
 
 Props: `FloatingButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop       | Type                 | Default | Description                                                                |
-| ---------- | -------------------- | ------- | -------------------------------------------------------------------------- |
-| `size?`    | `FloatingButtonSize` | `'md'`  | —                                                                          |
-| `asChild?` | `boolean`            | `false` | Render the child element instead of a `<button>` — e.g. a router `<Link>`. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `FloatingButtonSize` | `'md'` | — |
+| `asChild?` | `boolean` | `false` | Render the child element instead of a `<button>` — e.g. a router `<Link>`. |
 
 **Types**
 
@@ -1059,12 +992,12 @@ type FloatingButtonSize = 'sm' | 'md';
 
 Props: `GnbProps extends Omit<HTMLAttributes<HTMLElement>, 'children'>`
 
-| Prop       | Type        | Default | Description                                                     |
-| ---------- | ----------- | ------- | --------------------------------------------------------------- |
-| `logo?`    | `ReactNode` | —       | Brand mark, centered in Figma's 40px `icon_size` box.           |
-| `menu?`    | `ReactNode` | —       | Primary navigation — typically a `<GnbMenu>`.                   |
-| `search?`  | `ReactNode` | —       | Search field placed before the actions (Figma `type="Search"`). |
-| `actions?` | `ReactNode` | —       | Trailing cluster — buttons, icon buttons, avatar.               |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `logo?` | `ReactNode` | — | Brand mark, centered in Figma's 40px `icon_size` box. |
+| `menu?` | `ReactNode` | — | Primary navigation — typically a `<GnbMenu>`. |
+| `search?` | `ReactNode` | — | Search field placed before the actions (Figma `type="Search"`). |
+| `actions?` | `ReactNode` | — | Trailing cluster — buttons, icon buttons, avatar. |
 
 ### GnbMenu
 
@@ -1074,9 +1007,9 @@ Declares no props of its own beyond the standard DOM attributes.
 
 Props: `GnbMenuItemProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop       | Type      | Default | Description                                                                |
-| ---------- | --------- | ------- | -------------------------------------------------------------------------- |
-| `active?`  | `boolean` | `false` | Marks the current page — paints text-primary and sets aria-current.        |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `active?` | `boolean` | `false` | Marks the current page — paints text-primary and sets aria-current. |
 | `asChild?` | `boolean` | `false` | Render the child element instead of a `<button>` — e.g. a router `<Link>`. |
 
 ### GnbMenuProps
@@ -1091,21 +1024,21 @@ No members declared in this package.
 
 Props: `GridProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop          | Type         | Default        | Description                                                                                                                                                                                                                          |
-| ------------- | ------------ | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `layout?`     | `GridLayout` | `'full-width'` | `beside-sidebar` is the 12-column grid that sits next to a 264px LNB rail (Figma 26866:28999): same track count, 24px desktop margin instead of 32px. Mobile and tablet are identical to `full-width` — the rail is collapsed there. |
-| `withMargin?` | `boolean`    | `true`         | Outer margin (16 / 24 / 32px). Turn off to nest inside an already-padded shell.                                                                                                                                                      |
-| `asChild?`    | `boolean`    | `false`        | —                                                                                                                                                                                                                                    |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `layout?` | `GridLayout` | `'full-width'` | `beside-sidebar` is the 12-column grid that sits next to a 264px LNB rail (Figma 26866:28999): same track count, 24px desktop margin instead of 32px. Mobile and tablet are identical to `full-width` — the rail is collapsed there. |
+| `withMargin?` | `boolean` | `true` | Outer margin (16 / 24 / 32px). Turn off to nest inside an already-padded shell. |
+| `asChild?` | `boolean` | `false` | — |
 
 ### GridItem
 
 Props: `GridItemProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop       | Type                     | Default | Description                                                                  |
-| ---------- | ------------------------ | ------- | ---------------------------------------------------------------------------- |
-| `size?`    | `Responsive<GridSize>`   | —       | Columns to span — `6` for every band, or `{ xs: 4, md: 4, xl: 6 }` per band. |
-| `offset?`  | `Responsive<GridOffset>` | —       | Columns to leave empty before this item.                                     |
-| `asChild?` | `boolean`                | `false` | —                                                                            |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `Responsive<GridSize>` | — | Columns to span — `6` for every band, or `{ xs: 4, md: 4, xl: 6 }` per band. |
+| `offset?` | `Responsive<GridOffset>` | — | Columns to leave empty before this item. |
+| `asChild?` | `boolean` | `false` | — |
 
 ### GridOverlay
 
@@ -1136,80 +1069,78 @@ The original single-line field, now a thin alias over `InputText`.
 
 Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'>`
 
-| Prop              | Type                                 | Default | Description                                                               |
-| ----------------- | ------------------------------------ | ------- | ------------------------------------------------------------------------- |
-| `label?`          | `string`                             | —       | —                                                                         |
-| `error?`          | `string`                             | —       | —                                                                         |
-| `helperText?`     | `string`                             | —       | —                                                                         |
-| `prefix?`         | `ReactNode`                          | —       | Slot rendered on the left of the field — icon, text, or any ReactNode     |
-| `suffix?`         | `ReactNode`                          | —       | Slot rendered on the right of the field — icon, button, or any ReactNode  |
-| `block?`          | `boolean`                            | `false` | Stretch to the container width — see `InputFieldShellProps.block`         |
-| `disabledInput?`  | `boolean`                            | —       | Disables only the `<input>`; the box and its slots stay interactive       |
-| `fieldClassName?` | `string`                             | —       | Extra classes applied to the native `<input>`                             |
-| `boxClassName?`   | `string`                             | —       | Extra classes applied to the bordered box                                 |
-| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']` | —       | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?`         | `InputFieldShellProps['boxRef']`     | —       | Handle on the bordered box — see `InputFieldShellProps.boxRef`            |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label?` | `string` | — | — |
+| `error?` | `string` | — | — |
+| `helperText?` | `string` | — | — |
+| `prefix?` | `ReactNode` | — | Slot rendered on the left of the field — icon, text, or any ReactNode |
+| `suffix?` | `ReactNode` | — | Slot rendered on the right of the field — icon, button, or any ReactNode |
+| `block?` | `boolean` | `false` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | Disables only the `<input>`; the box and its slots stay interactive |
+| `fieldClassName?` | `string` | — | Extra classes applied to the native `<input>` |
+| `boxClassName?` | `string` | — | Extra classes applied to the bordered box |
+| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | Click anywhere on the box — note that clicks on the field bubble here too |
+| `boxRef?` | `InputFieldShellProps['boxRef']` | — | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
 ### InputDate
 
 `InputText` with a `YYYY.MM.DD` mask and a `DatePicker` popover.
 
 Props: `InputDateProps extends Omit<
-InputTextProps,
-'value' | 'defaultValue' | 'type' | 'suffix' | 'onChange' | 'min' | 'max'
+    InputTextProps,
+    'value' | 'defaultValue' | 'type' | 'suffix' | 'onChange' | 'min' | 'max'
+  >`
 
-> `
-
-| Prop              | Type                                                                                                     | Default                        | From             | Description                                                               |
-| ----------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------ | ---------------- | ------------------------------------------------------------------------- |
-| `value?`          | `Date \| null`                                                                                           | —                              | `InputDateProps` | —                                                                         |
-| `defaultValue?`   | `Date \| null`                                                                                           | —                              | `InputDateProps` | —                                                                         |
-| `onValueChange?`  | `(date: Date \| null) => void`                                                                           | —                              | `InputDateProps` | —                                                                         |
-| `min?`            | `Date`                                                                                                   | —                              | `InputDateProps` | Earliest selectable date — earlier dates are disabled and rejected        |
-| `max?`            | `Date`                                                                                                   | —                              | `InputDateProps` | Latest selectable date                                                    |
-| `invalidMessage?` | `string`                                                                                                 | `'Please enter a valid date.'` | `InputDateProps` | Shown when the typed text is not a date in range                          |
-| `calendarLabel?`  | `string`                                                                                                 | `'Choose date'`                | `InputDateProps` | Accessible name of the calendar button                                    |
-| `calendarProps?`  | `Partial< Omit< ComponentProps<typeof DatePicker>, 'mode' \| 'selected' \| 'onSelect' \| 'disabled' > >` | —                              | `InputDateProps` | Pass-through for the popover calendar (locale, formatters…)               |
-| `prefix?`         | `ReactNode`                                                                                              | —                              | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode     |
-| `label?`          | `string`                                                                                                 | —                              | `InputTextProps` | —                                                                         |
-| `error?`          | `string`                                                                                                 | —                              | `InputTextProps` | —                                                                         |
-| `helperText?`     | `string`                                                                                                 | —                              | `InputTextProps` | —                                                                         |
-| `block?`          | `boolean`                                                                                                | —                              | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block`         |
-| `disabledInput?`  | `boolean`                                                                                                | —                              | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive       |
-| `fieldClassName?` | `string`                                                                                                 | —                              | `InputTextProps` | Extra classes applied to the native `<input>`                             |
-| `boxClassName?`   | `string`                                                                                                 | —                              | `InputTextProps` | Extra classes applied to the bordered box                                 |
-| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']`                                                                     | —                              | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?`         | `InputFieldShellProps['boxRef']`                                                                         | —                              | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef`            |
+| Prop | Type | Default | From | Description |
+| --- | --- | --- | --- | --- |
+| `value?` | `Date \| null` | — | `InputDateProps` | — |
+| `defaultValue?` | `Date \| null` | — | `InputDateProps` | — |
+| `onValueChange?` | `(date: Date \| null) => void` | — | `InputDateProps` | — |
+| `min?` | `Date` | — | `InputDateProps` | Earliest selectable date — earlier dates are disabled and rejected |
+| `max?` | `Date` | — | `InputDateProps` | Latest selectable date |
+| `invalidMessage?` | `string` | `'Please enter a valid date.'` | `InputDateProps` | Shown when the typed text is not a date in range |
+| `calendarLabel?` | `string` | `'Choose date'` | `InputDateProps` | Accessible name of the calendar button |
+| `calendarProps?` | `Partial< Omit< ComponentProps<typeof DatePicker>, 'mode' \| 'selected' \| 'onSelect' \| 'disabled' > >` | — | `InputDateProps` | Pass-through for the popover calendar (locale, formatters…) |
+| `prefix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode |
+| `label?` | `string` | — | `InputTextProps` | — |
+| `error?` | `string` | — | `InputTextProps` | — |
+| `helperText?` | `string` | — | `InputTextProps` | — |
+| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
+| `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
+| `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
+| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
+| `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
 ### InputDropdown
 
 `InputText` as a read-only trigger for a radio-list panel.
 
 Props: `InputDropdownProps extends Omit<
-InputTextProps,
-'value' | 'defaultValue' | 'type' | 'suffix' | 'onChange' | 'readOnly'
+    InputTextProps,
+    'value' | 'defaultValue' | 'type' | 'suffix' | 'onChange' | 'readOnly'
+  >`
 
-> `
-
-| Prop              | Type                                 | Default | From                 | Description                                                               |
-| ----------------- | ------------------------------------ | ------- | -------------------- | ------------------------------------------------------------------------- |
-| `value?`          | `string`                             | —       | `InputDropdownProps` | —                                                                         |
-| `defaultValue?`   | `string`                             | —       | `InputDropdownProps` | —                                                                         |
-| `onValueChange?`  | `(value: string) => void`            | —       | `InputDropdownProps` | —                                                                         |
-| `open?`           | `boolean`                            | —       | `InputDropdownProps` | —                                                                         |
-| `onOpenChange?`   | `(open: boolean) => void`            | —       | `InputDropdownProps` | —                                                                         |
-| `panelClassName?` | `string`                             | —       | `InputDropdownProps` | Extra classes on the panel                                                |
-| `children`        | `ReactNode`                          | —       | `InputDropdownProps` | `InputDropdownItem` and `InputDropdownSub` rows                           |
-| `prefix?`         | `ReactNode`                          | —       | `InputTextProps`     | Slot rendered on the left of the field — icon, text, or any ReactNode     |
-| `label?`          | `string`                             | —       | `InputTextProps`     | —                                                                         |
-| `error?`          | `string`                             | —       | `InputTextProps`     | —                                                                         |
-| `helperText?`     | `string`                             | —       | `InputTextProps`     | —                                                                         |
-| `block?`          | `boolean`                            | —       | `InputTextProps`     | Stretch to the container width — see `InputFieldShellProps.block`         |
-| `disabledInput?`  | `boolean`                            | —       | `InputTextProps`     | Disables only the `<input>`; the box and its slots stay interactive       |
-| `fieldClassName?` | `string`                             | —       | `InputTextProps`     | Extra classes applied to the native `<input>`                             |
-| `boxClassName?`   | `string`                             | —       | `InputTextProps`     | Extra classes applied to the bordered box                                 |
-| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']` | —       | `InputTextProps`     | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?`         | `InputFieldShellProps['boxRef']`     | —       | `InputTextProps`     | Handle on the bordered box — see `InputFieldShellProps.boxRef`            |
+| Prop | Type | Default | From | Description |
+| --- | --- | --- | --- | --- |
+| `value?` | `string` | — | `InputDropdownProps` | — |
+| `defaultValue?` | `string` | — | `InputDropdownProps` | — |
+| `onValueChange?` | `(value: string) => void` | — | `InputDropdownProps` | — |
+| `open?` | `boolean` | — | `InputDropdownProps` | — |
+| `onOpenChange?` | `(open: boolean) => void` | — | `InputDropdownProps` | — |
+| `panelClassName?` | `string` | — | `InputDropdownProps` | Extra classes on the panel |
+| `children` | `ReactNode` | — | `InputDropdownProps` | `InputDropdownItem` and `InputDropdownSub` rows |
+| `prefix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode |
+| `label?` | `string` | — | `InputTextProps` | — |
+| `error?` | `string` | — | `InputTextProps` | — |
+| `helperText?` | `string` | — | `InputTextProps` | — |
+| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
+| `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
+| `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
+| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
+| `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
 ### InputDropdownItem
 
@@ -1217,12 +1148,12 @@ One selectable row. Works at any depth, including inside `InputDropdownSub`.
 
 Props: `InputDropdownItemProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>`
 
-| Prop        | Type        | Default | Description                                                                     |
-| ----------- | ----------- | ------- | ------------------------------------------------------------------------------- |
-| `value`     | `string`    | —       | —                                                                               |
-| `label?`    | `string`    | —       | Text shown in the field once selected — required when `children` isn't a string |
-| `disabled?` | `boolean`   | —       | —                                                                               |
-| `children`  | `ReactNode` | —       | —                                                                               |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | — | — |
+| `label?` | `string` | — | Text shown in the field once selected — required when `children` isn't a string |
+| `disabled?` | `boolean` | — | — |
+| `children` | `ReactNode` | — | — |
 
 ### InputDropdownSub
 
@@ -1230,38 +1161,37 @@ A category row that opens its own panel to the right. The items inside stay part
 
 Props: `InputDropdownSubProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'>`
 
-| Prop              | Type        | Default | Description                                             |
-| ----------------- | ----------- | ------- | ------------------------------------------------------- |
-| `label`           | `ReactNode` | —       | Row text — the category, which is not selectable itself |
-| `children`        | `ReactNode` | —       | `InputDropdownItem` rows shown in the flyout            |
-| `panelClassName?` | `string`    | —       | Extra classes on the flyout panel                       |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `ReactNode` | — | Row text — the category, which is not selectable itself |
+| `children` | `ReactNode` | — | `InputDropdownItem` rows shown in the flyout |
+| `panelClassName?` | `string` | — | Extra classes on the flyout panel |
 
 ### InputFileUpload
 
 Click-or-drop file field: a dashed dropzone plus one row per file.
 
 Props: `InputFileUploadProps extends Omit<
-InputHTMLAttributes<HTMLInputElement>,
-'type' | 'value' | 'defaultValue' | 'onChange' | 'prefix' | 'children'
+    InputHTMLAttributes<HTMLInputElement>,
+    'type' | 'value' | 'defaultValue' | 'onChange' | 'prefix' | 'children'
+  >`
 
-> `
-
-| Prop                  | Type                            | Default                                                | Description                                                                                                                                    |
-| --------------------- | ------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `label?`              | `string`                        | —                                                      | —                                                                                                                                              |
-| `error?`              | `string`                        | —                                                      | —                                                                                                                                              |
-| `helperText?`         | `string`                        | —                                                      | —                                                                                                                                              |
-| `files?`              | `InputFileUploadItemData[]`     | `[]`                                                   | Rows under the dropzone. `status` comes from the caller — see the note below.                                                                  |
-| `onFilesAdded?`       | `(files: File[]) => void`       | —                                                      | Fires with the files that passed `accept` / `maxSize`                                                                                          |
-| `onRemove?`           | `(id: string) => void`          | —                                                      | —                                                                                                                                              |
-| `onDownload?`         | `(id: string) => void`          | —                                                      | —                                                                                                                                              |
-| `onPreview?`          | `(id: string) => void`          | —                                                      | —                                                                                                                                              |
-| `maxSize?`            | `number`                        | —                                                      | Max bytes per file. A batch containing a bigger file is rejected whole.                                                                        |
-| `invalidTypeMessage?` | `string`                        | `'Unsupported file type.'`                             | Shown when a picked file fails the `accept` filter.                                                                                            |
-| `maxSizeMessage?`     | `(maxSizeMb: string) => string` | `(maxSizeMb) => `Files must be under ${maxSizeMb}MB.`` | Shown when a picked file exceeds `maxSize`. A function rather than a string because the limit has to be interpolated in the caller's language. |
-| `description?`        | `ReactNode`                     | `'Drag and drop a file here, or click to upload'`      | First line in the dropzone                                                                                                                     |
-| `hint?`               | `ReactNode`                     | `'PDF, DOCX, XLSX (max 10MB)'`                         | Second line — the accepted formats hint                                                                                                        |
-| `boxClassName?`       | `string`                        | —                                                      | Extra classes on the dashed box                                                                                                                |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label?` | `string` | — | — |
+| `error?` | `string` | — | — |
+| `helperText?` | `string` | — | — |
+| `files?` | `InputFileUploadItemData[]` | `[]` | Rows under the dropzone. `status` comes from the caller — see the note below. |
+| `onFilesAdded?` | `(files: File[]) => void` | — | Fires with the files that passed `accept` / `maxSize` |
+| `onRemove?` | `(id: string) => void` | — | — |
+| `onDownload?` | `(id: string) => void` | — | — |
+| `onPreview?` | `(id: string) => void` | — | — |
+| `maxSize?` | `number` | — | Max bytes per file. A batch containing a bigger file is rejected whole. |
+| `invalidTypeMessage?` | `string` | `'Unsupported file type.'` | Shown when a picked file fails the `accept` filter. |
+| `maxSizeMessage?` | `(maxSizeMb: string) => string` | `(maxSizeMb) => `Files must be under ${maxSizeMb}MB.`` | Shown when a picked file exceeds `maxSize`. A function rather than a string because the limit has to be interpolated in the caller's language. |
+| `description?` | `ReactNode` | `'Drag and drop a file here, or click to upload'` | First line in the dropzone |
+| `hint?` | `ReactNode` | `'PDF, DOCX, XLSX (max 10MB)'` | Second line — the accepted formats hint |
+| `boxClassName?` | `string` | — | Extra classes on the dashed box |
 
 ### InputFileUploadItem
 
@@ -1269,18 +1199,18 @@ One uploaded file: name on the left, status-specific affordances on the right.
 
 Props: `InputFileUploadItemProps extends Omit<HTMLAttributes<HTMLLIElement>, 'children'>, Omit<InputFileUploadItemData, 'id'>`
 
-| Prop             | Type                    | Default      | From                       | Description                                                           |
-| ---------------- | ----------------------- | ------------ | -------------------------- | --------------------------------------------------------------------- |
-| `disabled?`      | `boolean`               | `false`      | `InputFileUploadItemProps` | —                                                                     |
-| `onRemove?`      | `() => void`            | —            | `InputFileUploadItemProps` | Each action only renders when its handler is given — no dead buttons. |
-| `onDownload?`    | `() => void`            | —            | `InputFileUploadItemProps` | —                                                                     |
-| `onPreview?`     | `() => void`            | —            | `InputFileUploadItemProps` | —                                                                     |
-| `removeLabel?`   | `string`                | `'Remove'`   | `InputFileUploadItemProps` | —                                                                     |
-| `downloadLabel?` | `string`                | `'Download'` | `InputFileUploadItemProps` | —                                                                     |
-| `previewLabel?`  | `string`                | `'Preview'`  | `InputFileUploadItemProps` | —                                                                     |
-| `name`           | `string`                | —            | `InputFileUploadItemData`  | —                                                                     |
-| `status?`        | `InputFileUploadStatus` | `'done'`     | `InputFileUploadItemData`  | —                                                                     |
-| `error?`         | `string`                | —            | `InputFileUploadItemData`  | Message under the row — only rendered while `status` is `'error'`     |
+| Prop | Type | Default | From | Description |
+| --- | --- | --- | --- | --- |
+| `disabled?` | `boolean` | `false` | `InputFileUploadItemProps` | — |
+| `onRemove?` | `() => void` | — | `InputFileUploadItemProps` | Each action only renders when its handler is given — no dead buttons. |
+| `onDownload?` | `() => void` | — | `InputFileUploadItemProps` | — |
+| `onPreview?` | `() => void` | — | `InputFileUploadItemProps` | — |
+| `removeLabel?` | `string` | `'Remove'` | `InputFileUploadItemProps` | — |
+| `downloadLabel?` | `string` | `'Download'` | `InputFileUploadItemProps` | — |
+| `previewLabel?` | `string` | `'Preview'` | `InputFileUploadItemProps` | — |
+| `name` | `string` | — | `InputFileUploadItemData` | — |
+| `status?` | `InputFileUploadStatus` | `'done'` | `InputFileUploadItemData` | — |
+| `error?` | `string` | — | `InputFileUploadItemData` | Message under the row — only rendered while `status` is `'error'` |
 
 ### InputPhoneNumber
 
@@ -1288,24 +1218,24 @@ Props: `InputFileUploadItemProps extends Omit<HTMLAttributes<HTMLLIElement>, 'ch
 
 Props: `InputPhoneNumberProps extends Omit<InputTextProps, 'value' | 'defaultValue' | 'type'>`
 
-| Prop              | Type                                 | Default                                 | From                    | Description                                                               |
-| ----------------- | ------------------------------------ | --------------------------------------- | ----------------------- | ------------------------------------------------------------------------- |
-| `value?`          | `string`                             | —                                       | `InputPhoneNumberProps` | Digits only, no separators — e.g. `01012345678`                           |
-| `defaultValue?`   | `string`                             | —                                       | `InputPhoneNumberProps` | —                                                                         |
-| `onValueChange?`  | `(digits: string) => void`           | —                                       | `InputPhoneNumberProps` | Receives the digits only, whatever `format` is displayed                  |
-| `format?`         | `'raw' \| 'dashed'`                  | `'raw'`                                 | `InputPhoneNumberProps` | —                                                                         |
-| `invalidMessage?` | `string`                             | `'Please enter a valid mobile number.'` | `InputPhoneNumberProps` | Shown on blur when the value is not a valid KR mobile number              |
-| `prefix?`         | `ReactNode`                          | —                                       | `InputTextProps`        | Slot rendered on the left of the field — icon, text, or any ReactNode     |
-| `label?`          | `string`                             | —                                       | `InputTextProps`        | —                                                                         |
-| `error?`          | `string`                             | —                                       | `InputTextProps`        | —                                                                         |
-| `helperText?`     | `string`                             | —                                       | `InputTextProps`        | —                                                                         |
-| `suffix?`         | `ReactNode`                          | —                                       | `InputTextProps`        | Slot rendered on the right of the field — icon, button, or any ReactNode  |
-| `block?`          | `boolean`                            | —                                       | `InputTextProps`        | Stretch to the container width — see `InputFieldShellProps.block`         |
-| `disabledInput?`  | `boolean`                            | —                                       | `InputTextProps`        | Disables only the `<input>`; the box and its slots stay interactive       |
-| `fieldClassName?` | `string`                             | —                                       | `InputTextProps`        | Extra classes applied to the native `<input>`                             |
-| `boxClassName?`   | `string`                             | —                                       | `InputTextProps`        | Extra classes applied to the bordered box                                 |
-| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']` | —                                       | `InputTextProps`        | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?`         | `InputFieldShellProps['boxRef']`     | —                                       | `InputTextProps`        | Handle on the bordered box — see `InputFieldShellProps.boxRef`            |
+| Prop | Type | Default | From | Description |
+| --- | --- | --- | --- | --- |
+| `value?` | `string` | — | `InputPhoneNumberProps` | Digits only, no separators — e.g. `01012345678` |
+| `defaultValue?` | `string` | — | `InputPhoneNumberProps` | — |
+| `onValueChange?` | `(digits: string) => void` | — | `InputPhoneNumberProps` | Receives the digits only, whatever `format` is displayed |
+| `format?` | `'raw' \| 'dashed'` | `'raw'` | `InputPhoneNumberProps` | — |
+| `invalidMessage?` | `string` | `'Please enter a valid mobile number.'` | `InputPhoneNumberProps` | Shown on blur when the value is not a valid KR mobile number |
+| `prefix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode |
+| `label?` | `string` | — | `InputTextProps` | — |
+| `error?` | `string` | — | `InputTextProps` | — |
+| `helperText?` | `string` | — | `InputTextProps` | — |
+| `suffix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the right of the field — icon, button, or any ReactNode |
+| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
+| `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
+| `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
+| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
+| `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
 ### InputSearch
 
@@ -1313,43 +1243,42 @@ Props: `InputPhoneNumberProps extends Omit<InputTextProps, 'value' | 'defaultVal
 
 Props: `InputSearchProps extends Omit<InputTextProps, 'prefix' | 'suffix' | 'type'>`
 
-| Prop              | Type                                 | Default          | From               | Description                                                               |
-| ----------------- | ------------------------------------ | ---------------- | ------------------ | ------------------------------------------------------------------------- |
-| `onSearch?`       | `(value: string) => void`            | —                | `InputSearchProps` | Fired when Enter is pressed, with the current value                       |
-| `onClear?`        | `() => void`                         | —                | `InputSearchProps` | Fired when the clear button is pressed                                    |
-| `clearLabel?`     | `string`                             | `'Clear search'` | `InputSearchProps` | Accessible name of the clear button                                       |
-| `label?`          | `string`                             | —                | `InputTextProps`   | —                                                                         |
-| `error?`          | `string`                             | —                | `InputTextProps`   | —                                                                         |
-| `helperText?`     | `string`                             | —                | `InputTextProps`   | —                                                                         |
-| `block?`          | `boolean`                            | —                | `InputTextProps`   | Stretch to the container width — see `InputFieldShellProps.block`         |
-| `disabledInput?`  | `boolean`                            | —                | `InputTextProps`   | Disables only the `<input>`; the box and its slots stay interactive       |
-| `fieldClassName?` | `string`                             | —                | `InputTextProps`   | Extra classes applied to the native `<input>`                             |
-| `boxClassName?`   | `string`                             | —                | `InputTextProps`   | Extra classes applied to the bordered box                                 |
-| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']` | —                | `InputTextProps`   | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?`         | `InputFieldShellProps['boxRef']`     | —                | `InputTextProps`   | Handle on the bordered box — see `InputFieldShellProps.boxRef`            |
+| Prop | Type | Default | From | Description |
+| --- | --- | --- | --- | --- |
+| `onSearch?` | `(value: string) => void` | — | `InputSearchProps` | Fired when Enter is pressed, with the current value |
+| `onClear?` | `() => void` | — | `InputSearchProps` | Fired when the clear button is pressed |
+| `clearLabel?` | `string` | `'Clear search'` | `InputSearchProps` | Accessible name of the clear button |
+| `label?` | `string` | — | `InputTextProps` | — |
+| `error?` | `string` | — | `InputTextProps` | — |
+| `helperText?` | `string` | — | `InputTextProps` | — |
+| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
+| `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
+| `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
+| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
+| `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
 ### InputTag
 
 The input family's tag editor: Enter or `,` adds, Backspace removes the last.
 
 Props: `InputTagProps extends Omit<
-InputHTMLAttributes<HTMLInputElement>,
-'value' | 'defaultValue' | 'onChange' | 'prefix'
+    InputHTMLAttributes<HTMLInputElement>,
+    'value' | 'defaultValue' | 'onChange' | 'prefix'
+  >`
 
-> `
-
-| Prop              | Type                              | Default | Description                                                |
-| ----------------- | --------------------------------- | ------- | ---------------------------------------------------------- |
-| `value?`          | `string[]`                        | —       | —                                                          |
-| `defaultValue?`   | `string[]`                        | —       | —                                                          |
-| `onValueChange?`  | `(tags: string[]) => void`        | —       | —                                                          |
-| `maxTags?`        | `number`                          | —       | —                                                          |
-| `validate?`       | `(tag: string) => string \| null` | —       | Return a message to reject the tag, or `null` to accept it |
-| `label?`          | `string`                          | —       | —                                                          |
-| `error?`          | `string`                          | —       | —                                                          |
-| `helperText?`     | `string`                          | —       | —                                                          |
-| `boxClassName?`   | `string`                          | —       | Extra classes on the bordered box                          |
-| `fieldClassName?` | `string`                          | —       | Extra classes on the native `<input>`                      |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value?` | `string[]` | — | — |
+| `defaultValue?` | `string[]` | — | — |
+| `onValueChange?` | `(tags: string[]) => void` | — | — |
+| `maxTags?` | `number` | — | — |
+| `validate?` | `(tag: string) => string \| null` | — | Return a message to reject the tag, or `null` to accept it |
+| `label?` | `string` | — | — |
+| `error?` | `string` | — | — |
+| `helperText?` | `string` | — | — |
+| `boxClassName?` | `string` | — | Extra classes on the bordered box |
+| `fieldClassName?` | `string` | — | Extra classes on the native `<input>` |
 
 ### InputText
 
@@ -1357,19 +1286,19 @@ The plain single-line field — `<InputV2 />` with no `fieldType`.
 
 Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'>`
 
-| Prop              | Type                                 | Default | Description                                                               |
-| ----------------- | ------------------------------------ | ------- | ------------------------------------------------------------------------- |
-| `label?`          | `string`                             | —       | —                                                                         |
-| `error?`          | `string`                             | —       | —                                                                         |
-| `helperText?`     | `string`                             | —       | —                                                                         |
-| `prefix?`         | `ReactNode`                          | —       | Slot rendered on the left of the field — icon, text, or any ReactNode     |
-| `suffix?`         | `ReactNode`                          | —       | Slot rendered on the right of the field — icon, button, or any ReactNode  |
-| `block?`          | `boolean`                            | `true`  | Stretch to the container width — see `InputFieldShellProps.block`         |
-| `disabledInput?`  | `boolean`                            | `false` | Disables only the `<input>`; the box and its slots stay interactive       |
-| `fieldClassName?` | `string`                             | —       | Extra classes applied to the native `<input>`                             |
-| `boxClassName?`   | `string`                             | —       | Extra classes applied to the bordered box                                 |
-| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']` | —       | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?`         | `InputFieldShellProps['boxRef']`     | —       | Handle on the bordered box — see `InputFieldShellProps.boxRef`            |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label?` | `string` | — | — |
+| `error?` | `string` | — | — |
+| `helperText?` | `string` | — | — |
+| `prefix?` | `ReactNode` | — | Slot rendered on the left of the field — icon, text, or any ReactNode |
+| `suffix?` | `ReactNode` | — | Slot rendered on the right of the field — icon, button, or any ReactNode |
+| `block?` | `boolean` | `true` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | `false` | Disables only the `<input>`; the box and its slots stay interactive |
+| `fieldClassName?` | `string` | — | Extra classes applied to the native `<input>` |
+| `boxClassName?` | `string` | — | Extra classes applied to the bordered box |
+| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | Click anywhere on the box — note that clicks on the field bubble here too |
+| `boxRef?` | `InputFieldShellProps['boxRef']` | — | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
 ### InputTextarea
 
@@ -1377,14 +1306,14 @@ The input family's multi-line field, with an optional character counter.
 
 Props: `InputTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>`
 
-| Prop              | Type      | Default | Description                                                        |
-| ----------------- | --------- | ------- | ------------------------------------------------------------------ |
-| `label?`          | `string`  | —       | —                                                                  |
-| `error?`          | `string`  | —       | —                                                                  |
-| `helperText?`     | `string`  | —       | —                                                                  |
-| `showCount?`      | `boolean` | `false` | Renders the character counter — the Figma `TextAreaWithCount` type |
-| `boxClassName?`   | `string`  | —       | Extra classes on the bordered box                                  |
-| `fieldClassName?` | `string`  | —       | Extra classes on the native `<textarea>`                           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label?` | `string` | — | — |
+| `error?` | `string` | — | — |
+| `helperText?` | `string` | — | — |
+| `showCount?` | `boolean` | `false` | Renders the character counter — the Figma `TextAreaWithCount` type |
+| `boxClassName?` | `string` | — | Extra classes on the bordered box |
+| `fieldClassName?` | `string` | — | Extra classes on the native `<textarea>` |
 
 ### InputTextFormatting
 
@@ -1392,21 +1321,21 @@ The input family's rich-text field: an ITUI toolbar over a Lexical editor.
 
 Props: `InputTextFormattingProps`
 
-| Prop               | Type                                              | Default              | Description                                                                                                                                                                                                      |
-| ------------------ | ------------------------------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `label?`           | `string`                                          | —                    | —                                                                                                                                                                                                                |
-| `error?`           | `string`                                          | —                    | —                                                                                                                                                                                                                |
-| `helperText?`      | `string`                                          | —                    | —                                                                                                                                                                                                                |
-| `placeholder?`     | `string`                                          | `'Enter content'`    | —                                                                                                                                                                                                                |
-| `defaultValue?`    | `string`                                          | —                    | Serialized state to open with — `JSON.stringify(editorState.toJSON())`                                                                                                                                           |
-| `onChange?`        | `(value: { json: string; text: string }) => void` | —                    | `json` round-trips through `defaultValue`; `text` is the plain-text version                                                                                                                                      |
-| `onCommand?`       | `(command: InputTextFormattingCommand) => void`   | —                    | Fired by the Image / Video / Code / More buttons, which are drawn but not connected to Lexical — each needs a custom `DecoratorNode` and an upload flow, which belongs to the app rather than the design system. |
-| `onLinkRequest?`   | `() => string \| null`                            | —                    | Return the URL for the selection; falls back to `window.prompt`                                                                                                                                                  |
-| `linkPromptLabel?` | `string`                                          | `'Enter a link URL'` | Prompt text used by that fallback                                                                                                                                                                                |
-| `labels?`          | `Partial<InputTextFormattingLabels>`              | —                    | Overrides for the toolbar's tooltips, `aria-label`s and dropdown rows                                                                                                                                            |
-| `className?`       | `string`                                          | —                    | —                                                                                                                                                                                                                |
-| `boxClassName?`    | `string`                                          | —                    | Extra classes on the bordered box                                                                                                                                                                                |
-| `editorClassName?` | `string`                                          | —                    | Extra classes on the editable area                                                                                                                                                                               |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label?` | `string` | — | — |
+| `error?` | `string` | — | — |
+| `helperText?` | `string` | — | — |
+| `placeholder?` | `string` | `'Enter content'` | — |
+| `defaultValue?` | `string` | — | Serialized state to open with — `JSON.stringify(editorState.toJSON())` |
+| `onChange?` | `(value: { json: string; text: string }) => void` | — | `json` round-trips through `defaultValue`; `text` is the plain-text version |
+| `onCommand?` | `(command: InputTextFormattingCommand) => void` | — | Fired by the Image / Video / Code / More buttons, which are drawn but not connected to Lexical — each needs a custom `DecoratorNode` and an upload flow, which belongs to the app rather than the design system. |
+| `onLinkRequest?` | `() => string \| null` | — | Return the URL for the selection; falls back to `window.prompt` |
+| `linkPromptLabel?` | `string` | `'Enter a link URL'` | Prompt text used by that fallback |
+| `labels?` | `Partial<InputTextFormattingLabels>` | — | Overrides for the toolbar's tooltips, `aria-label`s and dropdown rows |
+| `className?` | `string` | — | — |
+| `boxClassName?` | `string` | — | Extra classes on the bordered box |
+| `editorClassName?` | `string` | — | Extra classes on the editable area |
 
 ### InputV2
 
@@ -1416,13 +1345,13 @@ Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'pref
 
 > Props are a union, so the table lists only what every arm has in common. The rest depend on the discriminant — set it and autocomplete narrows to them.
 
-| Prop            | Type     | Default | Description                                                                                                 |
-| --------------- | -------- | ------- | ----------------------------------------------------------------------------------------------------------- |
-| `fieldType?`    | `'text'` | —       | —                                                                                                           |
-| `label?`        | `string` | —       | —                                                                                                           |
-| `error?`        | `string` | —       | —                                                                                                           |
-| `helperText?`   | `string` | —       | —                                                                                                           |
-| `boxClassName?` | `string` | —       | Extra classes applied to the bordered box Extra classes on the bordered box Extra classes on the dashed box |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `fieldType?` | `'text'` | — | — |
+| `label?` | `string` | — | — |
+| `error?` | `string` | — | — |
+| `helperText?` | `string` | — | — |
+| `boxClassName?` | `string` | — | Extra classes applied to the bordered box Extra classes on the bordered box Extra classes on the dashed box |
 
 ### InputWithButton
 
@@ -1430,22 +1359,22 @@ Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'pref
 
 Props: `InputWithButtonProps extends Omit<InputTextProps, 'suffix'>`
 
-| Prop              | Type                                                       | Default | From                   | Description                                                               |
-| ----------------- | ---------------------------------------------------------- | ------- | ---------------------- | ------------------------------------------------------------------------- |
-| `buttonLabel`     | `ReactNode`                                                | —       | `InputWithButtonProps` | —                                                                         |
-| `onButtonClick?`  | `() => void`                                               | —       | `InputWithButtonProps` | —                                                                         |
-| `buttonDisabled?` | `boolean`                                                  | `false` | `InputWithButtonProps` | Disables only the button — the field stays editable                       |
-| `buttonProps?`    | `Omit<ButtonProps, 'children' \| 'onClick' \| 'disabled'>` | —       | `InputWithButtonProps` | Escape hatch for variant/size/icons on the trailing button                |
-| `prefix?`         | `ReactNode`                                                | —       | `InputTextProps`       | Slot rendered on the left of the field — icon, text, or any ReactNode     |
-| `label?`          | `string`                                                   | —       | `InputTextProps`       | —                                                                         |
-| `error?`          | `string`                                                   | —       | `InputTextProps`       | —                                                                         |
-| `helperText?`     | `string`                                                   | —       | `InputTextProps`       | —                                                                         |
-| `block?`          | `boolean`                                                  | —       | `InputTextProps`       | Stretch to the container width — see `InputFieldShellProps.block`         |
-| `disabledInput?`  | `boolean`                                                  | —       | `InputTextProps`       | Disables only the `<input>`; the box and its slots stay interactive       |
-| `fieldClassName?` | `string`                                                   | —       | `InputTextProps`       | Extra classes applied to the native `<input>`                             |
-| `boxClassName?`   | `string`                                                   | —       | `InputTextProps`       | Extra classes applied to the bordered box                                 |
-| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']`                       | —       | `InputTextProps`       | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?`         | `InputFieldShellProps['boxRef']`                           | —       | `InputTextProps`       | Handle on the bordered box — see `InputFieldShellProps.boxRef`            |
+| Prop | Type | Default | From | Description |
+| --- | --- | --- | --- | --- |
+| `buttonLabel` | `ReactNode` | — | `InputWithButtonProps` | — |
+| `onButtonClick?` | `() => void` | — | `InputWithButtonProps` | — |
+| `buttonDisabled?` | `boolean` | `false` | `InputWithButtonProps` | Disables only the button — the field stays editable |
+| `buttonProps?` | `Omit<ButtonProps, 'children' \| 'onClick' \| 'disabled'>` | — | `InputWithButtonProps` | Escape hatch for variant/size/icons on the trailing button |
+| `prefix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode |
+| `label?` | `string` | — | `InputTextProps` | — |
+| `error?` | `string` | — | `InputTextProps` | — |
+| `helperText?` | `string` | — | `InputTextProps` | — |
+| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
+| `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
+| `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
+| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
+| `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
 **Types**
 
@@ -1453,28 +1382,8 @@ Props: `InputWithButtonProps extends Omit<InputTextProps, 'suffix'>`
 type InputFileUploadStatus = 'uploading' | 'success' | 'error' | 'done';
 type InputProps = InputTextProps;
 type InputTextFormattingCommand = 'image' | 'video' | 'code' | 'more';
-type InputV2FieldType =
-  | 'text'
-  | 'search'
-  | 'phone'
-  | 'date'
-  | 'dropdown'
-  | 'tag'
-  | 'textarea'
-  | 'button'
-  | 'upload'
-  | 'text-formatting';
-type InputV2Props =
-  | ({ fieldType?: 'text' } & InputTextProps)
-  | ({ fieldType: 'search' } & InputSearchProps)
-  | ({ fieldType: 'phone' } & InputPhoneNumberProps)
-  | ({ fieldType: 'date' } & InputDateProps)
-  | ({ fieldType: 'dropdown' } & InputDropdownProps)
-  | ({ fieldType: 'tag' } & InputTagProps)
-  | ({ fieldType: 'textarea' } & InputTextareaProps)
-  | ({ fieldType: 'button' } & InputWithButtonProps)
-  | ({ fieldType: 'upload' } & InputFileUploadProps)
-  | ({ fieldType: 'text-formatting' } & InputTextFormattingProps);
+type InputV2FieldType = 'text' | 'search' | 'phone' | 'date' | 'dropdown' | 'tag' | 'textarea' | 'button' | 'upload' | 'text-formatting';
+type InputV2Props = ({ fieldType?: 'text' } & InputTextProps) | ({ fieldType: 'search' } & InputSearchProps) | ({ fieldType: 'phone' } & InputPhoneNumberProps) | ({ fieldType: 'date' } & InputDateProps) | ({ fieldType: 'dropdown' } & InputDropdownProps) | ({ fieldType: 'tag' } & InputTagProps) | ({ fieldType: 'textarea' } & InputTextareaProps) | ({ fieldType: 'button' } & InputWithButtonProps) | ({ fieldType: 'upload' } & InputFileUploadProps) | ({ fieldType: 'text-formatting' } & InputTextFormattingProps);
 ```
 
 ---
@@ -1487,40 +1396,40 @@ Declares no props of its own beyond the standard DOM attributes.
 
 ### InputGroupAddon
 
-| Prop     | Type                                                                     | Default          | Description |
-| -------- | ------------------------------------------------------------------------ | ---------------- | ----------- |
-| `align?` | `'inline-start' \| 'inline-end' \| 'block-start' \| 'block-end' \| null` | `'inline-start'` | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `align?` | `'inline-start' \| 'inline-end' \| 'block-start' \| 'block-end' \| null` | `'inline-start'` | — |
 
 ### InputGroupButton
 
 Props: `ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop         | Type            | Default     | Description        |
-| ------------ | --------------- | ----------- | ------------------ |
-| `variant?`   | `ButtonVariant` | `'primary'` | —                  |
-| `size?`      | `ButtonSize`    | `'sm'`      | —                  |
-| `iconLeft?`  | `ReactNode`     | —           | Leading icon slot  |
-| `iconRight?` | `ReactNode`     | —           | Trailing icon slot |
-| `loading?`   | `boolean`       | —           | —                  |
-| `fullWidth?` | `boolean`       | —           | —                  |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `ButtonVariant` | `'primary'` | — |
+| `size?` | `ButtonSize` | `'sm'` | — |
+| `iconLeft?` | `ReactNode` | — | Leading icon slot |
+| `iconRight?` | `ReactNode` | — | Trailing icon slot |
+| `loading?` | `boolean` | — | — |
+| `fullWidth?` | `boolean` | — | — |
 
 ### InputGroupInput
 
 Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'>`
 
-| Prop              | Type                                 | Default | Description                                                               |
-| ----------------- | ------------------------------------ | ------- | ------------------------------------------------------------------------- |
-| `label?`          | `string`                             | —       | —                                                                         |
-| `error?`          | `string`                             | —       | —                                                                         |
-| `helperText?`     | `string`                             | —       | —                                                                         |
-| `prefix?`         | `ReactNode`                          | —       | Slot rendered on the left of the field — icon, text, or any ReactNode     |
-| `suffix?`         | `ReactNode`                          | —       | Slot rendered on the right of the field — icon, button, or any ReactNode  |
-| `block?`          | `boolean`                            | —       | Stretch to the container width — see `InputFieldShellProps.block`         |
-| `disabledInput?`  | `boolean`                            | —       | Disables only the `<input>`; the box and its slots stay interactive       |
-| `fieldClassName?` | `string`                             | —       | Extra classes applied to the native `<input>`                             |
-| `boxClassName?`   | `string`                             | —       | Extra classes applied to the bordered box                                 |
-| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']` | —       | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?`         | `InputFieldShellProps['boxRef']`     | —       | Handle on the bordered box — see `InputFieldShellProps.boxRef`            |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label?` | `string` | — | — |
+| `error?` | `string` | — | — |
+| `helperText?` | `string` | — | — |
+| `prefix?` | `ReactNode` | — | Slot rendered on the left of the field — icon, text, or any ReactNode |
+| `suffix?` | `ReactNode` | — | Slot rendered on the right of the field — icon, button, or any ReactNode |
+| `block?` | `boolean` | — | Stretch to the container width — see `InputFieldShellProps.block` |
+| `disabledInput?` | `boolean` | — | Disables only the `<input>`; the box and its slots stay interactive |
+| `fieldClassName?` | `string` | — | Extra classes applied to the native `<input>` |
+| `boxClassName?` | `string` | — | Extra classes applied to the bordered box |
+| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | Click anywhere on the box — note that clicks on the field bubble here too |
+| `boxRef?` | `InputFieldShellProps['boxRef']` | — | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
 
 ### InputGroupText
 
@@ -1534,11 +1443,11 @@ Declares no props of its own beyond the standard DOM attributes.
 
 Props: `LabelProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop       | Type        | Default   | Description |
-| ---------- | ----------- | --------- | ----------- |
-| `size?`    | `LabelSize` | `'md'`    | —           |
-| `tone?`    | `LabelTone` | `'solid'` | —           |
-| `children` | `ReactNode` | —         | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `LabelSize` | `'md'` | — |
+| `tone?` | `LabelTone` | `'solid'` | — |
+| `children` | `ReactNode` | — | — |
 
 **Types**
 
@@ -1559,14 +1468,14 @@ Declares no props of its own beyond the standard DOM attributes.
 
 Props: `ListItemProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop           | Type        | Default | Description                                                                                                                                          |
-| -------------- | ----------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `leading?`     | `ReactNode` | —       | Leading slot — a 20×20 icon, an `<Avatar size="md">`, or any node.                                                                                   |
-| `description?` | `ReactNode` | —       | Secondary line below the title — turns the row into the two-line layout.                                                                             |
-| `trailing?`    | `ReactNode` | —       | Trailing content at the right edge — e.g. a `<Button>` and a kebab menu.                                                                             |
-| `chevron?`     | `boolean`   | `false` | Appends a CaretRight indicator after `trailing`, for rows that navigate.                                                                             |
-| `active?`      | `boolean`   | `false` | Marks the row as the selected one — renders on the pressed surface.                                                                                  |
-| `asChild?`     | `boolean`   | `false` | Render the row as its single child element (e.g. an `<a>` or a router link) instead of a `<button>`. That child's own children become the row title. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `leading?` | `ReactNode` | — | Leading slot — a 20×20 icon, an `<Avatar size="md">`, or any node. |
+| `description?` | `ReactNode` | — | Secondary line below the title — turns the row into the two-line layout. |
+| `trailing?` | `ReactNode` | — | Trailing content at the right edge — e.g. a `<Button>` and a kebab menu. |
+| `chevron?` | `boolean` | `false` | Appends a CaretRight indicator after `trailing`, for rows that navigate. |
+| `active?` | `boolean` | `false` | Marks the row as the selected one — renders on the pressed surface. |
+| `asChild?` | `boolean` | `false` | Render the row as its single child element (e.g. an `<a>` or a router link) instead of a `<button>`. That child's own children become the row title. |
 
 ### ListProps
 
@@ -1580,8 +1489,8 @@ No members declared in this package.
 
 Props: `LnbProps extends HTMLAttributes<HTMLElement>`
 
-| Prop         | Type      | Default | Description                                                           |
-| ------------ | --------- | ------- | --------------------------------------------------------------------- |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
 | `collapsed?` | `boolean` | `false` | Collapse to the 52px icon-only rail. Default: false → 264px expanded. |
 
 ### LnbFooter
@@ -1600,10 +1509,10 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-col
 
 Props: `LnbGroupTriggerProps extends ComponentPropsWithoutRef<typeof CollapsiblePrimitive.Trigger>`
 
-| Prop     | Type        | Default | Description                                                                |
-| -------- | ----------- | ------- | -------------------------------------------------------------------------- |
-| `icon?`  | `ReactNode` | —       | Leading glyph — Figma's 20px `height/icon/lg` slot.                        |
-| `label?` | `ReactNode` | —       | Row label. Visually hidden (but still the accessible name) when collapsed. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon?` | `ReactNode` | — | Leading glyph — Figma's 20px `height/icon/lg` slot. |
+| `label?` | `ReactNode` | — | Row label. Visually hidden (but still the accessible name) when collapsed. |
 
 Also accepts the props of `@radix-ui/react-primitive`.
 
@@ -1615,21 +1524,21 @@ Declares no props of its own beyond the standard DOM attributes.
 
 Props: `LnbItemProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop        | Type        | Default | Description                                                                    |
-| ----------- | ----------- | ------- | ------------------------------------------------------------------------------ |
-| `icon?`     | `ReactNode` | —       | Leading glyph — Figma's 20px `height/icon/lg` slot. Drives the collapsed rail. |
-| `label?`    | `ReactNode` | —       | Row label. Visually hidden (but still the accessible name) when collapsed.     |
-| `active?`   | `boolean`   | `false` | Figma `State=Select` — paints the pressed fill and sets `aria-current`.        |
-| `indented?` | `boolean`   | `false` | Sub-item inside an open LnbGroup: 36px indent, muted label, no glyph.          |
-| `asChild?`  | `boolean`   | `false` | Render `children` instead of a `<button>` — e.g. a router `<Link>`.            |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon?` | `ReactNode` | — | Leading glyph — Figma's 20px `height/icon/lg` slot. Drives the collapsed rail. |
+| `label?` | `ReactNode` | — | Row label. Visually hidden (but still the accessible name) when collapsed. |
+| `active?` | `boolean` | `false` | Figma `State=Select` — paints the pressed fill and sets `aria-current`. |
+| `indented?` | `boolean` | `false` | Sub-item inside an open LnbGroup: 36px indent, muted label, no glyph. |
+| `asChild?` | `boolean` | `false` | Render `children` instead of a `<button>` — e.g. a router `<Link>`. |
 
 ### LnbLogo
 
 Props: `LnbLogoProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop      | Type        | Default | Description                                                                                                                                                                                                   |
-| --------- | ----------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `action?` | `ReactNode` | —       | Trailing collapse control — Figma `Type=Expand (With Folding)`. Omit it for `Expand (Without Folding)`. On the collapsed rail it replaces the logo on hover/focus, which is Figma's `Collapse / Hover` state. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `action?` | `ReactNode` | — | Trailing collapse control — Figma `Type=Expand (With Folding)`. Omit it for `Expand (Without Folding)`. On the collapsed rail it replaces the logo on hover/focus, which is Figma's `Collapse / Hover` state. |
 
 ### LnbMenu
 
@@ -1639,21 +1548,21 @@ Declares no props of its own beyond the standard DOM attributes.
 
 Props: `LnbToggleProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop    | Type        | Default | Description                                                        |
-| ------- | ----------- | ------- | ------------------------------------------------------------------ |
-| `icon?` | `ReactNode` | —       | Glyph override. Defaults to Figma's `SidebarSimple` (26864:20157). |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon?` | `ReactNode` | — | Glyph override. Defaults to Figma's `SidebarSimple` (26864:20157). |
 
 ### LnbUser
 
 Props: `LnbUserProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'name'>`
 
-| Prop       | Type        | Default | Description                                                                     |
-| ---------- | ----------- | ------- | ------------------------------------------------------------------------------- |
-| `name?`    | `ReactNode` | —       | Primary line — `typography/body/md/medium`. Also the collapsed accessible name. |
-| `email?`   | `ReactNode` | —       | Secondary line — `typography/caption/sm/regular`.                               |
-| `avatar?`  | `ReactNode` | —       | Avatar override. Defaults to a 24px `height/profile/sm` Avatar of `name`.       |
-| `active?`  | `boolean`   | `false` | Figma `State=Select` — paints the pressed fill.                                 |
-| `asChild?` | `boolean`   | `false` | Render `children` instead of a `<button>` — e.g. a DropdownMenu trigger.        |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name?` | `ReactNode` | — | Primary line — `typography/body/md/medium`. Also the collapsed accessible name. |
+| `email?` | `ReactNode` | — | Secondary line — `typography/caption/sm/regular`. |
+| `avatar?` | `ReactNode` | — | Avatar override. Defaults to a 24px `height/profile/sm` Avatar of `name`. |
+| `active?` | `boolean` | `false` | Figma `State=Select` — paints the pressed fill. |
+| `asChild?` | `boolean` | `false` | Render `children` instead of a `<button>` — e.g. a DropdownMenu trigger. |
 
 ### LnbFooterProps
 
@@ -1683,72 +1592,72 @@ No members declared in this package.
 
 Props: `ModalProps`
 
-| Prop            | Type                      | Default     | Description                                            |
-| --------------- | ------------------------- | ----------- | ------------------------------------------------------ |
-| `open?`         | `boolean`                 | —           | —                                                      |
-| `defaultOpen?`  | `boolean`                 | —           | —                                                      |
-| `onOpenChange?` | `(open: boolean) => void` | —           | —                                                      |
-| `trigger?`      | `ReactNode`               | —           | Optional element that opens the modal (e.g. a Button). |
-| `title`         | `ReactNode`               | —           | —                                                      |
-| `children?`     | `ReactNode`               | —           | Body — centered text, an Input, or any content.        |
-| `cancelText?`   | `ReactNode`               | `'Cancel'`  | —                                                      |
-| `confirmText?`  | `ReactNode`               | `'Confirm'` | —                                                      |
-| `onCancel?`     | `() => void`              | —           | —                                                      |
-| `onConfirm?`    | `() => void`              | —           | —                                                      |
-| `singleButton?` | `boolean`                 | `false`     | Render only the confirm button (Figma "SingleButton"). |
-| `footer?`       | `ReactNode`               | —           | Replace the default footer buttons entirely.           |
-| `className?`    | `string`                  | —           | —                                                      |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open?` | `boolean` | — | — |
+| `defaultOpen?` | `boolean` | — | — |
+| `onOpenChange?` | `(open: boolean) => void` | — | — |
+| `trigger?` | `ReactNode` | — | Optional element that opens the modal (e.g. a Button). |
+| `title` | `ReactNode` | — | — |
+| `children?` | `ReactNode` | — | Body — centered text, an Input, or any content. |
+| `cancelText?` | `ReactNode` | `'Cancel'` | — |
+| `confirmText?` | `ReactNode` | `'Confirm'` | — |
+| `onCancel?` | `() => void` | — | — |
+| `onConfirm?` | `() => void` | — | — |
+| `singleButton?` | `boolean` | `false` | Render only the confirm button (Figma "SingleButton"). |
+| `footer?` | `ReactNode` | — | Replace the default footer buttons entirely. |
+| `className?` | `string` | — | — |
 
 ### ResourceModal
 
 Props: `ResourceModalProps`
 
-| Prop            | Type                                                                                                        | Default | Description                                               |
-| --------------- | ----------------------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------- |
-| `type`          | `ResourceModalType \| null`                                                                                 | —       | —                                                         |
-| `open`          | `boolean`                                                                                                   | —       | —                                                         |
-| `onClose`       | `() => void`                                                                                                | —       | —                                                         |
-| `itemName`      | `string`                                                                                                    | —       | —                                                         |
-| `initialValue?` | `string`                                                                                                    | —       | —                                                         |
-| `onConfirm?`    | `(value: any) => void`                                                                                      | —       | —                                                         |
-| `isLoading?`    | `boolean`                                                                                                   | —       | —                                                         |
-| `itemDetails?`  | `{ ownerName: string; location: string; sizeBytes: number; createdAt: number; updatedAt: number \| null; }` | —       | —                                                         |
-| `formatDate?`   | `(date: number) => string`                                                                                  | —       | —                                                         |
-| `formatBytes?`  | `(bytes: number) => string`                                                                                 | —       | —                                                         |
-| `initialTags?`  | `{ id: string; name: string }[]`                                                                            | —       | —                                                         |
-| `labels?`       | `Partial<ResourceModalLabels>`                                                                              | —       | Overrides for any of the modal's built-in English strings |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` | `ResourceModalType \| null` | — | — |
+| `open` | `boolean` | — | — |
+| `onClose` | `() => void` | — | — |
+| `itemName` | `string` | — | — |
+| `initialValue?` | `string` | — | — |
+| `onConfirm?` | `(value: any) => void` | — | — |
+| `isLoading?` | `boolean` | — | — |
+| `itemDetails?` | `{ ownerName: string; location: string; sizeBytes: number; createdAt: number; updatedAt: number \| null; }` | — | — |
+| `formatDate?` | `(date: number) => string` | — | — |
+| `formatBytes?` | `(bytes: number) => string` | — | — |
+| `initialTags?` | `{ id: string; name: string }[]` | — | — |
+| `labels?` | `Partial<ResourceModalLabels>` | — | Overrides for any of the modal's built-in English strings |
 
 ### ResourceModalLabels
 
 Every string the five modal bodies render. One bag rather than 25 props: they are always translated together and would otherwise bury the eleven behavioural props in autocomplete.
 
-| Prop                      | Type     | Default | Description                              |
-| ------------------------- | -------- | ------- | ---------------------------------------- |
-| `renameTitle`             | `string` | —       | —                                        |
-| `deleteTitle`             | `string` | —       | —                                        |
-| `tagTitle`                | `string` | —       | —                                        |
-| `moveTitle`               | `string` | —       | —                                        |
-| `propertiesTitle`         | `string` | —       | —                                        |
-| `nameLabel`               | `string` | —       | rename                                   |
-| `namePlaceholder`         | `string` | —       | —                                        |
-| `deleteQuestion`          | `string` | —       | delete                                   |
-| `deleteNote`              | `string` | —       | —                                        |
-| `currentTagsTitle`        | `string` | —       | tag                                      |
-| `noTagsText`              | `string` | —       | —                                        |
-| `tagPlaceholder`          | `string` | —       | —                                        |
-| `addTagText`              | `string` | —       | —                                        |
-| `removeTagLabel`          | `string` | —       | `aria-label` on each tag's remove button |
-| `folderSearchPlaceholder` | `string` | —       | move                                     |
-| `rootFolderName`          | `string` | —       | —                                        |
-| `newFolderText`           | `string` | —       | —                                        |
-| `itemTypeText`            | `string` | —       | properties                               |
-| `ownerLabel`              | `string` | —       | —                                        |
-| `locationLabel`           | `string` | —       | —                                        |
-| `sizeLabel`               | `string` | —       | —                                        |
-| `createdLabel`            | `string` | —       | —                                        |
-| `cancelText`              | `string` | —       | footer                                   |
-| `confirmText`             | `string` | —       | —                                        |
-| `deleteText`              | `string` | —       | —                                        |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `renameTitle` | `string` | — | — |
+| `deleteTitle` | `string` | — | — |
+| `tagTitle` | `string` | — | — |
+| `moveTitle` | `string` | — | — |
+| `propertiesTitle` | `string` | — | — |
+| `nameLabel` | `string` | — | rename |
+| `namePlaceholder` | `string` | — | — |
+| `deleteQuestion` | `string` | — | delete |
+| `deleteNote` | `string` | — | — |
+| `currentTagsTitle` | `string` | — | tag |
+| `noTagsText` | `string` | — | — |
+| `tagPlaceholder` | `string` | — | — |
+| `addTagText` | `string` | — | — |
+| `removeTagLabel` | `string` | — | `aria-label` on each tag's remove button |
+| `folderSearchPlaceholder` | `string` | — | move |
+| `rootFolderName` | `string` | — | — |
+| `newFolderText` | `string` | — | — |
+| `itemTypeText` | `string` | — | properties |
+| `ownerLabel` | `string` | — | — |
+| `locationLabel` | `string` | — | — |
+| `sizeLabel` | `string` | — | — |
+| `createdLabel` | `string` | — | — |
+| `cancelText` | `string` | — | footer |
+| `confirmText` | `string` | — | — |
+| `deleteText` | `string` | — | — |
 
 **Types**
 
@@ -1768,21 +1677,21 @@ Declares no props of its own beyond the standard DOM attributes.
 
 Props: `BottomNavigationItemProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop      | Type        | Default | Description |
-| --------- | ----------- | ------- | ----------- |
-| `icon?`   | `ReactNode` | —       | —           |
-| `label?`  | `ReactNode` | —       | —           |
-| `active?` | `boolean`   | `false` | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon?` | `ReactNode` | — | — |
+| `label?` | `ReactNode` | — | — |
+| `active?` | `boolean` | `false` | — |
 
 ### TopNavigation
 
 Props: `TopNavigationProps extends Omit<HTMLAttributes<HTMLElement>, 'title'>`
 
-| Prop     | Type        | Default | Description                                        |
-| -------- | ----------- | ------- | -------------------------------------------------- |
-| `left?`  | `ReactNode` | —       | Leading slot — back button, menu, or logo.         |
-| `title?` | `ReactNode` | —       | Centered title. Truncates when space is tight.     |
-| `right?` | `ReactNode` | —       | Trailing slot — action icons, avatar, or a button. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `left?` | `ReactNode` | — | Leading slot — back button, menu, or logo. |
+| `title?` | `ReactNode` | — | Centered title. Truncates when space is tight. |
+| `right?` | `ReactNode` | — | Trailing slot — action icons, avatar, or a button. |
 
 ### BottomNavigationProps
 
@@ -1796,12 +1705,12 @@ No members declared in this package.
 
 Props: `BottomNavigationItemV2Props extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop       | Type        | Default | Description                                                                    |
-| ---------- | ----------- | ------- | ------------------------------------------------------------------------------ |
-| `icon?`    | `ReactNode` | —       | Glyph slot — rendered in Figma's 20px `height/icon/lg` box.                    |
-| `label?`   | `ReactNode` | —       | —                                                                              |
-| `active?`  | `boolean`   | `false` | Figma `State=Select` — paints icon + label text-primary and sets aria-current. |
-| `asChild?` | `boolean`   | `false` | Render the child element instead of a `<button>` — e.g. a router `<Link>`.     |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon?` | `ReactNode` | — | Glyph slot — rendered in Figma's 20px `height/icon/lg` box. |
+| `label?` | `ReactNode` | — | — |
+| `active?` | `boolean` | `false` | Figma `State=Select` — paints icon + label text-primary and sets aria-current. |
+| `asChild?` | `boolean` | `false` | Render the child element instead of a `<button>` — e.g. a router `<Link>`. |
 
 ### BottomNavigationV2
 
@@ -1811,12 +1720,12 @@ Declares no props of its own beyond the standard DOM attributes.
 
 Props: `TopNavigationV2Props extends Omit<HTMLAttributes<HTMLElement>, 'title'>`
 
-| Prop         | Type           | Default | Description                                                                                                                                    |
-| ------------ | -------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `left?`      | `ReactNode`    | —       | Leading cluster — back caret, menu button, logo, or any combination.                                                                           |
-| `title?`     | `ReactNode`    | —       | Centered title. Truncates when the clusters leave too little room.                                                                             |
-| `right?`     | `ReactNode`    | —       | Trailing cluster — icon buttons, a primary button, or an avatar.                                                                               |
-| `actionGap?` | `'md' \| 'lg'` | `'md'`  | Gap inside both clusters: `spacing/md` (12px) on every Figma cell except BackIcon, which spaces its three icon buttons by `spacing/lg` (16px). |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `left?` | `ReactNode` | — | Leading cluster — back caret, menu button, logo, or any combination. |
+| `title?` | `ReactNode` | — | Centered title. Truncates when the clusters leave too little room. |
+| `right?` | `ReactNode` | — | Trailing cluster — icon buttons, a primary button, or an avatar. |
+| `actionGap?` | `'md' \| 'lg'` | `'md'` | Gap inside both clusters: `spacing/md` (12px) on every Figma cell except BackIcon, which spaces its three icon buttons by `spacing/lg` (16px). |
 
 ### BottomNavigationV2Props
 
@@ -1838,9 +1747,9 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-men
 
 Props: `OverflowMenuItemProps extends ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>`
 
-| Prop    | Type        | Default | Description                                                                     |
-| ------- | ----------- | ------- | ------------------------------------------------------------------------------- |
-| `icon?` | `ReactNode` | —       | Leading glyph — rendered in Figma's 16px `height/icon/md` box (type=LabelIcon). |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon?` | `ReactNode` | — | Leading glyph — rendered in Figma's 16px `height/icon/md` box (type=LabelIcon). |
 
 Also accepts the props of `@radix-ui/react-menu`, `@radix-ui/react-primitive`.
 
@@ -1852,9 +1761,9 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-men
 
 Props: `OverflowMenuTriggerProps extends ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Trigger>`
 
-| Prop    | Type        | Default | Description                                                        |
-| ------- | ----------- | ------- | ------------------------------------------------------------------ |
-| `icon?` | `ReactNode` | —       | Glyph shown in the default trigger. Ignored when `asChild` is set. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon?` | `ReactNode` | — | Glyph shown in the default trigger. Ignored when `asChild` is set. |
 
 Also accepts the props of `@radix-ui/react-primitive`.
 
@@ -1870,13 +1779,13 @@ No members declared in this package.
 
 Props: `PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'>`
 
-| Prop            | Type                     | Default | Description                                                   |
-| --------------- | ------------------------ | ------- | ------------------------------------------------------------- |
-| `page`          | `number`                 | —       | Current page (1-based).                                       |
-| `total`         | `number`                 | —       | Total number of pages.                                        |
-| `onPageChange?` | `(page: number) => void` | —       | —                                                             |
-| `siblingCount?` | `number`                 | `1`     | Pages shown on each side of the current page.                 |
-| `showEdges?`    | `boolean`                | `true`  | Show the jump-to-first / jump-to-last double-chevron buttons. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `page` | `number` | — | Current page (1-based). |
+| `total` | `number` | — | Total number of pages. |
+| `onPageChange?` | `(page: number) => void` | — | — |
+| `siblingCount?` | `number` | `1` | Pages shown on each side of the current page. |
+| `showEdges?` | `boolean` | `true` | Show the jump-to-first / jump-to-last double-chevron buttons. |
 
 ---
 
@@ -1894,9 +1803,9 @@ Positions the content against something other than the trigger — e.g. a whole 
 
 Props: `PopoverAnchorProps extends Omit<RadixAnchorProps, 'virtualRef'>`
 
-| Prop          | Type                         | Default | Description                                                                                                                                                                                                         |
-| ------------- | ---------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `virtualRef?` | `RefObject<Element \| null>` | —       | Position against this element instead — nothing is rendered. Use it to anchor to a node the anchor cannot wrap, such as an input's box while the label and error message stay outside the popover's reference rect. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `virtualRef?` | `RefObject<Element \| null>` | — | Position against this element instead — nothing is rendered. Use it to anchor to a node the anchor cannot wrap, such as an input's box while the label and error message stay outside the popover's reference rect. |
 
 Also accepts the props of `@radix-ui/react-primitive`.
 
@@ -1907,16 +1816,15 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 ### PopoverContent
 
 Props: `PopoverContentProps extends Omit<
-ComponentProps<typeof PopoverPrimitive.Content>,
-'side' | 'align'
+    ComponentProps<typeof PopoverPrimitive.Content>,
+    'side' | 'align'
+  >`
 
-> `
-
-| Prop         | Type               | Default    | Description                                                                                       |
-| ------------ | ------------------ | ---------- | ------------------------------------------------------------------------------------------------- |
-| `placement?` | `PopoverPlacement` | —          | Convenience shorthand combining side + align. When set, takes precedence over `side` and `align`. |
-| `side?`      | `Side`             | `'bottom'` | —                                                                                                 |
-| `align?`     | `Align`            | `'start'`  | —                                                                                                 |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `placement?` | `PopoverPlacement` | — | Convenience shorthand combining side + align. When set, takes precedence over `side` and `align`. |
+| `side?` | `Side` | `'bottom'` | — |
+| `align?` | `Align` | `'start'` | — |
 
 Also accepts the props of `@radix-ui/react-dismissable-layer`, `@radix-ui/react-popover`, `@radix-ui/react-popper`, `@radix-ui/react-primitive`.
 
@@ -1928,24 +1836,24 @@ Declares no props of its own beyond the standard DOM attributes.
 
 Props: `PopoverHeaderProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop       | Type        | Default | Description |
-| ---------- | ----------- | ------- | ----------- |
-| `avatar?`  | `ReactNode` | —       | —           |
-| `name?`    | `ReactNode` | —       | —           |
-| `email?`   | `ReactNode` | —       | —           |
-| `actions?` | `ReactNode` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `avatar?` | `ReactNode` | — | — |
+| `name?` | `ReactNode` | — | — |
+| `email?` | `ReactNode` | — | — |
+| `actions?` | `ReactNode` | — | — |
 
 ### PopoverItem
 
 Props: `PopoverItemProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop           | Type        | Default | Description                                                                                                                                                                                              |
-| -------------- | ----------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `icon?`        | `ReactNode` | —       | Leading icon slot — render any 20×20 icon node                                                                                                                                                           |
-| `description?` | `ReactNode` | —       | Secondary description text rendered below the label                                                                                                                                                      |
-| `trailing?`    | `ReactNode` | —       | Trailing content (text or icon) rendered at the right edge                                                                                                                                               |
-| `isSubmenu?`   | `boolean`   | `false` | Appends a CaretRight indicator for submenu items                                                                                                                                                         |
-| `asMenuItem?`  | `boolean`   | `false` | Renders the item as `role="menuitem"`. Required for items inside `PopoverMenu` — that is the role it finds its items by, and it owns the `tabIndex` from then on. Has no effect outside a `PopoverMenu`. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon?` | `ReactNode` | — | Leading icon slot — render any 20×20 icon node |
+| `description?` | `ReactNode` | — | Secondary description text rendered below the label |
+| `trailing?` | `ReactNode` | — | Trailing content (text or icon) rendered at the right edge |
+| `isSubmenu?` | `boolean` | `false` | Appends a CaretRight indicator for submenu items |
+| `asMenuItem?` | `boolean` | `false` | Renders the item as `role="menuitem"`. Required for items inside `PopoverMenu` — that is the role it finds its items by, and it owns the `tabIndex` from then on. Has no effect outside a `PopoverMenu`. |
 
 ### PopoverMenu
 
@@ -1961,7 +1869,7 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pop
 
 ### PopoverRoot
 
-> ⚠️ **Deprecated** — Renamed to `Popover` in 2.0 — the root is now spelled like `Dialog` / `Tabs` / `Tooltip`, and the panel that held the `Popover` name is now `PopoverPanel`. This alias is removed in the next minor.
+> ⚠️ **Deprecated** — Renamed to `Popover` — the root is now spelled like `Dialog` / `Tabs` / `Tooltip`, and the panel that held the `Popover` name is now `PopoverPanel`. The rename landed in `1.0.15`; `1.1.0` is the release that signals it in the version number. This alias is kept for the whole `1.x` line and removed in `2.0.0`.
 
 Declares no props of its own — everything is forwarded to `@radix-ui/react-popover`.
 
@@ -1992,19 +1900,7 @@ No members declared in this package.
 **Types**
 
 ```ts
-type PopoverPlacement =
-  | 'top-start'
-  | 'top-center'
-  | 'top-end'
-  | 'bottom-start'
-  | 'bottom-center'
-  | 'bottom-end'
-  | 'left-start'
-  | 'left-center'
-  | 'left-end'
-  | 'right-start'
-  | 'right-center'
-  | 'right-end';
+type PopoverPlacement = 'top-start' | 'top-center' | 'top-end' | 'bottom-start' | 'bottom-center' | 'bottom-end' | 'left-start' | 'left-center' | 'left-end' | 'right-start' | 'right-center' | 'right-end';
 ```
 
 ---
@@ -2015,23 +1911,23 @@ type PopoverPlacement =
 
 Props: `PopupProps`
 
-| Prop                     | Type                         | Default              | Description                                                 |
-| ------------------------ | ---------------------------- | -------------------- | ----------------------------------------------------------- |
-| `open?`                  | `boolean`                    | —                    | —                                                           |
-| `defaultOpen?`           | `boolean`                    | —                    | —                                                           |
-| `onOpenChange?`          | `(open: boolean) => void`    | —                    | —                                                           |
-| `trigger?`               | `ReactNode`                  | —                    | —                                                           |
-| `variant?`               | `PopupVariant`               | `'text'`             | —                                                           |
-| `title?`                 | `ReactNode`                  | —                    | Header title (text variant).                                |
-| `children?`              | `ReactNode`                  | —                    | Body content (text variant).                                |
-| `image?`                 | `ReactNode`                  | —                    | Image element (image variant). Falls back to a placeholder. |
-| `actionText?`            | `ReactNode`                  | —                    | Footer link action (text variant).                          |
-| `onAction?`              | `() => void`                 | —                    | —                                                           |
-| `showDontShowAgain?`     | `boolean`                    | `true`               | "Don't show again" checkbox.                                |
-| `dontShowAgain?`         | `boolean`                    | —                    | —                                                           |
-| `onDontShowAgainChange?` | `(checked: boolean) => void` | —                    | —                                                           |
-| `dontShowAgainLabel?`    | `ReactNode`                  | `"Don't show again"` | —                                                           |
-| `className?`             | `string`                     | —                    | —                                                           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open?` | `boolean` | — | — |
+| `defaultOpen?` | `boolean` | — | — |
+| `onOpenChange?` | `(open: boolean) => void` | — | — |
+| `trigger?` | `ReactNode` | — | — |
+| `variant?` | `PopupVariant` | `'text'` | — |
+| `title?` | `ReactNode` | — | Header title (text variant). |
+| `children?` | `ReactNode` | — | Body content (text variant). |
+| `image?` | `ReactNode` | — | Image element (image variant). Falls back to a placeholder. |
+| `actionText?` | `ReactNode` | — | Footer link action (text variant). |
+| `onAction?` | `() => void` | — | — |
+| `showDontShowAgain?` | `boolean` | `true` | "Don't show again" checkbox. |
+| `dontShowAgain?` | `boolean` | — | — |
+| `onDontShowAgainChange?` | `(checked: boolean) => void` | — | — |
+| `dontShowAgainLabel?` | `ReactNode` | `"Don't show again"` | — |
+| `className?` | `string` | — | — |
 
 **Types**
 
@@ -2047,17 +1943,17 @@ type PopupVariant = 'text' | 'image';
 
 Props: `ProgressProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop           | Type                             | Default                      | Description                                                                                                                                                                                                 |
-| -------------- | -------------------------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `variant?`     | `ProgressVariant`                | `'linear'`                   | Shape of the progress. Defaults to `'linear'`.                                                                                                                                                              |
-| `value?`       | `number`                         | `0`                          | Current amount of progress, from 0 to `max`. Defaults to `0`.                                                                                                                                               |
-| `max?`         | `number`                         | `100`                        | Value that counts as complete. Defaults to `100`, so raw counts work too: `value={3} max={7}`.                                                                                                              |
-| `status?`      | `ProgressStatus`                 | `'active'`                   | `'active'` shows the percentage, `'done'` shows a check icon on a full bar, `'error'` turns the bar red and shows an X icon. Defaults to `'active'`.                                                        |
-| `size?`        | `ProgressSize`                   | `'lg'`                       | Ring size. Only applies to `variant="circular"`. Defaults to `'lg'`.                                                                                                                                        |
-| `placement?`   | `ProgressPlacement`              | —                            | Where the text block sits. Defaults to `'right'` for linear and `'inside'` for circular; a placement that does not belong to the current variant falls back to that default instead of breaking the layout. |
-| `label?`       | `ReactNode`                      | —                            | Leading description text. Only rendered when `placement="top"`.                                                                                                                                             |
-| `showValue?`   | `boolean`                        | —                            | Show the percentage text. Defaults to `true`, except for circular `size="sm"` (matches the design).                                                                                                         |
-| `formatValue?` | `(percent: number) => ReactNode` | `(percent) => `${percent}%`` | Custom percentage text. Defaults to ``(percent) => `${percent}%` ``.                                                                                                                                        |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `ProgressVariant` | `'linear'` | Shape of the progress. Defaults to `'linear'`. |
+| `value?` | `number` | `0` | Current amount of progress, from 0 to `max`. Defaults to `0`. |
+| `max?` | `number` | `100` | Value that counts as complete. Defaults to `100`, so raw counts work too: `value={3} max={7}`. |
+| `status?` | `ProgressStatus` | `'active'` | `'active'` shows the percentage, `'done'` shows a check icon on a full bar, `'error'` turns the bar red and shows an X icon. Defaults to `'active'`. |
+| `size?` | `ProgressSize` | `'lg'` | Ring size. Only applies to `variant="circular"`. Defaults to `'lg'`. |
+| `placement?` | `ProgressPlacement` | — | Where the text block sits. Defaults to `'right'` for linear and `'inside'` for circular; a placement that does not belong to the current variant falls back to that default instead of breaking the layout. |
+| `label?` | `ReactNode` | — | Leading description text. Only rendered when `placement="top"`. |
+| `showValue?` | `boolean` | — | Show the percentage text. Defaults to `true`, except for circular `size="sm"` (matches the design). |
+| `formatValue?` | `(percent: number) => ReactNode` | `(percent) => `${percent}%`` | Custom percentage text. Defaults to ``(percent) => `${percent}%` ``. |
 
 ### SyncProgressBar
 
@@ -2065,20 +1961,16 @@ SyncProgressBar component as per Sheetric premium design (Note-5 mockup). Displa
 
 Props: `SyncProgressBarProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop       | Type      | Default | Description |
-| ---------- | --------- | ------- | ----------- |
-| `value?`   | `number`  | `0`     | —           |
-| `max?`     | `number`  | `100`   | —           |
-| `overlay?` | `boolean` | `false` | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value?` | `number` | `0` | — |
+| `max?` | `number` | `100` | — |
+| `overlay?` | `boolean` | `false` | — |
 
 **Types**
 
 ```ts
-type ProgressPlacement =
-  | 'right' /** linear — label on the left + value on the right, above the bar (`LinearTextTop`) */
-  | 'top' /** linear — value centered below the bar (`LinearTextBottom`) */
-  | 'bottom' /** circular — value in the middle of the ring */
-  | 'inside';
+type ProgressPlacement = 'right' /** linear — label on the left + value on the right, above the bar (`LinearTextTop`) */ | 'top' /** linear — value centered below the bar (`LinearTextBottom`) */ | 'bottom' /** circular — value in the middle of the ring */ | 'inside';
 type ProgressSize = 'sm' | 'md' | 'lg';
 type ProgressStatus = 'active' | 'done' | 'error';
 type ProgressVariant = 'circular' | 'linear';
@@ -2092,10 +1984,10 @@ type ProgressVariant = 'circular' | 'linear';
 
 Props: `RadioProps extends ComponentPropsWithoutRef<typeof RadixRadioGroup.Item>`
 
-| Prop        | Type        | Default | Description                                |
-| ----------- | ----------- | ------- | ------------------------------------------ |
-| `size?`     | `RadioSize` | `'md'`  | —                                          |
-| `children?` | `ReactNode` | —       | Optional label rendered next to the radio. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `RadioSize` | `'md'` | — |
+| `children?` | `ReactNode` | — | Optional label rendered next to the radio. |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-radio-group`.
 
@@ -2121,10 +2013,10 @@ type RadioSize = 'md' | 'sm';
 
 Props: `RadiusProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop       | Type          | Default | Description                                                                                                                                        |
-| ---------- | ------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `radius?`  | `RadiusScale` | `'md'`  | Which step of the ITUI scale to round to.                                                                                                          |
-| `asChild?` | `boolean`     | `false` | Round the child instead of a `div`, so an element that already behaves — a `<button>`, an `<img>`, another component's root — keeps its own logic. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `radius?` | `RadiusScale` | `'md'` | Which step of the ITUI scale to round to. |
+| `asChild?` | `boolean` | `false` | Round the child instead of a `div`, so an element that already behaves — a `<button>`, an `<img>`, another component's root — keeps its own logic. |
 
 **Types**
 
@@ -2134,7 +2026,7 @@ type RadiusScale = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
 
 **Values**
 
-- `RADIUS_PX`: `Record<RadiusScale, number>` — ITUI radius step → its pixel value. Exported so callers that need to _measure_ a corner (an annotation, an SVG clip path, a canvas) read the same numbers the classes below paint, and the two can never drift apart.
+- `RADIUS_PX`: `Record<RadiusScale, number>` — ITUI radius step → its pixel value. Exported so callers that need to *measure* a corner (an annotation, an SVG clip path, a canvas) read the same numbers the classes below paint, and the two can never drift apart.
 - `radiusClass`: `Record<RadiusScale, string>` — ITUI radius step → Tailwind class. Reach for `radiusClass.md` rather than typing `rounded-md`, which is 6px — a different value on a different scale.
 
 ---
@@ -2145,21 +2037,21 @@ type RadiusScale = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
 
 Props: `RatingProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'>`
 
-| Prop             | Type                      | Default | Description                                                         |
-| ---------------- | ------------------------- | ------- | ------------------------------------------------------------------- |
-| `value?`         | `number`                  | `0`     | Current rating: 0 → `count`, in 0.5 steps.                          |
-| `onValueChange?` | `(value: number) => void` | —       | Called with the picked rating.                                      |
-| `count?`         | `number`                  | `5`     | How many stars to draw.                                             |
-| `readOnly?`      | `boolean`                 | `false` | Render as a static display — no inputs, no hover preview.           |
-| `name?`          | `string`                  | —       | `name` shared by the underlying radios. Defaults to a generated id. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value?` | `number` | `0` | Current rating: 0 → `count`, in 0.5 steps. |
+| `onValueChange?` | `(value: number) => void` | — | Called with the picked rating. |
+| `count?` | `number` | `5` | How many stars to draw. |
+| `readOnly?` | `boolean` | `false` | Render as a static display — no inputs, no hover preview. |
+| `name?` | `string` | — | `name` shared by the underlying radios. Defaults to a generated id. |
 
 ### RatingStar
 
 Props: `RatingStarProps extends HTMLAttributes<HTMLSpanElement>`
 
-| Prop    | Type             | Default   | Description |
-| ------- | ---------------- | --------- | ----------- |
-| `fill?` | `RatingStarFill` | `'empty'` | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `fill?` | `RatingStarFill` | `'empty'` | — |
 
 **Types**
 
@@ -2177,12 +2069,12 @@ Root + viewport + bar in one element — the common case. Compose `ScrollAreaRoo
 
 Props: `ScrollAreaProps extends ScrollAreaRootProps`
 
-| Prop                  | Type                    | Default      | Description                                                               |
-| --------------------- | ----------------------- | ------------ | ------------------------------------------------------------------------- |
-| `size?`               | `ScrollbarSize`         | `'md'`       | —                                                                         |
-| `orientation?`        | `ScrollAreaOrientation` | `'vertical'` | Which bars to render. Defaults to `vertical`, as Figma specs.             |
-| `viewportClassName?`  | `string`                | —            | Reaches the scrolling element, e.g. to pad the content away from the bar. |
-| `scrollbarClassName?` | `string`                | —            | Reaches both rails.                                                       |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `ScrollbarSize` | `'md'` | — |
+| `orientation?` | `ScrollAreaOrientation` | `'vertical'` | Which bars to render. Defaults to `vertical`, as Figma specs. |
+| `viewportClassName?` | `string` | — | Reaches the scrolling element, e.g. to pad the content away from the bar. |
+| `scrollbarClassName?` | `string` | — | Reaches both rails. |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-scroll-area`.
 
@@ -2198,10 +2090,10 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 
 Props: `ScrollAreaScrollbarProps extends ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Scrollbar>`
 
-| Prop        | Type            | Default | Description                                              |
-| ----------- | --------------- | ------- | -------------------------------------------------------- |
-| `size?`     | `ScrollbarSize` | `'md'`  | —                                                        |
-| `children?` | `ReactNode`     | —       | Replaces the default thumb. The carets are always drawn. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `ScrollbarSize` | `'md'` | — |
+| `children?` | `ReactNode` | — | Replaces the default thumb. The carets are always drawn. |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-scroll-area`.
 
@@ -2216,19 +2108,11 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 **Types**
 
 ```ts
-type ScrollAreaCornerProps = ComponentPropsWithoutRef<
-  typeof ScrollAreaPrimitive.Corner
->;
+type ScrollAreaCornerProps = ComponentPropsWithoutRef< typeof ScrollAreaPrimitive.Corner >;
 type ScrollAreaOrientation = ScrollbarAxis | 'both';
-type ScrollAreaRootProps = ComponentPropsWithoutRef<
-  typeof ScrollAreaPrimitive.Root
->;
-type ScrollAreaThumbProps = ComponentPropsWithoutRef<
-  typeof ScrollAreaPrimitive.Thumb
->;
-type ScrollAreaViewportProps = ComponentPropsWithoutRef<
-  typeof ScrollAreaPrimitive.Viewport
->;
+type ScrollAreaRootProps = ComponentPropsWithoutRef< typeof ScrollAreaPrimitive.Root >;
+type ScrollAreaThumbProps = ComponentPropsWithoutRef< typeof ScrollAreaPrimitive.Thumb >;
+type ScrollAreaViewportProps = ComponentPropsWithoutRef< typeof ScrollAreaPrimitive.Viewport >;
 type ScrollbarAxis = 'vertical' | 'horizontal';
 type ScrollbarSize = 'md' | 'sm';
 ```
@@ -2273,12 +2157,12 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 
 Props: `SelectTriggerProps extends React.ComponentProps<typeof SelectPrimitive.Trigger>`
 
-| Prop           | Type                | Default     | Description                                                                                                                                                                                                                            |
-| -------------- | ------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `size?`        | `'sm' \| 'default'` | `'default'` | —                                                                                                                                                                                                                                      |
-| `label?`       | `string`            | —           | —                                                                                                                                                                                                                                      |
-| `error?`       | `string`            | —           | —                                                                                                                                                                                                                                      |
-| `placeholder?` | `React.ReactNode`   | —           | Shorthand for the common trigger body: with no `children`, the trigger renders `<SelectValue placeholder={placeholder} />` for you. Pass your own children when the body needs anything else — they win, and this prop is then unused. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `'sm' \| 'default'` | `'default'` | — |
+| `label?` | `string` | — | — |
+| `error?` | `string` | — | — |
+| `placeholder?` | `React.ReactNode` | — | Shorthand for the common trigger body: with no `children`, the trigger renders `<SelectValue placeholder={placeholder} />` for you. Pass your own children when the body needs anything else — they win, and this prop is then unused. |
 
 Also accepts the props of `@radix-ui/react-primitive`.
 
@@ -2294,11 +2178,11 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 
 Props: `ShadowProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop         | Type              | Default       | Description                                                                                                                                                   |
-| ------------ | ----------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `direction?` | `ShadowDirection` | `'downwards'` | Which way the shadow falls.                                                                                                                                   |
-| `size?`      | `ShadowSize`      | `'md'`        | Which step of the ramp to cast.                                                                                                                               |
-| `asChild?`   | `boolean`         | `false`       | Cast the shadow from the child instead of a `div`, so an element that already behaves — a card, a `<button>`, another component's root — keeps its own logic. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `direction?` | `ShadowDirection` | `'downwards'` | Which way the shadow falls. |
+| `size?` | `ShadowSize` | `'md'` | Which step of the ramp to cast. |
+| `asChild?` | `boolean` | `false` | Cast the shadow from the child instead of a `div`, so an element that already behaves — a card, a `<button>`, another component's root — keeps its own logic. |
 
 **Types**
 
@@ -2310,7 +2194,7 @@ type ShadowSize = 'sm' | 'md' | 'lg';
 **Values**
 
 - `SHADOW_BLUR`: `Record<ShadowSize, number>` — Step → its blur radius in px. Pairs with {@link SHADOW_OFFSET}.
-- `SHADOW_OFFSET`: `Record<ShadowSize, number>` — Step → its offset in px. Exported so callers that need to _measure_ the ramp (an annotation, a scroll shadow, a canvas) read the same numbers the classes below paint, and the two can never drift apart.
+- `SHADOW_OFFSET`: `Record<ShadowSize, number>` — Step → its offset in px. Exported so callers that need to *measure* the ramp (an annotation, a scroll shadow, a canvas) read the same numbers the classes below paint, and the two can never drift apart.
 - `shadowClass`: `Record<ShadowDirection, Record<ShadowSize, string>>` — Direction → size → Tailwind class. The one place the 4×3 grid is written down, and the only spelling that cannot be confused with the legacy `shadow-sm`/`shadow-md` ramp (see the header block).
 
 ---
@@ -2321,61 +2205,61 @@ type ShadowSize = 'sm' | 'md' | 'lg';
 
 Props: `SidebarProps extends HTMLAttributes<HTMLElement>`
 
-| Prop         | Type        | Default | Description                                                           |
-| ------------ | ----------- | ------- | --------------------------------------------------------------------- |
-| `collapsed?` | `boolean`   | `false` | Collapse to icon-only rail (52 px). Default: false → 264 px expanded. |
-| `children?`  | `ReactNode` | —       | —                                                                     |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `collapsed?` | `boolean` | `false` | Collapse to icon-only rail (52 px). Default: false → 264 px expanded. |
+| `children?` | `ReactNode` | — | — |
 
 ### SidebarFooter
 
 Props: `SidebarFooterProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop        | Type        | Default | Description |
-| ----------- | ----------- | ------- | ----------- |
-| `children?` | `ReactNode` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children?` | `ReactNode` | — | — |
 
 ### SidebarGroup
 
 Props: `SidebarGroupProps`
 
-| Prop            | Type                      | Default | Description                                          |
-| --------------- | ------------------------- | ------- | ---------------------------------------------------- |
-| `icon?`         | `ReactNode`               | —       | Leading 20px icon (required for the collapsed rail). |
-| `label`         | `ReactNode`               | —       | —                                                    |
-| `active?`       | `boolean`                 | `false` | Highlight the group header (selected section).       |
-| `defaultOpen?`  | `boolean`                 | `false` | Uncontrolled initial open state.                     |
-| `open?`         | `boolean`                 | —       | Controlled open state.                               |
-| `onOpenChange?` | `(open: boolean) => void` | —       | —                                                    |
-| `children?`     | `ReactNode`               | —       | Sub-items — typically <SidebarItem indented>.        |
-| `className?`    | `string`                  | —       | —                                                    |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon?` | `ReactNode` | — | Leading 20px icon (required for the collapsed rail). |
+| `label` | `ReactNode` | — | — |
+| `active?` | `boolean` | `false` | Highlight the group header (selected section). |
+| `defaultOpen?` | `boolean` | `false` | Uncontrolled initial open state. |
+| `open?` | `boolean` | — | Controlled open state. |
+| `onOpenChange?` | `(open: boolean) => void` | — | — |
+| `children?` | `ReactNode` | — | Sub-items — typically <SidebarItem indented>. |
+| `className?` | `string` | — | — |
 
 ### SidebarHeader
 
 Props: `SidebarHeaderProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop        | Type        | Default | Description |
-| ----------- | ----------- | ------- | ----------- |
-| `children?` | `ReactNode` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children?` | `ReactNode` | — | — |
 
 ### SidebarItem
 
 Props: `SidebarItemProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop        | Type        | Default | Description                                                                                                                            |
-| ----------- | ----------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `active?`   | `boolean`   | `false` | Selected/active state — bg-secondary + text-foreground.                                                                                |
-| `icon?`     | `ReactNode` | —       | Leading 20 px icon slot. Required in collapsed mode for visual identification.                                                         |
-| `indented?` | `boolean`   | `false` | Sub-item variant: 36 px left indent, no icon.                                                                                          |
-| `label?`    | `string`    | —       | Tooltip text shown to the right of the item when the sidebar is collapsed. Falls back to children if omitted and children is a string. |
-| `children?` | `ReactNode` | —       | —                                                                                                                                      |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `active?` | `boolean` | `false` | Selected/active state — bg-secondary + text-foreground. |
+| `icon?` | `ReactNode` | — | Leading 20 px icon slot. Required in collapsed mode for visual identification. |
+| `indented?` | `boolean` | `false` | Sub-item variant: 36 px left indent, no icon. |
+| `label?` | `string` | — | Tooltip text shown to the right of the item when the sidebar is collapsed. Falls back to children if omitted and children is a string. |
+| `children?` | `ReactNode` | — | — |
 
 ### SidebarMenu
 
 Props: `SidebarMenuProps extends HTMLAttributes<HTMLUListElement>`
 
-| Prop        | Type        | Default | Description |
-| ----------- | ----------- | ------- | ----------- |
-| `children?` | `ReactNode` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children?` | `ReactNode` | — | — |
 
 ---
 
@@ -2385,20 +2269,20 @@ Props: `SidebarMenuProps extends HTMLAttributes<HTMLUListElement>`
 
 Props: `SkeletonProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop         | Type                | Default  | Description                                               |
-| ------------ | ------------------- | -------- | --------------------------------------------------------- |
-| `variant?`   | `SkeletonVariant`   | `'text'` | Figma `Style` — the placeholder's default shape and size. |
-| `animation?` | `SkeletonAnimation` | `'wave'` | Figma `Animation` — `none` renders the static fill.       |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `SkeletonVariant` | `'text'` | Figma `Style` — the placeholder's default shape and size. |
+| `animation?` | `SkeletonAnimation` | `'wave'` | Figma `Animation` — `none` renders the static fill. |
 
 ### SkeletonText
 
 Props: `SkeletonTextProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop         | Type                | Default  | Description                                                             |
-| ------------ | ------------------- | -------- | ----------------------------------------------------------------------- |
-| `lines?`     | `number`            | `4`      | Total line count, including the heading line when `heading` is set.     |
-| `heading?`   | `boolean`           | `true`   | Opens the block with the taller, shorter line of Figma's text skeleton. |
-| `animation?` | `SkeletonAnimation` | `'wave'` | Passed through to every line.                                           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `lines?` | `number` | `4` | Total line count, including the heading line when `heading` is set. |
+| `heading?` | `boolean` | `true` | Opens the block with the taller, shorter line of Figma's text skeleton. |
+| `animation?` | `SkeletonAnimation` | `'wave'` | Passed through to every line. |
 
 **Types**
 
@@ -2429,13 +2313,13 @@ Imperatively show a snackbar in the nearest `<SnackbarToaster />`.
 
 Props: `SnackbarOptions extends Omit<ExternalToast, 'toasterId' | 'action'>`
 
-| Prop           | Type                                         | Default | Description                                                                    |
-| -------------- | -------------------------------------------- | ------- | ------------------------------------------------------------------------------ |
-| `tone?`        | `SnackbarTone`                               | —       | —                                                                              |
-| `icon?`        | `ReactNode`                                  | —       | —                                                                              |
-| `title`        | `ReactNode`                                  | —       | —                                                                              |
-| `description?` | `ReactNode`                                  | —       | —                                                                              |
-| `action?`      | `{ label: ReactNode; onClick?: () => void }` | —       | Trailing link button. Clicking it dismisses the snackbar, then runs `onClick`. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `tone?` | `SnackbarTone` | — | — |
+| `icon?` | `ReactNode` | — | — |
+| `title` | `ReactNode` | — | — |
+| `description?` | `ReactNode` | — | — |
+| `action?` | `{ label: ReactNode; onClick?: () => void }` | — | Trailing link button. Clicking it dismisses the snackbar, then runs `onClick`. |
 
 Also accepts the props of `sonner`.
 
@@ -2443,22 +2327,22 @@ Also accepts the props of `sonner`.
 
 Props: `SnackbarProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop      | Type           | Default   | Description                                                |
-| --------- | -------------- | --------- | ---------------------------------------------------------- |
-| `tone?`   | `SnackbarTone` | `'light'` | —                                                          |
-| `icon?`   | `ReactNode`    | —         | Leading icon slot — Figma "icon/content", rendered at 20px |
-| `action?` | `ReactNode`    | —         | Trailing action slot — pass a `SnackbarAction`             |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `tone?` | `SnackbarTone` | `'light'` | — |
+| `icon?` | `ReactNode` | — | Leading icon slot — Figma "icon/content", rendered at 20px |
+| `action?` | `ReactNode` | — | Trailing action slot — pass a `SnackbarAction` |
 
 ### SnackbarAction
 
 Props: `ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop         | Type        | Default | Description        |
-| ------------ | ----------- | ------- | ------------------ |
-| `iconLeft?`  | `ReactNode` | —       | Leading icon slot  |
-| `iconRight?` | `ReactNode` | —       | Trailing icon slot |
-| `loading?`   | `boolean`   | —       | —                  |
-| `fullWidth?` | `boolean`   | —       | —                  |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `iconLeft?` | `ReactNode` | — | Leading icon slot |
+| `iconRight?` | `ReactNode` | — | Trailing icon slot |
+| `loading?` | `boolean` | — | — |
+| `fullWidth?` | `boolean` | — | — |
 
 ### SnackbarDescription
 
@@ -2474,12 +2358,12 @@ Declares no props of its own — everything is forwarded to `sonner`.
 
 ### SnackbarActionProps
 
-| Prop         | Type        | Default | Description        |
-| ------------ | ----------- | ------- | ------------------ |
-| `iconLeft?`  | `ReactNode` | —       | Leading icon slot  |
-| `iconRight?` | `ReactNode` | —       | Trailing icon slot |
-| `loading?`   | `boolean`   | —       | —                  |
-| `fullWidth?` | `boolean`   | —       | —                  |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `iconLeft?` | `ReactNode` | — | Leading icon slot |
+| `iconRight?` | `ReactNode` | — | Trailing icon slot |
+| `loading?` | `boolean` | — | — |
+| `fullWidth?` | `boolean` | — | — |
 
 ### SnackbarDescriptionProps
 
@@ -2511,33 +2395,22 @@ type SnackbarTone = 'light' | 'dark';
 
 Props: `SpacingProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop       | Type          | Default      | Description                                                                                                                                             |
-| ---------- | ------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `size?`    | `SpacingStep` | `'lg'`       | Which step of the ITUI scale to occupy.                                                                                                                 |
-| `axis?`    | `SpacingAxis` | `'vertical'` | `vertical` holds height (a gap between stacked rows), `horizontal` width.                                                                               |
-| `asChild?` | `boolean`     | `false`      | Size the child instead of a `div`, so an element that already carries meaning — an `<hr>`, a real divider — keeps it instead of being wrapped in a box. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `SpacingStep` | `'lg'` | Which step of the ITUI scale to occupy. |
+| `axis?` | `SpacingAxis` | `'vertical'` | `vertical` holds height (a gap between stacked rows), `horizontal` width. |
+| `asChild?` | `boolean` | `false` | Size the child instead of a `div`, so an element that already carries meaning — an `<hr>`, a real divider — keeps it instead of being wrapped in a box. |
 
 **Types**
 
 ```ts
 type SpacingAxis = 'vertical' | 'horizontal';
-type SpacingStep =
-  | 'none'
-  | 'xs'
-  | 'sm'
-  | 'md'
-  | 'lg'
-  | 'xl'
-  | '2xl'
-  | '3xl'
-  | '4xl'
-  | '5xl'
-  | '6xl';
+type SpacingStep = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl';
 ```
 
 **Values**
 
-- `SPACING_PX`: `Record<SpacingStep, number>` — ITUI step → its pixel value. Exported so callers that need to _measure_ the scale (a virtualised list's row gap, a canvas, an annotation) read the same numbers the classes below paint, and the two can never drift apart.
+- `SPACING_PX`: `Record<SpacingStep, number>` — ITUI step → its pixel value. Exported so callers that need to *measure* the scale (a virtualised list's row gap, a canvas, an annotation) read the same numbers the classes below paint, and the two can never drift apart.
 - `spacingClass`: `Record<"p" \| "gap" \| "px" \| "py", Record<SpacingStep, string>>` — ITUI step → Tailwind class, per property. The one place the ITUI→Tailwind translation is written down, so no caller has to redo it (see the name trap in the header block).
 
 ---
@@ -2548,11 +2421,11 @@ type SpacingStep =
 
 Props: `SpinnerProps extends HTMLAttributes<HTMLSpanElement>`
 
-| Prop           | Type                    | Default     | Description                                        |
-| -------------- | ----------------------- | ----------- | -------------------------------------------------- |
-| `size?`        | `SpinnerSize \| number` | `'md'`      | —                                                  |
-| `description?` | `string`                | —           | —                                                  |
-| `label?`       | `string`                | `'Loading'` | Screen-reader name for the `role="status"` region. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `SpinnerSize \| number` | `'md'` | — |
+| `description?` | `string` | — | — |
+| `label?` | `string` | `'Loading'` | Screen-reader name for the `role="status"` region. |
 
 **Types**
 
@@ -2568,12 +2441,12 @@ type SpinnerSize = 'sm' | 'md' | 'lg' | 'icon';
 
 Props: `StepperProps extends OlHTMLAttributes<HTMLOListElement>`
 
-| Prop           | Type                 | Default        | Description                                                                                                                     |
-| -------------- | -------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `variant?`     | `StepperVariant`     | `'filled'`     | Defaults to `'filled'`.                                                                                                         |
-| `orientation?` | `StepperOrientation` | `'horizontal'` | Defaults to `'horizontal'`.                                                                                                     |
-| `current?`     | `number`             | `0`            | Zero-based index of the active step. Earlier steps read as `completed`, later ones as `upcoming`. Defaults to `0`.              |
-| `children?`    | `ReactNode`          | —              | `StepperItem` elements. They must be direct children — an item rendered by a wrapper component shares its wrapper's step index. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `StepperVariant` | `'filled'` | Defaults to `'filled'`. |
+| `orientation?` | `StepperOrientation` | `'horizontal'` | Defaults to `'horizontal'`. |
+| `current?` | `number` | `0` | Zero-based index of the active step. Earlier steps read as `completed`, later ones as `upcoming`. Defaults to `0`. |
+| `children?` | `ReactNode` | — | `StepperItem` elements. They must be direct children — an item rendered by a wrapper component shares its wrapper's step index. |
 
 ### StepperIndicator
 
@@ -2581,23 +2454,23 @@ Figma's "Base Stepper" — the circle on its own. Decorative: the readable step 
 
 Props: `StepperIndicatorProps extends HTMLAttributes<HTMLSpanElement>`
 
-| Prop        | Type             | Default      | Description                                      |
-| ----------- | ---------------- | ------------ | ------------------------------------------------ |
-| `variant?`  | `StepperVariant` | `'filled'`   | Defaults to `'filled'`.                          |
-| `status?`   | `StepStatus`     | `'upcoming'` | Defaults to `'upcoming'`.                        |
-| `step?`     | `number`         | —            | 1-based number rendered by the `filled` variant. |
-| `children?` | `ReactNode`      | —            | Replaces the default check glyph / number.       |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `StepperVariant` | `'filled'` | Defaults to `'filled'`. |
+| `status?` | `StepStatus` | `'upcoming'` | Defaults to `'upcoming'`. |
+| `step?` | `number` | — | 1-based number rendered by the `filled` variant. |
+| `children?` | `ReactNode` | — | Replaces the default check glyph / number. |
 
 ### StepperItem
 
 Props: `StepperItemProps extends Omit<LiHTMLAttributes<HTMLLIElement>, 'title'>`
 
-| Prop           | Type         | Default | Description                                               |
-| -------------- | ------------ | ------- | --------------------------------------------------------- |
-| `title?`       | `ReactNode`  | —       | —                                                         |
-| `description?` | `ReactNode`  | —       | —                                                         |
-| `status?`      | `StepStatus` | —       | Overrides the status derived from the parent's `current`. |
-| `children?`    | `ReactNode`  | —       | Extra content rendered under the description.             |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title?` | `ReactNode` | — | — |
+| `description?` | `ReactNode` | — | — |
+| `status?` | `StepStatus` | — | Overrides the status derived from the parent's `current`. |
+| `children?` | `ReactNode` | — | Extra content rendered under the description. |
 
 **Types**
 
@@ -2623,8 +2496,8 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 
 Props: `TabListProps extends ComponentPropsWithoutRef<typeof RadixTabs.List>`
 
-| Prop    | Type      | Default     | Description                                  |
-| ------- | --------- | ----------- | -------------------------------------------- |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
 | `type?` | `TabType` | `'default'` | Paints every trigger inside. Figma's `Type`. |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-tabs`.
@@ -2633,10 +2506,10 @@ Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-tabs`.
 
 Props: `TabTriggerProps extends ComponentPropsWithoutRef<typeof RadixTabs.Trigger>`
 
-| Prop         | Type        | Default | Description                                       |
-| ------------ | ----------- | ------- | ------------------------------------------------- |
-| `iconLeft?`  | `ReactNode` | —       | Leading glyph (16px) — Figma's `Style=LabelIcon`. |
-| `iconRight?` | `ReactNode` | —       | Trailing glyph (16px).                            |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `iconLeft?` | `ReactNode` | — | Leading glyph (16px) — Figma's `Style=LabelIcon`. |
+| `iconRight?` | `ReactNode` | — | Trailing glyph (16px). |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-tabs`.
 
@@ -2662,58 +2535,58 @@ type TabType = 'default' | 'line' | 'segment' | 'pill';
 
 Props: `TableProps extends HTMLAttributes<HTMLTableElement>`
 
-| Prop   | Type                    | Default | Description |
-| ------ | ----------------------- | ------- | ----------- |
-| `ref?` | `Ref<HTMLTableElement>` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ref?` | `Ref<HTMLTableElement>` | — | — |
 
 ### TableBody
 
 Props: `TableBodyProps extends HTMLAttributes<HTMLTableSectionElement>`
 
-| Prop   | Type                           | Default | Description |
-| ------ | ------------------------------ | ------- | ----------- |
-| `ref?` | `Ref<HTMLTableSectionElement>` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ref?` | `Ref<HTMLTableSectionElement>` | — | — |
 
 ### TableCell
 
 Props: `TableCellProps extends TdHTMLAttributes<HTMLTableCellElement>`
 
-| Prop   | Type                        | Default | Description |
-| ------ | --------------------------- | ------- | ----------- |
-| `ref?` | `Ref<HTMLTableCellElement>` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ref?` | `Ref<HTMLTableCellElement>` | — | — |
 
 ### TableHead
 
 Props: `TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement>`
 
-| Prop             | Type                        | Default | Description                                                                                                                                            |
-| ---------------- | --------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `ref?`           | `Ref<HTMLTableCellElement>` | —       | —                                                                                                                                                      |
-| `sortDirection?` | `SortDirection`             | —       | —                                                                                                                                                      |
-| `sortable?`      | `boolean`                   | —       | Marks a sortable column that is not currently sorted, so it still reports `aria-sort="none"` and stays keyboard-reachable. Implied by `sortDirection`. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ref?` | `Ref<HTMLTableCellElement>` | — | — |
+| `sortDirection?` | `SortDirection` | — | — |
+| `sortable?` | `boolean` | — | Marks a sortable column that is not currently sorted, so it still reports `aria-sort="none"` and stays keyboard-reachable. Implied by `sortDirection`. |
 
 ### TableHeader
 
 Props: `TableHeaderProps extends HTMLAttributes<HTMLTableSectionElement>`
 
-| Prop   | Type                           | Default | Description |
-| ------ | ------------------------------ | ------- | ----------- |
-| `ref?` | `Ref<HTMLTableSectionElement>` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ref?` | `Ref<HTMLTableSectionElement>` | — | — |
 
 ### TableRow
 
 Props: `TableRowProps extends HTMLAttributes<HTMLTableRowElement>`
 
-| Prop        | Type                       | Default | Description |
-| ----------- | -------------------------- | ------- | ----------- |
-| `ref?`      | `Ref<HTMLTableRowElement>` | —       | —           |
-| `selected?` | `boolean`                  | —       | —           |
-| `disabled?` | `boolean`                  | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ref?` | `Ref<HTMLTableRowElement>` | — | — |
+| `selected?` | `boolean` | — | — |
+| `disabled?` | `boolean` | — | — |
 
 **Types**
 
 ```ts
-type SortDirection = 'asc' | 'desc';
+type SortDirection = 'asc'|'desc';
 ```
 
 ---
@@ -2744,16 +2617,16 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 
 Props: `TagProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'>`
 
-| Prop          | Type         | Default     | Description                                                                 |
-| ------------- | ------------ | ----------- | --------------------------------------------------------------------------- |
-| `variant?`    | `TagVariant` | `'outline'` | —                                                                           |
-| `size?`       | `TagSize`    | `'md'`      | —                                                                           |
-| `selected?`   | `boolean`    | `false`     | —                                                                           |
-| `disabled?`   | `boolean`    | `false`     | —                                                                           |
-| `onClick?`    | `() => void` | —           | When provided, the tag behaves as a button.                                 |
-| `onClose?`    | `() => void` | —           | When provided, renders a trailing close (X) button that calls this handler. |
-| `closeLabel?` | `string`     | `'Remove'`  | Accessible label for the close button.                                      |
-| `children`    | `ReactNode`  | —           | —                                                                           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `TagVariant` | `'outline'` | — |
+| `size?` | `TagSize` | `'md'` | — |
+| `selected?` | `boolean` | `false` | — |
+| `disabled?` | `boolean` | `false` | — |
+| `onClick?` | `() => void` | — | When provided, the tag behaves as a button. |
+| `onClose?` | `() => void` | — | When provided, renders a trailing close (X) button that calls this handler. |
+| `closeLabel?` | `string` | `'Remove'` | Accessible label for the close button. |
+| `children` | `ReactNode` | — | — |
 
 **Types**
 
@@ -2770,11 +2643,11 @@ type TagVariant = 'outline' | 'filled';
 
 Props: `ToastProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop    | Type        | Default    | Description                                            |
-| ------- | ----------- | ---------- | ------------------------------------------------------ |
-| `tone?` | `ToastTone` | `'light'`  | —                                                      |
-| `type?` | `ToastType` | `'normal'` | —                                                      |
-| `icon?` | `ReactNode` | —          | Replaces the icon `type` picks, in the same 16px slot. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `tone?` | `ToastTone` | `'light'` | — |
+| `type?` | `ToastType` | `'normal'` | — |
+| `icon?` | `ReactNode` | — | Replaces the icon `type` picks, in the same 16px slot. |
 
 ### Toaster
 
@@ -2800,9 +2673,9 @@ type ToastType = 'normal' | 'success' | 'info' | 'warning' | 'error';
 
 Props: `ToggleProps extends ComponentPropsWithoutRef<typeof RadixSwitch.Root>`
 
-| Prop    | Type         | Default | Description |
-| ------- | ------------ | ------- | ----------- |
-| `size?` | `ToggleSize` | `'md'`  | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size?` | `ToggleSize` | `'md'` | — |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-switch`.
 
@@ -2840,41 +2713,31 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 
 Props: `TypographyProps extends HTMLAttributes<HTMLParagraphElement>`
 
-| Prop       | Type                | Default     | Description                                                                                                                                                        |
-| ---------- | ------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `variant?` | `TypographyVariant` | `'body-md'` | Which step of the ITUI type scale to render.                                                                                                                       |
-| `weight?`  | `TypographyWeight`  | `'regular'` | How much emphasis the text carries.                                                                                                                                |
-| `asChild?` | `boolean`           | `false`     | Render the child instead of a `p`, so an element that already carries meaning — a heading, a `<label>`, a link — keeps it instead of being wrapped in a paragraph. |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant?` | `TypographyVariant` | `'body-md'` | Which step of the ITUI type scale to render. |
+| `weight?` | `TypographyWeight` | `'regular'` | How much emphasis the text carries. |
+| `asChild?` | `boolean` | `false` | Render the child instead of a `p`, so an element that already carries meaning — a heading, a `<label>`, a link — keeps it instead of being wrapped in a paragraph. |
 
 ### TypographySpec
 
 The measurements behind one variant, in px.
 
-| Prop            | Type     | Default | Description |
-| --------------- | -------- | ------- | ----------- |
-| `fontSize`      | `number` | —       | —           |
-| `lineHeight`    | `number` | —       | —           |
-| `letterSpacing` | `number` | —       | —           |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `fontSize` | `number` | — | — |
+| `lineHeight` | `number` | — | — |
+| `letterSpacing` | `number` | — | — |
 
 **Types**
 
 ```ts
-type TypographyVariant =
-  | 'display-6xl'
-  | 'display-5xl'
-  | 'heading-4xl'
-  | 'heading-3xl'
-  | 'heading-2xl'
-  | 'heading-xl'
-  | 'body-lg'
-  | 'body-md'
-  | 'caption-sm'
-  | 'caption-xs';
+type TypographyVariant = 'display-6xl' | 'display-5xl' | 'heading-4xl' | 'heading-3xl' | 'heading-2xl' | 'heading-xl' | 'body-lg' | 'body-md' | 'caption-sm' | 'caption-xs';
 type TypographyWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 ```
 
 **Values**
 
-- `TYPOGRAPHY_SPEC`: `Record<TypographyVariant, TypographySpec>` — Variant → its measurements. Exported so callers that need to _measure_ the scale (a canvas, a virtualised row height, an annotation) read the same numbers the classes below paint, and the two can never drift apart.
+- `TYPOGRAPHY_SPEC`: `Record<TypographyVariant, TypographySpec>` — Variant → its measurements. Exported so callers that need to *measure* the scale (a canvas, a virtualised row height, an annotation) read the same numbers the classes below paint, and the two can never drift apart.
 - `typographyClass`: `Record<TypographyVariant, string>` — Variant → Tailwind classes. The one place the ITUI→Tailwind translation is written down, so no caller has to redo it (see the name trap in the header block) — reach for this from any component that needs a scale style rather than retyping the triple.
 - `typographyWeightClass`: `Record<TypographyWeight, string>` — Weight → Tailwind class. Named for Figma's `font/weight/*`, not the number.

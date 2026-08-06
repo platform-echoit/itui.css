@@ -16,15 +16,17 @@ Popover.displayName = 'Popover';
 /*
   The root deliberately does NOT accept `className`. It used to, and dropped it
   on the floor — the root has no element to put it on. Rejecting it is what makes
-  the 2.0 rename fail loudly: `<Popover className="w-56">` was the old panel, and
-  the panel is now `PopoverPanel`. Without this, that call would still typecheck
-  and simply render nothing.
+  the rename fail loudly: `<Popover className="w-56">` was the old panel, and the
+  panel is now `PopoverPanel`. Without this, that call would still typecheck and
+  simply render nothing.
 */
 
 /**
- * @deprecated Renamed to `Popover` in 2.0 — the root is now spelled like
- * `Dialog` / `Tabs` / `Tooltip`, and the panel that held the `Popover` name is
- * now `PopoverPanel`. This alias is removed in the next minor.
+ * @deprecated Renamed to `Popover` — the root is now spelled like `Dialog` /
+ * `Tabs` / `Tooltip`, and the panel that held the `Popover` name is now
+ * `PopoverPanel`. The rename landed in `1.0.15`; `1.1.0` is the release that
+ * signals it in the version number. This alias is kept for the whole `1.x`
+ * line and removed in `2.0.0`.
  */
 export const PopoverRoot = Popover;
 

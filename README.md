@@ -328,10 +328,21 @@ import {
 panel it opens — that is what holds the items. `PopoverPanel` is the same surface without
 the popover machinery, for a panel something else already positions.
 
-> ⚠️ **Renamed in `2.0`.** `Popover` used to be the standalone panel and the root was
-> `PopoverRoot`. `PopoverRoot` still works as a `@deprecated` alias, but the panel moved to
-> `PopoverPanel` — a `<Popover className="…">` left over from `1.x` no longer typechecks,
-> deliberately, because the root has no element to put a `className` on.
+> ⚠️ **Renamed.** `Popover` used to be the standalone panel and the root was `PopoverRoot`.
+> `PopoverRoot` still works as a `@deprecated` alias for the whole `1.x` line, but the panel
+> moved to `PopoverPanel` — a `<Popover className="…">` left over from `1.0.14` no longer
+> typechecks, deliberately, because the root has no element to put a `className` on.
+>
+> **Migrating from `1.0.14`:** rename the element that carried the styling, and nothing else.
+>
+> ```diff
+> - <Popover className="w-56">…</Popover>
+> + <PopoverPanel className="w-56">…</PopoverPanel>
+> ```
+>
+> The rename shipped in `1.0.15`, a patch — which was the wrong channel for a change that
+> stops code compiling. `1.1.0` re-releases it under a version number that says so; there is
+> no second change to make if you already upgraded.
 
 Wrap the items in `PopoverMenu` when the popover is a menu — it adds `role="menu"` and
 arrow-key navigation, which `PopoverItem` alone does not. [Props →][api-popover]

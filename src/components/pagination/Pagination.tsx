@@ -1,3 +1,10 @@
+'use client';
+
+// Unlike `Tag` and `Chip`, this one cannot be gated into a server-renderable
+// shape: every cell is a button that calls `goTo`, so the handlers exist
+// whether or not the consumer passed `onPageChange`. There is no decorative
+// pagination to keep on the server, so the directive is the honest fix (I-15).
+
 import { forwardRef, type HTMLAttributes } from 'react';
 import { cn } from '../../lib/utils';
 

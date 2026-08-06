@@ -152,7 +152,10 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
         aria-pressed={isInteractive ? selected : undefined}
         aria-disabled={disabled || undefined}
         onClick={isInteractive ? () => onClick?.() : undefined}
-        onKeyDown={handleKeyDown}
+        // Gated like `onClick` above, and for the same reason: a bare handler
+        // here is a function on a DOM prop, which fails a Server Component
+        // render even when the tag is decorative (I-15).
+        onKeyDown={isInteractive ? handleKeyDown : undefined}
         {...rest}
       >
         <span>{children}</span>

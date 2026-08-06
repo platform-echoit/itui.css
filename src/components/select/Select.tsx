@@ -1,8 +1,10 @@
 'use client';
 
 import * as SelectPrimitive from '@radix-ui/react-select';
+import { useId } from 'react';
 import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
 import { CaretUpRegularIcon } from '../../icons/ITUI/caret-up';
+import { inputMessageId } from '../input/InputFieldShell';
 import { cn } from '../../lib/utils';
 
 // ─── Select ───────────────────────────────────────────────────────────────────
@@ -65,8 +67,20 @@ const triggerBase =
 const triggerVariants = {
   disabled: 'bg-neutral-100 border-input pointer-events-none',
   error: 'bg-white border-destructive',
+  /*
+    `focus-visible:border-ring` is the *field* focus idiom, the one
+    `InputFieldShell.tsx` uses — not `Button`'s outline ring. A select sits next
+    to an `InputText` in a form, so borrowing the button's indicator would make
+    two neighbouring fields light up differently (I-16).
+
+    It replaces an explicit `focus-visible:ring-0 focus-visible:outline-none`,
+    which left the keyboard user with no indicator at all: `data-[state=open]`
+    only fires once the menu is open, which is not the same moment as focus.
+    The `data-[state=closed]` pair that used to follow is gone with it — it
+    restated the base colours and only muddied which rule wins while focused.
+  */
   default:
-    'bg-white border-input focus-visible:ring-0 focus-visible:outline-none data-[state=open]:border-brand data-[state=open]:bg-accent data-[state=closed]:border-input data-[state=closed]:bg-white',
+    'bg-white border-input focus-visible:border-ring data-[state=open]:border-brand data-[state=open]:bg-accent',
 };
 
 function SelectTrigger({
@@ -77,10 +91,35 @@ function SelectTrigger({
   disabled,
   error,
   placeholder,
+  id,
+  'aria-describedby': ariaDescribedBy,
+  'aria-labelledby': ariaLabelledBy,
   ...props
 }: SelectTriggerProps) {
+  // `id ?? useId()` and not a bare `useId()`: overwriting an id the consumer
+  // passed would be a breaking change. Same contract as `InputText` (I-17).
+  const generatedId = useId();
+  const triggerId = id ?? generatedId;
   const isDisabled = !!disabled;
   const isError = !!error && !isDisabled;
+
+  /*
+    `htmlFor` alone is not enough here, which is why this is wired differently
+    from `InputText`: Radix renders the trigger as `<button role="combobox">`,
+    and a combobox takes no name from its own content — so the name fell back to
+    the placeholder while the visible `label` reached nobody. `aria-labelledby`
+    is the one mechanism that names it in every AT; the button's text stays the
+    combobox *value*. The `htmlFor` below is kept for the pointer behaviour.
+  */
+  const labelId = label ? `${triggerId}-label` : undefined;
+  const labelledBy =
+    [ariaLabelledBy, labelId].filter(Boolean).join(' ') || undefined;
+
+  // Appended rather than replacing, so a consumer's own hint id survives.
+  const describedBy =
+    [ariaDescribedBy, isError ? inputMessageId(triggerId) : null]
+      .filter(Boolean)
+      .join(' ') || undefined;
 
   const variant = isDisabled
     ? triggerVariants.disabled
@@ -91,14 +130,22 @@ function SelectTrigger({
   return (
     <div className="flex flex-col gap-2">
       {label && (
-        <label className="shrink-0 text-sm font-medium leading-6 tracking-md text-foreground">
+        <label
+          id={labelId}
+          htmlFor={triggerId}
+          className="shrink-0 text-sm font-medium leading-6 tracking-md text-foreground"
+        >
           {label}
         </label>
       )}
 
       <SelectPrimitive.Trigger
+        id={triggerId}
         data-slot="select-trigger"
         data-size={size}
+        aria-invalid={isError || undefined}
+        aria-labelledby={labelledBy}
+        aria-describedby={describedBy}
         className={cn(triggerBase, variant, className)}
         {...props}
       >
@@ -116,6 +163,7 @@ function SelectTrigger({
 
       {isError && (
         <p
+          id={inputMessageId(triggerId)}
           className="text-sm font-normal leading-5 tracking-md text-destructive"
           role="alert"
         >
