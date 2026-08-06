@@ -2,7 +2,6 @@
 
 import {
   forwardRef,
-  useId,
   useState,
   type ChangeEvent,
   type DragEvent,
@@ -20,6 +19,7 @@ import { WarningFillIcon } from '../../icons/ITUI/warning';
 import { DownloadSimpleRegularIcon } from '../../icons/ITUI/download-simple';
 import { CaretRightRegularIcon } from '../../icons/ITUI/caret-right';
 import { InputFieldShell } from './InputFieldShell';
+import { useFieldA11y } from './useFieldA11y';
 
 /*
   Token → Tailwind map (Figma 28964:9746 `Upload` · 28985:5360 `UploadedFile`)
@@ -331,18 +331,28 @@ export const InputFileUpload = forwardRef<
       id,
       className,
       boxClassName,
+      'aria-describedby': ariaDescribedBy,
+      'aria-labelledby': ariaLabelledBy,
       ...rest
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const inputId = id ?? generatedId;
-
     const [isDragOver, setIsDragOver] = useState(false);
     const [rejection, setRejection] = useState<string | null>(null);
 
+    // A rejected drop is an error the field owns rather than one the consumer
+    // passed, but it reaches the shell and the screen reader the same way.
     const message = error ?? rejection ?? undefined;
     const isError = !!message && !disabled;
+
+    const { fieldId, fieldProps } = useFieldA11y({
+      id,
+      error: message,
+      helperText,
+      disabled,
+      'aria-describedby': ariaDescribedBy,
+      'aria-labelledby': ariaLabelledBy,
+    });
 
     // One bad file rejects the whole batch: partially accepting a drop leaves the
     // user guessing which files made it through.
@@ -390,7 +400,7 @@ export const InputFileUpload = forwardRef<
           error={message}
           helperText={helperText}
           disabled={disabled}
-          htmlFor={inputId}
+          htmlFor={fieldId}
           boxClassName={cn(
             'h-auto min-h-31 items-stretch border-dashed p-0',
             !disabled && !isError && 'hover:border-ring hover:bg-brand-subtle',
@@ -399,7 +409,7 @@ export const InputFileUpload = forwardRef<
           )}
         >
           <label
-            htmlFor={inputId}
+            htmlFor={fieldId}
             onDragOver={handleDragOver}
             onDragLeave={() => setIsDragOver(false)}
             onDrop={handleDrop}
@@ -452,13 +462,12 @@ export const InputFileUpload = forwardRef<
 
           <input
             ref={ref}
-            id={inputId}
+            {...fieldProps}
             type="file"
             accept={accept}
             multiple={multiple}
             disabled={disabled}
             onChange={handleChange}
-            aria-invalid={isError || undefined}
             className="sr-only"
             {...rest}
           />

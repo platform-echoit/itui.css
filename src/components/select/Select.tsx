@@ -1,10 +1,9 @@
 'use client';
 
 import * as SelectPrimitive from '@radix-ui/react-select';
-import { useId } from 'react';
 import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
 import { CaretUpRegularIcon } from '../../icons/ITUI/caret-up';
-import { inputMessageId } from '../input/InputFieldShell';
+import { useFieldA11y } from '../input/useFieldA11y';
 import { cn } from '../../lib/utils';
 
 // ─── Select ───────────────────────────────────────────────────────────────────
@@ -96,30 +95,25 @@ function SelectTrigger({
   'aria-labelledby': ariaLabelledBy,
   ...props
 }: SelectTriggerProps) {
-  // `id ?? useId()` and not a bare `useId()`: overwriting an id the consumer
-  // passed would be a breaking change. Same contract as `InputText` (I-17).
-  const generatedId = useId();
-  const triggerId = id ?? generatedId;
   const isDisabled = !!disabled;
-  const isError = !!error && !isDisabled;
 
   /*
-    `htmlFor` alone is not enough here, which is why this is wired differently
-    from `InputText`: Radix renders the trigger as `<button role="combobox">`,
-    and a combobox takes no name from its own content — so the name fell back to
-    the placeholder while the visible `label` reached nobody. `aria-labelledby`
-    is the one mechanism that names it in every AT; the button's text stays the
-    combobox *value*. The `htmlFor` below is kept for the pointer behaviour.
+    `nameFromLabelId` is what makes this different from `InputText`: Radix
+    renders the trigger as `<button role="combobox">`, and a combobox takes no
+    name from its own content — so the name fell back to the placeholder while
+    the visible `label` reached nobody. `aria-labelledby` is the one mechanism
+    that names it in every AT; the button's text stays the combobox *value*.
+    `labelProps.htmlFor` is kept for the pointer behaviour.
   */
-  const labelId = label ? `${triggerId}-label` : undefined;
-  const labelledBy =
-    [ariaLabelledBy, labelId].filter(Boolean).join(' ') || undefined;
-
-  // Appended rather than replacing, so a consumer's own hint id survives.
-  const describedBy =
-    [ariaDescribedBy, isError ? inputMessageId(triggerId) : null]
-      .filter(Boolean)
-      .join(' ') || undefined;
+  const { fieldProps, labelProps, messageProps, isError } = useFieldA11y({
+    id,
+    label,
+    error,
+    disabled: isDisabled,
+    'aria-describedby': ariaDescribedBy,
+    'aria-labelledby': ariaLabelledBy,
+    nameFromLabelId: true,
+  });
 
   const variant = isDisabled
     ? triggerVariants.disabled
@@ -131,8 +125,7 @@ function SelectTrigger({
     <div className="flex flex-col gap-2">
       {label && (
         <label
-          id={labelId}
-          htmlFor={triggerId}
+          {...labelProps}
           className="shrink-0 text-sm font-medium leading-6 tracking-md text-foreground"
         >
           {label}
@@ -140,12 +133,9 @@ function SelectTrigger({
       )}
 
       <SelectPrimitive.Trigger
-        id={triggerId}
+        {...fieldProps}
         data-slot="select-trigger"
         data-size={size}
-        aria-invalid={isError || undefined}
-        aria-labelledby={labelledBy}
-        aria-describedby={describedBy}
         className={cn(triggerBase, variant, className)}
         {...props}
       >
@@ -163,9 +153,8 @@ function SelectTrigger({
 
       {isError && (
         <p
-          id={inputMessageId(triggerId)}
+          {...messageProps}
           className="text-sm font-normal leading-5 tracking-md text-destructive"
-          role="alert"
         >
           {error}
         </p>

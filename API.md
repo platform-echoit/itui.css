@@ -1330,6 +1330,7 @@ Props: `InputTextFormattingProps`
 | `label?` | `string` | — | — |
 | `error?` | `string` | — | — |
 | `helperText?` | `string` | — | — |
+| `id?` | `string` | — | id of the editable area; one is generated when omitted |
 | `placeholder?` | `string` | `'Enter content'` | — |
 | `defaultValue?` | `string` | — | Serialized state to open with — `JSON.stringify(editorState.toJSON())` |
 | `onChange?` | `(value: { json: string; text: string }) => void` | — | `json` round-trips through `defaultValue`; `text` is the plain-text version |
@@ -2714,6 +2715,7 @@ Props: `ToggleProps extends ComponentPropsWithoutRef<typeof RadixSwitch.Root>`
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `size?` | `ToggleSize` | `'md'` | — |
+| `label?` | `ReactNode` | — | Text beside the switch, which also becomes its accessible name — the same shape `Checkbox` takes, so a form does not switch paradigms halfway down. |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-switch`.
 

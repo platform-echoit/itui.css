@@ -550,6 +550,31 @@ Requires support for CSS custom properties and `oklch()` color.
 
 ---
 
+## Versioning
+
+This package follows semver, and reads the middle number as the one that matters to you:
+
+| Bump      | What you are agreeing to                                                                              |
+| --------- | ----------------------------------------------------------------------------------------------------- |
+| **patch** | Nothing to do. No export is renamed or removed, and no prop changes meaning. Safe to take unattended.   |
+| **minor** | New exports and new props, plus anything marked `@deprecated`. Your code still compiles.                |
+| **major** | Removals and renames. Read the release notes before upgrading.                                          |
+
+Two consequences worth stating out loud, because both have bitten this package:
+
+- **A rename never ships in a patch.** `1.0.15` moved `Popover` from the panel to the Radix root and
+  broke `<Popover className>` on a patch upgrade — the one channel you are entitled to take blind.
+  `1.1.0` re-released it under a number that says so. The migration is one rename, in
+  [Popover](#popover).
+- **`@deprecated` is a minor, not a patch.** Nothing is removed and compilation is unaffected, but if
+  you run `eslint-plugin-deprecation` or `@typescript-eslint/no-deprecated` at `error`, a new
+  deprecation turns your CI red. That is a code change on your side, so it gets a minor.
+
+Deprecated exports stay for at least one minor before a major removes them, and each one names its
+replacement in its JSDoc — your editor shows it on hover, without a trip to this file.
+
+---
+
 ## Contributing
 
 Contributions are welcome. See [DEVELOPMENT.md](https://github.com/platform-echoit/itui.css/blob/main/DEVELOPMENT.md) for build and publishing guidelines.

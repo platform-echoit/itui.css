@@ -2,13 +2,13 @@
 
 import {
   forwardRef,
-  useId,
   type ChangeEvent,
   type TextareaHTMLAttributes,
 } from 'react';
 import { cn } from '../../lib/utils';
 import { useControllableState } from '../../lib/use-controllable-state';
 import { InputFieldShell, inputFieldClass } from './InputFieldShell';
+import { useFieldA11y } from './useFieldA11y';
 
 /*
   Token → Tailwind map (Figma 27096:9852 `TextArea` · 28363:2455 `…WithLabel`)
@@ -60,12 +60,20 @@ export const InputTextarea = forwardRef<
       className,
       boxClassName,
       fieldClassName,
+      'aria-describedby': ariaDescribedBy,
+      'aria-labelledby': ariaLabelledBy,
       ...rest
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const textareaId = id ?? generatedId;
+    const { fieldId, fieldProps } = useFieldA11y({
+      id,
+      error,
+      helperText,
+      disabled,
+      'aria-describedby': ariaDescribedBy,
+      'aria-labelledby': ariaLabelledBy,
+    });
 
     // Only drives the counter, so uncontrolled usage can show one too.
     const [text, setText] = useControllableState({
@@ -90,18 +98,17 @@ export const InputTextarea = forwardRef<
           'h-auto min-h-30 flex-col items-stretch gap-1 p-3',
           boxClassName,
         )}
-        htmlFor={textareaId}
+        htmlFor={fieldId}
       >
         <textarea
           ref={ref}
-          id={textareaId}
+          {...fieldProps}
           rows={rows}
           maxLength={maxLength}
           disabled={disabled}
           value={value}
           defaultValue={defaultValue}
           onChange={handleChange}
-          aria-invalid={(!!error && !disabled) || undefined}
           className={inputFieldClass(
             disabled,
             cn('resize-none', fieldClassName),
