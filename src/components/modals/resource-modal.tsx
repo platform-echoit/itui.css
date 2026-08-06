@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { FolderFillIcon } from '../../icons/ITUI/folder';
+import { FolderRegularIcon } from '../../icons/ITUI/folder';
 import { InfoRegularIcon } from '../../icons/ITUI/info';
 import { MagnifyingGlassRegularIcon } from '../../icons/ITUI/magnifying-glass';
 import { XRegularIcon } from '../../icons/ITUI/x';
@@ -282,7 +282,7 @@ export const ResourceModal: React.FC<ResourceModalProps> = ({
                   className={`flex items-center gap-2 p-2 rounded-md cursor-pointer ${selectedFolderId === 'root' ? 'bg-blue-100 text-blue-700' : 'hover:bg-white'}`}
                   onClick={() => setSelectedFolderId('root')}
                 >
-                  <FolderFillIcon className="size-4 opacity-70 [&_path]:fill-current" />
+                  <FolderRegularIcon className="size-4 opacity-70 [&_path]:fill-current" />
                   <span className="text-sm font-medium">
                     {text.rootFolderName}
                   </span>

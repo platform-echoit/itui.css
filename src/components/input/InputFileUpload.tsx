@@ -13,9 +13,9 @@ import { cn } from '../../lib/utils';
 import { Divider } from '../divider/Divider';
 import { Spinner } from '../spinner/Spinner';
 import { UploadSimpleRegularIcon } from '../../icons/ITUI/upload-simple';
-import { CheckCircleFillIcon } from '../../icons/ITUI/check-circle';
+import { CheckCircleRegularIcon } from '../../icons/ITUI/check-circle';
 import { XCircleRegularIcon } from '../../icons/ITUI/xcircle';
-import { WarningFillIcon } from '../../icons/ITUI/warning';
+import { WarningRegularIcon } from '../../icons/ITUI/warning';
 import { DownloadSimpleRegularIcon } from '../../icons/ITUI/download-simple';
 import { CaretRightRegularIcon } from '../../icons/ITUI/caret-right';
 import { InputFieldShell } from './InputFieldShell';
@@ -178,7 +178,7 @@ export const InputFileUploadItem = forwardRef<
           {status === 'uploading' && <Spinner size="sm" />}
 
           {status === 'success' && (
-            <CheckCircleFillIcon
+            <CheckCircleRegularIcon
               width={20}
               height={20}
               aria-hidden="true"
@@ -235,7 +235,7 @@ export const InputFileUploadItem = forwardRef<
               role="alert"
               className="flex items-center gap-1 px-3 py-2 text-xs leading-sm tracking-sm text-destructive"
             >
-              <WarningFillIcon
+              <WarningRegularIcon
                 width={16}
                 height={16}
                 aria-hidden="true"

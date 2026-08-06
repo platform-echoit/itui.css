@@ -1,9 +1,9 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import * as RadixProgress from '@radix-ui/react-progress';
 import { cn } from '../../lib/utils';
-import CheckCircleFillIcon from '../../icons/ITUI/check-circle/CheckCircleFillIcon';
+import CheckCircleRegularIcon from '../../icons/ITUI/check-circle/CheckCircleRegularIcon';
 import CheckRegularIcon from '../../icons/ITUI/check/CheckRegularIcon';
-import XCircleFillIcon from '../../icons/ITUI/xcircle/XCircleFillIcon';
+import XCircleRegularIcon from '../../icons/ITUI/xcircle/XCircleRegularIcon';
 import XRegularIcon from '../../icons/ITUI/x/XRegularIcon';
 
 /*
@@ -164,10 +164,10 @@ function ProgressValue({
     const isDone = status === 'done';
     const Icon = isDone
       ? iconStyle === 'circle'
-        ? CheckCircleFillIcon
+        ? CheckCircleRegularIcon
         : CheckRegularIcon
       : iconStyle === 'circle'
-        ? XCircleFillIcon
+        ? XCircleRegularIcon
         : XRegularIcon;
 
     return (

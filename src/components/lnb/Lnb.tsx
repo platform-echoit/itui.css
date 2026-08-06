@@ -12,7 +12,7 @@ import { cn } from '../../lib/utils';
 import { Avatar } from '../avatar/Avatar';
 import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
 import { SidebarSimpleRegularIcon } from '../../icons/ITUI/sidebar-simple';
-import { UserFillIcon } from '../../icons/ITUI/user';
+import { UserRegularIcon } from '../../icons/ITUI/user';
 
 /*
   Token → Tailwind map (Figma node 28392:397 "LNB")
@@ -490,7 +490,7 @@ const LnbUserAvatar = () => (
     className="bg-surface-neutral-subtle text-neutral-subtle"
     aria-hidden="true"
   >
-    <UserFillIcon className="size-4 [&_path]:fill-current" />
+    <UserRegularIcon className="size-4 [&_path]:fill-current" />
   </Avatar>
 );
 

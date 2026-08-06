@@ -5,7 +5,7 @@ import { cn } from '../../lib/utils';
 import { useControllableState } from '../../lib/use-controllable-state';
 import { useForwardedRef } from '../../lib/use-forwarded-ref';
 import { MagnifyingGlassRegularIcon } from '../../icons/ITUI/magnifying-glass';
-import { XCircleFillIcon } from '../../icons/ITUI/xcircle';
+import { XCircleRegularIcon } from '../../icons/ITUI/xcircle';
 import { InputText, type InputTextProps } from './InputText';
 
 /*
@@ -98,7 +98,11 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
               onClick={handleClear}
               className="flex size-5 cursor-pointer items-center justify-center"
             >
-              <XCircleFillIcon width={20} height={20} />
+              <XCircleRegularIcon
+                width={20}
+                height={20}
+                className="[&_path]:fill-current"
+              />
             </button>
           ) : undefined
         }
