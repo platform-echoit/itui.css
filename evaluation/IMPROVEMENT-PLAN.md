@@ -193,7 +193,11 @@ nghĩa nếu đổi máy móc, phải chốt trước (xem I-22).
 - **Nguyên nhân.** Logic label/error/message sống trong `InputFieldShell`, nhưng `InputFieldShell`
   cố tình không export ra barrel (nó là building block nội bộ của nhóm input), nên `Select` không
   có đường dùng lại — và đã tự viết lại markup label/message của riêng nó.
-- **Ảnh hưởng tới developer.** Gián tiếp: mỗi field mới là một cơ hội tái phạm I-4.
+- **Ảnh hưởng tới developer.** ~~Gián tiếp: mỗi field mới là một cơ hội tái phạm I-4.~~
+  **Trực tiếp hơn thế** (audit khi triển khai, 2026-08-06): I-4 đã tái phạm sẵn ở **4 field khác**
+  — `InputTextarea`, `InputTag`, `InputFileUpload` render message mà control không trỏ tới, và
+  `InputTextFormatting` không có `id` nào cả. Message lỗi hiện trên màn hình, không ai đọc được.
+  Xem bảng trong checklist §6.
 - **Component.** `InputText`, `InputFieldShell`, `SelectTrigger`, mọi field tương lai.
 - **Hướng giải quyết.** Tách một hook nội bộ `useFieldA11y({ id, label, error, helperText })` trả
   về `{ fieldId, messageId, fieldProps, labelProps, messageProps }`, đặt cạnh `InputFieldShell`
@@ -468,14 +472,14 @@ nghĩa nếu đổi máy móc, phải chốt trước (xem I-22).
 | `modals/resource-modal.tsx:285` | `FolderFillIcon` | `FolderRegularIcon` |
 | `progress/Progress.tsx:167,170` | `CheckCircleFillIcon`, `XCircleFillIcon` | `CheckCircleRegularIcon`, `XCircleRegularIcon` |
 | `rating/Rating.tsx:85,97` | `StarFillIcon` ×2 | ⚠️ xem "Ngoại lệ" |
-| `scroll/Scroll.tsx:39,101-106` | `CaretUp/Down/Left/RightFillIcon` | `CaretUp/Down/Left/RightRegularIcon` |
+| `scroll/Scroll.tsx:39,101-106` | `CaretUp/Down/Left/RightFillIcon` | ⚠️ **ngoại lệ 4** — xem dưới |
 
 **Nhóm B — thay SVG tự vẽ bằng icon ITUI Regular**
 
 | File | Component nội bộ | Icon đích |
 | --- | --- | --- |
 | `accordion/Accordion.tsx:110` | `ChevronIcon` | `CaretDownRegularIcon` (đúng idiom `Select`/`InputDropdown`) |
-| `avatar/Avatar.tsx:122` | `AvatarPlaceholder` | `UserRegularIcon` ⚠️ đang là glyph full-bleed `viewBox 72` |
+| `avatar/Avatar.tsx:122` | `AvatarPlaceholder` | ⚠️ **ngoại lệ 5** — xem dưới |
 | `card/CardTemplates.tsx:25` | `ImagePlaceholder` | `ImageRegularIcon` |
 | `card/CardTemplates.tsx:41` | `CheckIcon` | `CheckRegularIcon` |
 | `checkbox/Checkbox.tsx:73` | `CheckIcon` | `CheckRegularIcon` |
@@ -502,7 +506,17 @@ nghĩa nếu đổi máy móc, phải chốt trước (xem I-22).
      `#9E9E9E` width 2. Bộ ITUI **không có** `package-open` lẫn `search-remove`; thay bằng
      `PackageRegularIcon`/`MagnifyingGlassMinusRegularIcon` là đổi sang glyph khác và lệch Figma.
      Đề nghị **giữ nguyên**, hoặc xin asset mới từ design.
-  4. **Không phải icon, không nằm trong phạm vi:** `bubble/Bubble.tsx:32` (`BubbleTail` — hình
+  4. **`Scroll`** (`scroll/Scroll.tsx`) — token comment của chính file ghi: *"Figma's exported
+     vector is the Phosphor **Fill** caret — a solid 11×6 triangle in a 16×16 box — which is
+     exactly `CaretUpFillIcon`'s path at half scale"*. Đây là asset Figma chứ không phải một lựa
+     chọn weight; đổi sang Regular là lệch design. Đề nghị **giữ `Fill`**. *(Phát hiện khi triển
+     khai 2026-08-06 — hai bảng trên dựng bằng grep `Fill`/`<svg>` nên không tách được "icon chọn
+     theo weight" khỏi "artwork export từ Figma".)*
+  5. **`Avatar`** (`avatar/Avatar.tsx`) — `AvatarPlaceholder` là **mask geometry export từ Figma**,
+     re-express trong hộp 72×72 của chính avatar: đầu + vai, mép dưới vai nằm ở y=78.5 tức ngoài
+     hình tròn, nên bị bo tròn cắt phẳng. `UserRegularIcon` là glyph khác và mất hiệu ứng cắt đó.
+     Đề nghị **giữ nguyên**.
+  6. **Không phải icon, không nằm trong phạm vi:** `bubble/Bubble.tsx:32` (`BubbleTail` — hình
      trang trí đuôi bong bóng) và `progress/Progress.tsx:236` (vòng tròn SVG của progress ring).
 - **Lưu ý triển khai.**
   - Icon ITUI là **path `fill`**, không phải stroke — mọi class màu dạng `text-*` sẽ **không ăn**
@@ -512,7 +526,10 @@ nghĩa nếu đổi máy móc, phải chốt trước (xem I-22).
     **32px**, nên chỗ nào thay cũng phải set class kích thước tường minh (`size-*`/`h-icon-*`).
     Đây là thay đổi thị giác thật sự → **bắt buộc QA trên Storybook**, không chỉ nhìn diff.
   - Import theo **đường dẫn từng file** (`../../icons/ITUI/<folder>/<Name>RegularIcon`) như các
-    component hiện có, không import từ barrel `icons/index.ts`.
+    component hiện có, không import từ barrel `icons/index.ts`. Tên folder không phải lúc nào cũng
+    kebab hoá tên icon: `XCircle*` nằm ở **`icons/ITUI/xcircle`**, không phải `x-circle`.
+  - Icon ITUI **không** có `aria-hidden` sẵn, còn mọi SVG inline đang bị thay **đều có**. Thiếu nó
+    là phơi icon trang trí ra cho screen reader — phải thêm tay ở từng chỗ thay.
 - **Kiểm tra nhất quán.** Regular đã là weight áp đảo trong thư viện (hơn 90 lượt dùng so với
   ~30 lượt `Fill`), nên đây là **kéo phần còn lại về chuẩn sẵn có**, không dựng chuẩn mới. ✓
   Ba ngoại lệ ở trên là chỗ `Fill` mang **ngữ nghĩa** (đầy/rỗng, đã chọn) chứ không phải chỗ chọn
@@ -742,35 +759,98 @@ trong README/`API.md`.
   `BottomSheet.tsx:236` (dạng `sm:max-w-[480px]` → `sm:max-w-120`). Có sẵn từ trước, không phải
   do Phase 2, và không gate nào bắt.
 
-### Phase 3 — `1.1.0` / `1.2.0`
+### Phase 3 — `1.1.0` / `1.2.0` ✅ **xong 2026-08-06**
 
-- [ ] Tách `useFieldA11y({ id, label, error, helperText })` cạnh `InputFieldShell` (không export
-      ra barrel)
-- [ ] Chuyển `InputFieldShell` sang dùng hook — kiểm chứng DOM output **không đổi**
-- [ ] Chuyển `SelectTrigger` sang dùng hook — thay phần wire tay từ Phase 1
-- [ ] Thêm `label?: ReactNode` cho `Toggle`, wrapper `<label>` **chỉ khi** có `label`
-- [ ] Kiểm chứng `Toggle` không có `label` giữ nguyên DOM cũ
-- [ ] Áp version policy đã chốt ở I-6b
+- [x] Tách `useFieldA11y({ id, label, error, helperText, disabled, nameFromLabelId })` cạnh
+      `InputFieldShell` (không export ra barrel)
+- [x] ~~Chuyển `InputFieldShell` sang dùng hook~~ — **không làm, có lý do.** Shell không sở hữu
+      control lẫn `id` nào; bắt nó gọi một hook sinh `useId()` mà nó không gắn được vào đâu thì
+      `messageId` sẽ trỏ tới một control không tồn tại. Hook thuộc **phía control** — đúng chỗ
+      4/6 field đang sai. Shell chỉ nhận thêm một prop `labelId?` (xem dưới), markup không đổi.
+- [x] **Phạm vi rộng hơn plan gốc — audit cả 6 field cho thấy I-4 không chỉ xảy ra ở `Select`:**
 
-**I-22 — icon về weight `Regular`** (theo thứ tự: chốt ngoại lệ → nhóm A → nhóm B → QA)
+      | Field | `id ?? useId()` | `<label htmlFor>` | `aria-invalid` | `aria-describedby` |
+      | --- | --- | --- | --- | --- |
+      | `InputText` | ✅ | ✅ | ✅ | ✅ |
+      | `SelectTrigger` (Phase 1) | ✅ | ✅ + `labelledby` | ✅ | ✅ |
+      | `InputTextarea` | ✅ | ✅ | ✅ | ❌ |
+      | `InputTag` | ✅ | ✅ | ❌ | ❌ |
+      | `InputFileUpload` | ✅ | ✅ | ✅ | ❌ |
+      | `InputTextFormatting` | ❌ không có `id` | ❌ | ❌ | ❌ |
 
-- [ ] **Chốt 3 ngoại lệ trước tiên** với design: `Rating` (sao đầy/rỗng), `DropdownMenuRadioItem`
-      (chấm "đã chọn"), `Empty` (illustration 60×60 từ Figma, ITUI không có glyph tương ứng).
-      Không đụng code ba chỗ này cho tới khi có quyết định.
-- [ ] Nhóm A — đổi `Fill` → `Regular`: `input/InputFileUpload.tsx:181,238`,
-      `input/InputSearch.tsx:101`, `lnb/Lnb.tsx:493`, `modals/resource-modal.tsx:285`,
-      `progress/Progress.tsx:167,170`, `scroll/Scroll.tsx:39,101-106` (sửa cả dòng `import` ở đầu file)
-- [ ] Nhóm B — thay SVG inline bằng icon ITUI Regular: `accordion/Accordion.tsx:110`,
-      `avatar/Avatar.tsx:122`, `card/CardTemplates.tsx:25,41`, `checkbox/Checkbox.tsx:73`,
-      `chip/Chip.tsx:129`, `pagination/Pagination.tsx:67,84`, `popup/Popup.tsx:53,61`,
-      `tag/Tag.tsx:90`; xoá hàm icon nội bộ sau khi hết chỗ dùng
-- [ ] Mỗi chỗ thay: thêm `[&_path]:fill-current` (icon ITUI hardcode `fill`, `text-*` không ăn) và
-      set class kích thước tường minh (mặc định icon là 32px)
-- [ ] **Không** đụng `bubble/Bubble.tsx:32` (đuôi bong bóng) và `progress/Progress.tsx:236`
-      (vòng progress) — không phải icon
-- [ ] Import theo đường dẫn từng file `../../icons/ITUI/<folder>/<Name>RegularIcon`, không qua barrel
-- [ ] QA Storybook từng component đã đụng — đây là thay đổi thị giác, diff không đủ để duyệt
-- [ ] `pnpm check`; ghi phần "thay đổi thị giác" vào release note
+      Shell **có** render `<p>` message ở cả bốn, nhưng control không trỏ tới → message lỗi hiện
+      trên màn hình mà không được đọc. Nên I-5 không phải "refactor nội bộ, DOM không đổi" như
+      plan mô tả: nó **đổi DOM của 4 component** — và đó chính là phần sửa.
+- [x] `InputText` + `SelectTrigger` sang hook — verify bằng `renderToStaticMarkup`: **không đổi
+      một attribute nào** (kể cả `aria-describedby="own-hint t3-message"` khi consumer tự truyền
+      hint, và `disabled` vẫn nuốt error)
+- [x] `InputTextarea` / `InputTag` / `InputFileUpload` sang hook → có `aria-invalid` +
+      `aria-describedby` trỏ đúng `<id>-message`
+- [x] `InputTextFormatting`: thêm prop `id?`, `nameFromLabelId: true` vì Lexical render editor là
+      `contenteditable` — `<label for>` chỉ bind được với labelable element, nên tên phải đến từ
+      `aria-labelledby`. Thay `aria-label={label}` bằng `aria-labelledby` trỏ chính `<label>`
+- [x] `InputFieldShell` nhận thêm `labelId?` để field nào cần `aria-labelledby` cũng dùng được,
+      không phải tự dựng markup như `Select` đã phải làm
+- [x] Thêm `label?: ReactNode` cho `Toggle`, wrapper `<label>` **chỉ khi** có `label`;
+      typography/màu disabled mượn từ `Checkbox` (Figma không mock switch có nhãn — đã ghi vào
+      token comment). Radix render switch là `<button>`, vốn labelable, nên `<label>` bọc vừa đặt
+      tên vừa làm hit target
+- [x] `Toggle` không có `label` giữ nguyên DOM cũ (early-return trước wrapper) → `className` vẫn
+      rơi đúng element cũ
+- [x] I-6b — thêm mục **Versioning** vào README: bảng patch/minor/major + hai hệ quả đã cắn
+      package này (rename không đi patch; `@deprecated` là minor vì làm đỏ CI của consumer bật
+      `no-deprecated` ở mức `error`)
+- [x] `pnpm docs:api` (491 exports) + gate: `check:client`, `check:barrels`, `check:classes`,
+      `check:docs`, `check:rsc` (871.2 kB / 976.6 kB), `check:bundle` — **tất cả xanh**
+
+**I-22 — icon về weight `Regular`** ✅ **xong 2026-08-06**
+
+- [x] **Ba ngoại lệ đã chốt** (user, 2026-08-06 — "theo đề xuất trong plan"): `Rating` đổi mô hình
+      (nền `StarRegularIcon`, lớp fill giữ `StarFillIcon`); `DropdownMenuRadioItem` **giữ**
+      `CircleFillIcon`; `Empty` **giữ nguyên** 2 illustration 60×60
+- [x] **Ba ngoại lệ *bổ sung*, phát hiện khi đọc source — plan gốc xếp nhầm vào nhóm A/B.**
+      Plan dựng hai nhóm bằng cách grep `Fill` và `<svg>`, nên không phân biệt được "icon chọn
+      theo weight" với "artwork export từ Figma". Áp cùng nguyên tắc user đã chốt (Fill mang
+      **ngữ nghĩa** hoặc **do Figma quy định** thì giữ):
+      - `scroll/Scroll.tsx` — token comment ghi thẳng: *"Figma's exported vector is the Phosphor
+        **Fill** caret … which is exactly `CaretUpFillIcon`'s path at half scale"*. Fill ở đây là
+        asset Figma, không phải lựa chọn tuỳ tiện → **giữ nguyên**
+      - `avatar/Avatar.tsx` — `AvatarPlaceholder` là **mask geometry export từ Figma**, viewBox 72
+        full-bleed, vai tràn ra ngoài để bo tròn cắt phẳng. `UserRegularIcon` là glyph khác hẳn và
+        mất hiệu ứng cắt → **giữ nguyên**
+      - `progress/Progress.tsx` — Figma chỉ định **glyph** (`CheckCircle`/`XCircle` cho linear,
+        `Check`/`X` cho circular) chứ **không** chỉ định weight → **đổi được**, đã đổi
+- [x] Nhóm A — `Fill` → `Regular`: `InputFileUpload` (`CheckCircle`, `Warning`), `InputSearch`
+      (`XCircle`), `Lnb` (`User`), `resource-modal` (`Folder`), `Progress`
+      (`CheckCircle`, `XCircle`)
+- [x] Nhóm B — SVG inline → ITUI Regular: `Accordion` (`CaretDown`), `CardTemplates`
+      (`Image`, `Check`), `Checkbox` (`Check`), `Chip` (`X`), `Pagination`
+      (`CaretLeft/Right` + `CaretDoubleLeft/Right`, `DotsThree`), `Popup` (`X`, `Image`),
+      `Tag` (`X`), `Rating` (nền `StarRegular`); đã xoá hết hàm icon nội bộ
+- [x] `Pagination.Chevron` bỏ luôn `-scale-x-100` + path thứ hai có điều kiện — bộ caret ITUI đã
+      có sẵn cả hai hướng lẫn hai bản đơn/đôi, không cần tự dựng lại
+- [x] Mỗi chỗ thay: `[&_path]:fill-current` + class kích thước tường minh. **`aria-hidden="true"`
+      cũng phải thêm tay** — mọi SVG inline cũ đều có sẵn, icon ITUI thì **không**, nên bỏ qua sẽ
+      phơi icon trang trí ra cho screen reader
+- [x] **Không** đụng `bubble/Bubble.tsx` và `progress/Progress.tsx:236` — không phải icon
+- [x] Import theo đường dẫn từng folder, không qua barrel `icons/index.ts`
+- [x] QA Storybook 19 ảnh chụp thật (`Rating` 0→5 nửa sao, `Pagination` many-pages, `Chip` 24 ô
+      state×size, `Checkbox` checked, `Progress` statuses, `UploadField` items+error,
+      `InputSearch` filled, `Popup` mở, `Card` image+pricing, `Toggle` labelled, `Accordion`)
+- [x] Gate xanh; phần "thay đổi thị giác" cho release note ở dưới
+
+**Ghi chú thị giác cho release note `1.2.0`:**
+
+> Icon trong 13 component chuyển từ SVG tự vẽ / biến thể `Fill` sang bộ ITUI weight `Regular`.
+> Không đổi API, không đổi compile — nhưng nét icon **mảnh hơn** ở: `Accordion`, `Card`,
+> `Checkbox`, `Chip`, `InputFileUpload`, `InputSearch`, `Lnb`, `Pagination`, `Popup`, `Progress`
+> (chỉ biến thể linear), `Rating` (sao rỗng giờ là **viền** thay vì sao xám đặc), `resource-modal`,
+> `Tag`. `Scroll`, `Avatar`, `Empty` và chấm "đã chọn" của `DropdownMenu` giữ nguyên.
+>
+> Hai chỗ đổi cả **màu**, không chỉ nét: nút xoá của `InputSearch` từ `#101010` về
+> `text-neutral-muted` (nay ăn `fill-current` như mọi slot icon khác), và sao rỗng của `Rating`
+> nhạt hơn mock Figma — Figma vẽ sao rỗng là sao xám **đặc**, đây là deviation có chủ ý để phân
+> biệt đầy/rỗng khi cả hai đã cùng weight.
 
 ### Phase 4 — `1.2.0`
 

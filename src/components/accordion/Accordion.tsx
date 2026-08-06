@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from 'react';
 import * as RadixAccordion from '@radix-ui/react-accordion';
+import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
 import { cn } from '../../lib/utils';
 
 /*
@@ -105,26 +106,6 @@ AccordionItem.displayName = 'AccordionItem';
 
 // ─── AccordionTrigger ───────────────────────────────────────────────────────
 
-function ChevronIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d="M4 6L8 10L12 6"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export interface AccordionTriggerProps
   extends ComponentPropsWithoutRef<typeof RadixAccordion.Trigger> {
   /** Optional leading icon (20px). */
@@ -162,10 +143,12 @@ export const AccordionTrigger = forwardRef<
           )}
           <span className="truncate">{children}</span>
         </span>
-        <ChevronIcon
+        <CaretDownRegularIcon
+          aria-hidden="true"
           className={cn(
             'size-4 shrink-0 transition-transform duration-200 ease-out',
             'group-data-[state=open]:rotate-180 motion-reduce:transition-none',
+            '[&_path]:fill-current',
           )}
         />
       </RadixAccordion.Trigger>

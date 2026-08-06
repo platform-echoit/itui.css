@@ -7,7 +7,7 @@ import {
   type HTMLAttributes,
 } from 'react';
 import { cn } from '../../lib/utils';
-import { StarFillIcon } from '../../icons/ITUI/star';
+import { StarFillIcon, StarRegularIcon } from '../../icons/ITUI/star';
 
 /*
   Token → Tailwind class reference (Figma node 27901:3604 — "Rating")
@@ -27,8 +27,13 @@ import { StarFillIcon } from '../../icons/ITUI/star';
 
   DESIGN NOTES
   - Figma builds the half star from two mask groups over the same Star glyph.
-    The same silhouette is produced here by one grey StarFillIcon with a
-    `currentColor` copy clipped to `w-1/2` on top — no masks, no exported assets.
+    The same silhouette is produced here by a StarRegularIcon base with a
+    `currentColor` StarFillIcon clipped to `w-1/2` on top — no masks, no
+    exported assets.
+    The base is the one place the library keeps a weight *pair* rather than a
+    single weight: outline-empty against solid-filled is what carries the value
+    (I-22). Figma draws the empty star as a grey solid instead, so this reads
+    lighter than the mock — deliberate, and the one deviation in this component.
   - Figma's `rating` variants run 0 → 5 in 0.5 steps, so the input domain matches:
     every star carries two half-width hit areas, for `index + 0.5` and `index + 1`.
   - Group semantics, arrow-key navigation and form participation come from native
@@ -82,7 +87,7 @@ export const RatingStar = forwardRef<HTMLSpanElement, RatingStarProps>(
       className={cn('relative inline-flex h-icon-lg w-icon-lg shrink-0', className)}
       {...rest}
     >
-      <StarFillIcon
+      <StarRegularIcon
         aria-hidden
         className="h-icon-lg w-icon-lg [&_path]:fill-icon-neutral-disabled"
       />

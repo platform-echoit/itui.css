@@ -1,4 +1,6 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { CheckRegularIcon } from '../../icons/ITUI/check';
+import { ImageRegularIcon } from '../../icons/ITUI/image';
 import { cn } from '../../lib/utils';
 
 /*
@@ -20,33 +22,17 @@ const BODY = 'text-sm leading-6 tracking-md';
 const IMAGE_SURFACE =
   'flex items-center justify-center bg-surface-neutral-subtle text-neutral-subtle';
 
+/**
+ * Stand-in artwork for an empty image slot. `[&_path]:fill-current` because
+ * ITUI icons hard-code `fill="#101010"`; `opacity-40` keeps it reading as a
+ * placeholder rather than as content.
+ */
 function ImagePlaceholder({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={cn('opacity-40', className)}
+    <ImageRegularIcon
       aria-hidden="true"
-    >
-      <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M21 15l-5-5L5 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function CheckIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M5 10.5L8.5 14L15 6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+      className={cn('opacity-40 [&_path]:fill-current', className)}
+    />
   );
 }
 
@@ -216,9 +202,10 @@ export const PricingCard = forwardRef<HTMLDivElement, PricingCardProps>(
           const included = feature.included !== false;
           return (
             <li key={index} className="flex items-center gap-2">
-              <CheckIcon
+              <CheckRegularIcon
+                aria-hidden="true"
                 className={cn(
-                  'size-5 shrink-0',
+                  'size-5 shrink-0 [&_path]:fill-current',
                   included ? 'text-brand' : 'text-neutral-disabled',
                 )}
               />

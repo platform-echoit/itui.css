@@ -5,6 +5,7 @@ import {
   type MouseEvent,
   type ReactNode,
 } from 'react';
+import { XRegularIcon } from '../../icons/ITUI/x';
 import { cn } from '../../lib/utils';
 
 /*
@@ -85,25 +86,6 @@ function boxClasses(
   );
 }
 
-function XIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d="M4 4L12 12M12 4L4 12"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
 export const Tag = forwardRef<HTMLDivElement, TagProps>(
   (
     {
@@ -167,7 +149,10 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
             aria-label={closeLabel}
             className="inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full text-current hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-brand"
           >
-            <XIcon className="size-4" />
+            <XRegularIcon
+              aria-hidden="true"
+              className="size-4 [&_path]:fill-current"
+            />
           </button>
         )}
       </div>

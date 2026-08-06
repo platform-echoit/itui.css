@@ -6,6 +6,11 @@
 // pagination to keep on the server, so the directive is the honest fix (I-15).
 
 import { forwardRef, type HTMLAttributes } from 'react';
+import { CaretDoubleLeftRegularIcon } from '../../icons/ITUI/caret-double-left';
+import { CaretDoubleRightRegularIcon } from '../../icons/ITUI/caret-double-right';
+import { CaretLeftRegularIcon } from '../../icons/ITUI/caret-left';
+import { CaretRightRegularIcon } from '../../icons/ITUI/caret-right';
+import { DotsThreeRegularIcon } from '../../icons/ITUI/dots-three';
 import { cn } from '../../lib/utils';
 
 /*
@@ -61,6 +66,16 @@ function getPages(
   return [1, 'ellipsis', ...range(left, right), 'ellipsis', total];
 }
 
+/*
+  Four separate ITUI glyphs rather than one flipped-and-doubled drawing: the
+  caret family already ships both directions and both counts, so `-scale-x-100`
+  and a conditional second path were re-deriving artwork that exists.
+*/
+const CARETS = {
+  left: { single: CaretLeftRegularIcon, double: CaretDoubleLeftRegularIcon },
+  right: { single: CaretRightRegularIcon, double: CaretDoubleRightRegularIcon },
+} as const;
+
 function Chevron({
   direction,
   double,
@@ -70,35 +85,12 @@ function Chevron({
   double?: boolean;
   className?: string;
 }) {
+  const Icon = CARETS[direction][double ? 'double' : 'single'];
   return (
-    <svg
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={cn(direction === 'right' && '-scale-x-100', className)}
+    <Icon
       aria-hidden="true"
-    >
-      <path d="M12 5L7 10L12 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      {double && (
-        <path d="M16 5L11 10L16 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      )}
-    </svg>
-  );
-}
-
-function EllipsisIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <circle cx="5" cy="10" r="1.3" />
-      <circle cx="10" cy="10" r="1.3" />
-      <circle cx="15" cy="10" r="1.3" />
-    </svg>
+      className={cn('[&_path]:fill-current', className)}
+    />
   );
 }
 
@@ -178,7 +170,10 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
                 aria-hidden="true"
                 className={cn(CELL, 'text-neutral-muted')}
               >
-                <EllipsisIcon className="size-5" />
+                <DotsThreeRegularIcon
+                  aria-hidden="true"
+                  className="size-5 [&_path]:fill-current"
+                />
               </span>
             ) : (
               <CellButton

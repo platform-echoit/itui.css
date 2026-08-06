@@ -2,6 +2,8 @@
 
 import { type ReactNode } from 'react';
 import * as RadixDialog from '@radix-ui/react-dialog';
+import { ImageRegularIcon } from '../../icons/ITUI/image';
+import { XRegularIcon } from '../../icons/ITUI/x';
 import { cn } from '../../lib/utils';
 import { Button } from '../button';
 import { Checkbox } from '../checkbox';
@@ -48,21 +50,13 @@ export interface PopupProps {
 const CARD =
   'overflow-hidden rounded-xl border border-surface-neutral-hover bg-inverse shadow-downwards-sm';
 
-function XIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
-      <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
+/** Stand-in artwork for an empty image slot — same shape `CardTemplates` uses. */
 function ImagePlaceholder({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={cn('opacity-40', className)} aria-hidden="true">
-      <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M21 15l-5-5L5 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <ImageRegularIcon
+      aria-hidden="true"
+      className={cn('opacity-40 [&_path]:fill-current', className)}
+    />
   );
 }
 
@@ -104,7 +98,10 @@ export function Popup({
       aria-label="Close"
       className="inline-flex size-5 shrink-0 cursor-pointer items-center justify-center text-icon-neutral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
     >
-      <XIcon className="size-5" />
+      <XRegularIcon
+        aria-hidden="true"
+        className="size-5 [&_path]:fill-current"
+      />
     </RadixDialog.Close>
   );
 

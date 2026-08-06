@@ -4,6 +4,7 @@ import {
   type InputHTMLAttributes,
   type ReactNode,
 } from 'react';
+import { CheckRegularIcon } from '../../icons/ITUI/check';
 import { cn } from '../../lib/utils';
 
 /*
@@ -68,26 +69,6 @@ const labelTypeMap: Record<CheckboxSize, string> = {
   sm: 'text-xs leading-5 tracking-sm',
 };
 
-function CheckIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 10 10"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d="M1.5 5L4 7.5L8.5 2.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {
@@ -139,7 +120,12 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             'peer-focus-visible:ring-2 peer-focus-visible:ring-brand peer-focus-visible:ring-offset-1',
           )}
         >
-          {checked && <CheckIcon className="size-3" />}
+          {checked && (
+            <CheckRegularIcon
+              aria-hidden="true"
+              className="size-3 [&_path]:fill-current"
+            />
+          )}
         </span>
         {label && (
           <span
