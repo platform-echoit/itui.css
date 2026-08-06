@@ -1,7 +1,0 @@
-node_modules
-dist-baseline
-dist-barrel
-dist-subpath
-# Produced by `pnpm check:bundle` — the packed tarball under test.
-itui.tgz
-pnpm-lock.yaml

@@ -211,9 +211,12 @@ Stated plainly, so you can decide whether they matter for your product:
 
 - **Field focus is a 1px border.** Enough for WCAG 2.1 SC 2.4.7, weak against WCAG 2.2 SC 2.4.11.
   See [Focus indicators](#focus-indicators).
-- **`Dialog` does not set `aria-modal`.** Radix marks the background `aria-hidden` instead, which
-  reaches the same practical result on current screen readers, but is not the attribute a checklist
-  looks for.
+- **No dialog sets `aria-modal`, and this one is deliberate.** `Dialog`, `Modal`, `Popup` and
+  `BottomSheet` all render Radix's dialog content, which calls `hideOthers()` to mark every
+  sibling `aria-hidden` on mount. Radix's own source calls that the *"better supported equivalent
+  to setting `aria-modal`"*, and we agree: adding the attribute on top would duplicate a mechanism
+  that already has wider assistive-technology support. Expect an automated checklist to flag its
+  absence anyway — the background really is hidden, just by the other method.
 - **`SelectTrigger` accepts `disabled` without forwarding it.** A disabled trigger loses its
   pointer events but stays focusable and still opens by keyboard.
 - **The `dropdown-menu` and `tabs` families paint themselves with raw palette classes.** Their

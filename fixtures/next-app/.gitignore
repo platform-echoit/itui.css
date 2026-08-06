@@ -1,7 +1,0 @@
-node_modules
-.next
-next-env.d.ts
-tsconfig.tsbuildinfo
-# Produced by `pnpm check:rsc` — the packed tarball under test.
-itui.tgz
-pnpm-lock.yaml
