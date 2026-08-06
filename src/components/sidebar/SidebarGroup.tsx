@@ -16,6 +16,7 @@ import { cn } from '../../lib/utils';
 export interface SidebarGroupProps {
   /** Leading 20px icon (required for the collapsed rail). */
   icon?: ReactNode;
+  /** The group header's text. */
   label: ReactNode;
   /** Highlight the group header (selected section). */
   active?: boolean;
@@ -23,12 +24,19 @@ export interface SidebarGroupProps {
   defaultOpen?: boolean;
   /** Controlled open state. */
   open?: boolean;
+  /** Fires whenever the group opens or closes. */
   onOpenChange?: (open: boolean) => void;
   /** Sub-items — typically <SidebarItem indented>. */
   children?: ReactNode;
+  /** Lands on the group wrapper, not on its header row. */
   className?: string;
 }
 
+/**
+ * A collapsible section of a `SidebarMenu`: a header row that expands to reveal
+ * its `SidebarItem`s. On the collapsed rail the sub-items are hidden, since
+ * there is no room for them.
+ */
 export function SidebarGroup({
   icon,
   label,

@@ -58,10 +58,13 @@ const SUBMENU_ATTRIBUTE = 'data-input-dropdown-submenu';
 
 export interface InputDropdownItemProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
+  /** Identity of this row — what `onValueChange` reports and `value` matches against. */
   value: string;
   /** Text shown in the field once selected — required when `children` isn't a string */
   label?: string;
+  /** Greys the row out and takes it out of keyboard navigation. */
   disabled?: boolean;
+  /** The row's content. A plain string doubles as the field's text once chosen. */
   children: ReactNode;
 }
 
@@ -229,10 +232,15 @@ export interface InputDropdownProps
     InputTextProps,
     'value' | 'defaultValue' | 'type' | 'suffix' | 'onChange' | 'readOnly'
   > {
+  /** Controlled selection — the `value` of the chosen item. */
   value?: string;
+  /** Starting selection for the uncontrolled case. */
   defaultValue?: string;
+  /** Fires with the chosen item's `value`. */
   onValueChange?: (value: string) => void;
+  /** Controlled panel state. Leave it out and the field opens and closes itself. */
   open?: boolean;
+  /** Fires whenever the panel opens or closes. */
   onOpenChange?: (open: boolean) => void;
   /** Extra classes on the panel */
   panelClassName?: string;

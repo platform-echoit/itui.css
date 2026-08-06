@@ -62,6 +62,7 @@ import { FilmStripRegularIcon } from '../../icons/ITUI/film-strip';
 import { CodeRegularIcon } from '../../icons/ITUI/code';
 import { DotsThreeRegularIcon } from '../../icons/ITUI/dots-three';
 import { InputFieldShell } from './InputFieldShell';
+import { useFieldA11y } from './useFieldA11y';
 
 /*
   Token → Tailwind map (Figma 28964:10009 `TextFormatting` · 27102:5491 `…WithLabel`)
@@ -486,9 +487,15 @@ function Toolbar({
 // ─── InputTextFormatting ──────────────────────────────────────────────────────
 
 export interface InputTextFormattingProps {
+  /** Text above the box — it is what names the field for assistive technology. */
   label?: string;
+  /** Message under the box. It also paints the error border and sets `aria-invalid`. */
   error?: string;
+  /** Hint under the box. `error` replaces it while the field is invalid. */
   helperText?: string;
+  /** id of the editable area; one is generated when omitted */
+  id?: string;
+  /** Ghost text shown while the editor is empty. */
   placeholder?: string;
   /** Serialized state to open with — `JSON.stringify(editorState.toJSON())` */
   defaultValue?: string;
@@ -506,6 +513,7 @@ export interface InputTextFormattingProps {
   linkPromptLabel?: string;
   /** Overrides for the toolbar's tooltips, `aria-label`s and dropdown rows */
   labels?: Partial<InputTextFormattingLabels>;
+  /** Extra classes on the outer wrapper — label, box and message together. */
   className?: string;
   /** Extra classes on the bordered box */
   boxClassName?: string;
@@ -535,74 +543,97 @@ export const InputTextFormatting = forwardRef<
       onLinkRequest,
       linkPromptLabel = 'Enter a link URL',
       labels,
+      id,
       className,
       boxClassName,
       editorClassName,
     },
     ref,
-  ) => (
-    <InputFieldShell
-      label={label}
-      error={error}
-      helperText={helperText}
-      className={className}
-      boxClassName={cn('h-auto flex-col items-stretch gap-0 p-0', boxClassName)}
-    >
-      <LexicalComposer
-        initialConfig={{
-          namespace: 'InputTextFormatting',
-          nodes: [HeadingNode, QuoteNode, LinkNode],
-          theme: EDITOR_THEME,
-          editorState: defaultValue,
-          onError: (thrown) => {
-            throw thrown;
-          },
-        }}
-      >
-        <Toolbar
-          onCommand={onCommand}
-          onLinkRequest={onLinkRequest}
-          linkPromptLabel={linkPromptLabel}
-          labels={labels}
-        />
+  ) => {
+    /*
+      The one field with no id at all before I-5: its `<label>` pointed nowhere,
+      its message paragraph had no id to be pointed at, and the editor announced
+      no invalid state. `nameFromLabelId` because Lexical renders the editor as
+      a `contenteditable` div — `<label for>` only binds to labelable elements,
+      so the name has to come from `aria-labelledby`.
+    */
+    const { fieldId, fieldProps, labelProps } = useFieldA11y({
+      id,
+      label,
+      error,
+      helperText,
+      nameFromLabelId: true,
+    });
 
-        {/* relative: the placeholder is absolutely positioned over the caret. */}
-        <div className="relative flex-1 p-4">
-          <RichTextPlugin
-            contentEditable={
-              <ContentEditable
-                ref={ref}
-                aria-label={label}
-                aria-placeholder={placeholder}
-                placeholder={
-                  <span className="pointer-events-none absolute top-4 left-4 text-base leading-lg tracking-lg text-neutral-muted">
-                    {placeholder}
-                  </span>
-                }
-                className={cn('min-h-15 outline-none', editorClassName)}
-              />
-            }
-            // The placeholder above already covers it.
-            placeholder={null}
-            ErrorBoundary={LexicalErrorBoundary}
+    return (
+      <InputFieldShell
+        label={label}
+        error={error}
+        helperText={helperText}
+        className={className}
+        htmlFor={fieldId}
+        labelId={labelProps.id}
+        boxClassName={cn(
+          'h-auto flex-col items-stretch gap-0 p-0',
+          boxClassName,
+        )}
+      >
+        <LexicalComposer
+          initialConfig={{
+            namespace: 'InputTextFormatting',
+            nodes: [HeadingNode, QuoteNode, LinkNode],
+            theme: EDITOR_THEME,
+            editorState: defaultValue,
+            onError: (thrown) => {
+              throw thrown;
+            },
+          }}
+        >
+          <Toolbar
+            onCommand={onCommand}
+            onLinkRequest={onLinkRequest}
+            linkPromptLabel={linkPromptLabel}
+            labels={labels}
           />
-          <HistoryPlugin />
-          <LinkPlugin />
-          {onChange && (
-            <OnChangePlugin
-              ignoreSelectionChange
-              onChange={(editorState) =>
-                onChange({
-                  json: JSON.stringify(editorState.toJSON()),
-                  text: editorState.read(() => $getRoot().getTextContent()),
-                })
+
+          {/* relative: the placeholder is absolutely positioned over the caret. */}
+          <div className="relative flex-1 p-4">
+            <RichTextPlugin
+              contentEditable={
+                <ContentEditable
+                  ref={ref}
+                  {...fieldProps}
+                  aria-placeholder={placeholder}
+                  placeholder={
+                    <span className="pointer-events-none absolute top-4 left-4 text-base leading-lg tracking-lg text-neutral-muted">
+                      {placeholder}
+                    </span>
+                  }
+                  className={cn('min-h-15 outline-none', editorClassName)}
+                />
               }
+              // The placeholder above already covers it.
+              placeholder={null}
+              ErrorBoundary={LexicalErrorBoundary}
             />
-          )}
-        </div>
-      </LexicalComposer>
-    </InputFieldShell>
-  ),
+            <HistoryPlugin />
+            <LinkPlugin />
+            {onChange && (
+              <OnChangePlugin
+                ignoreSelectionChange
+                onChange={(editorState) =>
+                  onChange({
+                    json: JSON.stringify(editorState.toJSON()),
+                    text: editorState.read(() => $getRoot().getTextContent()),
+                  })
+                }
+              />
+            )}
+          </div>
+        </LexicalComposer>
+      </InputFieldShell>
+    );
+  },
 );
 
 InputTextFormatting.displayName = 'InputTextFormatting';

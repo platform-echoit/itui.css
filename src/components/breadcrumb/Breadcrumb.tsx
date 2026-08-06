@@ -87,6 +87,11 @@ const BreadcrumbSeparatorContext =
 
 // ─── BreadcrumbSeparator ──────────────────────────────────────────────────────
 
+/**
+ * The glyph between two crumbs. `Breadcrumb` inserts these for you, so write one
+ * by hand only where you need a different glyph — around a collapsed "…", say.
+ * A hand-placed separator suppresses the automatic one on both sides.
+ */
 export const BreadcrumbSeparator = forwardRef<
   HTMLLIElement,
   BreadcrumbSeparatorProps
@@ -118,6 +123,11 @@ BreadcrumbSeparator.displayName = 'BreadcrumbSeparator';
 
 // ─── BreadcrumbItem ───────────────────────────────────────────────────────────
 
+/**
+ * One level in the trail. It renders an `<a>` when it navigates and a `<span>`
+ * with `aria-current="page"` when it is `current`, so the crumb you are on is
+ * neither focusable nor hoverable.
+ */
 export const BreadcrumbItem = forwardRef<HTMLElement, BreadcrumbItemProps>(
   (
     { href, icon, current = false, asChild = false, className, children, ...rest },
@@ -165,6 +175,11 @@ BreadcrumbItem.displayName = 'BreadcrumbItem';
 
 // ─── Breadcrumb ───────────────────────────────────────────────────────────────
 
+/**
+ * The trail of pages leading to this one, as a labelled `<nav>` around an `<ol>`.
+ * List only `BreadcrumbItem`s — separators are woven in between them for you, so
+ * the markup stays the crumbs themselves.
+ */
 export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
   ({ separator = 'slash', className, children, ...rest }, ref) => {
     /*

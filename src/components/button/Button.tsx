@@ -20,13 +20,31 @@ export type ButtonVariant =
 export type ButtonSize = 'lg' | 'md' | 'sm' | 'icon'; // Force refresh
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * How much weight the action carries. `primary` is the one filled button per
+   * view; `alternative` is the outlined brand button that sits next to it;
+   * `secondary` is the neutral outline for everything else. `link` and
+   * `link-underline` drop the box for inline actions, `ghost` keeps the box but
+   * paints it only on hover, and `destructive` is the red one for deletes.
+   */
   variant?: ButtonVariant;
+  /**
+   * Height: 48 / 40 / 32px. `icon` is the square variant for a button whose only
+   * child is an icon — a plain icon-only `md` button squares itself too, so reach
+   * for `icon` when you want that square at a size the label steps do not give.
+   */
   size?: ButtonSize;
   /** Leading icon slot */
   iconLeft?: ReactNode;
   /** Trailing icon slot */
   iconRight?: ReactNode;
+  /**
+   * Swap the leading icon for a spinner and swallow clicks. Deliberately not
+   * `disabled`: the button stays focusable so the `aria-busy` change is
+   * announced instead of focus falling to `<body>`.
+   */
   loading?: boolean;
+  /** Stretch to the container's width. Ignored on an icon-only button. */
   fullWidth?: boolean;
 }
 
@@ -152,6 +170,11 @@ const variantConfig: Record<ButtonVariant, string> = {
 
 // ─── Button ───────────────────────────────────────────────────────────────────
 
+/**
+ * The library's action element: a real `<button>` with seven variants, three
+ * heights and a loading state. It defaults to `type="button"`, so a button
+ * inside a form only submits when you ask it to with `type="submit"`.
+ */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {

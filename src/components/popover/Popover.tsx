@@ -4,11 +4,23 @@ import { cn } from '../../lib/utils';
 
 // ─── Root / Trigger / Portal / Close ─────────────────────────────────────────
 
+export interface PopoverProps
+  extends ComponentProps<typeof PopoverPrimitive.Root> {
+  /**
+   * Not accepted here — the root renders no DOM, so there is nothing to style.
+   * `<Popover className="w-56">` was the `1.0.14` panel; it is now
+   * `<PopoverPanel className="w-56">`.
+   *
+   * @deprecated `className` moved to `PopoverPanel`.
+   */
+  className?: never;
+}
+
 /**
  * The popover root — state and context only, it renders no DOM of its own.
  * Pair it with `PopoverTrigger` and `PopoverContent`.
  */
-export function Popover(props: ComponentProps<typeof PopoverPrimitive.Root>) {
+export function Popover(props: PopoverProps) {
   return <PopoverPrimitive.Root {...props} />;
 }
 Popover.displayName = 'Popover';
@@ -16,18 +28,30 @@ Popover.displayName = 'Popover';
 /*
   The root deliberately does NOT accept `className`. It used to, and dropped it
   on the floor — the root has no element to put it on. Rejecting it is what makes
-  the 2.0 rename fail loudly: `<Popover className="w-56">` was the old panel, and
-  the panel is now `PopoverPanel`. Without this, that call would still typecheck
-  and simply render nothing.
+  the rename fail loudly: `<Popover className="w-56">` was the old panel, and the
+  panel is now `PopoverPanel`. Without this, that call would still typecheck and
+  simply render nothing.
+
+  Radix's own root props type is *also* named `PopoverProps`, so before this
+  interface existed the compiler said "not assignable to type
+  'IntrinsicAttributes & PopoverProps'" and stopped there — correct, and useless
+  to someone migrating. `className?: never` puts the destination in the hover
+  text at the exact spot the error appears. It is a one-off for this migration
+  door and should not be copied to other components.
 */
 
 /**
- * @deprecated Renamed to `Popover` in 2.0 — the root is now spelled like
- * `Dialog` / `Tabs` / `Tooltip`, and the panel that held the `Popover` name is
- * now `PopoverPanel`. This alias is removed in the next minor.
+ * The popover root under its old name — identical to `Popover`.
+ *
+ * @deprecated Renamed to `Popover` — the root is now spelled like `Dialog` /
+ * `Tabs` / `Tooltip`, and the panel that held the `Popover` name is now
+ * `PopoverPanel`. The rename landed in `1.0.15`; `1.1.0` is the release that
+ * signals it in the version number. This alias is kept for the whole `1.x`
+ * line and removed in `2.0.0`.
  */
 export const PopoverRoot = Popover;
 
+/** The element that opens the popover. Pass `asChild` to keep your own button. */
 export function PopoverTrigger({
   className,
   ...props
@@ -69,6 +93,10 @@ export function PopoverAnchor({
 }
 PopoverAnchor.displayName = 'PopoverAnchor';
 
+/**
+ * Renders popover content into `document.body`. `PopoverContent` portals itself
+ * already, so this is only for hand-assembled popovers.
+ */
 export function PopoverPortal(
   props: ComponentProps<typeof PopoverPrimitive.Portal>,
 ) {
@@ -76,6 +104,7 @@ export function PopoverPortal(
 }
 PopoverPortal.displayName = 'PopoverPortal';
 
+/** Closes the popover from inside it. Wrap your own button with `asChild`. */
 export function PopoverClose(
   props: ComponentProps<typeof PopoverPrimitive.Close>,
 ) {
@@ -121,10 +150,17 @@ export interface PopoverContentProps
    * @example "bottom-start" | "top-center" | "right-end"
    */
   placement?: PopoverPlacement;
+  /** Which edge of the trigger the panel opens from. @default 'bottom' */
   side?: Side;
+  /** How the panel lines up along that edge. @default 'start' */
   align?: Align;
 }
 
+/**
+ * The floating panel: portalled, positioned and styled. Reach for `placement`
+ * rather than `side` + `align` — it is the same pair in one prop, and it wins
+ * when both are given.
+ */
 export function PopoverContent({
   className,
   sideOffset = 2,

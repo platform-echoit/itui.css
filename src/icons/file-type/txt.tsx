@@ -1,3 +1,8 @@
+/**
+ * The `.txt` document icon. Same set as the other file-type logos — it is listed
+ * on its own only because it takes every `svg` attribute rather than `className`
+ * alone.
+ */
 export function TxtIcon({ ...props }: React.SVGAttributes<SVGSVGElement>) {
   return (
     <svg

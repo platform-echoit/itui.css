@@ -6,8 +6,14 @@ import { cn } from '../../lib/utils';
 export type BadgeVariant = 'circle' | 'overflow' | 'dot';
 
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * `circle` is the fixed 20px counter, `overflow` grows with its content (the
+   * one to use for `"99+"`), and `dot` is the contentless red dot.
+   */
   variant?: BadgeVariant;
+  /** The count. Ignored by `dot`, and clipped by `circle` past two characters. */
   children?: ReactNode;
+  /** Extra classes on the badge itself. */
   className?: string;
 }
 
@@ -42,6 +48,11 @@ export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
 
 // ─── Badge ────────────────────────────────────────────────────────────────────
 
+/**
+ * The notification counter — a red circle carrying a number, or a bare dot. It
+ * is sized for one or two digits, so it is the wrong component for a text label:
+ * `"Enterprise"` comes out as `"erp"`. Use `Tag` or `Chip` for those.
+ */
 export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
   ({ variant = 'circle', children, className = '', ...rest }, ref) => {
     if (variant === 'dot') {

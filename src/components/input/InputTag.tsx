@@ -2,7 +2,6 @@
 
 import {
   forwardRef,
-  useId,
   useState,
   type InputHTMLAttributes,
   type KeyboardEvent,
@@ -12,6 +11,7 @@ import { useControllableState } from '../../lib/use-controllable-state';
 import { useForwardedRef } from '../../lib/use-forwarded-ref';
 import { Tag } from '../tag/Tag';
 import { InputFieldShell, inputFieldClass } from './InputFieldShell';
+import { useFieldA11y } from './useFieldA11y';
 
 /*
   Token → Tailwind map (Figma node 27096:9850 `Tag` · 28964:9575 `TagWithLabel`)
@@ -30,14 +30,21 @@ export interface InputTagProps
     InputHTMLAttributes<HTMLInputElement>,
     'value' | 'defaultValue' | 'onChange' | 'prefix'
   > {
+  /** Controlled list of tags. */
   value?: string[];
+  /** Starting tags for the uncontrolled case. */
   defaultValue?: string[];
+  /** Fires with the whole next list, not just the tag that changed. */
   onValueChange?: (tags: string[]) => void;
+  /** Cap on the list. At the cap the field stops accepting new tags. */
   maxTags?: number;
   /** Return a message to reject the tag, or `null` to accept it */
   validate?: (tag: string) => string | null;
+  /** Text above the box — it is what names the field for assistive technology. */
   label?: string;
+  /** Message under the box. It also paints the error border and sets `aria-invalid`. */
   error?: string;
+  /** Hint under the box. `error` replaces it while the field is invalid. */
   helperText?: string;
   /** Extra classes on the bordered box */
   boxClassName?: string;
@@ -64,12 +71,12 @@ export const InputTag = forwardRef<HTMLInputElement, InputTagProps>(
       fieldClassName,
       placeholder,
       onKeyDown,
+      'aria-describedby': ariaDescribedBy,
+      'aria-labelledby': ariaLabelledBy,
       ...rest
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const inputId = id ?? generatedId;
     const [inputRef, setInputRef] = useForwardedRef(ref);
 
     const [tags, setTags] = useControllableState({
@@ -79,6 +86,17 @@ export const InputTag = forwardRef<HTMLInputElement, InputTagProps>(
     });
     const [draft, setDraft] = useState('');
     const [rejection, setRejection] = useState<string | null>(null);
+
+    // A rejected tag is an error the field owns rather than one the consumer
+    // passed, but it reaches the shell and the screen reader the same way.
+    const { fieldId, fieldProps } = useFieldA11y({
+      id,
+      error: error ?? rejection ?? undefined,
+      helperText,
+      disabled,
+      'aria-describedby': ariaDescribedBy,
+      'aria-labelledby': ariaLabelledBy,
+    });
 
     const addTag = (raw: string) => {
       const tag = raw.trim();
@@ -121,7 +139,7 @@ export const InputTag = forwardRef<HTMLInputElement, InputTagProps>(
         disabled={disabled}
         className={className}
         boxClassName={cn('h-auto min-h-12 flex-wrap gap-1 py-2', boxClassName)}
-        htmlFor={inputId}
+        htmlFor={fieldId}
         onBoxClick={() => inputRef.current?.focus()}
       >
         {tags.map((tag, index) => (
@@ -137,7 +155,7 @@ export const InputTag = forwardRef<HTMLInputElement, InputTagProps>(
 
         <input
           ref={setInputRef}
-          id={inputId}
+          {...fieldProps}
           disabled={disabled}
           value={draft}
           placeholder={tags.length === 0 ? placeholder : undefined}

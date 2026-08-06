@@ -3,12 +3,31 @@ import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 
 import { cn } from '../../lib/utils';
 
+/**
+ * Shares the open/close timing between every tooltip under it, so moving
+ * between neighbours does not re-wait the delay. **Required**: a `Tooltip`
+ * without a `TooltipProvider` ancestor throws at runtime. Mount one near the
+ * root — `Popover` and `Dialog` need no such wrapper.
+ */
 const TooltipProvider = TooltipPrimitive.Provider;
 
+/**
+ * The tooltip root — state only, it renders no DOM. Pair it with
+ * `TooltipTrigger` and `TooltipContent`, inside a `TooltipProvider`.
+ */
 const Tooltip = TooltipPrimitive.Root;
 
+/**
+ * The element the tooltip describes. Pass `asChild` to keep your own button —
+ * and keep it focusable, or the tooltip is unreachable by keyboard.
+ */
 const TooltipTrigger = TooltipPrimitive.Trigger;
 
+/**
+ * The floating bubble. It portals itself, so it escapes an `overflow: hidden`
+ * ancestor. Keep the text short — this is a hint, not a popover, and it is
+ * hidden from the pointer.
+ */
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>

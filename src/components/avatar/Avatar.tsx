@@ -47,8 +47,15 @@ import { cn } from '../../lib/utils';
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 
 export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
+  /** One of the six Figma profile sizes, 24px through 72px. */
   size?: AvatarSize;
+  /** Photo to show. Without it the avatar falls back to initials, then to the silhouette. */
   src?: string;
+  /**
+   * Alt text for `src`. Defaults to `''`, which marks the photo decorative — the
+   * right call when the person's name is already next to it. Set it when the
+   * avatar stands alone.
+   */
   alt?: string;
   /**
    * Background color for initial/placeholder mode.
@@ -133,6 +140,11 @@ function AvatarPlaceholder() {
 
 // ─── Avatar ───────────────────────────────────────────────────────────────────
 
+/**
+ * A person or entity as a round photo, initials, or a silhouette — in that order
+ * of preference, so it degrades on its own when `src` is missing or fails to
+ * load. Pass the display name as children and only the first letter is rendered.
+ */
 export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
   (
     {
@@ -197,6 +209,11 @@ Avatar.displayName = 'Avatar';
 
 // ─── AvatarGroup ──────────────────────────────────────────────────────────────
 
+/**
+ * Overlaps its `Avatar` children into a stack and closes it with an optional
+ * "+N" badge. It only lays them out — pass the same `size` here as on the
+ * children, since the badge has no way to read theirs.
+ */
 export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
   ({ count, size = 'md', className, children, ...rest }, ref) => (
     <div

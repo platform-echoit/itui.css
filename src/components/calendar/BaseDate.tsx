@@ -58,16 +58,24 @@ export type BaseDateState =
 export type BaseDateRangeEdge = 'start' | 'end';
 
 interface BaseDateOwnProps {
+  /**
+   * How the cell reads. `selected` fills the circle, `range` tints the band
+   * between two ends, `primary` marks today, and `error` is the invalid date —
+   * red here means "not allowed", not "today".
+   */
   state?: BaseDateState;
+  /** Which end of a range the cell sits on — draws the half band that joins it to the band. */
   rangeEdge?: BaseDateRangeEdge;
   /** `true` renders the 4px dot from the design; a node renders your own marker row. */
   marker?: boolean | ReactNode;
 }
 
+/** Props of `BaseDate` — the non-interactive cell. */
 export interface BaseDateProps
   extends HTMLAttributes<HTMLSpanElement>,
     BaseDateOwnProps {}
 
+/** Props of `BaseDateButton` — the same cell as a `<button>`. */
 export interface BaseDateButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     BaseDateOwnProps {}

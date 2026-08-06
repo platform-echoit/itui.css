@@ -183,9 +183,18 @@ export interface GridProps extends HTMLAttributes<HTMLDivElement> {
   layout?: GridLayout;
   /** Outer margin (16 / 24 / 32px). Turn off to nest inside an already-padded shell. */
   withMargin?: boolean;
+  /**
+   * Lay out the child instead of a `div`, so an element that already carries
+   * meaning — a `<main>`, a `<ul>`, another component's root — keeps its own tag.
+   */
   asChild?: boolean;
 }
 
+/**
+ * The 12-column ITUI page grid: track count, gutter and outer margin at all
+ * three breakpoints, so a page does not re-derive them. Place children with
+ * `GridItem`, which speaks in columns rather than in widths.
+ */
 const Grid = forwardRef<HTMLDivElement, GridProps>(
   (
     {
@@ -235,9 +244,18 @@ export interface GridItemProps extends HTMLAttributes<HTMLDivElement> {
    * it has the advantage of snapping to the real track instead of approximating it.
    */
   offset?: Responsive<GridOffset>;
+  /**
+   * Span the child instead of a `div`, so an element that already carries
+   * meaning — a `<section>`, a `<li>`, another component's root — keeps its tag.
+   */
   asChild?: boolean;
 }
 
+/**
+ * One cell of a `Grid`, sized in columns rather than in widths. Both `size` and
+ * `offset` take either a single value for every breakpoint or one value per
+ * breakpoint, so a responsive cell stays a single prop.
+ */
 const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
   ({ className, size, offset, asChild = false, ...props }, ref) => {
     const Component = asChild ? Slot : 'div';

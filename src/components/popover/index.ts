@@ -12,6 +12,7 @@ export {
   PopoverContent,
 } from './Popover';
 export type {
+  PopoverProps,
   PopoverAnchorProps,
   PopoverPlacement,
   PopoverContentProps,

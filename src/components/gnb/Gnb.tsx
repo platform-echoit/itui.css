@@ -64,6 +64,11 @@ export interface GnbProps
   actions?: ReactNode;
 }
 
+/**
+ * The desktop global navigation bar — a 72px `<header>` with a logo, a menu, an
+ * optional search field and a trailing action cluster. It takes those as props
+ * rather than as children, so the four regions cannot drift out of order.
+ */
 export const Gnb = forwardRef<HTMLElement, GnbProps>(
   ({ logo, menu, search, actions, className, ...rest }, ref) => (
     <header
@@ -110,6 +115,7 @@ Gnb.displayName = 'Gnb';
 
 export interface GnbMenuProps extends HTMLAttributes<HTMLElement> {}
 
+/** The primary nav inside a `Gnb` — a `<nav aria-label="Main">` around `GnbMenuItem`s. */
 export const GnbMenu = forwardRef<HTMLElement, GnbMenuProps>(
   ({ className, children, ...rest }, ref) => (
     <nav
@@ -134,6 +140,10 @@ export interface GnbMenuItemProps
   asChild?: boolean;
 }
 
+/**
+ * One top-level nav link. It is a `<button>` by default; pass `asChild` to hand
+ * the styling to a router `<Link>` so the item actually navigates.
+ */
 export const GnbMenuItem = forwardRef<HTMLButtonElement, GnbMenuItemProps>(
   (
     { active = false, asChild = false, className, type = 'button', ...rest },

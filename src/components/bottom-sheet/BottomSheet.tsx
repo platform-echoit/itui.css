@@ -78,23 +78,36 @@ function ensureBottomSheetStyles() {
 ensureBottomSheetStyles();
 
 export interface BottomSheetProps {
+  /** Controlled open state. Pair it with `onOpenChange`, or use `defaultOpen` instead. */
   open?: boolean;
+  /** Open state for the uncontrolled case — the sheet then owns it. */
   defaultOpen?: boolean;
+  /** Fires on every open and close, including Esc, backdrop tap and drag-to-dismiss. */
   onOpenChange?: (open: boolean) => void;
+  /** Element that opens the sheet. Omit it when you drive `open` yourself. */
   trigger?: ReactNode;
+  /**
+   * How tall the panel may grow: `full` is a fixed 90dvh, while `tall` and
+   * `regular` hug their content up to 90dvh / 75dvh and scroll past it.
+   */
   size?: BottomSheetSize;
+  /** Heading text. It is also the sheet's accessible name, so leaving it out costs one. */
   title?: ReactNode;
   /** Show the drag handle affordance at the top. @default true */
   showHandle?: boolean;
+  /** Body of the sheet. It scrolls on its own once the panel hits its size cap. */
   children?: ReactNode;
   /** Replace the default footer entirely. */
   footer?: ReactNode;
   /** Convenience footer: primary button. */
   primaryText?: ReactNode;
+  /** Runs on the primary button. It does not close the sheet — do that yourself. */
   onPrimary?: () => void;
   /** Convenience footer: secondary (cancel) button — its presence makes it a two-button footer. */
   secondaryText?: ReactNode;
+  /** Runs on the secondary button. It does not close the sheet — do that yourself. */
   onSecondary?: () => void;
+  /** Lands on the sliding panel, not on the scrim. */
   className?: string;
   /**
    * Forwarded to the underlying Radix Dialog.Content. Call `event.preventDefault()`
@@ -104,6 +117,12 @@ export interface BottomSheetProps {
   onCloseAutoFocus?: (event: Event) => void;
 }
 
+/**
+ * The mobile sheet that slides up from the bottom edge. Same family as `Dialog`
+ * / `Modal` / `Popup`, but a distinct design rather than a newer version.
+ *
+ * @see https://github.com/platform-echoit/itui.css#picking-between-similar-names
+ */
 export function BottomSheet({
   open,
   defaultOpen,

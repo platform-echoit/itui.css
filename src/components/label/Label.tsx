@@ -27,8 +27,11 @@ export type LabelSize = 'sm' | 'md';
 export type LabelTone = 'solid' | 'tint' | 'line';
 
 export interface LabelProps extends HTMLAttributes<HTMLDivElement> {
+  /** Height: 32px or 24px. */
   size?: LabelSize;
+  /** Filled brand, tinted, or outlined. */
   tone?: LabelTone;
+  /** The label's text. */
   children: ReactNode;
 }
 
@@ -43,6 +46,11 @@ const toneConfig: Record<LabelTone, string> = {
   line: 'bg-inverse border border-brand text-brand',
 };
 
+/**
+ * The brand-coloured marker from the Figma "Label" board — a `div`, not an HTML
+ * `<label>`, so it names nothing and takes no `htmlFor`. To caption a form
+ * field, use the field's own `label` prop instead.
+ */
 export const Label = forwardRef<HTMLDivElement, LabelProps>(
   ({ size = 'md', tone = 'solid', className, children, ...rest }, ref) => (
     <div

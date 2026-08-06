@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from 'react';
 import * as RadixAccordion from '@radix-ui/react-accordion';
+import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
 import { cn } from '../../lib/utils';
 
 /*
@@ -66,9 +67,21 @@ const triggerColorMap: Record<AccordionVariant, string> = {
 export type AccordionProps = ComponentPropsWithoutRef<
   typeof RadixAccordion.Root
 > & {
+  /**
+   * Which of the four Figma looks the items wear. It is set once on the root and
+   * read from context, so it can never disagree between two items of one
+   * accordion — `line` is the borderless list variant, `outline` the emphasised
+   * one that also tints the title.
+   */
   variant?: AccordionVariant;
 };
 
+/**
+ * A list of headers that expand to reveal their content. Radix owns the state,
+ * so `type="single"` (one section at a time, add `collapsible` to allow none)
+ * or `type="multiple"` is required, and the sections themselves are
+ * `AccordionItem` + `AccordionTrigger` + `AccordionContent`.
+ */
 export const Accordion = forwardRef<
   ComponentRef<typeof RadixAccordion.Root>,
   AccordionProps
@@ -88,6 +101,10 @@ Accordion.displayName = 'Accordion';
 export interface AccordionItemProps
   extends ComponentPropsWithoutRef<typeof RadixAccordion.Item> {}
 
+/**
+ * One expandable section. Its `value` is what `Accordion` opens and closes by,
+ * so it has to be unique within the accordion.
+ */
 export const AccordionItem = forwardRef<
   ComponentRef<typeof RadixAccordion.Item>,
   AccordionItemProps
@@ -105,32 +122,16 @@ AccordionItem.displayName = 'AccordionItem';
 
 // ─── AccordionTrigger ───────────────────────────────────────────────────────
 
-function ChevronIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d="M4 6L8 10L12 6"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export interface AccordionTriggerProps
   extends ComponentPropsWithoutRef<typeof RadixAccordion.Trigger> {
   /** Optional leading icon (20px). */
   icon?: ReactNode;
 }
 
+/**
+ * The clickable header of an `AccordionItem`. It renders its own caret and the
+ * `<h3>` wrapper Radix expects, so pass only the title text as children.
+ */
 export const AccordionTrigger = forwardRef<
   ComponentRef<typeof RadixAccordion.Trigger>,
   AccordionTriggerProps
@@ -162,10 +163,12 @@ export const AccordionTrigger = forwardRef<
           )}
           <span className="truncate">{children}</span>
         </span>
-        <ChevronIcon
+        <CaretDownRegularIcon
+          aria-hidden="true"
           className={cn(
             'size-4 shrink-0 transition-transform duration-200 ease-out',
             'group-data-[state=open]:rotate-180 motion-reduce:transition-none',
+            '[&_path]:fill-current',
           )}
         />
       </RadixAccordion.Trigger>
@@ -179,6 +182,11 @@ AccordionTrigger.displayName = 'AccordionTrigger';
 export interface AccordionContentProps
   extends ComponentPropsWithoutRef<typeof RadixAccordion.Content> {}
 
+/**
+ * The body an `AccordionItem` reveals. `className` lands on the inner padded
+ * div, not on the animated wrapper, so styling it cannot break the open/close
+ * height animation.
+ */
 export const AccordionContent = forwardRef<
   ComponentRef<typeof RadixAccordion.Content>,
   AccordionContentProps

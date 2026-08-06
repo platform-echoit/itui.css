@@ -22,6 +22,13 @@ import { cn } from '../../lib/utils';
   ─────────────────────────────────────────────────────────────────────────────
 */
 
+/*
+  V1 of the mobile bars. `NavigationV2` implements the same two bars with richer
+  top-bar slots and `asChild` support, and is the one the README points at — so
+  every export here carries `@deprecated`. Nothing is removed: existing screens
+  keep compiling, they just get told where the current version lives.
+*/
+
 // ─── TopNavigation (app bar) ──────────────────────────────────────────────────
 
 export interface TopNavigationProps
@@ -34,6 +41,12 @@ export interface TopNavigationProps
   right?: ReactNode;
 }
 
+/**
+ * The mobile app bar: a 56px header with a leading slot, a centred title and a
+ * trailing slot.
+ *
+ * @deprecated Use `TopNavigationV2` — same bar, plus `asChild` on the slots.
+ */
 export const TopNavigation = forwardRef<HTMLElement, TopNavigationProps>(
   ({ left, title, right, className, ...rest }, ref) => (
     <header
@@ -62,6 +75,12 @@ TopNavigation.displayName = 'TopNavigation';
 
 export interface BottomNavigationProps extends HTMLAttributes<HTMLElement> {}
 
+/**
+ * The mobile tab bar pinned to the bottom edge, holding `BottomNavigationItem`s
+ * that share the width evenly.
+ *
+ * @deprecated Use `BottomNavigationV2`.
+ */
 export const BottomNavigation = forwardRef<HTMLElement, BottomNavigationProps>(
   ({ className, children, ...rest }, ref) => (
     <nav
@@ -82,11 +101,20 @@ BottomNavigation.displayName = 'BottomNavigation';
 
 export interface BottomNavigationItemProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** 20px glyph above the label. */
   icon?: ReactNode;
+  /** Caption under the icon. Truncates rather than wrapping. */
   label?: ReactNode;
+  /** Marks the current tab — paints it brand and sets `aria-current="page"`. */
   active?: boolean;
 }
 
+/**
+ * One tab of a `BottomNavigation` — icon over label, brand-coloured while
+ * `active`.
+ *
+ * @deprecated Use `BottomNavigationItemV2`.
+ */
 export const BottomNavigationItem = forwardRef<
   HTMLButtonElement,
   BottomNavigationItemProps

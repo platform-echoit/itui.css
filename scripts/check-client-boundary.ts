@@ -8,7 +8,7 @@
  *   instead of a consumer's `next build`. Grep cannot replace it: a comment
  *   mentioning `useContext` and an `import { type X }` both read as usage.
  *
- * Two rules, both derived from facts rather than a hand-kept list:
+ * Three rules, all derived from facts rather than a hand-kept list:
  *
  *   R1  The module uses a React API that does not exist under the
  *       `react-server` condition. React ships only 21 exports there, so
@@ -21,16 +21,24 @@
  *       a dep upgrade that adds the directive relaxes the rule by itself, and
  *       dropping the `radix-ui` umbrella (I-11) makes those reports disappear.
  *
- * Known gap: passing a locally-defined handler into a client primitive (the
- * `dialog.tsx` case) is not detectable this way. The Next.js fixture in CI
- * covers it.
+ *   R3  The module hands a function it created to an `on*` prop that always
+ *       renders. R1 and R2 both looked at *imports*, so `Tag` — `forwardRef`
+ *       plus one bare `onKeyDown={handleKeyDown}`, no client dep — passed both
+ *       while failing every consumer's `next build` with "Event handlers cannot
+ *       be passed to Client Component props" (I-15). See `handlerSites` for
+ *       which guards exempt a site and why only those.
  *
- * Usage:  tsx scripts/check-client-boundary.ts
+ * R3 covers the module's own JSX. It cannot see a handler that only reaches the
+ * DOM at render time through a *dependency's* component, so the Next.js fixture
+ * in CI stays the integration half of this pair — see fixtures/next-app/README.md.
+ *
+ * Usage:  tsx scripts/check-client-boundary.ts [--self-test]
  */
 
 import { existsSync, readFileSync, readdirSync } from 'fs';
 import { createRequire } from 'module';
 import { dirname, join, resolve, sep } from 'path';
+import ts from 'typescript';
 
 const root = resolve(process.cwd());
 const require_ = createRequire(import.meta.url);
@@ -246,6 +254,257 @@ function depSelfDeclares(spec: string): boolean {
   return result;
 }
 
+// ── R3: handlers this module creates and always renders ──────────────────────
+
+/**
+ * Props a Server Component cannot supply, because a function is exactly what it
+ * may not pass. That makes them the one honest exemption for R3: a site whose
+ * handler only exists when `onClick` was given is unreachable from the server.
+ */
+const HANDLER_PROP = /^on[A-Z]/;
+
+/** `on*` props of the module's own JSX — where a function would cross over. */
+const HANDLER_ATTR = HANDLER_PROP;
+
+/** Names bound to a function here: `const handleKeyDown = (e) => …`. */
+function localFunctions(source: ts.SourceFile): Set<string> {
+  const names = new Set<string>();
+
+  const visit = (node: ts.Node) => {
+    if (ts.isFunctionDeclaration(node) && node.name) names.add(node.name.text);
+    if (
+      ts.isVariableDeclaration(node) &&
+      ts.isIdentifier(node.name) &&
+      node.initializer &&
+      isFunctionExpression(node.initializer)
+    ) {
+      names.add(node.name.text);
+    }
+    ts.forEachChild(node, visit);
+  };
+
+  visit(source);
+  return names;
+}
+
+/** `useCallback(fn, deps)` is still a function — and legal under react-server. */
+function isFunctionExpression(node: ts.Expression): boolean {
+  if (ts.isArrowFunction(node) || ts.isFunctionExpression(node)) return true;
+  return (
+    ts.isCallExpression(node) &&
+    ts.isIdentifier(node.expression) &&
+    node.expression.text === 'useCallback'
+  );
+}
+
+/**
+ * Names whose value depends on a handler prop — the prop itself plus anything
+ * computed from it (`const isInteractive = !!onClick && !disabled`). Iterated to
+ * a fixpoint so a chain of locals still resolves back to the prop.
+ */
+function handlerDerivedNames(source: ts.SourceFile): Set<string> {
+  const derived = new Set<string>();
+  const locals: Array<{ name: string; initializer: ts.Expression }> = [];
+
+  const visit = (node: ts.Node) => {
+    if (ts.isParameter(node) && ts.isObjectBindingPattern(node.name)) {
+      for (const element of node.name.elements) {
+        const declared = element.propertyName ?? element.name;
+        if (!ts.isIdentifier(declared) || !HANDLER_PROP.test(declared.text))
+          continue;
+        if (ts.isIdentifier(element.name)) derived.add(element.name.text);
+      }
+    }
+    if (
+      ts.isVariableDeclaration(node) &&
+      ts.isIdentifier(node.name) &&
+      node.initializer
+    ) {
+      locals.push({ name: node.name.text, initializer: node.initializer });
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+
+  for (let grew = true; grew; ) {
+    grew = false;
+    for (const { name, initializer } of locals) {
+      if (derived.has(name)) continue;
+      if (referencesAny(initializer, derived)) {
+        derived.add(name);
+        grew = true;
+      }
+    }
+  }
+
+  return derived;
+}
+
+function referencesAny(node: ts.Node, names: Set<string>): boolean {
+  if (ts.isIdentifier(node) && names.has(node.text)) return true;
+  return ts.forEachChild(node, (child) => referencesAny(child, names)) ?? false;
+}
+
+/**
+ * The function value an `on*` prop renders, or `undefined` when every path to
+ * one is decided by a handler prop.
+ *
+ * `&&` and `?:` are read as guards, `??` and `||` deliberately are not: their
+ * right-hand side renders precisely when the left is missing, which on the
+ * server is always.
+ */
+function unguardedFunction(
+  expr: ts.Expression,
+  fns: Set<string>,
+  derived: Set<string>,
+): ts.Expression | undefined {
+  if (ts.isParenthesizedExpression(expr))
+    return unguardedFunction(expr.expression, fns, derived);
+
+  if (ts.isConditionalExpression(expr)) {
+    if (referencesAny(expr.condition, derived)) return undefined;
+    return (
+      unguardedFunction(expr.whenTrue, fns, derived) ??
+      unguardedFunction(expr.whenFalse, fns, derived)
+    );
+  }
+
+  if (ts.isBinaryExpression(expr)) {
+    const guarding =
+      expr.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken;
+    if (guarding && referencesAny(expr.left, derived)) return undefined;
+    return (
+      unguardedFunction(expr.left, fns, derived) ??
+      unguardedFunction(expr.right, fns, derived)
+    );
+  }
+
+  if (ts.isArrowFunction(expr) || ts.isFunctionExpression(expr)) return expr;
+  if (ts.isIdentifier(expr) && fns.has(expr.text)) return expr;
+
+  // A bare prop forward (`onClick={onClick}`) is the consumer's function, not
+  // ours: whoever passed it already had to be a Client Component.
+  return undefined;
+}
+
+/** Tests that stand between a node and the rendered output. */
+function guardedByHandler(node: ts.Node, derived: Set<string>): boolean {
+  for (let n: ts.Node = node; n.parent; n = n.parent) {
+    const parent = n.parent;
+    if (ts.isConditionalExpression(parent) && parent.condition !== n) {
+      if (referencesAny(parent.condition, derived)) return true;
+    } else if (
+      ts.isBinaryExpression(parent) &&
+      parent.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken &&
+      parent.right === n
+    ) {
+      if (referencesAny(parent.left, derived)) return true;
+    }
+  }
+  return false;
+}
+
+type HandlerSite = { line: number; prop: string };
+
+/** Every `on*` prop in this module that renders a function unconditionally. */
+function handlerSites(file: string, text: string): HandlerSite[] {
+  const source = ts.createSourceFile(
+    file,
+    text,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TSX,
+  );
+  const fns = localFunctions(source);
+  const derived = handlerDerivedNames(source);
+  const sites: HandlerSite[] = [];
+
+  const visit = (node: ts.Node) => {
+    if (
+      ts.isJsxAttribute(node) &&
+      ts.isIdentifier(node.name) &&
+      HANDLER_ATTR.test(node.name.text) &&
+      node.initializer &&
+      ts.isJsxExpression(node.initializer) &&
+      node.initializer.expression &&
+      unguardedFunction(node.initializer.expression, fns, derived) &&
+      !guardedByHandler(node, derived)
+    ) {
+      const { line } = source.getLineAndCharacterOfPosition(node.getStart());
+      sites.push({ line: line + 1, prop: node.name.text });
+    }
+    ts.forEachChild(node, visit);
+  };
+
+  visit(source);
+  return sites;
+}
+
+// ── Self-test ────────────────────────────────────────────────────────────────
+
+/**
+ * R3 has no positive case left in `src/` once its findings are fixed, so the
+ * rule would rot unnoticed. These cases keep it honest — same reason
+ * `check:classes` carries one.
+ */
+function selfTest(): number {
+  const cases: Array<[string, string, number]> = [
+    [
+      'bare local handler → flagged (the I-15 shape)',
+      'const C = () => { const h = () => {}; return <div onKeyDown={h} />; };',
+      1,
+    ],
+    [
+      'inline arrow → flagged',
+      'const C = ({ page }) => <button onClick={() => go(page)}>x</button>;',
+      1,
+    ],
+    [
+      'gated on a handler prop → clean, the server never has one',
+      'const C = ({ onClick }) => { const on = !!onClick; const h = () => {}; return <div onKeyDown={on ? h : undefined} />; };',
+      0,
+    ],
+    [
+      'rendered only when a handler prop exists → clean',
+      'const C = ({ onClose }) => { const h = () => {}; return <div>{onClose && <button onClick={h} />}</div>; };',
+      0,
+    ],
+    [
+      'gated on a plain prop → still flagged, that guard is true on the server',
+      'const C = ({ showEdges }) => { const h = () => {}; return <div>{showEdges && <button onClick={h} />}</div>; };',
+      1,
+    ],
+    [
+      'bare prop forward → clean, the function is the consumer’s',
+      'const C = ({ onClick }) => <button onClick={onClick}>x</button>;',
+      0,
+    ],
+    [
+      '?? fallback → flagged, the right side is what the server renders',
+      'const C = ({ onClick }) => { const h = () => {}; return <button onClick={onClick ?? h} />; };',
+      1,
+    ],
+  ];
+
+  let failed = 0;
+  console.log('self-test (R3)');
+  for (const [name, code, expected] of cases) {
+    const got = handlerSites('self-test.tsx', code).length;
+    const ok = got === expected;
+    if (!ok) failed++;
+    console.log(
+      `  ${ok ? 'PASS' : 'FAIL'}  ${name}` +
+        `${ok ? '' : ` (expected ${expected}, got ${got})`}`,
+    );
+  }
+  console.log('');
+  return failed;
+}
+
+if (process.argv.includes('--self-test')) {
+  process.exit(selfTest() === 0 ? 0 : 1);
+}
+
 // ── Report ───────────────────────────────────────────────────────────────────
 
 type Violation = { file: string; reasons: string[] };
@@ -280,6 +539,19 @@ for (const file of collectSources(join(root, 'src'))) {
     );
   }
 
+  // Only .tsx can hold the JSX R3 reads, and parsing every .ts as TSX would
+  // mis-read its generics.
+  if (file.endsWith('.tsx')) {
+    const sites = handlerSites(file, source);
+    if (sites.length) {
+      reasons.push(
+        `handler rendered unconditionally: ${sites
+          .map((s) => `${s.prop} (line ${s.line})`)
+          .join(', ')}`,
+      );
+    }
+  }
+
   if (reasons.length) {
     violations.push({
       file: file
@@ -304,6 +576,11 @@ for (const { file, reasons } of violations) {
 console.error(
   '\nAdd "use client" at the top of each file, or remove the client-only API.\n' +
     'Reports naming the `radix-ui` umbrella also clear by switching to the\n' +
-    'individual @radix-ui/react-* package, which ships its own directive (I-11).\n',
+    'individual @radix-ui/react-* package, which ships its own directive (I-11).\n' +
+    '\nA "handler rendered unconditionally" report has a second fix worth\n' +
+    'preferring: gate the handler on the prop that makes the component\n' +
+    'interactive (`onKeyDown={isInteractive ? handleKeyDown : undefined}`).\n' +
+    'A directive would work too, but it also makes the decorative case — a\n' +
+    '<Tag> with no onClick — client-only for nothing (I-15).\n',
 );
 process.exit(1);

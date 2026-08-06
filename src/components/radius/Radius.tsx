@@ -90,11 +90,17 @@ export const radiusClass: Record<RadiusScale, string> = {
 
 // ─── Radius ───────────────────────────────────────────────────────────────────
 
-/*
-  Defaults to `md` rather than Figma's first variant (`XS`, 4px), which is too
-  subtle to read as a deliberate corner on anything but a small control. Same
-  kind of call TabList makes with its `w-full` default.
-*/
+/**
+ * Applies one step of the ITUI corner scale. This is a token primitive, not a
+ * surface: it paints a `rounded-*` class and nothing else, so give it a
+ * background of its own — or pass `asChild` to round an element that already
+ * has one. Use it when a corner has to come from the scale rather than from a
+ * literal `rounded-[10px]`; `RADIUS_PX` gives the same steps as numbers.
+ *
+ * Defaults to `md` rather than Figma's first variant (`XS`, 4px), which is too
+ * subtle to read as a deliberate corner on anything but a small control. Same
+ * kind of call TabList makes with its `w-full` default.
+ */
 const Radius = forwardRef<HTMLDivElement, RadiusProps>(
   ({ className, radius = 'md', asChild = false, ...props }, ref) => {
     const Component = asChild ? Slot : 'div';

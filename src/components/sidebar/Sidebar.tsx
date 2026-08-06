@@ -61,14 +61,17 @@ import { cn } from '../../lib/utils';
 export interface SidebarProps extends HTMLAttributes<HTMLElement> {
   /** Collapse to icon-only rail (52 px). Default: false → 264 px expanded. */
   collapsed?: boolean;
+  /** The rail's contents — typically a `SidebarHeader` and a `SidebarFooter`. */
   children?: ReactNode;
 }
 
 export interface SidebarHeaderProps extends HTMLAttributes<HTMLDivElement> {
+  /** Logo and menus. */
   children?: ReactNode;
 }
 
 export interface SidebarMenuProps extends HTMLAttributes<HTMLUListElement> {
+  /** `SidebarItem` rows and `SidebarGroup`s. */
   children?: ReactNode;
 }
 
@@ -82,15 +85,23 @@ export interface SidebarItemProps
   indented?: boolean;
   /** Tooltip text shown to the right of the item when the sidebar is collapsed. Falls back to children if omitted and children is a string. */
   label?: string;
+  /** The row's text. */
   children?: ReactNode;
 }
 
 export interface SidebarFooterProps extends HTMLAttributes<HTMLDivElement> {
+  /** Pinned bottom content — settings, the signed-in user. */
   children?: ReactNode;
 }
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
 
+/**
+ * The navigation rail, in a form that renders from a Server Component: it takes
+ * no hooks at all, publishing `collapsed` as a data attribute that the parts
+ * below read through CSS. `Lnb` is the richer rail — reach for this one when the
+ * layout must stay server-rendered.
+ */
 export const Sidebar = forwardRef<HTMLElement, SidebarProps>(
   ({ collapsed = false, className, children, ...rest }, ref) => (
     <nav
@@ -113,6 +124,7 @@ Sidebar.displayName = 'Sidebar';
 
 // ─── SidebarHeader ────────────────────────────────────────────────────────────
 
+/** The top region of the rail — logo and menus. */
 export const SidebarHeader = forwardRef<HTMLDivElement, SidebarHeaderProps>(
   ({ className, children, ...rest }, ref) => (
     <div
@@ -132,6 +144,7 @@ SidebarHeader.displayName = 'SidebarHeader';
 
 // ─── SidebarMenu ──────────────────────────────────────────────────────────────
 
+/** A `<ul>` of `SidebarItem` rows. Use one per section of the rail. */
 export const SidebarMenu = forwardRef<HTMLUListElement, SidebarMenuProps>(
   ({ className, children, ...rest }, ref) => (
     <ul
@@ -151,6 +164,10 @@ SidebarMenu.displayName = 'SidebarMenu';
 
 // ─── SidebarItem ──────────────────────────────────────────────────────────────
 
+/**
+ * One navigation row. On the collapsed rail only the icon shows, with `label`
+ * as its tooltip — so an item without an `icon` disappears there.
+ */
 export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
   (
     {
@@ -224,6 +241,7 @@ SidebarItem.displayName = 'SidebarItem';
 
 // ─── SidebarFooter ────────────────────────────────────────────────────────────
 
+/** The pinned bottom region of the rail. */
 export const SidebarFooter = forwardRef<HTMLDivElement, SidebarFooterProps>(
   ({ className, children, ...rest }, ref) => (
     <div

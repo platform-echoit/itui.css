@@ -35,16 +35,27 @@ export type DateFooterAlignment = 'right' | 'center';
 
 export interface DateFooterProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+  /** Which of the two layouts to draw. @default 'center' */
   alignment?: DateFooterAlignment;
+  /** Label of the primary button. No label, no button — there is no default wording. */
   confirmText?: ReactNode;
+  /** Label of the secondary button. Leaving it out makes this a one-button footer. */
   cancelText?: ReactNode;
+  /** Runs on the primary button. */
   onConfirm?: () => void;
+  /** Runs on the secondary button. */
   onCancel?: () => void;
+  /** Greys out the primary button — for "nothing picked yet". */
   confirmDisabled?: boolean;
   /** Left slot of the `right` alignment — the design puts the range summary here. */
   children?: ReactNode;
 }
 
+/**
+ * The confirm/cancel row under a date picker. Both buttons are opt-in: each one
+ * appears only when its label is passed, which keeps the wording — and the
+ * locale — with the caller.
+ */
 export const DateFooter = forwardRef<HTMLDivElement, DateFooterProps>(
   (
     {

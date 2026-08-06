@@ -12,7 +12,7 @@ import { cn } from '../../lib/utils';
 import { Avatar } from '../avatar/Avatar';
 import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
 import { SidebarSimpleRegularIcon } from '../../icons/ITUI/sidebar-simple';
-import { UserFillIcon } from '../../icons/ITUI/user';
+import { UserRegularIcon } from '../../icons/ITUI/user';
 
 /*
   Token → Tailwind map (Figma node 28392:397 "LNB")
@@ -130,6 +130,12 @@ export interface LnbProps extends HTMLAttributes<HTMLElement> {
   collapsed?: boolean;
 }
 
+/**
+ * The left navigation rail: a full-height `<nav>` that toggles between a 264px
+ * expanded state and a 52px icon-only one. `collapsed` is yours to control — the
+ * rail publishes it to every part below through a data attribute, so labels,
+ * carets and sub-menus all follow it without props of their own.
+ */
 export const Lnb = forwardRef<HTMLElement, LnbProps>(
   ({ collapsed = false, className, children, ...rest }, ref) => (
     <nav
@@ -154,6 +160,10 @@ Lnb.displayName = 'Lnb';
 
 export interface LnbHeaderProps extends HTMLAttributes<HTMLDivElement> {}
 
+/**
+ * The scrolling top region of the rail — logo and menus. It takes the leftover
+ * height, which is what keeps `LnbFooter` pinned when the menu grows long.
+ */
 export const LnbHeader = forwardRef<HTMLDivElement, LnbHeaderProps>(
   ({ className, children, ...rest }, ref) => (
     <div
@@ -184,6 +194,11 @@ export interface LnbLogoProps extends HTMLAttributes<HTMLDivElement> {
   action?: ReactNode;
 }
 
+/**
+ * The brand row at the top of the rail. Give it an `action` (usually an
+ * `LnbToggle`) and, on the collapsed rail, that control takes the logo's place
+ * on hover or focus rather than sitting beside it.
+ */
 export const LnbLogo = forwardRef<HTMLDivElement, LnbLogoProps>(
   ({ action, className, children, ...rest }, ref) => (
     <div
@@ -234,6 +249,10 @@ export interface LnbToggleProps
   icon?: ReactNode;
 }
 
+/**
+ * The collapse/expand button. It only reports the intent — flipping `Lnb`'s
+ * `collapsed` is still yours to do.
+ */
 export const LnbToggle = forwardRef<HTMLButtonElement, LnbToggleProps>(
   (
     { icon, className, type = 'button', 'aria-label': ariaLabel, ...rest },
@@ -263,6 +282,7 @@ LnbToggle.displayName = 'LnbToggle';
 
 export interface LnbMenuProps extends HTMLAttributes<HTMLUListElement> {}
 
+/** A `<ul>` of `LnbItem` rows and `LnbGroup`s. Use one per section of the rail. */
 export const LnbMenu = forwardRef<HTMLUListElement, LnbMenuProps>(
   ({ className, children, ...rest }, ref) => (
     <ul
@@ -295,6 +315,11 @@ export interface LnbItemProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
 }
 
+/**
+ * One navigation row. On the collapsed rail the label is visually hidden but
+ * stays the accessible name, so an icon-only row is still announced. It is a
+ * `<button>` by default — pass `asChild` to make it a router link.
+ */
 export const LnbItem = forwardRef<HTMLButtonElement, LnbItemProps>(
   (
     {
@@ -354,6 +379,10 @@ LnbItem.displayName = 'LnbItem';
 export interface LnbGroupProps
   extends ComponentPropsWithoutRef<typeof CollapsiblePrimitive.Root> {}
 
+/**
+ * A collapsible section of the menu: put an `LnbGroupTrigger` and an
+ * `LnbGroupContent` inside it. It renders as the `<li>` that `LnbMenu` expects.
+ */
 export const LnbGroup = forwardRef<
   ElementRef<typeof CollapsiblePrimitive.Root>,
   LnbGroupProps
@@ -384,6 +413,10 @@ export interface LnbGroupTriggerProps
   label?: ReactNode;
 }
 
+/**
+ * The row that opens an `LnbGroup`. It draws its own caret and keeps the
+ * selected fill while the group is open.
+ */
 export const LnbGroupTrigger = forwardRef<
   ElementRef<typeof CollapsiblePrimitive.Trigger>,
   LnbGroupTriggerProps
@@ -430,6 +463,10 @@ LnbGroupTrigger.displayName = 'LnbGroupTrigger';
 export interface LnbGroupContentProps
   extends ComponentPropsWithoutRef<typeof CollapsiblePrimitive.Content> {}
 
+/**
+ * The sub-items an `LnbGroup` reveals — pass `LnbItem`s with `indented`. It is
+ * hidden entirely on the collapsed rail, which has no room for them.
+ */
 export const LnbGroupContent = forwardRef<
   ElementRef<typeof CollapsiblePrimitive.Content>,
   LnbGroupContentProps
@@ -456,6 +493,7 @@ LnbGroupContent.displayName = 'LnbGroupContent';
 
 export interface LnbFooterProps extends HTMLAttributes<HTMLDivElement> {}
 
+/** The pinned bottom region of the rail — settings, the signed-in user. */
 export const LnbFooter = forwardRef<HTMLDivElement, LnbFooterProps>(
   ({ className, children, ...rest }, ref) => (
     <div
@@ -490,7 +528,7 @@ const LnbUserAvatar = () => (
     className="bg-surface-neutral-subtle text-neutral-subtle"
     aria-hidden="true"
   >
-    <UserFillIcon className="size-4 [&_path]:fill-current" />
+    <UserRegularIcon className="size-4 [&_path]:fill-current" />
   </Avatar>
 );
 
@@ -510,6 +548,10 @@ export interface LnbUserProps
   asChild?: boolean;
 }
 
+/**
+ * The signed-in user row at the foot of the rail: avatar, name and email. Pass
+ * `asChild` to make it the trigger of a menu rather than a plain button.
+ */
 export const LnbUser = forwardRef<HTMLButtonElement, LnbUserProps>(
   (
     {

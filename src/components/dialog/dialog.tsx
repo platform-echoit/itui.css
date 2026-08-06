@@ -5,30 +5,54 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { cn } from '../../lib/utils';
 import XRegularIcon from '../../icons/ITUI/x/XRegularIcon';
 
+/**
+ * The primitive you compose freely — `Modal`, `Popup` and `BottomSheet` are
+ * ready-made shapes built on it. Four different designs, not four versions of
+ * one, so none of them is deprecated.
+ *
+ * @see https://github.com/platform-echoit/itui.css#picking-between-similar-names
+ */
 function Dialog({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />;
 }
 
+/**
+ * The element that opens the dialog. Pass `asChild` to keep your own button
+ * rather than nesting one inside Radix's.
+ */
 function DialogTrigger({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
   return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />;
 }
 
+/**
+ * Renders the dialog into `document.body`. `DialogContent` already portals
+ * itself, so reach for this only when you are assembling the parts by hand.
+ */
 function DialogPortal({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Portal>) {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />;
 }
 
+/**
+ * Closes the dialog from anywhere inside it. Wrap your own button with `asChild`
+ * — the built-in ✕ in the header is separate and controlled by
+ * `DialogContent`'s `showCloseButton`.
+ */
 function DialogClose({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Close>) {
   return <DialogPrimitive.Close data-slot="dialog-close" {...props} />;
 }
 
+/**
+ * The blurred scrim behind the dialog. `DialogContent` renders one already, so
+ * this is only for hand-assembled dialogs.
+ */
 function DialogOverlay({
   className,
   ...props
@@ -45,6 +69,12 @@ function DialogOverlay({
   );
 }
 
+/**
+ * The dialog panel, with its portal and scrim included. It splits `children` by
+ * position: the **first** child becomes the fixed header (and gets the ✕), and
+ * everything after it becomes the scrolling body — so the order of your children
+ * is load-bearing, and a header you meant to be a body will end up pinned.
+ */
 function DialogContent({
   className,
   children,
@@ -54,8 +84,11 @@ function DialogContent({
   onOpenAutoFocus,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
+  /** Render the ✕ in the header. Only appears when there is a header child. */
   showCloseButton?: boolean;
+  /** Keeps the header borderless. Set `false` for a ruled header. @default true */
   hideHeaderBorder?: boolean;
+  /** Lands on the scrolling body. `className` goes to the panel itself. */
   contentClassName?: string;
 }) {
   const childArray = React.Children.toArray(children);
@@ -107,6 +140,10 @@ function DialogContent({
   );
 }
 
+/**
+ * Groups `DialogTitle` and `DialogDescription`. Put it first inside
+ * `DialogContent` — that is the position that becomes the pinned header.
+ */
 function DialogHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -117,6 +154,11 @@ function DialogHeader({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/**
+ * The action row: stacked on mobile with the primary button on top, right-aligned
+ * from `sm` up. It cancels the body's padding to sit flush at the bottom, so it
+ * belongs as the last child of the body rather than outside it.
+ */
 function DialogFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -130,6 +172,10 @@ function DialogFooter({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/**
+ * The dialog's heading — and its accessible name. Radix warns at runtime when a
+ * dialog has none, so include one even if you hide it with `sr-only`.
+ */
 function DialogTitle({
   className,
   ...props
@@ -146,6 +192,11 @@ function DialogTitle({
   );
 }
 
+/**
+ * The supporting line under the title, wired to the dialog's
+ * `aria-describedby`. It renders a `div` rather than the usual `<p>`, so rich
+ * content inside it stays valid markup.
+ */
 function DialogDescription({
   className,
   ...props

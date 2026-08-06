@@ -6,6 +6,12 @@ import { Button, ButtonProps } from '../button';
 import { Input, InputProps } from '../input/Input';
 // import { Textarea } from "@/components/ui/textarea";
 
+/**
+ * A single bordered frame around one control and its adornments, so a prefix,
+ * a unit, or a trailing button read as part of the field rather than as
+ * neighbours. It draws the border and the focus ring itself; the
+ * `InputGroupInput` inside it is stripped of both.
+ */
 function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -41,11 +47,20 @@ const inputGroupAddonVariants = cva(
   },
 );
 
+/**
+ * An adornment inside an `InputGroup` — an icon, a unit, a button. Clicking it
+ * focuses the control, so it never reads as dead space; a click on a `<button>`
+ * inside it is left alone.
+ */
 function InputGroupAddon({
   className,
   align = 'inline-start',
   ...props
 }: React.ComponentProps<'div'> & {
+  /**
+   * Where the adornment sits. The `inline-*` values put it beside the control;
+   * the `block-*` values stack it above or below and make the group taller.
+   */
   align?: 'inline-start' | 'inline-end' | 'block-start' | 'block-end' | null;
 }) {
   return (
@@ -65,6 +80,7 @@ function InputGroupAddon({
   );
 }
 
+/** A `Button` presized for an `InputGroupAddon` — same props, smaller defaults. */
 function InputGroupButton({
   className,
   type = 'button',
@@ -83,6 +99,7 @@ function InputGroupButton({
   );
 }
 
+/** Muted text inside an addon — a unit, a prefix, a hint. */
 function InputGroupText({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span
@@ -95,6 +112,10 @@ function InputGroupText({ className, ...props }: React.ComponentProps<'span'>) {
   );
 }
 
+/**
+ * The control of an `InputGroup`: an `Input` with its own border, ring and
+ * background removed so the group's frame is the only one you see.
+ */
 function InputGroupInput({ className, ...props }: InputProps) {
   return (
     <Input

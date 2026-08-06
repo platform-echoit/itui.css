@@ -1,4 +1,6 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { CheckRegularIcon } from '../../icons/ITUI/check';
+import { ImageRegularIcon } from '../../icons/ITUI/image';
 import { cn } from '../../lib/utils';
 
 /*
@@ -20,33 +22,17 @@ const BODY = 'text-sm leading-6 tracking-md';
 const IMAGE_SURFACE =
   'flex items-center justify-center bg-surface-neutral-subtle text-neutral-subtle';
 
+/**
+ * Stand-in artwork for an empty image slot. `[&_path]:fill-current` because
+ * ITUI icons hard-code `fill="#101010"`; `opacity-40` keeps it reading as a
+ * placeholder rather than as content.
+ */
 function ImagePlaceholder({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={cn('opacity-40', className)}
+    <ImageRegularIcon
       aria-hidden="true"
-    >
-      <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M21 15l-5-5L5 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function CheckIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M5 10.5L8.5 14L15 6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+      className={cn('opacity-40 [&_path]:fill-current', className)}
+    />
   );
 }
 
@@ -55,7 +41,9 @@ function CheckIcon({ className }: { className?: string }) {
 export type CardImagePosition = 'top' | 'bottom' | 'center' | 'left';
 
 export interface CardWithImageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+  /** Headline of the card. */
   title: ReactNode;
+  /** Supporting line under the title. Omit it for a title-only card. */
   description?: ReactNode;
   /** Image element (e.g. <img>). Falls back to a placeholder when omitted. */
   image?: ReactNode;
@@ -63,6 +51,12 @@ export interface CardWithImageProps extends Omit<HTMLAttributes<HTMLDivElement>,
   imagePosition?: CardImagePosition;
 }
 
+/**
+ * Ready-made card: an image slot plus a title and description, in the four
+ * arrangements the Figma template ships. Reach for the `Card` primitives instead
+ * when you need a layout this does not cover — these templates take content, not
+ * children.
+ */
 export const CardWithImage = forwardRef<HTMLDivElement, CardWithImageProps>(
   ({ title, description, image, imagePosition = 'top', className, ...rest }, ref) => {
     const isLeft = imagePosition === 'left';
@@ -120,7 +114,9 @@ CardWithImage.displayName = 'CardWithImage';
 export type CardActionTone = 'light' | 'dark';
 
 export interface CardWithActionProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+  /** Headline of the card. */
   title: ReactNode;
+  /** Supporting line under the title. */
   description?: ReactNode;
   /** Footer actions (e.g. Buttons). Rendered in a bordered footer, stretched equally. */
   actions?: ReactNode;
@@ -133,6 +129,11 @@ export interface CardWithActionProps extends Omit<HTMLAttributes<HTMLDivElement>
   image?: ReactNode;
 }
 
+/**
+ * Ready-made card: title, description and a footer of actions stretched to equal
+ * widths. The `dark` tone lays the same card over an image behind a scrim, which
+ * is why it drops the border and the footer divider.
+ */
 export const CardWithAction = forwardRef<HTMLDivElement, CardWithActionProps>(
   ({ title, description, actions, tone = 'light', image, className, ...rest }, ref) => {
     const isDark = tone === 'dark';
@@ -181,7 +182,9 @@ CardWithAction.displayName = 'CardWithAction';
 
 // ─── PricingCard ────────────────────────────────────────────────────────────
 
+/** One line of a `PricingCard`'s feature list. */
 export interface PricingFeature {
+  /** What the plan includes, e.g. `"Unlimited members"`. */
   label: ReactNode;
   /** false → shown muted with a disabled check (feature not included). @default true */
   included?: boolean;
@@ -190,11 +193,19 @@ export interface PricingFeature {
 export interface PricingCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   /** Optional highlight badge, e.g. "Most Popular". */
   badge?: ReactNode;
+  /** Plan name. */
   title: ReactNode;
+  /** Price, already formatted — the card does no currency work. */
   price: ReactNode;
+  /** The feature list, in order. Excluded lines stay in place, greyed out. */
   features: PricingFeature[];
 }
 
+/**
+ * Ready-made plan card: badge, plan name, price and a checked feature list. It
+ * carries no call to action — put the Button next to it, so one card can be a
+ * link, another a form submit.
+ */
 export const PricingCard = forwardRef<HTMLDivElement, PricingCardProps>(
   ({ badge, title, price, features, className, ...rest }, ref) => (
     <div ref={ref} className={cn(CARD_SHELL, 'flex flex-col', className)} {...rest}>
@@ -216,9 +227,10 @@ export const PricingCard = forwardRef<HTMLDivElement, PricingCardProps>(
           const included = feature.included !== false;
           return (
             <li key={index} className="flex items-center gap-2">
-              <CheckIcon
+              <CheckRegularIcon
+                aria-hidden="true"
                 className={cn(
-                  'size-5 shrink-0',
+                  'size-5 shrink-0 [&_path]:fill-current',
                   included ? 'text-brand' : 'text-neutral-disabled',
                 )}
               />

@@ -4,6 +4,7 @@ import {
   type InputHTMLAttributes,
   type ReactNode,
 } from 'react';
+import { CheckRegularIcon } from '../../icons/ITUI/check';
 import { cn } from '../../lib/utils';
 
 /*
@@ -45,7 +46,14 @@ export type CheckboxSize = 'sm' | 'md';
 
 export interface CheckboxProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'> {
+  /** Box and label size: 20px/`text-sm` or 16px/`text-xs`. */
   size?: CheckboxSize;
+  /**
+   * Text beside the box. The input already sits inside a `<label>`, so passing it
+   * here both names the checkbox and makes the text part of its hit target —
+   * prefer it over wrapping a label of your own. Without it, supply an
+   * `aria-label`, or the checkbox has no accessible name.
+   */
   label?: ReactNode;
   /**
    * Fires with the next checked state — the same shape as `Radio`, `Toggle`,
@@ -68,26 +76,12 @@ const labelTypeMap: Record<CheckboxSize, string> = {
   sm: 'text-xs leading-5 tracking-sm',
 };
 
-function CheckIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 10 10"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d="M1.5 5L4 7.5L8.5 2.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
+/**
+ * A checkbox over a real `<input type="checkbox">` — the visual box is CSS on a
+ * visually-hidden input, so forms, `required`, and `react-hook-form`'s
+ * `{...field}` all work unchanged. Take the value from `onCheckedChange` for the
+ * boolean, or from `onChange` for the native event; both fire.
+ */
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {
@@ -139,7 +133,12 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             'peer-focus-visible:ring-2 peer-focus-visible:ring-brand peer-focus-visible:ring-offset-1',
           )}
         >
-          {checked && <CheckIcon className="size-3" />}
+          {checked && (
+            <CheckRegularIcon
+              aria-hidden="true"
+              className="size-3 [&_path]:fill-current"
+            />
+          )}
         </span>
         {label && (
           <span

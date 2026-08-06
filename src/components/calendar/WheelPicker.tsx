@@ -38,19 +38,27 @@ import { cn } from '../../lib/utils';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
+/** One row of a wheel. */
 export interface WheelPickerOption {
+  /** Identity of the row, as it appears in the picker's `value` record. */
   value: string;
+  /** What the row reads — free to be formatted (`1월`, `01`) while `value` stays raw. */
   label: ReactNode;
 }
 
+/** One wheel of a `WheelPicker`. */
 export interface WheelPickerColumn {
+  /** Identifies this column in the `value` record. */
   key: string;
+  /** Rows of this wheel, top to bottom. */
   options: WheelPickerOption[];
+  /** Accessible name of the wheel — there is no visible label above it. */
   'aria-label'?: string;
 }
 
 export interface WheelPickerProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  /** The wheels, left to right. */
   columns: WheelPickerColumn[];
   /** Selected option value per column, keyed by `column.key`. */
   value: Record<string, string>;
@@ -211,16 +219,24 @@ export type DateWheelPickerType = 'date' | 'year-month' | 'time';
 
 export interface DateWheelPickerProps
   extends Omit<WheelPickerProps, 'columns' | 'value' | 'onChange'> {
+  /**
+   * Which wheels to show: `date` is year · month · day, `year-month` drops the
+   * day, and `time` is the hour wheel. @default 'date'
+   */
   type?: DateWheelPickerType;
+  /** The current date. Only the fields this `type` shows are read from it. */
   value: Date;
+  /** Fires with a whole new `Date` — the untouched fields are carried over. */
   onChange?: (value: Date) => void;
-  /** @default value's year − 10 */
+  /** First year on the year wheel. @default value's year − 10 */
   fromYear?: number;
-  /** @default value's year + 10 */
+  /** Last year on the year wheel. @default value's year + 10 */
   toYear?: number;
+  /** Formats the year label. Defaults to the plain number. */
   formatYear?: (year: number) => ReactNode;
   /** `month` is 0-indexed, matching `Date`. */
   formatMonth?: (month: number) => ReactNode;
+  /** Formats the day label. Defaults to the plain number. */
   formatDay?: (day: number) => ReactNode;
   /** `hour` is 0–23. */
   formatHour?: (hour: number) => ReactNode;

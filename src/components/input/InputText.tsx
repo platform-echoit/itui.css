@@ -1,19 +1,13 @@
 'use client';
 
-import {
-  forwardRef,
-  useId,
-  type InputHTMLAttributes,
-  type ReactNode,
-} from 'react';
+import { forwardRef, type InputHTMLAttributes, type ReactNode } from 'react';
 import {
   InputFieldShell,
   inputFieldClass,
-  inputMessage,
-  inputMessageId,
   inputSlotClass,
   type InputFieldShellProps,
 } from './InputFieldShell';
+import { useFieldA11y } from './useFieldA11y';
 
 /*
   Figma node 27096:9849 `Input` · 28361:2330 `InputWithLabel`.
@@ -23,8 +17,11 @@ import {
 
 export interface InputTextProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
+  /** Text above the box — it is what names the field for assistive technology. */
   label?: string;
+  /** Message under the box. It also paints the error border and sets `aria-invalid`. */
   error?: string;
+  /** Hint under the box. `error` replaces it while the field is invalid. */
   helperText?: string;
   /** Slot rendered on the left of the field — icon, text, or any ReactNode */
   prefix?: ReactNode;
@@ -63,25 +60,19 @@ export const InputText = forwardRef<HTMLInputElement, InputTextProps>(
       onBoxClick,
       boxRef,
       'aria-describedby': ariaDescribedBy,
+      'aria-labelledby': ariaLabelledBy,
       ...rest
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const inputId = id ?? generatedId;
-    const isError = !!error && !disabled;
-
-    // The message is only reachable by a screen reader if the field points at
-    // it. Appended rather than replacing, so a consumer's own hint id survives.
-    const describedBy =
-      [
-        ariaDescribedBy,
-        inputMessage({ error, helperText, disabled })
-          ? inputMessageId(inputId)
-          : null,
-      ]
-        .filter(Boolean)
-        .join(' ') || undefined;
+    const { fieldId, fieldProps } = useFieldA11y({
+      id,
+      error,
+      helperText,
+      disabled,
+      'aria-describedby': ariaDescribedBy,
+      'aria-labelledby': ariaLabelledBy,
+    });
 
     return (
       <InputFieldShell
@@ -92,7 +83,7 @@ export const InputText = forwardRef<HTMLInputElement, InputTextProps>(
         block={block}
         className={className}
         boxClassName={boxClassName}
-        htmlFor={inputId}
+        htmlFor={fieldId}
         onBoxClick={onBoxClick}
         boxRef={boxRef}
       >
@@ -100,10 +91,8 @@ export const InputText = forwardRef<HTMLInputElement, InputTextProps>(
 
         <input
           ref={ref}
-          id={inputId}
+          {...fieldProps}
           disabled={disabled || disabledInput}
-          aria-invalid={isError || undefined}
-          aria-describedby={describedBy}
           className={inputFieldClass(disabled || disabledInput, fieldClassName)}
           {...rest}
         />

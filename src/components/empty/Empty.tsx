@@ -30,6 +30,7 @@ export interface EmptyProps extends HTMLAttributes<HTMLDivElement> {
   icon?: ReactNode;
   /** Overrides the caption the `type` would render. Pass `''` to hide it. */
   title?: string;
+  /** A second line under the caption. `\n` starts a new line. */
   description?: string;
 }
 
@@ -112,6 +113,11 @@ const renderLines = (text: string) =>
 
 // ── Empty ─────────────────────────────────────────────────────────────────────
 
+/**
+ * The empty state of a list or a search: a 60px illustration over a caption, in
+ * the two shapes the design ships. Children are rendered under the text, which
+ * is where a "create the first one" button goes.
+ */
 export const Empty = forwardRef<HTMLDivElement, EmptyProps>(
   (
     {

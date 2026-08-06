@@ -7,7 +7,7 @@ import {
   type HTMLAttributes,
 } from 'react';
 import { cn } from '../../lib/utils';
-import { StarFillIcon } from '../../icons/ITUI/star';
+import { StarFillIcon, StarRegularIcon } from '../../icons/ITUI/star';
 
 /*
   Token → Tailwind class reference (Figma node 27901:3604 — "Rating")
@@ -27,8 +27,13 @@ import { StarFillIcon } from '../../icons/ITUI/star';
 
   DESIGN NOTES
   - Figma builds the half star from two mask groups over the same Star glyph.
-    The same silhouette is produced here by one grey StarFillIcon with a
-    `currentColor` copy clipped to `w-1/2` on top — no masks, no exported assets.
+    The same silhouette is produced here by a StarRegularIcon base with a
+    `currentColor` StarFillIcon clipped to `w-1/2` on top — no masks, no
+    exported assets.
+    The base is the one place the library keeps a weight *pair* rather than a
+    single weight: outline-empty against solid-filled is what carries the value
+    (I-22). Figma draws the empty star as a grey solid instead, so this reads
+    lighter than the mock — deliberate, and the one deviation in this component.
   - Figma's `rating` variants run 0 → 5 in 0.5 steps, so the input domain matches:
     every star carries two half-width hit areas, for `index + 0.5` and `index + 1`.
   - Group semantics, arrow-key navigation and form participation come from native
@@ -44,6 +49,7 @@ import { StarFillIcon } from '../../icons/ITUI/star';
 export type RatingStarFill = 'empty' | 'half' | 'full';
 
 export interface RatingStarProps extends HTMLAttributes<HTMLSpanElement> {
+  /** How much of the star is coloured in. @default 'empty' */
   fill?: RatingStarFill;
 }
 
@@ -75,6 +81,10 @@ function fillAt(value: number, index: number): RatingStarFill {
 
 // ─── RatingStar ───────────────────────────────────────────────────────────────
 
+/**
+ * One star, drawn as an outline with a coloured layer clipped over it. Exported
+ * for building a legend or a static score; `Rating` draws its own.
+ */
 export const RatingStar = forwardRef<HTMLSpanElement, RatingStarProps>(
   ({ fill = 'empty', className, children, ...rest }, ref) => (
     <span
@@ -82,7 +92,7 @@ export const RatingStar = forwardRef<HTMLSpanElement, RatingStarProps>(
       className={cn('relative inline-flex h-icon-lg w-icon-lg shrink-0', className)}
       {...rest}
     >
-      <StarFillIcon
+      <StarRegularIcon
         aria-hidden
         className="h-icon-lg w-icon-lg [&_path]:fill-icon-neutral-disabled"
       />
@@ -105,6 +115,11 @@ RatingStar.displayName = 'RatingStar';
 
 // ─── Rating ───────────────────────────────────────────────────────────────────
 
+/**
+ * A star rating in half-star steps. Interactive, it is a real radio group — each
+ * half-star is an `<input type="radio">`, so arrow keys and forms work without
+ * help. Pass `readOnly` for the display-only form.
+ */
 export const Rating = forwardRef<HTMLDivElement, RatingProps>(
   (
     {

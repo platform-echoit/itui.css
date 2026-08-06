@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { FolderFillIcon } from '../../icons/ITUI/folder';
+import { FolderRegularIcon } from '../../icons/ITUI/folder';
 import { InfoRegularIcon } from '../../icons/ITUI/info';
 import { MagnifyingGlassRegularIcon } from '../../icons/ITUI/magnifying-glass';
 import { XRegularIcon } from '../../icons/ITUI/x';
@@ -29,37 +29,55 @@ export type ResourceModalType =
  * behavioural props in autocomplete.
  */
 export interface ResourceModalLabels {
+  /** Heading of the `rename` modal. */
   renameTitle: string;
+  /** Heading of the `delete` modal. */
   deleteTitle: string;
+  /** Heading of the `tag` modal. */
   tagTitle: string;
+  /** Heading of the `move` modal. */
   moveTitle: string;
+  /** Heading of the `properties` modal. */
   propertiesTitle: string;
   /** rename */
   nameLabel: string;
+  /** Placeholder of the rename field. */
   namePlaceholder: string;
   /** delete */
   deleteQuestion: string;
+  /** Line under the question — the "this cannot be undone" warning. */
   deleteNote: string;
   /** tag */
   currentTagsTitle: string;
+  /** Shown in place of the tag list while there are none. */
   noTagsText: string;
+  /** Placeholder of the new-tag field. */
   tagPlaceholder: string;
+  /** Label of the button that adds the typed tag. */
   addTagText: string;
   /** `aria-label` on each tag's remove button */
   removeTagLabel: string;
   /** move */
   folderSearchPlaceholder: string;
+  /** Name shown for the top-level folder in the move tree. */
   rootFolderName: string;
+  /** Label of the "create a folder here" row. */
   newFolderText: string;
   /** properties */
   itemTypeText: string;
+  /** Row label for the owner. */
   ownerLabel: string;
+  /** Row label for the containing folder. */
   locationLabel: string;
+  /** Row label for the file size. */
   sizeLabel: string;
+  /** Row label for the creation date. */
   createdLabel: string;
   /** footer */
   cancelText: string;
+  /** Label of the confirm button on every modal but `delete`. */
   confirmText: string;
+  /** Label of the confirm button on the `delete` modal — it is destructive. */
   deleteText: string;
 }
 
@@ -92,14 +110,26 @@ const DEFAULT_LABELS: ResourceModalLabels = {
 };
 
 export interface ResourceModalProps {
+  /** Which of the five modals to render. `null` renders none. */
   type: ResourceModalType | null;
+  /** Whether the modal is open. It is always controlled — there is no `defaultOpen`. */
   open: boolean;
+  /** Fires on Esc, on the scrim, on ✕ and on cancel. Set `open` to `false` here. */
   onClose: () => void;
+  /** Name of the file or folder being acted on, shown in the body copy. */
   itemName: string;
+  /** Starting text of the `rename` field. */
   initialValue?: string;
+  /**
+   * Fires with the modal's result: the new name for `rename`, the tag list for
+   * `tag`, the target folder id for `move`, and `null` for `delete` and
+   * `properties`. It does not close the modal — do that from `onClose`.
+   */
   onConfirm?: (value: any) => void;
+  /** Disables the confirm button while the request is in flight. */
   isLoading?: boolean;
   // properties specific
+  /** What the `properties` modal lists. Ignored by the other four. */
   itemDetails?: {
     ownerName: string;
     location: string;
@@ -107,14 +137,23 @@ export interface ResourceModalProps {
     createdAt: number;
     updatedAt: number | null;
   };
+  /** Formats the timestamps in `properties`. Without it the raw epoch number is printed. */
   formatDate?: (date: number) => string;
+  /** Formats `sizeBytes` in `properties`. Without it the raw byte count is printed. */
   formatBytes?: (bytes: number) => string;
   // tags specific
+  /** Tags the `tag` modal opens with. */
   initialTags?: { id: string; name: string }[];
   /** Overrides for any of the modal's built-in English strings */
   labels?: Partial<ResourceModalLabels>;
 }
 
+/**
+ * The five file-manager dialogs — rename, delete, tag, move and properties — as
+ * one component switched by `type`. It renders the body and the footer; the
+ * work behind confirm, and closing afterwards, stay with the caller. Every
+ * string it prints can be replaced through `labels`.
+ */
 export const ResourceModal: React.FC<ResourceModalProps> = ({
   type,
   open,
@@ -282,7 +321,7 @@ export const ResourceModal: React.FC<ResourceModalProps> = ({
                   className={`flex items-center gap-2 p-2 rounded-md cursor-pointer ${selectedFolderId === 'root' ? 'bg-blue-100 text-blue-700' : 'hover:bg-white'}`}
                   onClick={() => setSelectedFolderId('root')}
                 >
-                  <FolderFillIcon className="size-4 opacity-70 [&_path]:fill-current" />
+                  <FolderRegularIcon className="size-4 opacity-70 [&_path]:fill-current" />
                   <span className="text-sm font-medium">
                     {text.rootFolderName}
                   </span>

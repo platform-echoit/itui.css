@@ -69,8 +69,11 @@ export type TypographyWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 
 /** The measurements behind one variant, in px. */
 export interface TypographySpec {
+  /** Rendered font size. */
   fontSize: number;
+  /** Rendered line box height — the number to use for row heights. */
   lineHeight: number;
+  /** Tracking, negative on the display and heading steps. */
   letterSpacing: number;
 }
 
@@ -140,16 +143,22 @@ export const typographyWeightClass: Record<TypographyWeight, string> = {
 
 // ─── Typography ───────────────────────────────────────────────────────────────
 
-/*
-  Defaults to `body-md` / `regular` — the running-text style, i.e. the one a
-  caller who did not think about it almost certainly wanted. A display step
-  would silently blow up any unlabelled usage.
-
-  `font-sans` is explicit rather than inherited: all four Figma families
-  (display / heading / body / caption) resolve to the same Pretendard binding,
-  which is what --font-sans holds, and stating it keeps a Typography correct
-  inside a container that switched to font-mono.
-*/
+/**
+ * Renders text at one step of the ITUI type scale — size, line height, tracking
+ * and weight in one prop pair, so running text does not have to restate four
+ * classes. It is a `<p>` by default; pass `asChild` when the element already
+ * carries meaning (a heading, a `<label>`, a link) so the tag stays right.
+ * `TYPOGRAPHY_SPEC` gives the same steps as numbers.
+ *
+ * Defaults to `body-md` / `regular` — the running-text style, i.e. the one a
+ * caller who did not think about it almost certainly wanted. A display step
+ * would silently blow up any unlabelled usage.
+ *
+ * `font-sans` is explicit rather than inherited: all four Figma families
+ * (display / heading / body / caption) resolve to the same Pretendard binding,
+ * which is what --font-sans holds, and stating it keeps a Typography correct
+ * inside a container that switched to font-mono.
+ */
 const Typography = forwardRef<HTMLParagraphElement, TypographyProps>(
   (
     {

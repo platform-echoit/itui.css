@@ -48,9 +48,13 @@ import { CaretRight } from '../../icons/ITUI/icons';
 export interface PopoverPanelProps extends HTMLAttributes<HTMLDivElement> {}
 
 export interface PopoverHeaderProps extends HTMLAttributes<HTMLDivElement> {
+  /** Leading avatar, usually an `<Avatar size="md">`. */
   avatar?: ReactNode;
+  /** Primary line — the display name. Truncates rather than wrapping. */
   name?: ReactNode;
+  /** Secondary line under the name. Truncates rather than wrapping. */
   email?: ReactNode;
+  /** Buttons under the identity row — "Manage account", "Sign out". */
   actions?: ReactNode;
 }
 
@@ -78,12 +82,12 @@ export interface PopoverItemProps
 
 // ─── PopoverPanel ─────────────────────────────────────────────────────────────
 
-/*
-  The standalone surface, for a panel that is not driven by `Popover`'s Radix
-  root — a sidebar flyout, a story, anything already positioned by its parent.
-  Inside an open popover reach for `PopoverContent` instead: it paints the same
-  surface and adds the portal, positioning and dismiss behaviour.
-*/
+/**
+ * The standalone surface, for a panel that is not driven by `Popover`'s Radix
+ * root — a sidebar flyout, a story, anything already positioned by its parent.
+ * Inside an open popover reach for `PopoverContent` instead: it paints the same
+ * surface and adds the portal, positioning and dismiss behaviour.
+ */
 export const PopoverPanel = forwardRef<HTMLDivElement, PopoverPanelProps>(
   ({ className, children, ...rest }, ref) => (
     <div
@@ -102,6 +106,7 @@ PopoverPanel.displayName = 'PopoverPanel';
 
 // ─── PopoverHeader ────────────────────────────────────────────────────────────
 
+/** The identity block at the top of a panel: avatar, name, email and actions. */
 export const PopoverHeader = forwardRef<HTMLDivElement, PopoverHeaderProps>(
   ({ avatar, name, email, actions, className, ...rest }, ref) => (
     <div
@@ -139,6 +144,7 @@ PopoverHeader.displayName = 'PopoverHeader';
 
 // ─── PopoverGroup ─────────────────────────────────────────────────────────────
 
+/** A padded run of `PopoverItem`s. Use one per section of the panel. */
 export const PopoverGroup = forwardRef<HTMLDivElement, PopoverGroupProps>(
   ({ className, children, ...rest }, ref) => (
     <div ref={ref} className={cn('flex flex-col p-2', className)} {...rest}>
@@ -150,6 +156,7 @@ PopoverGroup.displayName = 'PopoverGroup';
 
 // ─── PopoverSeparator ─────────────────────────────────────────────────────────
 
+/** A rule between two `PopoverGroup`s. */
 export const PopoverSeparator = forwardRef<
   HTMLDivElement,
   PopoverSeparatorProps
@@ -164,6 +171,11 @@ PopoverSeparator.displayName = 'PopoverSeparator';
 
 // ─── PopoverItem ──────────────────────────────────────────────────────────────
 
+/**
+ * One row of a panel: leading icon, label, optional description and trailing
+ * slot. It is a `<button>`; inside a `PopoverMenu` add `asMenuItem` so the menu
+ * can find it and manage its focus.
+ */
 export const PopoverItem = forwardRef<HTMLButtonElement, PopoverItemProps>(
   (
     {

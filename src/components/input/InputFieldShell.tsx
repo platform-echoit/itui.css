@@ -53,6 +53,13 @@ export interface InputFieldShellProps {
   boxClassName?: string;
   /** id of the control the label points at */
   htmlFor?: string;
+  /**
+   * id put on the `<label>` itself, for controls that cannot be named by
+   * `htmlFor` alone — `for` only binds to labelable elements, so a
+   * `contenteditable` editor needs `aria-labelledby` pointing here instead.
+   * Comes from `useFieldA11y({ nameFromLabelId: true })`.
+   */
+  labelId?: string;
   /** Click anywhere on the box — used by InputTag to focus its inner field */
   onBoxClick?: (event: MouseEvent<HTMLDivElement>) => void;
   /**
@@ -81,6 +88,7 @@ export function InputFieldShell({
   className,
   boxClassName,
   htmlFor,
+  labelId,
   onBoxClick,
   boxRef,
   children,
@@ -92,6 +100,7 @@ export function InputFieldShell({
     <div className={cn('flex flex-col gap-2', block && 'w-full', className)}>
       {label && (
         <label
+          id={labelId}
           htmlFor={htmlFor}
           className="shrink-0 text-sm leading-md tracking-md font-medium text-foreground"
         >

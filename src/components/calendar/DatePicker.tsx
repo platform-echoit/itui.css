@@ -71,13 +71,23 @@ export type DatePickerProps = DayPickerProps & {
   confirmText?: ReactNode;
   /** Renders the cancel button; omit it and no cancel button appears. */
   cancelText?: ReactNode;
+  /** Runs on the confirm button. The picker does not close itself — that is yours to do. */
   onConfirm?: () => void;
+  /** Runs on the cancel button. */
   onCancel?: () => void;
+  /** Greys out the confirm button, e.g. until a full range is picked. */
   confirmDisabled?: boolean;
-  /** @default 'right' for two months (PC), `center` otherwise (mobile) */
+  /**
+   * Which footer layout to draw.
+   * @default 'right' for two months (PC), `center` otherwise (mobile)
+   */
   footerAlignment?: DateFooterAlignment;
   /** Left slot of the inline footer. Defaults to the selected range, formatted. */
   summary?: ReactNode;
+  /**
+   * Formats the default range summary. Override it to match your locale — the
+   * built-in one writes Korean dates (`2026년 1월 26일 - 2026년 2월 3일`).
+   */
   formatRangeSummary?: (range: DateRange) => ReactNode;
 };
 

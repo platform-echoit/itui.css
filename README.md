@@ -114,6 +114,46 @@ say.
 
 ---
 
+## Next.js / React Server Components
+
+Every component that needs state, refs, effects or event handlers carries its own `"use client"`
+banner — 36 modules currently do. Importing any of them from a Server Component works as-is, with
+no boundary of your own:
+
+```tsx
+// app/page.tsx — a Server Component, no "use client" needed
+import { Button, Card, Table, Select, Dialog } from '@echoit/itui.css';
+```
+
+Load the stylesheet once from the root layout's CSS, same as [step 2](#2-load-the-styles):
+
+```css
+/* app/globals.css */
+@import 'tailwindcss';
+@import '@echoit/itui.css';
+```
+
+```tsx
+// app/layout.tsx
+import './globals.css';
+```
+
+Two things this does **not** do for you:
+
+- **Your own file still needs `"use client"` when you write a handler.** Passing a function across
+  the server/client boundary — `onClick`, `onValueChange`, `onOpenChange` — is what React rejects,
+  and it rejects it no matter which library the prop belongs to. The banner belongs on the file
+  that defines the handler.
+- **Subpath imports still carry no CSS.** The [callout in step 2](#2-load-the-styles) applies to
+  App Router exactly as it does everywhere else.
+
+The boundary is a build gate rather than a convention: `check:client` rejects a module that uses
+client-only React or hands a handler to a DOM prop without declaring itself, and `check:rsc` packs
+the tarball and runs a real `next build` over a fixture that renders **every** export. Both run in
+CI.
+
+---
+
 ## Components
 
 Prop tables live in the [API reference][api] — every export, read straight out of the source.
@@ -328,10 +368,21 @@ import {
 panel it opens — that is what holds the items. `PopoverPanel` is the same surface without
 the popover machinery, for a panel something else already positions.
 
-> ⚠️ **Renamed in `2.0`.** `Popover` used to be the standalone panel and the root was
-> `PopoverRoot`. `PopoverRoot` still works as a `@deprecated` alias, but the panel moved to
-> `PopoverPanel` — a `<Popover className="…">` left over from `1.x` no longer typechecks,
-> deliberately, because the root has no element to put a `className` on.
+> ⚠️ **Renamed.** `Popover` used to be the standalone panel and the root was `PopoverRoot`.
+> `PopoverRoot` still works as a `@deprecated` alias for the whole `1.x` line, but the panel
+> moved to `PopoverPanel` — a `<Popover className="…">` left over from `1.0.14` no longer
+> typechecks, deliberately, because the root has no element to put a `className` on.
+>
+> **Migrating from `1.0.14`:** rename the element that carried the styling, and nothing else.
+>
+> ```diff
+> - <Popover className="w-56">…</Popover>
+> + <PopoverPanel className="w-56">…</PopoverPanel>
+> ```
+>
+> The rename shipped in `1.0.15`, a patch — which was the wrong channel for a change that
+> stops code compiling. `1.1.0` re-releases it under a version number that says so; there is
+> no second change to make if you already upgraded.
 
 Wrap the items in `PopoverMenu` when the popover is a menu — it adds `role="menu"` and
 arrow-key navigation, which `PopoverItem` alone does not. [Props →][api-popover]
@@ -462,13 +513,16 @@ There is no hosted docs site yet. Until there is, these are the sources of truth
 - **[API.md][api]** — every export with its props, defaults and JSDoc. Generated from the source
   on each build and checked in CI, so it is the one page that cannot be out of date.
 - **[TOKENS.md](https://github.com/platform-echoit/itui.css/blob/main/TOKENS.md)** — full token reference.
+- **[ACCESSIBILITY.md](https://github.com/platform-echoit/itui.css/blob/main/ACCESSIBILITY.md)** —
+  per component: what takes focus, which keys do what, and which ARIA the component owns versus
+  the ARIA you still have to supply.
 - **This README** — setup, theming, and how the compound components fit together.
 - **Types** — every component ships `.d.ts` with the same JSDoc, so your editor has all of the
   above without leaving the file.
 - **Storybook** — `pnpm dev` in `apps/storybook` for a live component gallery.
 
-> `API.md` and `TOKENS.md` are not inside the npm tarball — `files` ships `dist` only — so the
-> links above point at GitHub.
+> All three Markdown files are in the npm tarball as well, so `node_modules/@echoit/itui.css/`
+> answers these questions offline. The links point at GitHub for reading them in a browser.
 
 ---
 
@@ -493,7 +547,34 @@ Requires support for CSS custom properties and `oklch()` color.
   keeping it a peer means you get one copy of the React types, not a second one nested here
 - **Node.js 18+**
 - **An ESM-capable bundler.** The package is `"type": "module"` and ships **ESM only** — there
-  is no CommonJS build, so `require('@echoit/itui.css')` does not work
+  is no CommonJS build, so `require('@echoit/itui.css')` does not work. It throws
+  `@echoit/itui.css is ESM-only …` rather than a resolution error, so the message says what to do:
+  `import` from an ESM module, or `await import('@echoit/itui.css')` from CommonJS
+
+---
+
+## Versioning
+
+This package follows semver, and reads the middle number as the one that matters to you:
+
+| Bump      | What you are agreeing to                                                                              |
+| --------- | ----------------------------------------------------------------------------------------------------- |
+| **patch** | Nothing to do. No export is renamed or removed, and no prop changes meaning. Safe to take unattended.   |
+| **minor** | New exports and new props, plus anything marked `@deprecated`. Your code still compiles.                |
+| **major** | Removals and renames. Read the release notes before upgrading.                                          |
+
+Two consequences worth stating out loud, because both have bitten this package:
+
+- **A rename never ships in a patch.** `1.0.15` moved `Popover` from the panel to the Radix root and
+  broke `<Popover className>` on a patch upgrade — the one channel you are entitled to take blind.
+  `1.1.0` re-released it under a number that says so. The migration is one rename, in
+  [Popover](#popover).
+- **`@deprecated` is a minor, not a patch.** Nothing is removed and compilation is unaffected, but if
+  you run `eslint-plugin-deprecation` or `@typescript-eslint/no-deprecated` at `error`, a new
+  deprecation turns your CI red. That is a code change on your side, so it gets a minor.
+
+Deprecated exports stay for at least one minor before a major removes them, and each one names its
+replacement in its JSDoc — your editor shows it on hover, without a trip to this file.
 
 ---
 

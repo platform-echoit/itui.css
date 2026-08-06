@@ -2,6 +2,8 @@
 
 import { type ReactNode } from 'react';
 import * as RadixDialog from '@radix-ui/react-dialog';
+import { ImageRegularIcon } from '../../icons/ITUI/image';
+import { XRegularIcon } from '../../icons/ITUI/x';
 import { cn } from '../../lib/utils';
 import { Button } from '../button';
 import { Checkbox } from '../checkbox';
@@ -23,10 +25,15 @@ import { Checkbox } from '../checkbox';
 export type PopupVariant = 'text' | 'image';
 
 export interface PopupProps {
+  /** Controlled open state. Pair it with `onOpenChange`, or use `defaultOpen`. */
   open?: boolean;
+  /** Open state for the uncontrolled case — the popup then owns it. */
   defaultOpen?: boolean;
+  /** Fires on every open and close, including Esc and the ✕. */
   onOpenChange?: (open: boolean) => void;
+  /** Element that opens the popup. Omit it when you drive `open` yourself. */
   trigger?: ReactNode;
+  /** `text` is the title-and-body card; `image` is the artwork-led one. */
   variant?: PopupVariant;
   /** Header title (text variant). */
   title?: ReactNode;
@@ -36,36 +43,39 @@ export interface PopupProps {
   image?: ReactNode;
   /** Footer link action (text variant). */
   actionText?: ReactNode;
+  /** Runs on the footer link. It does not close the popup — do that yourself. */
   onAction?: () => void;
   /** "Don't show again" checkbox. */
   showDontShowAgain?: boolean;
+  /** Checked state of that checkbox. Persisting the choice is yours to do. */
   dontShowAgain?: boolean;
+  /** Fires with the checkbox's next state. */
   onDontShowAgainChange?: (checked: boolean) => void;
+  /** Text beside the checkbox. @default "Don't show again" */
   dontShowAgainLabel?: ReactNode;
+  /** Lands on the popup card, not on the scrim. */
   className?: string;
 }
 
 const CARD =
   'overflow-hidden rounded-xl border border-surface-neutral-hover bg-inverse shadow-downwards-sm';
 
-function XIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
-      <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
+/** Stand-in artwork for an empty image slot — same shape `CardTemplates` uses. */
 function ImagePlaceholder({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={cn('opacity-40', className)} aria-hidden="true">
-      <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M21 15l-5-5L5 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <ImageRegularIcon
+      aria-hidden="true"
+      className={cn('opacity-40 [&_path]:fill-current', className)}
+    />
   );
 }
 
+/**
+ * The announcement card: image slot, body, and an optional "don't show again".
+ * Not a variant of `Modal` — a different design with a different job.
+ *
+ * @see https://github.com/platform-echoit/itui.css#picking-between-similar-names
+ */
 export function Popup({
   open,
   defaultOpen,
@@ -98,7 +108,10 @@ export function Popup({
       aria-label="Close"
       className="inline-flex size-5 shrink-0 cursor-pointer items-center justify-center text-icon-neutral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
     >
-      <XIcon className="size-5" />
+      <XRegularIcon
+        aria-hidden="true"
+        className="size-5 [&_path]:fill-current"
+      />
     </RadixDialog.Close>
   );
 

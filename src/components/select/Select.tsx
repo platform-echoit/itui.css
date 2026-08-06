@@ -3,10 +3,17 @@
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
 import { CaretUpRegularIcon } from '../../icons/ITUI/caret-up';
+import { useFieldA11y } from '../input/useFieldA11y';
 import { cn } from '../../lib/utils';
 
 // ─── Select ───────────────────────────────────────────────────────────────────
 
+/**
+ * The select root — state and context only, it renders no DOM of its own. Pair
+ * it with `SelectTrigger` and `SelectContent`. Radix builds a real listbox
+ * rather than a native `<select>`, so it also renders a hidden native input to
+ * keep forms working.
+ */
 function Select({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
@@ -15,6 +22,7 @@ function Select({
 
 // ─── SelectGroup ──────────────────────────────────────────────────────────────
 
+/** Groups related options under a `SelectLabel`. */
 function SelectGroup({
   className,
   ...props
@@ -30,6 +38,10 @@ function SelectGroup({
 
 // ─── SelectValue ──────────────────────────────────────────────────────────────
 
+/**
+ * Prints the chosen option's text inside the trigger, or the placeholder while
+ * nothing is chosen. `SelectTrigger`'s `placeholder` prop renders one for you.
+ */
 function SelectValue({
   className,
   ...props
@@ -47,8 +59,11 @@ function SelectValue({
 
 export interface SelectTriggerProps
   extends React.ComponentProps<typeof SelectPrimitive.Trigger> {
+  /** Trigger height: the compact 36px row, or the 48px field. @default 'default' */
   size?: 'sm' | 'default';
+  /** Text above the trigger. It is what names the select for assistive technology. */
   label?: string;
+  /** Message under the trigger. It also paints the error border and sets `aria-invalid`. */
   error?: string;
   /**
    * Shorthand for the common trigger body: with no `children`, the trigger
@@ -65,10 +80,27 @@ const triggerBase =
 const triggerVariants = {
   disabled: 'bg-neutral-100 border-input pointer-events-none',
   error: 'bg-white border-destructive',
+  /*
+    `focus-visible:border-ring` is the *field* focus idiom, the one
+    `InputFieldShell.tsx` uses — not `Button`'s outline ring. A select sits next
+    to an `InputText` in a form, so borrowing the button's indicator would make
+    two neighbouring fields light up differently (I-16).
+
+    It replaces an explicit `focus-visible:ring-0 focus-visible:outline-none`,
+    which left the keyboard user with no indicator at all: `data-[state=open]`
+    only fires once the menu is open, which is not the same moment as focus.
+    The `data-[state=closed]` pair that used to follow is gone with it — it
+    restated the base colours and only muddied which rule wins while focused.
+  */
   default:
-    'bg-white border-input focus-visible:ring-0 focus-visible:outline-none data-[state=open]:border-brand data-[state=open]:bg-accent data-[state=closed]:border-input data-[state=closed]:bg-white',
+    'bg-white border-input focus-visible:border-ring data-[state=open]:border-brand data-[state=open]:bg-accent',
 };
 
+/**
+ * The button that opens the list, plus the label and message around it — the
+ * same wiring the `Input` family uses, so `label` names the trigger and `error`
+ * is announced. With no children it renders a `SelectValue` from `placeholder`.
+ */
 function SelectTrigger({
   className,
   size = 'default',
@@ -77,10 +109,30 @@ function SelectTrigger({
   disabled,
   error,
   placeholder,
+  id,
+  'aria-describedby': ariaDescribedBy,
+  'aria-labelledby': ariaLabelledBy,
   ...props
 }: SelectTriggerProps) {
   const isDisabled = !!disabled;
-  const isError = !!error && !isDisabled;
+
+  /*
+    `nameFromLabelId` is what makes this different from `InputText`: Radix
+    renders the trigger as `<button role="combobox">`, and a combobox takes no
+    name from its own content — so the name fell back to the placeholder while
+    the visible `label` reached nobody. `aria-labelledby` is the one mechanism
+    that names it in every AT; the button's text stays the combobox *value*.
+    `labelProps.htmlFor` is kept for the pointer behaviour.
+  */
+  const { fieldProps, labelProps, messageProps, isError } = useFieldA11y({
+    id,
+    label,
+    error,
+    disabled: isDisabled,
+    'aria-describedby': ariaDescribedBy,
+    'aria-labelledby': ariaLabelledBy,
+    nameFromLabelId: true,
+  });
 
   const variant = isDisabled
     ? triggerVariants.disabled
@@ -91,12 +143,16 @@ function SelectTrigger({
   return (
     <div className="flex flex-col gap-2">
       {label && (
-        <label className="shrink-0 text-sm font-medium leading-6 tracking-md text-foreground">
+        <label
+          {...labelProps}
+          className="shrink-0 text-sm font-medium leading-6 tracking-md text-foreground"
+        >
           {label}
         </label>
       )}
 
       <SelectPrimitive.Trigger
+        {...fieldProps}
         data-slot="select-trigger"
         data-size={size}
         className={cn(triggerBase, variant, className)}
@@ -116,8 +172,8 @@ function SelectTrigger({
 
       {isError && (
         <p
+          {...messageProps}
           className="text-sm font-normal leading-5 tracking-md text-destructive"
-          role="alert"
         >
           {error}
         </p>
@@ -137,6 +193,10 @@ const contentPopper =
 const viewportBase =
   'data-[position=popper]:h-(--radix-select-trigger-height) data-[position=popper]:w-full data-[position=popper]:min-w-[min(var(--radix-select-trigger-width),18rem)]';
 
+/**
+ * The dropdown listbox. It portals itself, so it escapes an `overflow: hidden`
+ * ancestor, and matches the trigger's width in the default `popper` position.
+ */
 function SelectContent({
   className,
   children,
@@ -173,6 +233,7 @@ function SelectContent({
 
 // ─── SelectLabel ──────────────────────────────────────────────────────────────
 
+/** A non-interactive heading over a `SelectGroup`. */
 function SelectLabel({
   className,
   ...props
@@ -191,6 +252,7 @@ function SelectLabel({
 const itemBase =
   "mx-2 hover:bg-accent hover:cursor-pointer rounded-lg focus:bg-secondary focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground gap-2 p-2 text-sm [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 relative flex w-[calc(100%-1rem)] cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 overflow-hidden";
 
+/** One option. Its `value` is what `Select` reports — it must be unique and non-empty. */
 function SelectItem({
   className,
   children,
@@ -209,6 +271,7 @@ function SelectItem({
 
 // ─── SelectSeparator ──────────────────────────────────────────────────────────
 
+/** A rule between two groups of options. */
 function SelectSeparator({
   className,
   ...props
@@ -224,6 +287,7 @@ function SelectSeparator({
 
 // ─── SelectScrollUpButton ─────────────────────────────────────────────────────
 
+/** The "more above" affordance on a long list. `SelectContent` renders one already. */
 function SelectScrollUpButton({
   className,
   ...props
@@ -244,6 +308,7 @@ function SelectScrollUpButton({
 
 // ─── SelectScrollDownButton ───────────────────────────────────────────────────
 
+/** The "more below" affordance on a long list. `SelectContent` renders one already. */
 function SelectScrollDownButton({
   className,
   ...props

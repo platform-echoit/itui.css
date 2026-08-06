@@ -39,23 +39,34 @@ import {cn} from '../../lib/utils';
 export type SortDirection='asc'|'desc';
 
 export interface TableProps extends HTMLAttributes<HTMLTableElement> {
+  /** Ref to the `<table>`, not to the scrolling wrapper around it. */
   ref?: Ref<HTMLTableElement>;
 }
 export interface TableHeaderProps
   extends HTMLAttributes<HTMLTableSectionElement> {
+  /** Ref to the `<thead>`. */
   ref?: Ref<HTMLTableSectionElement>;
 }
 export interface TableBodyProps
   extends HTMLAttributes<HTMLTableSectionElement> {
+  /** Ref to the `<tbody>`. */
   ref?: Ref<HTMLTableSectionElement>;
 }
 export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
+  /** Ref to the `<tr>`. */
   ref?: Ref<HTMLTableRowElement>;
+  /** Paints the chosen state. It is presentation only — you own the selection. */
   selected?: boolean;
+  /** Greys the row out and drops both its click and its keyboard handlers. */
   disabled?: boolean;
 }
 export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
+  /** Ref to the `<th>`. */
   ref?: Ref<HTMLTableCellElement>;
+  /**
+   * Which way this column is currently sorted. It draws the arrow and sets
+   * `aria-sort`; doing the sorting is yours.
+   */
   sortDirection?: SortDirection;
   /**
    * Marks a sortable column that is not currently sorted, so it still reports
@@ -64,11 +75,18 @@ export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
   sortable?: boolean;
 }
 export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
+  /** Ref to the `<td>`. */
   ref?: Ref<HTMLTableCellElement>;
 }
 
 // ── Table ────────────────────────────────────────────────────────────────────
 
+/**
+ * A real `<table>` in a bordered, horizontally scrolling frame. It supplies the
+ * surface and the type scale only — sorting, selection and pagination stay with
+ * the caller, which is why `TableRow.selected` and `TableHead.sortDirection` are
+ * presentational.
+ */
 export const Table=({className,...props}: TableProps) => (
   <div className="w-full overflow-x-auto rounded-lg border border-neutral-subtle border-b-0">
     <table className={cn('w-full bg-white',className)} {...props} />
@@ -77,6 +95,7 @@ export const Table=({className,...props}: TableProps) => (
 
 // ── TableHeader ───────────────────────────────────────────────────────────────
 
+/** The `<thead>` — a `TableRow` of `TableHead` cells. */
 export const TableHeader=({className,...props}: TableHeaderProps) => (
   <thead
     className={cn('bg-white border-b border-neutral-subtle',className)}
@@ -86,12 +105,17 @@ export const TableHeader=({className,...props}: TableHeaderProps) => (
 
 // ── TableBody ─────────────────────────────────────────────────────────────────
 
+/** The `<tbody>` — the data rows. */
 export const TableBody=({className,...props}: TableBodyProps) => (
   <tbody className={cn(className)} {...props} />
 );
 
 // ── TableRow ──────────────────────────────────────────────────────────────────
 
+/**
+ * One row. `disabled` drops its `onClick` **and** its `onKeyDown`, so a disabled
+ * row cannot be triggered by Enter either.
+ */
 export const TableRow=({
   className,
   selected,
@@ -124,6 +148,11 @@ const ARIA_SORT: Record<SortDirection,'ascending'|'descending'> = {
   desc: 'descending',
 };
 
+/**
+ * A header cell. Given `sortable` or `sortDirection` it wraps its content in a
+ * real `<button>` — a `<th>` cannot take focus — so an `onClick` on the cell
+ * starts firing on Enter and Space as well.
+ */
 export const TableHead=({
   className,
   sortDirection,
@@ -178,6 +207,7 @@ export const TableHead=({
 
 // ── TableCell ─────────────────────────────────────────────────────────────────
 
+/** One data cell. Its content does not wrap; give it `whitespace-normal` if it should. */
 export const TableCell=({className,...props}: TableCellProps) => (
   <td
     className={cn(

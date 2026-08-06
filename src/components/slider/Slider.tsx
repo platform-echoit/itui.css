@@ -30,6 +30,11 @@ import { cn } from '../../lib/utils';
 export interface SliderProps
   extends ComponentPropsWithoutRef<typeof RadixSlider.Root> {}
 
+/**
+ * A value picked by dragging along a track. Radix owns the interaction, so
+ * `value` / `onValueChange` take arrays — pass two values for a range slider and
+ * it renders two thumbs.
+ */
 export const Slider = forwardRef<
   ComponentRef<typeof RadixSlider.Root>,
   SliderProps

@@ -84,6 +84,10 @@ export interface ListItemProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 // ─── List ─────────────────────────────────────────────────────────────────────
 
+/**
+ * The bordered, shadowed card that holds `ListItem` rows. It only supplies the
+ * surface and the spacing — the rows carry their own behaviour.
+ */
 export const List = forwardRef<HTMLDivElement, ListProps>(
   ({ className, children, ...rest }, ref) => (
     <div
@@ -102,6 +106,11 @@ List.displayName = 'List';
 
 // ─── ListItem ─────────────────────────────────────────────────────────────────
 
+/**
+ * One row: a leading slot, a title (its children), an optional second line, and
+ * a trailing slot. It is a `<button>` by default — pass `asChild` when the row
+ * should be a link, and the child's children become the title.
+ */
 export const ListItem = forwardRef<HTMLButtonElement, ListItemProps>(
   (
     {

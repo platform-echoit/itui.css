@@ -241,7 +241,9 @@ StepperIndicator.displayName = 'StepperIndicator';
 
 export interface StepperItemProps
   extends Omit<LiHTMLAttributes<HTMLLIElement>, 'title'> {
+  /** The step's name. */
   title?: ReactNode;
+  /** Supporting line under the title. */
   description?: ReactNode;
   /** Overrides the status derived from the parent's `current`. */
   status?: StepStatus;
@@ -249,6 +251,10 @@ export interface StepperItemProps
   children?: ReactNode;
 }
 
+/**
+ * One step. It reads its number and its status from the `Stepper` around it, so
+ * neither is a prop — reach for `status` only to override that.
+ */
 export const StepperItem = forwardRef<HTMLLIElement, StepperItemProps>(
   ({ title, description, status, className, children, ...rest }, ref) => {
     const { variant, orientation, current } = useContext(StepperContext);
@@ -397,6 +403,11 @@ export interface StepperProps extends OlHTMLAttributes<HTMLOListElement> {
   children?: ReactNode;
 }
 
+/**
+ * A numbered progress trail through a multi-step flow. It hands each
+ * `StepperItem` its index and its status, which is why the items have to be
+ * direct children.
+ */
 export const Stepper = forwardRef<HTMLOListElement, StepperProps>(
   (
     {

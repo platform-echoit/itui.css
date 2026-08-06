@@ -2,7 +2,6 @@
 
 import {
   forwardRef,
-  useId,
   useState,
   type ChangeEvent,
   type DragEvent,
@@ -14,12 +13,13 @@ import { cn } from '../../lib/utils';
 import { Divider } from '../divider/Divider';
 import { Spinner } from '../spinner/Spinner';
 import { UploadSimpleRegularIcon } from '../../icons/ITUI/upload-simple';
-import { CheckCircleFillIcon } from '../../icons/ITUI/check-circle';
+import { CheckCircleRegularIcon } from '../../icons/ITUI/check-circle';
 import { XCircleRegularIcon } from '../../icons/ITUI/xcircle';
-import { WarningFillIcon } from '../../icons/ITUI/warning';
+import { WarningRegularIcon } from '../../icons/ITUI/warning';
 import { DownloadSimpleRegularIcon } from '../../icons/ITUI/download-simple';
 import { CaretRightRegularIcon } from '../../icons/ITUI/caret-right';
 import { InputFieldShell } from './InputFieldShell';
+import { useFieldA11y } from './useFieldA11y';
 
 /*
   Token → Tailwind map (Figma 28964:9746 `Upload` · 28985:5360 `UploadedFile`)
@@ -56,7 +56,9 @@ export type InputFileUploadStatus = 'uploading' | 'success' | 'error' | 'done';
 export interface InputFileUploadItemData {
   /** React key, and the id handed back to `onRemove` / `onDownload` / `onPreview` */
   id: string;
+  /** File name shown on the row. */
   name: string;
+  /** Where the upload stands. It is yours to advance — the field does no uploading. */
   status?: InputFileUploadStatus;
   /** Message under the row — only rendered while `status` is `'error'` */
   error?: string;
@@ -119,13 +121,19 @@ function RowAction({
 export interface InputFileUploadItemProps
   extends Omit<HTMLAttributes<HTMLLIElement>, 'children'>,
     Omit<InputFileUploadItemData, 'id'> {
+  /** Greys the row out and stops its action buttons responding. */
   disabled?: boolean;
   /** Each action only renders when its handler is given — no dead buttons. */
   onRemove?: () => void;
+  /** Renders the download button and runs on it. */
   onDownload?: () => void;
+  /** Renders the preview button and runs on it. */
   onPreview?: () => void;
+  /** Accessible name of the remove button — it is icon-only. */
   removeLabel?: string;
+  /** Accessible name of the download button. */
   downloadLabel?: string;
+  /** Accessible name of the preview button. */
   previewLabel?: string;
 }
 
@@ -178,7 +186,7 @@ export const InputFileUploadItem = forwardRef<
           {status === 'uploading' && <Spinner size="sm" />}
 
           {status === 'success' && (
-            <CheckCircleFillIcon
+            <CheckCircleRegularIcon
               width={20}
               height={20}
               aria-hidden="true"
@@ -235,7 +243,7 @@ export const InputFileUploadItem = forwardRef<
               role="alert"
               className="flex items-center gap-1 px-3 py-2 text-xs leading-sm tracking-sm text-destructive"
             >
-              <WarningFillIcon
+              <WarningRegularIcon
                 width={16}
                 height={16}
                 aria-hidden="true"
@@ -259,15 +267,21 @@ export interface InputFileUploadProps
     InputHTMLAttributes<HTMLInputElement>,
     'type' | 'value' | 'defaultValue' | 'onChange' | 'prefix' | 'children'
   > {
+  /** Text above the box — it is what names the field for assistive technology. */
   label?: string;
+  /** Message under the box. It also paints the error border and sets `aria-invalid`. */
   error?: string;
+  /** Hint under the box. `error` replaces it while the field is invalid. */
   helperText?: string;
   /** Rows under the dropzone. `status` comes from the caller — see the note below. */
   files?: InputFileUploadItemData[];
   /** Fires with the files that passed `accept` / `maxSize` */
   onFilesAdded?: (files: File[]) => void;
+  /** Fires with a row's `id`. Given it, each row grows a remove button. */
   onRemove?: (id: string) => void;
+  /** Fires with a row's `id`. Given it, each row grows a download button. */
   onDownload?: (id: string) => void;
+  /** Fires with a row's `id`. Given it, each row grows a preview button. */
   onPreview?: (id: string) => void;
   /** Max bytes per file. A batch containing a bigger file is rejected whole. */
   maxSize?: number;
@@ -331,18 +345,28 @@ export const InputFileUpload = forwardRef<
       id,
       className,
       boxClassName,
+      'aria-describedby': ariaDescribedBy,
+      'aria-labelledby': ariaLabelledBy,
       ...rest
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const inputId = id ?? generatedId;
-
     const [isDragOver, setIsDragOver] = useState(false);
     const [rejection, setRejection] = useState<string | null>(null);
 
+    // A rejected drop is an error the field owns rather than one the consumer
+    // passed, but it reaches the shell and the screen reader the same way.
     const message = error ?? rejection ?? undefined;
     const isError = !!message && !disabled;
+
+    const { fieldId, fieldProps } = useFieldA11y({
+      id,
+      error: message,
+      helperText,
+      disabled,
+      'aria-describedby': ariaDescribedBy,
+      'aria-labelledby': ariaLabelledBy,
+    });
 
     // One bad file rejects the whole batch: partially accepting a drop leaves the
     // user guessing which files made it through.
@@ -390,7 +414,7 @@ export const InputFileUpload = forwardRef<
           error={message}
           helperText={helperText}
           disabled={disabled}
-          htmlFor={inputId}
+          htmlFor={fieldId}
           boxClassName={cn(
             'h-auto min-h-31 items-stretch border-dashed p-0',
             !disabled && !isError && 'hover:border-ring hover:bg-brand-subtle',
@@ -399,7 +423,7 @@ export const InputFileUpload = forwardRef<
           )}
         >
           <label
-            htmlFor={inputId}
+            htmlFor={fieldId}
             onDragOver={handleDragOver}
             onDragLeave={() => setIsDragOver(false)}
             onDrop={handleDrop}
@@ -452,13 +476,12 @@ export const InputFileUpload = forwardRef<
 
           <input
             ref={ref}
-            id={inputId}
+            {...fieldProps}
             type="file"
             accept={accept}
             multiple={multiple}
             disabled={disabled}
             onChange={handleChange}
-            aria-invalid={isError || undefined}
             className="sr-only"
             {...rest}
           />

@@ -1,7 +1,7 @@
 {
   "name": "@echoit/itui.css",
   "description": "React component library built on Tailwind CSS v4 tokens. ESM-only, tree-shakable, TypeScript-first.",
-  "version": "1.0.15",
+  "version": "1.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -23,11 +23,13 @@
     ".": {
       "style": "./dist/index.css",
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/require-error.cjs"
     },
     "./icons": {
       "types": "./dist/icons/index.d.ts",
-      "import": "./dist/icons/index.js"
+      "import": "./dist/icons/index.js",
+      "require": "./dist/require-error.cjs"
     },
     "./dist/index.css": {
       "style": "./dist/index.css",
@@ -40,11 +42,15 @@
     "./package.json": "./package.json",
     "./*": {
       "types": "./dist/components/*/index.d.ts",
-      "import": "./dist/components/*/index.js"
+      "import": "./dist/components/*/index.js",
+      "require": "./dist/require-error.cjs"
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "API.md",
+    "TOKENS.md",
+    "ACCESSIBILITY.md"
   ],
   "sideEffects": [
     "**/*.css",
@@ -73,9 +79,10 @@
     "check:rsc": "tsx scripts/check-rsc.ts",
     "check:bundle": "tsx scripts/check-bundle.ts",
     "prebuild": "pnpm check:client && pnpm check:barrels && pnpm check:classes",
-    "build": "pnpm build:js && pnpm build:dts && pnpm build:paths",
+    "build": "pnpm build:js && pnpm build:cjs && pnpm build:dts && pnpm build:paths",
     "dev": "tsup --watch",
     "build:js": "tsup",
+    "build:cjs": "cpy src/require-error.cjs dist --flat",
     "build:dts": "tsc -p tsconfig.components.json && tsx scripts/build-icon-types.ts",
     "build:paths": "tsx scripts/fix-esm-paths.ts",
     "build:css": "cpy src/styles/global.css dist/styles/global.css",

@@ -203,15 +203,21 @@ const widthClass: Record<SpacingStep, string> = {
 
 // ─── Spacing ──────────────────────────────────────────────────────────────────
 
-/*
-  Defaults to `lg` (16px) rather than the middle step Radius and Shadow default
-  to: `none` — Figma's first variant — renders nothing at all, and 12px is an
-  arbitrary pick for a spacer. 16px is the value the system itself leans on, from
-  the mobile grid margin to the standard card padding.
-
-  `shrink-0` on both axes: a spacer that a flex parent is free to compress is not
-  measuring anything. aria-hidden because it carries no content.
-*/
+/**
+ * Holds one step of the ITUI spacing scale open. This is a token primitive, not
+ * a layout: an `aria-hidden` box with a fixed height — or width, with
+ * `axis="horizontal"` — and no content of its own. Reach for it where `gap` and
+ * padding cannot, such as between siblings that share no flex parent;
+ * `SPACING_PX` gives the same steps as numbers.
+ *
+ * Defaults to `lg` (16px) rather than the middle step Radius and Shadow default
+ * to: `none` — Figma's first variant — renders nothing at all, and 12px is an
+ * arbitrary pick for a spacer. 16px is the value the system itself leans on, from
+ * the mobile grid margin to the standard card padding.
+ *
+ * `shrink-0` on both axes: a spacer that a flex parent is free to compress is not
+ * measuring anything. aria-hidden because it carries no content.
+ */
 const Spacing = forwardRef<HTMLDivElement, SpacingProps>(
   ({ className, size = 'lg', axis = 'vertical', asChild = false, ...props }, ref) => {
     const Component = asChild ? Slot : 'div';

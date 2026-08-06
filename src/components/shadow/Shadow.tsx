@@ -136,11 +136,17 @@ export const shadowClass: Record<
 
 // ─── Shadow ───────────────────────────────────────────────────────────────────
 
-/*
-  Defaults to downwards/md rather than Figma's first variant (Downwards/Sm):
-  downwards is the direction three of the six already-shipped tokens use, and md
-  is the middle step. Same kind of call Radius makes defaulting to `md`.
-*/
+/**
+ * Casts one step of the ITUI elevation ramp. This is a token primitive, not a
+ * surface: it paints a `shadow-*` class and nothing else, so the element needs
+ * a background of its own — or pass `asChild` to shadow one that has it. Use it
+ * when elevation has to come from the ramp rather than from a literal
+ * `shadow-[0_4px_…]`; `SHADOW_OFFSET` gives the same steps as numbers.
+ *
+ * Defaults to downwards/md rather than Figma's first variant (Downwards/Sm):
+ * downwards is the direction three of the six already-shipped tokens use, and md
+ * is the middle step. Same kind of call Radius makes defaulting to `md`.
+ */
 const Shadow = forwardRef<HTMLDivElement, ShadowProps>(
   (
     { className, direction = 'downwards', size = 'md', asChild = false, ...props },
