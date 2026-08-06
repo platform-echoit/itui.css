@@ -114,6 +114,46 @@ say.
 
 ---
 
+## Next.js / React Server Components
+
+Every component that needs state, refs, effects or event handlers carries its own `"use client"`
+banner — 36 modules currently do. Importing any of them from a Server Component works as-is, with
+no boundary of your own:
+
+```tsx
+// app/page.tsx — a Server Component, no "use client" needed
+import { Button, Card, Table, Select, Dialog } from '@echoit/itui.css';
+```
+
+Load the stylesheet once from the root layout's CSS, same as [step 2](#2-load-the-styles):
+
+```css
+/* app/globals.css */
+@import 'tailwindcss';
+@import '@echoit/itui.css';
+```
+
+```tsx
+// app/layout.tsx
+import './globals.css';
+```
+
+Two things this does **not** do for you:
+
+- **Your own file still needs `"use client"` when you write a handler.** Passing a function across
+  the server/client boundary — `onClick`, `onValueChange`, `onOpenChange` — is what React rejects,
+  and it rejects it no matter which library the prop belongs to. The banner belongs on the file
+  that defines the handler.
+- **Subpath imports still carry no CSS.** The [callout in step 2](#2-load-the-styles) applies to
+  App Router exactly as it does everywhere else.
+
+The boundary is a build gate rather than a convention: `check:client` rejects a module that uses
+client-only React or hands a handler to a DOM prop without declaring itself, and `check:rsc` packs
+the tarball and runs a real `next build` over a fixture that renders **every** export. Both run in
+CI.
+
+---
+
 ## Components
 
 Prop tables live in the [API reference][api] — every export, read straight out of the source.
@@ -504,7 +544,9 @@ Requires support for CSS custom properties and `oklch()` color.
   keeping it a peer means you get one copy of the React types, not a second one nested here
 - **Node.js 18+**
 - **An ESM-capable bundler.** The package is `"type": "module"` and ships **ESM only** — there
-  is no CommonJS build, so `require('@echoit/itui.css')` does not work
+  is no CommonJS build, so `require('@echoit/itui.css')` does not work. It throws
+  `@echoit/itui.css is ESM-only …` rather than a resolution error, so the message says what to do:
+  `import` from an ESM module, or `await import('@echoit/itui.css')` from CommonJS
 
 ---
 

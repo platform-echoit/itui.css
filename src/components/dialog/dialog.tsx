@@ -5,6 +5,13 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { cn } from '../../lib/utils';
 import XRegularIcon from '../../icons/ITUI/x/XRegularIcon';
 
+/**
+ * The primitive you compose freely — `Modal`, `Popup` and `BottomSheet` are
+ * ready-made shapes built on it. Four different designs, not four versions of
+ * one, so none of them is deprecated.
+ *
+ * @see https://github.com/platform-echoit/itui.css#picking-between-similar-names
+ */
 function Dialog({
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {

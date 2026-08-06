@@ -3,8 +3,19 @@ import * as TabsPrimitive from '@radix-ui/react-tabs';
 
 import { cn } from '../../lib/utils';
 
+/*
+  This family predates the design system. It paints itself with raw `slate-*`
+  palette classes, so it answers to neither the ITUI tokens nor the consumer's
+  dark mode — `Tab` is the component drawn from the Figma spec. Kept exported so
+  existing screens keep compiling; every part carries `@deprecated` so
+  autocomplete says what the README's "Picking between similar names" table
+  already says.
+*/
+
+/** @deprecated Use `Tab` — this one ignores your theme and your dark mode. */
 const Tabs = TabsPrimitive.Root;
 
+/** @deprecated Use `TabList` (it also carries the `type` variant). */
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
@@ -20,6 +31,7 @@ const TabsList = React.forwardRef<
 ));
 TabsList.displayName = TabsPrimitive.List.displayName;
 
+/** @deprecated Use `TabTrigger` (it also takes `iconLeft` / `iconRight`). */
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
@@ -35,6 +47,7 @@ const TabsTrigger = React.forwardRef<
 ));
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
+/** @deprecated Use `TabContent`. */
 const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>

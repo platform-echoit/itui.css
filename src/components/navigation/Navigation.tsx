@@ -22,6 +22,13 @@ import { cn } from '../../lib/utils';
   ─────────────────────────────────────────────────────────────────────────────
 */
 
+/*
+  V1 of the mobile bars. `NavigationV2` implements the same two bars with richer
+  top-bar slots and `asChild` support, and is the one the README points at — so
+  every export here carries `@deprecated`. Nothing is removed: existing screens
+  keep compiling, they just get told where the current version lives.
+*/
+
 // ─── TopNavigation (app bar) ──────────────────────────────────────────────────
 
 export interface TopNavigationProps
@@ -34,6 +41,7 @@ export interface TopNavigationProps
   right?: ReactNode;
 }
 
+/** @deprecated Use `TopNavigationV2` — same bar, plus `asChild` on the slots. */
 export const TopNavigation = forwardRef<HTMLElement, TopNavigationProps>(
   ({ left, title, right, className, ...rest }, ref) => (
     <header
@@ -62,6 +70,7 @@ TopNavigation.displayName = 'TopNavigation';
 
 export interface BottomNavigationProps extends HTMLAttributes<HTMLElement> {}
 
+/** @deprecated Use `BottomNavigationV2`. */
 export const BottomNavigation = forwardRef<HTMLElement, BottomNavigationProps>(
   ({ className, children, ...rest }, ref) => (
     <nav
@@ -87,6 +96,7 @@ export interface BottomNavigationItemProps
   active?: boolean;
 }
 
+/** @deprecated Use `BottomNavigationItemV2`. */
 export const BottomNavigationItem = forwardRef<
   HTMLButtonElement,
   BottomNavigationItemProps

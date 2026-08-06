@@ -104,6 +104,12 @@ export interface BottomSheetProps {
   onCloseAutoFocus?: (event: Event) => void;
 }
 
+/**
+ * The mobile sheet that slides up from the bottom edge. Same family as `Dialog`
+ * / `Modal` / `Popup`, but a distinct design rather than a newer version.
+ *
+ * @see https://github.com/platform-echoit/itui.css#picking-between-similar-names
+ */
 export function BottomSheet({
   open,
   defaultOpen,

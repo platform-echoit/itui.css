@@ -81,6 +81,24 @@ export type TabType = 'default' | 'line' | 'segment' | 'pill';
 /** Set by `TabList`, read by every `TabTrigger` under it — Figma pins the variant on the list frame. */
 const TabTypeContext = createContext<TabType>('default');
 
+/*
+  Radix owns the real tabs context, and its error names Radix's own parts:
+  an orphaned `<TabTrigger>` throws "`TabsTrigger` must be used within `Tabs`".
+  Neither name is one the caller typed, and `Tabs` is a *different* export of
+  this library — the legacy one the README tells you to avoid — so the message
+  reads as advice to switch to it. `createContextScope` takes no display names
+  from the outside, so the only way to name our own parts is to check first and
+  throw before Radix gets the chance.
+*/
+const TabRootContext = createContext(false);
+
+function useTabRootGuard(component: string) {
+  const insideRoot = useContext(TabRootContext);
+  if (!insideRoot) {
+    throw new Error(`\`${component}\` must be used within \`Tab\``);
+  }
+}
+
 const triggerTypeMap: Record<TabType, string> = {
   default: '',
   // border-transparent on every trigger, so only the colour changes when selected.
@@ -103,13 +121,15 @@ export interface TabProps
 
 export const Tab = forwardRef<ComponentRef<typeof RadixTabs.Root>, TabProps>(
   ({ className, ...props }, ref) => (
-    // Figma draws the list alone, so the list ↔ panel gap is an implementation choice:
-    // spacing/sm, the same token the list uses between triggers.
-    <RadixTabs.Root
-      ref={ref}
-      className={cn('flex w-full flex-col gap-2', className)}
-      {...props}
-    />
+    <TabRootContext.Provider value={true}>
+      {/* Figma draws the list alone, so the list ↔ panel gap is an implementation choice:
+          spacing/sm, the same token the list uses between triggers. */}
+      <RadixTabs.Root
+        ref={ref}
+        className={cn('flex w-full flex-col gap-2', className)}
+        {...props}
+      />
+    </TabRootContext.Provider>
   ),
 );
 Tab.displayName = 'Tab';
@@ -125,18 +145,21 @@ export interface TabListProps
 export const TabList = forwardRef<
   ComponentRef<typeof RadixTabs.List>,
   TabListProps
->(({ type = 'default', className, ...props }, ref) => (
-  <TabTypeContext.Provider value={type}>
-    <RadixTabs.List
-      ref={ref}
-      className={cn(
-        'flex w-full items-center justify-center gap-2 rounded-lg',
-        className,
-      )}
-      {...props}
-    />
-  </TabTypeContext.Provider>
-));
+>(({ type = 'default', className, ...props }, ref) => {
+  useTabRootGuard('TabList');
+  return (
+    <TabTypeContext.Provider value={type}>
+      <RadixTabs.List
+        ref={ref}
+        className={cn(
+          'flex w-full items-center justify-center gap-2 rounded-lg',
+          className,
+        )}
+        {...props}
+      />
+    </TabTypeContext.Provider>
+  );
+});
 TabList.displayName = 'TabList';
 
 // ─── TabTrigger ─────────────────────────────────────────────────────────────
@@ -169,6 +192,7 @@ export const TabTrigger = forwardRef<
   ComponentRef<typeof RadixTabs.Trigger>,
   TabTriggerProps
 >(({ className, children, iconLeft, iconRight, ...props }, ref) => {
+  useTabRootGuard('TabTrigger');
   const type = useContext(TabTypeContext);
   return (
     <RadixTabs.Trigger
@@ -204,16 +228,19 @@ export interface TabContentProps
 export const TabContent = forwardRef<
   ComponentRef<typeof RadixTabs.Content>,
   TabContentProps
->(({ className, ...props }, ref) => (
-  // Figma draws no panel, so this only carries the focus ring Radix needs — the panel is
-  // reachable by keyboard once tabbed out of the list.
-  <RadixTabs.Content
-    ref={ref}
-    className={cn(
-      'rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-brand',
-      className,
-    )}
-    {...props}
-  />
-));
+>(({ className, ...props }, ref) => {
+  useTabRootGuard('TabContent');
+  return (
+    // Figma draws no panel, so this only carries the focus ring Radix needs — the panel is
+    // reachable by keyboard once tabbed out of the list.
+    <RadixTabs.Content
+      ref={ref}
+      className={cn(
+        'rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-brand',
+        className,
+      )}
+      {...props}
+    />
+  );
+});
 TabContent.displayName = 'TabContent';

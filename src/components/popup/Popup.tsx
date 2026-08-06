@@ -66,6 +66,12 @@ function ImagePlaceholder({ className }: { className?: string }) {
   );
 }
 
+/**
+ * The announcement card: image slot, body, and an optional "don't show again".
+ * Not a variant of `Modal` — a different design with a different job.
+ *
+ * @see https://github.com/platform-echoit/itui.css#picking-between-similar-names
+ */
 export function Popup({
   open,
   defaultOpen,

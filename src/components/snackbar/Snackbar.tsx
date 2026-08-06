@@ -92,6 +92,13 @@ export interface SnackbarActionProps
 
 // ─── Snackbar ─────────────────────────────────────────────────────────────────
 
+/**
+ * The bottom-centre bar with an optional action link. Not a replacement for
+ * `Toast` — the two are designed to coexist, each rendering into its own
+ * viewport, so mount `<Toaster />` and `<SnackbarToaster />` both.
+ *
+ * @see https://github.com/platform-echoit/itui.css#picking-between-similar-names
+ */
 export const Snackbar = forwardRef<HTMLDivElement, SnackbarProps>(
   ({ tone = 'light', icon, action, className, children, ...rest }, ref) => (
     <SnackbarToneContext.Provider value={tone}>

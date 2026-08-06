@@ -64,6 +64,13 @@ export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
   icon?: ReactNode;
 }
 
+/**
+ * The top-centre notification. `Snackbar` is not a rival — the two are designed
+ * to coexist, each with its own viewport, so mount `<Toaster />` and
+ * `<SnackbarToaster />` both.
+ *
+ * @see https://github.com/platform-echoit/itui.css#picking-between-similar-names
+ */
 export const Toast = forwardRef<HTMLDivElement, ToastProps>(
   (
     { tone = 'light', type = 'normal', icon, className, children, ...rest },

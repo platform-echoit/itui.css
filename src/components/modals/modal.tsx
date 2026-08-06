@@ -39,6 +39,12 @@ export interface ModalProps {
   className?: string;
 }
 
+/**
+ * The ready-made confirm dialog: title + body + two buttons. Reach for `Dialog`
+ * when you need to compose the content yourself.
+ *
+ * @see https://github.com/platform-echoit/itui.css#picking-between-similar-names
+ */
 export function Modal({
   open,
   defaultOpen,
