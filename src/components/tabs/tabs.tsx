@@ -12,10 +12,18 @@ import { cn } from '../../lib/utils';
   already says.
 */
 
-/** @deprecated Use `Tab` — this one ignores your theme and your dark mode. */
+/**
+ * The legacy tab root — it owns which tab is selected.
+ *
+ * @deprecated Use `Tab` — this one ignores your theme and your dark mode.
+ */
 const Tabs = TabsPrimitive.Root;
 
-/** @deprecated Use `TabList` (it also carries the `type` variant). */
+/**
+ * The legacy row of triggers.
+ *
+ * @deprecated Use `TabList` (it also carries the `type` variant).
+ */
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
@@ -31,7 +39,11 @@ const TabsList = React.forwardRef<
 ));
 TabsList.displayName = TabsPrimitive.List.displayName;
 
-/** @deprecated Use `TabTrigger` (it also takes `iconLeft` / `iconRight`). */
+/**
+ * One legacy tab.
+ *
+ * @deprecated Use `TabTrigger` (it also takes `iconLeft` / `iconRight`).
+ */
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
@@ -47,7 +59,11 @@ const TabsTrigger = React.forwardRef<
 ));
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
-/** @deprecated Use `TabContent`. */
+/**
+ * The legacy panel for the trigger with the same `value`.
+ *
+ * @deprecated Use `TabContent`.
+ */
 const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>

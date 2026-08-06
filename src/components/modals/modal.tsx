@@ -20,22 +20,31 @@ import { Button } from '../button';
 */
 
 export interface ModalProps {
+  /** Controlled open state. Pair it with `onOpenChange`, or use `defaultOpen`. */
   open?: boolean;
+  /** Open state for the uncontrolled case — the modal then owns it. */
   defaultOpen?: boolean;
+  /** Fires on every open and close, including Esc and the ✕. */
   onOpenChange?: (open: boolean) => void;
   /** Optional element that opens the modal (e.g. a Button). */
   trigger?: ReactNode;
+  /** Heading, and the modal's accessible name. */
   title: ReactNode;
   /** Body — centered text, an Input, or any content. */
   children?: ReactNode;
+  /** Label of the cancel button. @default 'Cancel' */
   cancelText?: ReactNode;
+  /** Label of the confirm button. @default 'Confirm' */
   confirmText?: ReactNode;
+  /** Runs on cancel. It does not close the modal — do that yourself. */
   onCancel?: () => void;
+  /** Runs on confirm. It does not close the modal — do that yourself. */
   onConfirm?: () => void;
   /** Render only the confirm button (Figma "SingleButton"). */
   singleButton?: boolean;
   /** Replace the default footer buttons entirely. */
   footer?: ReactNode;
+  /** Lands on the modal panel, not on the scrim. */
   className?: string;
 }
 

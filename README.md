@@ -513,13 +513,16 @@ There is no hosted docs site yet. Until there is, these are the sources of truth
 - **[API.md][api]** — every export with its props, defaults and JSDoc. Generated from the source
   on each build and checked in CI, so it is the one page that cannot be out of date.
 - **[TOKENS.md](https://github.com/platform-echoit/itui.css/blob/main/TOKENS.md)** — full token reference.
+- **[ACCESSIBILITY.md](https://github.com/platform-echoit/itui.css/blob/main/ACCESSIBILITY.md)** —
+  per component: what takes focus, which keys do what, and which ARIA the component owns versus
+  the ARIA you still have to supply.
 - **This README** — setup, theming, and how the compound components fit together.
 - **Types** — every component ships `.d.ts` with the same JSDoc, so your editor has all of the
   above without leaving the file.
 - **Storybook** — `pnpm dev` in `apps/storybook` for a live component gallery.
 
-> `API.md` and `TOKENS.md` are not inside the npm tarball — `files` ships `dist` only — so the
-> links above point at GitHub.
+> All three Markdown files are in the npm tarball as well, so `node_modules/@echoit/itui.css/`
+> answers these questions offline. The links point at GitHub for reading them in a browser.
 
 ---
 

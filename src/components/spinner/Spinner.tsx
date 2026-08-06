@@ -6,7 +6,9 @@ import { cn } from '../../lib/utils';
 export type SpinnerSize = 'sm' | 'md' | 'lg' | 'icon';
 
 export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement> {
+  /** One of the four named sizes (48 / 32 / 20 / 16px), or a pixel number. */
   size?: SpinnerSize | number;
+  /** Caption under the ring. Its presence switches to the stacked layout. */
   description?: string;
   /** Screen-reader name for the `role="status"` region. */
   label?: string;
@@ -45,6 +47,11 @@ const sizeClasses: Record<SpinnerSize, string> = {
 };
 
 // ─── Spinner ──────────────────────────────────────────────────────────────────
+/**
+ * The indeterminate loading ring. It is a live `role="status"` region, so it is
+ * announced when it appears — name it with `label` when the surrounding text
+ * does not already say what is loading.
+ */
 export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(
   (
     {

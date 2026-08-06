@@ -56,7 +56,10 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   opts?: CarouselOptions;
   /** Embla plugins, e.g. autoplay. */
   plugins?: CarouselPlugin;
-  /** @default 'horizontal' — vertical needs an explicit height on the viewport. */
+  /**
+   * Which way the slides move, and which arrow keys drive them.
+   * @default 'horizontal' — vertical needs an explicit height on the viewport.
+   */
   orientation?: CarouselOrientation;
   /** Receives the Embla api once ready, for imperative control from outside. */
   setApi?: (api: CarouselApi) => void;
@@ -77,6 +80,12 @@ interface CarouselContextValue {
 
 const CarouselContext = createContext<CarouselContextValue | null>(null);
 
+/**
+ * The parent `Carousel`'s state and controls — the Embla api, the selected
+ * index, whether either direction can still scroll, and the scroll functions.
+ * Use it to build a control the library does not ship. Throws outside a
+ * `Carousel`.
+ */
 export function useCarousel() {
   const context = useContext(CarouselContext);
   if (!context) {
@@ -87,6 +96,12 @@ export function useCarousel() {
 
 // ─── Carousel ─────────────────────────────────────────────────────────────────
 
+/**
+ * A slider built on Embla. This is the root: it owns the engine and the
+ * keyboard handling, and shares both through context, so `CarouselContent`,
+ * `CarouselItem`, `CarouselIndicator` and the two arrow buttons all have to sit
+ * inside it. Reach for `opts` to configure Embla itself (`loop`, `align`).
+ */
 export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
   (
     {
@@ -228,6 +243,10 @@ CarouselContent.displayName = 'CarouselContent';
 
 // ─── CarouselItem ─────────────────────────────────────────────────────────────
 
+/**
+ * One slide. It is full-width by default — override the `basis-*` class to show
+ * more than one slide at a time.
+ */
 export const CarouselItem = forwardRef<
   HTMLDivElement,
   HTMLAttributes<HTMLDivElement>
@@ -255,7 +274,7 @@ CarouselItem.displayName = 'CarouselItem';
 
 export interface CarouselIndicatorProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
-  /** @default 'pill' */
+  /** Indicator shape — `pill` widens the active one, `dot` keeps it round. @default 'pill' */
   type?: CarouselType;
   /** Render the pill-shaped surface behind the indicators. @default false */
   background?: boolean;
@@ -380,6 +399,11 @@ function ArrowIcon({ direction }: { direction: 'prev' | 'next' }) {
 // follow Button's text colour — including disabled:text-neutral-disabled.
 const ARROW_CLASS = 'absolute rounded-full [&_path]:fill-current';
 
+/**
+ * The "go back" arrow, positioned against the carousel and disabled at the first
+ * slide. It is a `Button`, so every `Button` prop still applies — but its
+ * `onClick` is owned by the carousel.
+ */
 export const CarouselPrevious = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'secondary', size = 'icon', ...rest }, ref) => {
     const { orientation, scrollPrev, canScrollPrev } = useCarousel();
@@ -402,6 +426,11 @@ export const CarouselPrevious = forwardRef<HTMLButtonElement, ButtonProps>(
 
 CarouselPrevious.displayName = 'CarouselPrevious';
 
+/**
+ * The "go forward" arrow, positioned against the carousel and disabled at the
+ * last slide. It is a `Button`, so every `Button` prop still applies — but its
+ * `onClick` is owned by the carousel.
+ */
 export const CarouselNext = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'secondary', size = 'icon', ...rest }, ref) => {
     const { orientation, scrollNext, canScrollNext } = useCarousel();

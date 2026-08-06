@@ -487,11 +487,15 @@ function Toolbar({
 // ─── InputTextFormatting ──────────────────────────────────────────────────────
 
 export interface InputTextFormattingProps {
+  /** Text above the box — it is what names the field for assistive technology. */
   label?: string;
+  /** Message under the box. It also paints the error border and sets `aria-invalid`. */
   error?: string;
+  /** Hint under the box. `error` replaces it while the field is invalid. */
   helperText?: string;
   /** id of the editable area; one is generated when omitted */
   id?: string;
+  /** Ghost text shown while the editor is empty. */
   placeholder?: string;
   /** Serialized state to open with — `JSON.stringify(editorState.toJSON())` */
   defaultValue?: string;
@@ -509,6 +513,7 @@ export interface InputTextFormattingProps {
   linkPromptLabel?: string;
   /** Overrides for the toolbar's tooltips, `aria-label`s and dropdown rows */
   labels?: Partial<InputTextFormattingLabels>;
+  /** Extra classes on the outer wrapper — label, box and message together. */
   className?: string;
   /** Extra classes on the bordered box */
   boxClassName?: string;

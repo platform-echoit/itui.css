@@ -35,15 +35,21 @@ export interface DateHeaderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   /** Center slot: the caption text, or the year/month dropdowns. */
   children?: ReactNode;
+  /** Runs on the left caret. */
   onPrevious?: () => void;
+  /** Runs on the right caret. */
   onNext?: () => void;
+  /** Greys out the left caret — for the first month of an allowed range. */
   previousDisabled?: boolean;
+  /** Greys out the right caret — for the last month of an allowed range. */
   nextDisabled?: boolean;
-  /** @default true */
+  /** Render the left caret at all. Hidden, it takes no space and the caption re-centres. @default true */
   showPrevious?: boolean;
-  /** @default true */
+  /** Render the right caret at all. Hidden, it takes no space and the caption re-centres. @default true */
   showNext?: boolean;
+  /** Accessible name of the left caret — the icon has no text. @default 'Previous month' */
   previousLabel?: string;
+  /** Accessible name of the right caret. @default 'Next month' */
   nextLabel?: string;
 }
 

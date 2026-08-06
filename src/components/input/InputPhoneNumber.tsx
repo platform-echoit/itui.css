@@ -32,9 +32,11 @@ export interface InputPhoneNumberProps
   extends Omit<InputTextProps, 'value' | 'defaultValue' | 'type'> {
   /** Digits only, no separators — e.g. `01012345678` */
   value?: string;
+  /** Starting digits for the uncontrolled case — same digits-only shape as `value`. */
   defaultValue?: string;
   /** Receives the digits only, whatever `format` is displayed */
   onValueChange?: (digits: string) => void;
+  /** How the digits are displayed: bare, or split as `010-1234-5678`. @default 'raw' */
   format?: 'raw' | 'dashed';
   /** Shown on blur when the value is not a valid KR mobile number */
   invalidMessage?: string;

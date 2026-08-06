@@ -30,14 +30,21 @@ export interface InputTagProps
     InputHTMLAttributes<HTMLInputElement>,
     'value' | 'defaultValue' | 'onChange' | 'prefix'
   > {
+  /** Controlled list of tags. */
   value?: string[];
+  /** Starting tags for the uncontrolled case. */
   defaultValue?: string[];
+  /** Fires with the whole next list, not just the tag that changed. */
   onValueChange?: (tags: string[]) => void;
+  /** Cap on the list. At the cap the field stops accepting new tags. */
   maxTags?: number;
   /** Return a message to reject the tag, or `null` to accept it */
   validate?: (tag: string) => string | null;
+  /** Text above the box — it is what names the field for assistive technology. */
   label?: string;
+  /** Message under the box. It also paints the error border and sets `aria-invalid`. */
   error?: string;
+  /** Hint under the box. `error` replaces it while the field is invalid. */
   helperText?: string;
   /** Extra classes on the bordered box */
   boxClassName?: string;

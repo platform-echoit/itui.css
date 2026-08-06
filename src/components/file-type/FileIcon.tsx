@@ -1,9 +1,17 @@
 import { FileType, type FileTypeLogo } from './FileType';
 
 export type FileIconProps = {
+  /** Width in px. Defaults to `FileType`'s own size. */
   width?: number;
+  /** Height in px. Defaults to `FileType`'s own size. */
   height?: number;
+  /**
+   * What the file is — an extension (`"xlsx"`), a MIME type
+   * (`"application/pdf"`), or a category alias (`"image"`, `"archive"`). Case
+   * does not matter, and anything unrecognised falls back to the text icon.
+   */
   iconType?: string;
+  /** Extra classes on the rendered `<svg>`. */
   className?: string;
 };
 
@@ -117,6 +125,11 @@ function resolveIcon(iconType: string): FileTypeLogo {
   return FALLBACK;
 }
 
+/**
+ * `FileType`, picked for you: hand it whatever string the file gives you — an
+ * extension, a MIME type, a category — and it resolves the right coloured logo,
+ * falling back to the text icon rather than rendering nothing.
+ */
 export const FileIcon = ({
   iconType,
   width,

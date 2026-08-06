@@ -46,7 +46,14 @@ export type CheckboxSize = 'sm' | 'md';
 
 export interface CheckboxProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'> {
+  /** Box and label size: 20px/`text-sm` or 16px/`text-xs`. */
   size?: CheckboxSize;
+  /**
+   * Text beside the box. The input already sits inside a `<label>`, so passing it
+   * here both names the checkbox and makes the text part of its hit target —
+   * prefer it over wrapping a label of your own. Without it, supply an
+   * `aria-label`, or the checkbox has no accessible name.
+   */
   label?: ReactNode;
   /**
    * Fires with the next checked state — the same shape as `Radio`, `Toggle`,
@@ -69,6 +76,12 @@ const labelTypeMap: Record<CheckboxSize, string> = {
   sm: 'text-xs leading-5 tracking-sm',
 };
 
+/**
+ * A checkbox over a real `<input type="checkbox">` — the visual box is CSS on a
+ * visually-hidden input, so forms, `required`, and `react-hook-form`'s
+ * `{...field}` all work unchanged. Take the value from `onCheckedChange` for the
+ * boolean, or from `onChange` for the native event; both fire.
+ */
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {

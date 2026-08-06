@@ -42,9 +42,13 @@ export type TagSize = 'lg' | 'md' | 'sm';
 
 export interface TagProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
+  /** `outline` is the bordered tag on the page background, `filled` the tinted one. */
   variant?: TagVariant;
+  /** Height: 32 / 28 / 24px. */
   size?: TagSize;
+  /** Paints the chosen state. It is presentation only — you own the selection. */
   selected?: boolean;
+  /** Greys the tag out and stops it responding to clicks. */
   disabled?: boolean;
   /** When provided, the tag behaves as a button. */
   onClick?: () => void;
@@ -52,6 +56,7 @@ export interface TagProps
   onClose?: () => void;
   /** Accessible label for the close button. */
   closeLabel?: string;
+  /** The tag's label. */
   children: ReactNode;
 }
 
@@ -86,6 +91,12 @@ function boxClasses(
   );
 }
 
+/**
+ * A status or tier label — the component to reach for instead of `Badge`, which
+ * is the notification counter and clips text. Like `Chip`, it only becomes
+ * interactive when you give it `onClick` or `onClose`, so a plain `<Tag>` still
+ * renders from a Server Component.
+ */
 export const Tag = forwardRef<HTMLDivElement, TagProps>(
   (
     {

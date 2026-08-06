@@ -31,6 +31,7 @@ export interface PaginationProps
   page: number;
   /** Total number of pages. */
   total: number;
+  /** Fires with the requested page. `page` is controlled, so update it here. */
   onPageChange?: (page: number) => void;
   /** Pages shown on each side of the current page. @default 1 */
   siblingCount?: number;
@@ -124,6 +125,11 @@ function CellButton({ active, disabled, ariaLabel, onClick, children }: CellButt
   );
 }
 
+/**
+ * The page bar: previous/next, jump-to-edge, and a run of page numbers that
+ * collapses into ellipses once `total` outgrows the row. It is fully controlled
+ * — it renders `page` and reports the next one, but never moves on its own.
+ */
 export const Pagination = forwardRef<HTMLElement, PaginationProps>(
   (
     {

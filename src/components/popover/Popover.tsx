@@ -41,6 +41,8 @@ Popover.displayName = 'Popover';
 */
 
 /**
+ * The popover root under its old name — identical to `Popover`.
+ *
  * @deprecated Renamed to `Popover` — the root is now spelled like `Dialog` /
  * `Tabs` / `Tooltip`, and the panel that held the `Popover` name is now
  * `PopoverPanel`. The rename landed in `1.0.15`; `1.1.0` is the release that
@@ -49,6 +51,7 @@ Popover.displayName = 'Popover';
  */
 export const PopoverRoot = Popover;
 
+/** The element that opens the popover. Pass `asChild` to keep your own button. */
 export function PopoverTrigger({
   className,
   ...props
@@ -90,6 +93,10 @@ export function PopoverAnchor({
 }
 PopoverAnchor.displayName = 'PopoverAnchor';
 
+/**
+ * Renders popover content into `document.body`. `PopoverContent` portals itself
+ * already, so this is only for hand-assembled popovers.
+ */
 export function PopoverPortal(
   props: ComponentProps<typeof PopoverPrimitive.Portal>,
 ) {
@@ -97,6 +104,7 @@ export function PopoverPortal(
 }
 PopoverPortal.displayName = 'PopoverPortal';
 
+/** Closes the popover from inside it. Wrap your own button with `asChild`. */
 export function PopoverClose(
   props: ComponentProps<typeof PopoverPrimitive.Close>,
 ) {
@@ -142,10 +150,17 @@ export interface PopoverContentProps
    * @example "bottom-start" | "top-center" | "right-end"
    */
   placement?: PopoverPlacement;
+  /** Which edge of the trigger the panel opens from. @default 'bottom' */
   side?: Side;
+  /** How the panel lines up along that edge. @default 'start' */
   align?: Align;
 }
 
+/**
+ * The floating panel: portalled, positioned and styled. Reach for `placement`
+ * rather than `side` + `align` — it is the same pair in one prop, and it wins
+ * when both are given.
+ */
 export function PopoverContent({
   className,
   sideOffset = 2,

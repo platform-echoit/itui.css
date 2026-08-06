@@ -396,9 +396,11 @@ export const colorBgClass: Record<ColorName, string> = {
 
 /** One ramp as the boards present it: its display name and its steps, in order. */
 export interface ColorRampSpec {
+  /** The ramp's token prefix, e.g. `"brand-sky"`. */
   ramp: ColorRamp;
   /** The heading Figma gives the ramp on its board. */
   label: string;
+  /** The steps this ramp draws, lightest first — not every ramp ships all ten. */
   steps: readonly ColorStep[];
 }
 
@@ -456,10 +458,17 @@ export interface ColorsProps extends HTMLAttributes<HTMLDivElement> {
   asChild?: boolean;
 }
 
-/*
-  Defaults to `brand-sky-500`, the ITUI primary — the one swatch every board
-  leads with and the colour the system is built around.
-*/
+/**
+ * Paints one named swatch of the ITUI palette as a background. This is a token
+ * primitive, not a surface: it applies a `bg-*` class and nothing else, so it
+ * needs a size — or pass `asChild` to colour an element that already has one.
+ * Use it when a colour has to come from the palette rather than from a literal
+ * hex; `COLOR_HEX` gives the same swatches as hex strings, and `COLOR_RAMPS`
+ * lists which steps each ramp actually ships.
+ *
+ * Defaults to `brand-sky-500`, the ITUI primary — the one swatch every board
+ * leads with and the colour the system is built around.
+ */
 const Colors = forwardRef<HTMLDivElement, ColorsProps>(
   ({ className, name = 'brand-sky-500', asChild = false, ...props }, ref) => {
     const Component = asChild ? Slot : 'div';

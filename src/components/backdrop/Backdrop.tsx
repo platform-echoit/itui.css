@@ -65,6 +65,12 @@ const positionClass: Record<BackdropPosition, string> = {
   absolute: 'absolute',
 };
 
+/**
+ * The scrim behind an overlay: a full-bleed dim or blur layer at `z-50`. It is
+ * presentation only — no focus trap, no dismiss, no state — so reach for it when
+ * you are building your own overlay. `Dialog`, `Modal`, `Popup` and `BottomSheet`
+ * already paint their own and need no `Backdrop` of yours.
+ */
 const Backdrop = forwardRef<HTMLDivElement, BackdropProps>(
   (
     { className, variant = 'dim', position = 'fixed', asChild = false, ...props },

@@ -51,7 +51,14 @@ export type InputV2FieldType =
 
 /** Props of `InputV2` — a union discriminated by `fieldType`. */
 export type InputV2Props =
-  | ({ fieldType?: 'text' } & InputTextProps)
+  | ({
+      /**
+       * Which field to render. It is the discriminant of this union, so setting
+       * it narrows the rest of the props to that field's own — omit it and you
+       * get the plain single-line field.
+       */
+      fieldType?: 'text';
+    } & InputTextProps)
   | ({ fieldType: 'search' } & InputSearchProps)
   | ({ fieldType: 'phone' } & InputPhoneNumberProps)
   | ({ fieldType: 'date' } & InputDateProps)

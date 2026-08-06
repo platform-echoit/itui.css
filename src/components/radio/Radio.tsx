@@ -42,6 +42,11 @@ export type RadioSize = 'md' | 'sm';
 export interface RadioGroupProps
   extends ComponentPropsWithoutRef<typeof RadixRadioGroup.Root> {}
 
+/**
+ * The container that owns which `Radio` is chosen, via `value` /
+ * `onValueChange`. Radix handles roving focus, so arrow keys move between the
+ * options and Tab moves past the whole group.
+ */
 export const RadioGroup = forwardRef<
   ComponentRef<typeof RadixRadioGroup.Root>,
   RadioGroupProps
@@ -73,11 +78,17 @@ const labelTypeMap: Record<RadioSize, string> = {
 
 export interface RadioProps
   extends ComponentPropsWithoutRef<typeof RadixRadioGroup.Item> {
+  /** Dot and label size: 20px/`text-sm` or 16px/`text-xs`. */
   size?: RadioSize;
   /** Optional label rendered next to the radio. */
   children?: ReactNode;
 }
 
+/**
+ * One option of a `RadioGroup` — it has to sit inside one. The label comes from
+ * `children` rather than from a `label` prop, which is the Radix idiom (and the
+ * one place the field family differs from `Checkbox`).
+ */
 export const Radio = forwardRef<
   ComponentRef<typeof RadixRadioGroup.Item>,
   RadioProps

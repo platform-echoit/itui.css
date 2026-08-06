@@ -47,7 +47,10 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "API.md",
+    "TOKENS.md",
+    "ACCESSIBILITY.md"
   ],
   "sideEffects": [
     "**/*.css",

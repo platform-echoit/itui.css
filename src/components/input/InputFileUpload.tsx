@@ -56,7 +56,9 @@ export type InputFileUploadStatus = 'uploading' | 'success' | 'error' | 'done';
 export interface InputFileUploadItemData {
   /** React key, and the id handed back to `onRemove` / `onDownload` / `onPreview` */
   id: string;
+  /** File name shown on the row. */
   name: string;
+  /** Where the upload stands. It is yours to advance — the field does no uploading. */
   status?: InputFileUploadStatus;
   /** Message under the row — only rendered while `status` is `'error'` */
   error?: string;
@@ -119,13 +121,19 @@ function RowAction({
 export interface InputFileUploadItemProps
   extends Omit<HTMLAttributes<HTMLLIElement>, 'children'>,
     Omit<InputFileUploadItemData, 'id'> {
+  /** Greys the row out and stops its action buttons responding. */
   disabled?: boolean;
   /** Each action only renders when its handler is given — no dead buttons. */
   onRemove?: () => void;
+  /** Renders the download button and runs on it. */
   onDownload?: () => void;
+  /** Renders the preview button and runs on it. */
   onPreview?: () => void;
+  /** Accessible name of the remove button — it is icon-only. */
   removeLabel?: string;
+  /** Accessible name of the download button. */
   downloadLabel?: string;
+  /** Accessible name of the preview button. */
   previewLabel?: string;
 }
 
@@ -259,15 +267,21 @@ export interface InputFileUploadProps
     InputHTMLAttributes<HTMLInputElement>,
     'type' | 'value' | 'defaultValue' | 'onChange' | 'prefix' | 'children'
   > {
+  /** Text above the box — it is what names the field for assistive technology. */
   label?: string;
+  /** Message under the box. It also paints the error border and sets `aria-invalid`. */
   error?: string;
+  /** Hint under the box. `error` replaces it while the field is invalid. */
   helperText?: string;
   /** Rows under the dropzone. `status` comes from the caller — see the note below. */
   files?: InputFileUploadItemData[];
   /** Fires with the files that passed `accept` / `maxSize` */
   onFilesAdded?: (files: File[]) => void;
+  /** Fires with a row's `id`. Given it, each row grows a remove button. */
   onRemove?: (id: string) => void;
+  /** Fires with a row's `id`. Given it, each row grows a download button. */
   onDownload?: (id: string) => void;
+  /** Fires with a row's `id`. Given it, each row grows a preview button. */
   onPreview?: (id: string) => void;
   /** Max bytes per file. A batch containing a bigger file is rejected whole. */
   maxSize?: number;

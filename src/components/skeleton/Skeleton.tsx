@@ -68,6 +68,11 @@ const variantClass: Record<SkeletonVariant, string> = {
   circle: 'size-15 rounded-full',
 };
 
+/**
+ * A loading placeholder in the shape of the content it stands in for. It carries
+ * its own default size — override it with `className` so the placeholder matches
+ * what will replace it, or the layout will jump when the data lands.
+ */
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
   (
     { variant = 'text', animation = 'wave', className, children, ...rest },
@@ -97,6 +102,10 @@ Skeleton.displayName = 'Skeleton';
 
 // ─── SkeletonText ─────────────────────────────────────────────────────────────
 
+/**
+ * A paragraph of `Skeleton` lines: an optional heading line, then body lines
+ * that close on a short one — the shape a block of text actually has.
+ */
 export const SkeletonText = forwardRef<HTMLDivElement, SkeletonTextProps>(
   (
     { lines = 4, heading = true, animation = 'wave', className, ...rest },

@@ -18,7 +18,9 @@ import { InputText, type InputTextProps } from './InputText';
 */
 
 export interface InputWithButtonProps extends Omit<InputTextProps, 'suffix'> {
+  /** Text on the trailing button. */
   buttonLabel: ReactNode;
+  /** Runs on the trailing button. The field's own value is not passed — read it yourself. */
   onButtonClick?: () => void;
   /** Disables only the button — the field stays editable */
   buttonDisabled?: boolean;

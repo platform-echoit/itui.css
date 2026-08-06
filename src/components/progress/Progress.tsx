@@ -191,6 +191,11 @@ function ProgressValue({
 
 // ─── Progress ─────────────────────────────────────────────────────────────────
 
+/**
+ * A determinate progress indicator, as a bar or a ring. It reports the fraction
+ * it is given — pass `value` with `max` and it does the percentage arithmetic,
+ * so `value={3} max={7}` works as well as `value={43}`.
+ */
 export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
   (
     {

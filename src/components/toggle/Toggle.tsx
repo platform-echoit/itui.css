@@ -47,6 +47,7 @@ const labelTypeMap: Record<ToggleSize, string> = {
 
 export interface ToggleProps
   extends ComponentPropsWithoutRef<typeof RadixSwitch.Root> {
+  /** Track size — the standard switch or the compact one. */
   size?: ToggleSize;
   /**
    * Text beside the switch, which also becomes its accessible name — the same
@@ -58,6 +59,11 @@ export interface ToggleProps
   label?: ReactNode;
 }
 
+/**
+ * An on/off switch. Unlike `Checkbox` it is not a form control — Radix renders a
+ * `<button role="switch">` — so read the value from `onCheckedChange` rather
+ * than from a form submission, and give it a `label` so it has a name.
+ */
 export const Toggle = forwardRef<
   ComponentRef<typeof RadixSwitch.Root>,
   ToggleProps

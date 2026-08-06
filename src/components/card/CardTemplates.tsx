@@ -41,7 +41,9 @@ function ImagePlaceholder({ className }: { className?: string }) {
 export type CardImagePosition = 'top' | 'bottom' | 'center' | 'left';
 
 export interface CardWithImageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+  /** Headline of the card. */
   title: ReactNode;
+  /** Supporting line under the title. Omit it for a title-only card. */
   description?: ReactNode;
   /** Image element (e.g. <img>). Falls back to a placeholder when omitted. */
   image?: ReactNode;
@@ -49,6 +51,12 @@ export interface CardWithImageProps extends Omit<HTMLAttributes<HTMLDivElement>,
   imagePosition?: CardImagePosition;
 }
 
+/**
+ * Ready-made card: an image slot plus a title and description, in the four
+ * arrangements the Figma template ships. Reach for the `Card` primitives instead
+ * when you need a layout this does not cover — these templates take content, not
+ * children.
+ */
 export const CardWithImage = forwardRef<HTMLDivElement, CardWithImageProps>(
   ({ title, description, image, imagePosition = 'top', className, ...rest }, ref) => {
     const isLeft = imagePosition === 'left';
@@ -106,7 +114,9 @@ CardWithImage.displayName = 'CardWithImage';
 export type CardActionTone = 'light' | 'dark';
 
 export interface CardWithActionProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+  /** Headline of the card. */
   title: ReactNode;
+  /** Supporting line under the title. */
   description?: ReactNode;
   /** Footer actions (e.g. Buttons). Rendered in a bordered footer, stretched equally. */
   actions?: ReactNode;
@@ -119,6 +129,11 @@ export interface CardWithActionProps extends Omit<HTMLAttributes<HTMLDivElement>
   image?: ReactNode;
 }
 
+/**
+ * Ready-made card: title, description and a footer of actions stretched to equal
+ * widths. The `dark` tone lays the same card over an image behind a scrim, which
+ * is why it drops the border and the footer divider.
+ */
 export const CardWithAction = forwardRef<HTMLDivElement, CardWithActionProps>(
   ({ title, description, actions, tone = 'light', image, className, ...rest }, ref) => {
     const isDark = tone === 'dark';
@@ -167,7 +182,9 @@ CardWithAction.displayName = 'CardWithAction';
 
 // ─── PricingCard ────────────────────────────────────────────────────────────
 
+/** One line of a `PricingCard`'s feature list. */
 export interface PricingFeature {
+  /** What the plan includes, e.g. `"Unlimited members"`. */
   label: ReactNode;
   /** false → shown muted with a disabled check (feature not included). @default true */
   included?: boolean;
@@ -176,11 +193,19 @@ export interface PricingFeature {
 export interface PricingCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   /** Optional highlight badge, e.g. "Most Popular". */
   badge?: ReactNode;
+  /** Plan name. */
   title: ReactNode;
+  /** Price, already formatted — the card does no currency work. */
   price: ReactNode;
+  /** The feature list, in order. Excluded lines stay in place, greyed out. */
   features: PricingFeature[];
 }
 
+/**
+ * Ready-made plan card: badge, plan name, price and a checked feature list. It
+ * carries no call to action — put the Button next to it, so one card can be a
+ * link, another a form submit.
+ */
 export const PricingCard = forwardRef<HTMLDivElement, PricingCardProps>(
   ({ badge, title, price, features, className, ...rest }, ref) => (
     <div ref={ref} className={cn(CARD_SHELL, 'flex flex-col', className)} {...rest}>

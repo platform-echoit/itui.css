@@ -38,6 +38,7 @@ export type FloatingButtonSize = 'sm' | 'md';
 
 export interface FloatingButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** 56px with a 28px icon, or 40px with a 20px one. @default 'md' */
   size?: FloatingButtonSize;
   /** Render the child element instead of a `<button>` — e.g. a router `<Link>`. */
   asChild?: boolean;
@@ -54,6 +55,11 @@ const sizeConfig: Record<FloatingButtonSize, { root: string; icon: string }> = {
 
 // ─── FloatingButton ───────────────────────────────────────────────────────────
 
+/**
+ * The round, shadowed action button that floats over content — a FAB. It draws
+ * only the button: pinning it to a corner is the page's job, and its icon child
+ * is recoloured and sized to match, so pass a bare icon rather than a wrapper.
+ */
 export const FloatingButton = forwardRef<
   HTMLButtonElement,
   FloatingButtonProps

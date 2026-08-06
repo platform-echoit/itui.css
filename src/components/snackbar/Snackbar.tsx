@@ -74,6 +74,7 @@ const SnackbarToneContext = createContext<SnackbarTone>('light');
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface SnackbarProps extends HTMLAttributes<HTMLDivElement> {
+  /** `light` is the translucent bar, `dark` the solid one for use over content. @default 'light' */
   tone?: SnackbarTone;
   /** Leading icon slot — Figma "icon/content", rendered at 20px */
   icon?: ReactNode;
@@ -87,6 +88,7 @@ export interface SnackbarTitleProps
 export interface SnackbarDescriptionProps
   extends HTMLAttributes<HTMLParagraphElement> {}
 
+/** Props of `SnackbarAction` — `Button`'s, minus the two it fixes itself. */
 export interface SnackbarActionProps
   extends Omit<ButtonProps, 'variant' | 'size'> {}
 
@@ -137,6 +139,7 @@ Snackbar.displayName = 'Snackbar';
 
 // ─── SnackbarTitle ────────────────────────────────────────────────────────────
 
+/** The bar's first line. Truncates rather than wrapping — a snackbar is one row tall. */
 export const SnackbarTitle = forwardRef<
   HTMLParagraphElement,
   SnackbarTitleProps
@@ -160,6 +163,7 @@ SnackbarTitle.displayName = 'SnackbarTitle';
 
 // ─── SnackbarDescription ──────────────────────────────────────────────────────
 
+/** The muted second line under `SnackbarTitle`. Also truncates. */
 export const SnackbarDescription = forwardRef<
   HTMLParagraphElement,
   SnackbarDescriptionProps
@@ -183,6 +187,10 @@ SnackbarDescription.displayName = 'SnackbarDescription';
 
 // ─── SnackbarAction ───────────────────────────────────────────────────────────
 
+/**
+ * The trailing link button of a `Snackbar`. Its `variant` and `size` are fixed by
+ * the design, so those two are the only `Button` props it does not take.
+ */
 export const SnackbarAction = forwardRef<
   HTMLButtonElement,
   SnackbarActionProps
@@ -208,6 +216,11 @@ export const SNACKBAR_TOASTER_ID = 'itui-snackbar';
 
 export interface SnackbarToasterProps extends Omit<ToasterProps, 'id'> {}
 
+/**
+ * The viewport snackbars render into. Mount it once, near the root — alongside
+ * `Toaster`, not instead of it: the two are scoped separately, so each only
+ * shows its own.
+ */
 export const SnackbarToaster = ({
   toastOptions,
   style,
@@ -228,9 +241,13 @@ export const SnackbarToaster = ({
 
 export interface SnackbarOptions
   extends Omit<ExternalToast, 'toasterId' | 'action'> {
+  /** `light` is the translucent bar, `dark` the solid one. @default 'light' */
   tone?: SnackbarTone;
+  /** Leading 20px glyph. */
   icon?: ReactNode;
+  /** First line of the bar. */
   title: ReactNode;
+  /** Muted second line. */
   description?: ReactNode;
   /** Trailing link button. Clicking it dismisses the snackbar, then runs `onClick`. */
   action?: { label: ReactNode; onClick?: () => void };

@@ -119,6 +119,11 @@ const triggerColorMap: Record<TabType, string> = {
 export interface TabProps
   extends ComponentPropsWithoutRef<typeof RadixTabs.Root> { }
 
+/**
+ * The tab root: it owns which tab is selected, via `value` / `onValueChange` or
+ * `defaultValue`. Every other part has to sit inside it — `TabList`,
+ * `TabTrigger` and `TabContent` throw by name if they do not.
+ */
 export const Tab = forwardRef<ComponentRef<typeof RadixTabs.Root>, TabProps>(
   ({ className, ...props }, ref) => (
     <TabRootContext.Provider value={true}>
@@ -142,6 +147,10 @@ export interface TabListProps
   type?: TabType;
 }
 
+/**
+ * The row of triggers. `type` is set here rather than per trigger, so one tab set
+ * cannot mix looks. Arrow keys move between the triggers inside it.
+ */
 export const TabList = forwardRef<
   ComponentRef<typeof RadixTabs.List>,
   TabListProps
@@ -188,6 +197,7 @@ export interface TabTriggerProps
   iconRight?: ReactNode;
 }
 
+/** One tab. Its `value` is what `Tab` selects by, and what pairs it with a `TabContent`. */
 export const TabTrigger = forwardRef<
   ComponentRef<typeof RadixTabs.Trigger>,
   TabTriggerProps
@@ -225,6 +235,7 @@ TabTrigger.displayName = 'TabTrigger';
 export interface TabContentProps
   extends ComponentPropsWithoutRef<typeof RadixTabs.Content> { }
 
+/** The panel for the trigger with the same `value`. Only the selected one is rendered. */
 export const TabContent = forwardRef<
   ComponentRef<typeof RadixTabs.Content>,
   TabContentProps

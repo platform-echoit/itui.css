@@ -77,6 +77,11 @@ export interface TopNavigationV2Props
   actionGap?: 'md' | 'lg';
 }
 
+/**
+ * The mobile app bar: a leading slot, a centred title and a trailing slot. The
+ * current version of `TopNavigation` — every slot also accepts `asChild`, so a
+ * router link can be the element itself.
+ */
 export const TopNavigationV2 = forwardRef<HTMLElement, TopNavigationV2Props>(
   ({ left, title, right, actionGap = 'md', className, ...rest }, ref) => {
     const clusterClass = cn(
@@ -117,6 +122,10 @@ TopNavigationV2.displayName = 'TopNavigationV2';
 
 export interface BottomNavigationV2Props extends HTMLAttributes<HTMLElement> {}
 
+/**
+ * The mobile tab bar pinned to the bottom edge. Holds `BottomNavigationItemV2`s,
+ * which share the width evenly.
+ */
 export const BottomNavigationV2 = forwardRef<
   HTMLElement,
   BottomNavigationV2Props
@@ -142,6 +151,7 @@ export interface BottomNavigationItemV2Props
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Glyph slot — rendered in Figma's 20px `height/icon/lg` box. */
   icon?: ReactNode;
+  /** Caption under the icon. Truncates rather than wrapping. */
   label?: ReactNode;
   /** Figma `State=Select` — paints icon + label text-primary and sets aria-current. */
   active?: boolean;
@@ -149,6 +159,10 @@ export interface BottomNavigationItemV2Props
   asChild?: boolean;
 }
 
+/**
+ * One tab of a `BottomNavigationV2` — icon over label. Pass `asChild` to make it
+ * a router link rather than a `<button>`.
+ */
 export const BottomNavigationItemV2 = forwardRef<
   HTMLButtonElement,
   BottomNavigationItemV2Props

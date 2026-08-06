@@ -21,9 +21,14 @@ import { cn } from '../../lib/utils';
 export type BubbleSender = 'outgoing' | 'incoming';
 
 export interface BubbleProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * Who is speaking: `outgoing` is the brand-blue bubble with its tail on the
+   * right, `incoming` the dark one with its tail on the left.
+   */
   sender?: BubbleSender;
   /** Show the speech-bubble tail at the bottom corner. */
   tail?: boolean;
+  /** Message text. Newlines are preserved and long words wrap. */
   children: ReactNode;
 }
 
@@ -46,6 +51,11 @@ function BubbleTail({ className }: { className?: string }) {
   );
 }
 
+/**
+ * One chat message as a rounded speech bubble. It sizes itself to its text, so
+ * the alignment of a conversation is the parent's job — this only draws the
+ * bubble and, with `tail`, the pointer at its bottom corner.
+ */
 export const Bubble = forwardRef<HTMLDivElement, BubbleProps>(
   ({ sender = 'outgoing', tail = false, className, children, ...rest }, ref) => {
     const isOutgoing = sender === 'outgoing';

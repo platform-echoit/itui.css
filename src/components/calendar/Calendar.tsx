@@ -69,8 +69,11 @@ export type CalendarSize = 'md' | 'lg';
 
 export type CalendarEventTone = 'primary' | 'success' | 'error';
 
+/** One thing happening on a day, drawn as a badge at size `lg` and as a dot at `md`. */
 export interface CalendarEvent {
+  /** Badge text at size `lg`. Size `md` draws a coloured dot only, so the label is not shown. */
   label: string;
+  /** Which semantic colour the badge or dot takes. @default 'primary' */
   tone?: CalendarEventTone;
 }
 
@@ -78,7 +81,9 @@ export interface CalendarEvent {
 export type CalendarEvents = Record<string, CalendarEvent[]>;
 
 export type CalendarProps = DayPickerProps & {
+  /** `lg` is the desktop grid with event badges; `md` the compact one with dots. */
   size?: CalendarSize;
+  /** What happens on which day, keyed by `yyyy-MM-dd`. */
   events?: CalendarEvents;
   /** Badges rendered per day before the rest collapse into a `+N` row (size `lg` only). */
   maxVisibleEvents?: number;

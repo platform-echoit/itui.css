@@ -25,10 +25,15 @@ import { Checkbox } from '../checkbox';
 export type PopupVariant = 'text' | 'image';
 
 export interface PopupProps {
+  /** Controlled open state. Pair it with `onOpenChange`, or use `defaultOpen`. */
   open?: boolean;
+  /** Open state for the uncontrolled case — the popup then owns it. */
   defaultOpen?: boolean;
+  /** Fires on every open and close, including Esc and the ✕. */
   onOpenChange?: (open: boolean) => void;
+  /** Element that opens the popup. Omit it when you drive `open` yourself. */
   trigger?: ReactNode;
+  /** `text` is the title-and-body card; `image` is the artwork-led one. */
   variant?: PopupVariant;
   /** Header title (text variant). */
   title?: ReactNode;
@@ -38,12 +43,17 @@ export interface PopupProps {
   image?: ReactNode;
   /** Footer link action (text variant). */
   actionText?: ReactNode;
+  /** Runs on the footer link. It does not close the popup — do that yourself. */
   onAction?: () => void;
   /** "Don't show again" checkbox. */
   showDontShowAgain?: boolean;
+  /** Checked state of that checkbox. Persisting the choice is yours to do. */
   dontShowAgain?: boolean;
+  /** Fires with the checkbox's next state. */
   onDontShowAgainChange?: (checked: boolean) => void;
+  /** Text beside the checkbox. @default "Don't show again" */
   dontShowAgainLabel?: ReactNode;
+  /** Lands on the popup card, not on the scrim. */
   className?: string;
 }
 

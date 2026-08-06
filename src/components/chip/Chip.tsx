@@ -47,9 +47,13 @@ export type ChipSize = 'lg' | 'md' | 'sm';
 
 export interface ChipProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'> {
+  /** `outline` is the bordered chip on the page background, `filled` the tinted one. */
   variant?: ChipVariant;
+  /** Height: 32 / 28 / 24px. */
   size?: ChipSize;
+  /** Paints the chosen state. It is presentation only — you own the selection. */
   selected?: boolean;
+  /** Greys the chip out and stops it responding to clicks. */
   disabled?: boolean;
   /**
    * Leading 16px icon — Figma `Type=CheckLabel`. SVG children are sized to 16px
@@ -67,6 +71,7 @@ export interface ChipProps
   onClose?: () => void;
   /** Accessible label for the close button. */
   closeLabel?: string;
+  /** The chip's label. */
   children: ReactNode;
 }
 
@@ -125,6 +130,13 @@ function boxClasses(
   );
 }
 
+/**
+ * A compact label that can carry an icon or avatar, be selected, and be
+ * dismissed — the filter/entry chip. It only becomes interactive when you give
+ * it `onClick` or `onClose`; without either it stays a plain label, and stays
+ * renderable from a Server Component. `Tag` is the same idea in the static,
+ * status-label form.
+ */
 export const Chip = forwardRef<HTMLDivElement, ChipProps>(
   (
     {

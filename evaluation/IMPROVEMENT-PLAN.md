@@ -852,17 +852,44 @@ trong README/`API.md`.
 > nhạt hơn mock Figma — Figma vẽ sao rỗng là sao xám **đặc**, đây là deviation có chủ ý để phân
 > biệt đầy/rỗng khi cả hai đã cùng weight.
 
-### Phase 4 — `1.2.0`
+### Phase 4 — `1.2.0` ✅ **xong 2026-08-06**
 
-- [ ] Thêm `API.md`, `TOKENS.md` vào `files` trong `package.json`
-- [ ] Viết JSDoc "khi nào dùng" cho `Button`, `Table`, `Card`, `Dialog`, nhóm `Input` — lấy
+- [x] Thêm `API.md`, `TOKENS.md` **và `ACCESSIBILITY.md`** vào `files`; sửa luôn callout trong
+      README vốn nói ngược lại ("không nằm trong tarball"). Verify bằng `npm pack --dry-run`:
+      cả ba có mặt, tarball tăng ~306 kB trên nền 17.85 MB
+- [x] **Phạm vi rộng hơn plan gốc — user chốt "quét sạch toàn bộ" thay vì top-20** (2026-08-06).
+      Số đo trước khi làm nặng hơn báo cáo: không phải "nhiều prop description trống" mà là
+      **303/625 dòng prop** (48%) và **179/245 section** không có một câu mô tả nào — gồm cả
+      `Button`, `Card`, `Dialog`, `Table`. Sau khi làm: **0 và 0**
+- [x] JSDoc "khi nào dùng" cho `Button`, `Table`, `Card`, `Dialog`, nhóm `Input` — lấy
       `PopoverItem.asMenuItem` làm chuẩn chất lượng
-- [ ] Mở rộng sang top-20 component
-- [ ] Viết trang accessibility: focus, bàn phím, ARIA ai sở hữu; gồm `TooltipProvider` và
-      `Checkbox.label` vs `Radio` children
-- [ ] JSDoc một dòng cho `Radius`/`Colors`/`Shadow`/`Spacing`/`Typography` nói rõ chúng là
-      primitive áp token (thay cho R-25)
-- [ ] `pnpm docs:api`
+- [x] Mở rộng ra **toàn bộ 56 module**, gồm cả nhóm legacy (`dropdown-menu`, `tabs`,
+      `navigation` V1). Với export deprecated phải viết **thêm câu mô tả** ngoài tag
+      `@deprecated` — đúng cái bẫy Phase 2 đã ghi lại: generator bỏ tag, nên chỉ có
+      `@deprecated` thì cột Description vẫn ra `—`
+- [x] Viết `ACCESSIBILITY.md`: bảng focus theo 4 nhóm idiom, bảng bàn phím, live region, mục
+      "cái bạn phải tự cấp", `TooltipProvider`, `Checkbox.label` vs `Radio` children, và mục
+      "Known gaps" liệt kê thẳng 5 điểm yếu còn lại
+- [x] JSDoc một dòng cho `Radius`/`Colors`/`Shadow`/`Spacing`/`Typography` **+ `Grid`/`GridItem`**
+      nói rõ chúng là primitive áp token (thay cho R-25)
+- [x] `pnpm docs:api` (491 exports, 56 module) + gate: `check:docs`, `check:client`,
+      `check:barrels`, `check:classes`, `check:rsc` (871.2 kB / 976.6 kB), `check:bundle`
+      (23.6 kB / 253.9 kB), `tsc -p tsconfig.components.json` — **tất cả xanh**
+
+**Phát hiện khi làm (đã sửa trong docs, chưa sửa code):**
+
+- **`Calendar`/`DatePicker` không có điều hướng bàn phím kiểu grid.** `@daypicker/react` không
+  đăng ký một phím mũi tên nào (grep `ArrowRight`/`PageUp`/`tabIndex` trong dist: 0 kết quả), nên
+  mỗi ngày là một tab stop riêng — tới ngày 28 phải bấm `Tab` 28 lần. Không hỏng, nhưng lệch
+  WAI-ARIA grid pattern. Đã ghi vào `ACCESSIBILITY.md` §Keyboard + §Known gaps.
+- **`Lnb` và `Sidebar` render `<nav>` không có `aria-label`.** Trang nào có thêm `Gnb` hoặc
+  `Breadcrumb` sẽ đọc "navigation" hai lần trong landmark list. Ghi vào mục "phải tự cấp" thay vì
+  sửa code, vì tên landmark phụ thuộc ngữ cảnh trang.
+- **`CalendarEvent.label` bị nuốt hoàn toàn ở `size="md"`** — biến thể đó chỉ vẽ chấm màu, không
+  render nhãn ở đâu cả. Thông tin chỉ tồn tại bằng thị giác.
+- Ba prop có JSDoc chỉ gồm tag (`@default …`) cũng ra `—`, vì generator đọc description chứ không
+  đọc tag: `Carousel.orientation`, `CarouselIndicator.type`, `DatePicker.footerAlignment`. Cùng
+  loại bẫy với `@deprecated` ở trên — **tag không bao giờ thay được câu mô tả**.
 
 ### Phase 5
 

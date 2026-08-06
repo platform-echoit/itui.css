@@ -58,7 +58,9 @@ const TYPE_ICON: Record<ToastType, ReactNode> = {
 };
 
 export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
+  /** `light` is the pale bar, `dark` the solid one. @default 'light' */
   tone?: ToastTone;
+  /** Which status icon leads the bar. `normal` is the icon-less variant. @default 'normal' */
   type?: ToastType;
   /** Replaces the icon `type` picks, in the same 16px slot. */
   icon?: ReactNode;
@@ -110,6 +112,11 @@ Toast.displayName = 'Toast';
 
 // ─── Toaster ──────────────────────────────────────────────────────────────────
 
+/**
+ * The viewport toasts render into. Mount it once, near the root of the app —
+ * `toast()` does nothing without it. Snackbars have their own viewport, so mount
+ * `SnackbarToaster` alongside it rather than instead of it.
+ */
 const Toaster = ({ className, ...props }: ToasterProps) => {
   return (
     <Sonner

@@ -88,10 +88,15 @@ interface IconProps extends SVGProps<SVGSVGElement> {
 
 export interface FileTypeProps
   extends Omit<SVGAttributes<SVGSVGElement>, 'width' | 'height'> {
+  /** Which file the badge stands for. Exact — use `FileIcon` to resolve one from an extension or MIME type. @default 'zip' */
   logo?: FileTypeLogo;
+  /** How the badge is drawn: outlined, flat, or the brand colours. @default 'line' */
   type?: FileTypeVariant;
+  /** Ref to the rendered `<svg>`. */
   ref?: Ref<SVGSVGElement>;
+  /** Width in px. @default 32 */
   width?: number;
+  /** Height in px. @default 32 */
   height?: number;
 }
 
@@ -138,6 +143,11 @@ const LOGO_MAP: Record<FileTypeLogo, IconComponent> = {
   folder: FolderIcon,
 };
 
+/**
+ * The file-format badge — 38 document logos plus a folder, in three treatments.
+ * It takes an exact `logo`; when all you have is a filename or a MIME type,
+ * use `FileIcon`, which maps those onto this.
+ */
 export function FileType({
   width = 32,
   height = 32,

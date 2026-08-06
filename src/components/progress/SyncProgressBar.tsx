@@ -2,8 +2,11 @@ import { forwardRef, type HTMLAttributes } from 'react';
 import { cn } from '../../lib/utils';
 
 export interface SyncProgressBarProps extends HTMLAttributes<HTMLDivElement> {
+  /** Current amount of progress, from 0 to `max`. @default 0 */
   value?: number;
+  /** Value that counts as complete, so raw counts work too. @default 100 */
   max?: number;
+  /** Centre the bar over a full-screen dimmed layer, blocking the page behind it. */
   overlay?: boolean;
 }
 

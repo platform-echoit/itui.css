@@ -63,8 +63,11 @@ export interface InputDateProps
     InputTextProps,
     'value' | 'defaultValue' | 'type' | 'suffix' | 'onChange' | 'min' | 'max'
   > {
+  /** Controlled date. `null` is the empty field — pair it with `onValueChange`. */
   value?: Date | null;
+  /** Starting date for the uncontrolled case. */
   defaultValue?: Date | null;
+  /** Fires with the parsed date, or `null` while the text is empty or unparseable. */
   onValueChange?: (date: Date | null) => void;
   /** Earliest selectable date — earlier dates are disabled and rejected */
   min?: Date;

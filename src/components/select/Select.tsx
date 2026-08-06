@@ -8,6 +8,12 @@ import { cn } from '../../lib/utils';
 
 // ─── Select ───────────────────────────────────────────────────────────────────
 
+/**
+ * The select root — state and context only, it renders no DOM of its own. Pair
+ * it with `SelectTrigger` and `SelectContent`. Radix builds a real listbox
+ * rather than a native `<select>`, so it also renders a hidden native input to
+ * keep forms working.
+ */
 function Select({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
@@ -16,6 +22,7 @@ function Select({
 
 // ─── SelectGroup ──────────────────────────────────────────────────────────────
 
+/** Groups related options under a `SelectLabel`. */
 function SelectGroup({
   className,
   ...props
@@ -31,6 +38,10 @@ function SelectGroup({
 
 // ─── SelectValue ──────────────────────────────────────────────────────────────
 
+/**
+ * Prints the chosen option's text inside the trigger, or the placeholder while
+ * nothing is chosen. `SelectTrigger`'s `placeholder` prop renders one for you.
+ */
 function SelectValue({
   className,
   ...props
@@ -48,8 +59,11 @@ function SelectValue({
 
 export interface SelectTriggerProps
   extends React.ComponentProps<typeof SelectPrimitive.Trigger> {
+  /** Trigger height: the compact 36px row, or the 48px field. @default 'default' */
   size?: 'sm' | 'default';
+  /** Text above the trigger. It is what names the select for assistive technology. */
   label?: string;
+  /** Message under the trigger. It also paints the error border and sets `aria-invalid`. */
   error?: string;
   /**
    * Shorthand for the common trigger body: with no `children`, the trigger
@@ -82,6 +96,11 @@ const triggerVariants = {
     'bg-white border-input focus-visible:border-ring data-[state=open]:border-brand data-[state=open]:bg-accent',
 };
 
+/**
+ * The button that opens the list, plus the label and message around it — the
+ * same wiring the `Input` family uses, so `label` names the trigger and `error`
+ * is announced. With no children it renders a `SelectValue` from `placeholder`.
+ */
 function SelectTrigger({
   className,
   size = 'default',
@@ -174,6 +193,10 @@ const contentPopper =
 const viewportBase =
   'data-[position=popper]:h-(--radix-select-trigger-height) data-[position=popper]:w-full data-[position=popper]:min-w-[min(var(--radix-select-trigger-width),18rem)]';
 
+/**
+ * The dropdown listbox. It portals itself, so it escapes an `overflow: hidden`
+ * ancestor, and matches the trigger's width in the default `popper` position.
+ */
 function SelectContent({
   className,
   children,
@@ -210,6 +233,7 @@ function SelectContent({
 
 // ─── SelectLabel ──────────────────────────────────────────────────────────────
 
+/** A non-interactive heading over a `SelectGroup`. */
 function SelectLabel({
   className,
   ...props
@@ -228,6 +252,7 @@ function SelectLabel({
 const itemBase =
   "mx-2 hover:bg-accent hover:cursor-pointer rounded-lg focus:bg-secondary focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground gap-2 p-2 text-sm [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2 relative flex w-[calc(100%-1rem)] cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 overflow-hidden";
 
+/** One option. Its `value` is what `Select` reports — it must be unique and non-empty. */
 function SelectItem({
   className,
   children,
@@ -246,6 +271,7 @@ function SelectItem({
 
 // ─── SelectSeparator ──────────────────────────────────────────────────────────
 
+/** A rule between two groups of options. */
 function SelectSeparator({
   className,
   ...props
@@ -261,6 +287,7 @@ function SelectSeparator({
 
 // ─── SelectScrollUpButton ─────────────────────────────────────────────────────
 
+/** The "more above" affordance on a long list. `SelectContent` renders one already. */
 function SelectScrollUpButton({
   className,
   ...props
@@ -281,6 +308,7 @@ function SelectScrollUpButton({
 
 // ─── SelectScrollDownButton ───────────────────────────────────────────────────
 
+/** The "more below" affordance on a long list. `SelectContent` renders one already. */
 function SelectScrollDownButton({
   className,
   ...props

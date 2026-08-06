@@ -29,6 +29,11 @@ export interface DividerProps extends HTMLAttributes<HTMLDivElement> {
 
 const LINE = 'bg-surface-neutral-hover';
 
+/**
+ * A horizontal rule between sections — 1px, or a 12px band for a heavier break.
+ * Give it children and it becomes the labelled form, line · text · line, which
+ * is the shape to use for an "or" between two options.
+ */
 export const Divider = forwardRef<HTMLDivElement, DividerProps>(
   ({ variant = 'normal', className, children, ...rest }, ref) => {
     if (children != null) {

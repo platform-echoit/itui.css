@@ -140,6 +140,10 @@ export type ScrollAreaRootProps = ComponentPropsWithoutRef<
   typeof ScrollAreaPrimitive.Root
 >;
 
+/**
+ * The clipping container of a hand-composed scroll area. It owns the size and
+ * the overflow; the actual scrolling happens in `ScrollAreaViewport`.
+ */
 export const ScrollAreaRoot = forwardRef<
   ElementRef<typeof ScrollAreaPrimitive.Root>,
   ScrollAreaRootProps
@@ -156,6 +160,7 @@ export type ScrollAreaViewportProps = ComponentPropsWithoutRef<
   typeof ScrollAreaPrimitive.Viewport
 >;
 
+/** The element that actually scrolls. Put the content inside it. */
 export const ScrollAreaViewport = forwardRef<
   ElementRef<typeof ScrollAreaPrimitive.Viewport>,
   ScrollAreaViewportProps
@@ -173,6 +178,7 @@ export type ScrollAreaThumbProps = ComponentPropsWithoutRef<
   typeof ScrollAreaPrimitive.Thumb
 >;
 
+/** The draggable handle. `ScrollAreaScrollbar` renders one already — replace it only to restyle. */
 export const ScrollAreaThumb = forwardRef<
   ElementRef<typeof ScrollAreaPrimitive.Thumb>,
   ScrollAreaThumbProps
@@ -193,11 +199,13 @@ ScrollAreaThumb.displayName = 'ScrollAreaThumb';
 
 export interface ScrollAreaScrollbarProps
   extends ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Scrollbar> {
+  /** Rail width: the standard bar or the narrow one. @default 'md' */
   size?: ScrollbarSize;
   /** Replaces the default thumb. The carets are always drawn. */
   children?: ReactNode;
 }
 
+/** One rail, with its carets and thumb. One per axis you want a bar on. */
 export const ScrollAreaScrollbar = forwardRef<
   ElementRef<typeof ScrollAreaPrimitive.Scrollbar>,
   ScrollAreaScrollbarProps
@@ -229,6 +237,7 @@ export type ScrollAreaCornerProps = ComponentPropsWithoutRef<
   typeof ScrollAreaPrimitive.Corner
 >;
 
+/** Fills the square where two rails meet. Only needed with both bars on. */
 export const ScrollAreaCorner = forwardRef<
   ElementRef<typeof ScrollAreaPrimitive.Corner>,
   ScrollAreaCornerProps
@@ -238,6 +247,7 @@ ScrollAreaCorner.displayName = 'ScrollAreaCorner';
 // ─── ScrollArea ───────────────────────────────────────────────────────────────
 
 export interface ScrollAreaProps extends ScrollAreaRootProps {
+  /** Rail width: the standard bar or the narrow one. @default 'md' */
   size?: ScrollbarSize;
   /** Which bars to render. Defaults to `vertical`, as Figma specs. */
   orientation?: ScrollAreaOrientation;

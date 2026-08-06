@@ -49,6 +49,7 @@ import { StarFillIcon, StarRegularIcon } from '../../icons/ITUI/star';
 export type RatingStarFill = 'empty' | 'half' | 'full';
 
 export interface RatingStarProps extends HTMLAttributes<HTMLSpanElement> {
+  /** How much of the star is coloured in. @default 'empty' */
   fill?: RatingStarFill;
 }
 
@@ -80,6 +81,10 @@ function fillAt(value: number, index: number): RatingStarFill {
 
 // ─── RatingStar ───────────────────────────────────────────────────────────────
 
+/**
+ * One star, drawn as an outline with a coloured layer clipped over it. Exported
+ * for building a legend or a static score; `Rating` draws its own.
+ */
 export const RatingStar = forwardRef<HTMLSpanElement, RatingStarProps>(
   ({ fill = 'empty', className, children, ...rest }, ref) => (
     <span
@@ -110,6 +115,11 @@ RatingStar.displayName = 'RatingStar';
 
 // ─── Rating ───────────────────────────────────────────────────────────────────
 
+/**
+ * A star rating in half-star steps. Interactive, it is a real radio group — each
+ * half-star is an `<input type="radio">`, so arrow keys and forms work without
+ * help. Pass `readOnly` for the display-only form.
+ */
 export const Rating = forwardRef<HTMLDivElement, RatingProps>(
   (
     {

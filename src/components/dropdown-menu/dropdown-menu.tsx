@@ -6,21 +6,35 @@ import { CircleFillIcon } from '../../icons/ITUI/circle';
 
 import { cn } from '../../lib/utils';
 
+/**
+ * Root of the full-featured menu: submenus, checkbox items, radio items and
+ * shortcuts. Radix owns the open state, focus and typeahead. It paints itself
+ * with raw `slate-*` palette classes rather than ITUI tokens, so it does not
+ * follow your theme — reach for `OverflowMenu` (a "more actions" menu) or
+ * `PopoverMenu` when the menu only lists plain actions.
+ */
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
+/** The button that opens the menu. Pass `asChild` to keep your own element. */
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 
+/** Groups related items so assistive technology reads them as one set. */
 const DropdownMenuGroup = DropdownMenuPrimitive.Group;
 
+/** Renders a submenu's content into `document.body` — `DropdownMenuContent` portals itself already. */
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal;
 
+/** Wraps a `DropdownMenuSubTrigger` and its `DropdownMenuSubContent` into one nested menu. */
 const DropdownMenuSub = DropdownMenuPrimitive.Sub;
 
+/** Holds `DropdownMenuRadioItem`s and owns which one is chosen, via `value` / `onValueChange`. */
 const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
+/** The row that opens a submenu. It draws its own trailing caret. */
 const DropdownMenuSubTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
+    /** Indents the row to line up with items that have a check or radio marker. */
     inset?: boolean;
   }
 >(({ className, inset, children, ...props }, ref) => (
@@ -40,6 +54,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
 DropdownMenuSubTrigger.displayName =
   DropdownMenuPrimitive.SubTrigger.displayName;
 
+/** The panel a submenu opens. Put it inside the same `DropdownMenuSub` as its trigger. */
 const DropdownMenuSubContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
@@ -56,6 +71,10 @@ const DropdownMenuSubContent = React.forwardRef<
 DropdownMenuSubContent.displayName =
   DropdownMenuPrimitive.SubContent.displayName;
 
+/**
+ * The menu panel. It portals itself into `document.body`, so it escapes an
+ * `overflow: hidden` ancestor without any work from you.
+ */
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
@@ -74,9 +93,11 @@ const DropdownMenuContent = React.forwardRef<
 ));
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
+/** One action. Use `onSelect` rather than `onClick` — it also fires on Enter and Space. */
 const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
+    /** Indents the row to line up with items that have a check or radio marker. */
     inset?: boolean;
   }
 >(({ className, inset, ...props }, ref) => (
@@ -92,6 +113,7 @@ const DropdownMenuItem = React.forwardRef<
 ));
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 
+/** An item that toggles, marked with a check. Drive it with `checked` / `onCheckedChange`. */
 const DropdownMenuCheckboxItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
@@ -116,6 +138,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
 DropdownMenuCheckboxItem.displayName =
   DropdownMenuPrimitive.CheckboxItem.displayName;
 
+/** One choice of a `DropdownMenuRadioGroup`, marked with a filled dot when chosen. */
 const DropdownMenuRadioItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
@@ -138,9 +161,11 @@ const DropdownMenuRadioItem = React.forwardRef<
 ));
 DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName;
 
+/** A non-interactive heading over a group of items. */
 const DropdownMenuLabel = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Label>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
+    /** Indents the heading to line up with items that have a check or radio marker. */
     inset?: boolean;
   }
 >(({ className, inset, ...props }, ref) => (
@@ -156,6 +181,7 @@ const DropdownMenuLabel = React.forwardRef<
 ));
 DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
 
+/** A rule between groups of items. Skipped by keyboard navigation. */
 const DropdownMenuSeparator = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
@@ -168,6 +194,10 @@ const DropdownMenuSeparator = React.forwardRef<
 ));
 DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
 
+/**
+ * The right-aligned key hint on an item, e.g. `⌘K`. It only prints the hint —
+ * binding the key is still yours to do.
+ */
 const DropdownMenuShortcut = ({
   className,
   ...props

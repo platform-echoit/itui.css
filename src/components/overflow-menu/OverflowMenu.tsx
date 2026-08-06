@@ -56,8 +56,16 @@ import { DotsThreeVerticalRegularIcon } from '../../icons/ITUI/dots-three-vertic
 
 // Plain aliases, same as dropdown-menu.tsx — assigning displayName here would
 // mutate the shared Radix primitive that DropdownMenu also re-exports.
+/**
+ * The "more actions" menu — a dots trigger over a short panel of labelled rows.
+ * Built on Radix's dropdown menu, so focus, roving arrow keys, typeahead and
+ * dismiss all come for free, but painted in ITUI tokens rather than the raw
+ * `slate-*` classes `DropdownMenu` still uses. Reach for `DropdownMenu` only
+ * when you need submenus, checkbox items or radio items.
+ */
 export const OverflowMenu = DropdownMenuPrimitive.Root;
 
+/** Renders menu content into `document.body`. `OverflowMenuContent` portals itself already. */
 export const OverflowMenuPortal = DropdownMenuPrimitive.Portal;
 
 // ─── OverflowMenuTrigger ──────────────────────────────────────────────────────
@@ -68,6 +76,11 @@ export interface OverflowMenuTriggerProps
   icon?: ReactNode;
 }
 
+/**
+ * The button that opens the menu. Left alone it renders the 32px dots button
+ * from the design, named "More actions"; pass `asChild` to supply your own
+ * element instead — then `icon` no longer applies.
+ */
 export const OverflowMenuTrigger = forwardRef<
   ElementRef<typeof DropdownMenuPrimitive.Trigger>,
   OverflowMenuTriggerProps
@@ -125,6 +138,10 @@ OverflowMenuTrigger.displayName = 'OverflowMenuTrigger';
 export interface OverflowMenuContentProps
   extends ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> {}
 
+/**
+ * The 160px panel of rows. It portals itself, so it escapes an
+ * `overflow: hidden` ancestor, and defaults to aligning with the trigger's end.
+ */
 export const OverflowMenuContent = forwardRef<
   ElementRef<typeof DropdownMenuPrimitive.Content>,
   OverflowMenuContentProps
@@ -159,6 +176,10 @@ export interface OverflowMenuItemProps
   icon?: ReactNode;
 }
 
+/**
+ * One action row, with an optional leading glyph. Use `onSelect` rather than
+ * `onClick` — it also fires on Enter and Space, and it closes the menu.
+ */
 export const OverflowMenuItem = forwardRef<
   ElementRef<typeof DropdownMenuPrimitive.Item>,
   OverflowMenuItemProps

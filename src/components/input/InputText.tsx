@@ -17,8 +17,11 @@ import { useFieldA11y } from './useFieldA11y';
 
 export interface InputTextProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
+  /** Text above the box — it is what names the field for assistive technology. */
   label?: string;
+  /** Message under the box. It also paints the error border and sets `aria-invalid`. */
   error?: string;
+  /** Hint under the box. `error` replaces it while the field is invalid. */
   helperText?: string;
   /** Slot rendered on the left of the field — icon, text, or any ReactNode */
   prefix?: ReactNode;

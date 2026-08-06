@@ -48,6 +48,13 @@ const setActive = (items: HTMLElement[], active: HTMLElement) => {
 
 export interface PopoverMenuProps extends HTMLAttributes<HTMLDivElement> {}
 
+/**
+ * Turns a run of `PopoverItem`s into a keyboard-navigable menu: `role="menu"`,
+ * arrow keys, Home/End, and a roving tabindex. Every item inside it needs
+ * `asMenuItem` — that is the role the menu finds them by. Use it for a group of
+ * actions that sits alongside other popover content; when the whole popover is
+ * the menu, `OverflowMenu` or `DropdownMenu` is the better fit.
+ */
 export const PopoverMenu = forwardRef<HTMLDivElement, PopoverMenuProps>(
   ({ className, onKeyDown, onFocus, children, ...rest }, forwardedRef) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
