@@ -10,18 +10,18 @@ import {cn} from '../../lib/utils';
 
 // ── Token → Tailwind map ─────────────────────────────────────────────────────
 /*
-  surface/neutral/secondary/default (#fff)    → bg-white
-  surface/neutral/secondary/hover   (#f5f5f5) → bg-neutral-100       (@theme)
-  surface/neutral/disabled/inverse  (#ededed) → bg-neutral-subtle     (@theme)
-  border/neutral/subtle             (#ededed) → border-neutral-subtle  (@theme)
-  text/neutral/strong + default     (#1a1a1a, #0f0f0f) → text-foreground    (@theme)
-  text/neutral/disabled             (#c2c2c2) → text-neutral-disabled  (@theme)
-  border/primary/default as text    (#009ce0) → text-brand             (@theme)
+  surface/neutral/secondary/default (#fafafa) → bg-inverse
+  surface/neutral/secondary/hover   (#f5f5f5) → bg-surface-hover             (@theme)
+  surface/neutral/disabled/inverse  (#ededed) → bg-surface-neutral-disabled  (@theme)
+  border/neutral/subtle             (#ededed) → border-border-neutral-subtle (@theme)
+  text/neutral/default              (#0f0f0f) → text-foreground              (@theme)
+  text/neutral/muted                (#595858) → text-neutral-muted           (@theme)
+  text/neutral/disabled             (#c2c2c2) → text-neutral-disabled        (@theme)
+  border/primary/default as text    (#009ce0) → text-brand                   (@theme)
   radius/sm (8px)                   → rounded-lg
-  height/table (48px)               → h-12
-  static/spacing/24 (24px)         → px-6
-  static/spacing/8  (8px)          → py-2
-  static/spacing/12 (12px)         → gap-3
+  height/table/sm (40px)           → h-10
+  spacing/md (12px)                → px-3 / gap-3
+  spacing/sm (8px)                 → py-2 / gap-2
   font/size/14 (14px)              → text-sm
   font/weight/medium (500)         → font-medium
   font/weight/regular (400)        → font-normal
@@ -29,9 +29,13 @@ import {cn} from '../../lib/utils';
   font/letter-spacing/md (0.2px)   → tracking-md    (@theme)
   height/icon/sm (12px)            → size-3
 
+  ⚠ `border-neutral-subtle` and `bg-neutral-subtle` are NOT this border colour.
+  Both resolve to --color-neutral-subtle (#9e9e9e, the icon/text grey); the
+  #ededed surface and border live under the longer names above.
+
   UNMAPPED:
-    container/7xl (1024px) — demo width; Table renders w-full.
-    checkbox column 68px   — no Tailwind match; consumer applies className.
+    size/container/6xl (1024px) — demo width; Table renders w-full.
+    checkbox column 40px        — no Tailwind match; consumer applies className.
 */
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -88,8 +92,8 @@ export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
  * presentational.
  */
 export const Table=({className,...props}: TableProps) => (
-  <div className="w-full overflow-x-auto rounded-lg border border-neutral-subtle border-b-0">
-    <table className={cn('w-full bg-white',className)} {...props} />
+  <div className="w-full overflow-x-auto rounded-lg border border-border-neutral-subtle">
+    <table className={cn('w-full bg-inverse',className)} {...props} />
   </div>
 );
 
@@ -97,17 +101,20 @@ export const Table=({className,...props}: TableProps) => (
 
 /** The `<thead>` — a `TableRow` of `TableHead` cells. */
 export const TableHeader=({className,...props}: TableHeaderProps) => (
-  <thead
-    className={cn('bg-white border-b border-neutral-subtle',className)}
-    {...props}
-  />
+  // No border of its own: the header is a TableRow, which already draws the
+  // 1px rule under itself.
+  <thead className={cn('bg-inverse',className)} {...props} />
 );
 
 // ── TableBody ─────────────────────────────────────────────────────────────────
 
 /** The `<tbody>` — the data rows. */
 export const TableBody=({className,...props}: TableBodyProps) => (
-  <tbody className={cn(className)} {...props} />
+  // The last row drops its rule so the frame's own bottom border is the only
+  // line there — a row border would cut straight across the rounded corners.
+  // It sits here rather than as `last:` on TableRow, which would also strip the
+  // header's rule: that row is the last one in its own <thead>.
+  <tbody className={cn('[&_tr:last-child]:border-b-0',className)} {...props} />
 );
 
 // ── TableRow ──────────────────────────────────────────────────────────────────
@@ -128,8 +135,12 @@ export const TableRow=({
     aria-disabled={disabled||undefined}
     data-disabled={disabled? '':undefined}
     className={cn(
-      'border-b border-neutral-subtle',
-      selected? 'bg-neutral-100':disabled? 'bg-neutral-subtle':'bg-white',
+      'border-b border-border-neutral-subtle',
+      selected
+        ? 'bg-surface-hover'
+        :disabled
+          ? 'bg-surface-neutral-disabled'
+          :'bg-inverse',
       disabled&&'pointer-events-none text-neutral-disabled',
       className,
     )}
@@ -169,8 +180,8 @@ export const TableHead=({
         sortDirection? ARIA_SORT[sortDirection]:isSortable? 'none':undefined
       }
       className={cn(
-        'h-10 px-3 text-left align-middle',
-        'text-sm font-medium leading-6 tracking-md text-brand-secondary-900 whitespace-nowrap',
+        'h-10 px-3 py-2 text-left align-middle',
+        'text-sm font-medium leading-6 tracking-md text-neutral-muted whitespace-nowrap',
         className,
       )}
       {...props}
