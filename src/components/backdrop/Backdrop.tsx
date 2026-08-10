@@ -73,7 +73,13 @@ const positionClass: Record<BackdropPosition, string> = {
  */
 const Backdrop = forwardRef<HTMLDivElement, BackdropProps>(
   (
-    { className, variant = 'dim', position = 'fixed', asChild = false, ...props },
+    {
+      className,
+      variant = 'dim',
+      position = 'fixed',
+      asChild = false,
+      ...props
+    },
     ref,
   ) => {
     const Component = asChild ? Slot : 'div';

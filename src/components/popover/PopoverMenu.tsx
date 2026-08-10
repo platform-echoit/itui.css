@@ -96,7 +96,10 @@ export const PopoverMenu = forwardRef<HTMLDivElement, PopoverMenuProps>(
           next = current < 0 ? 0 : (current + 1) % items.length;
           break;
         case 'ArrowUp':
-          next = current < 0 ? items.length - 1 : (current - 1 + items.length) % items.length;
+          next =
+            current < 0
+              ? items.length - 1
+              : (current - 1 + items.length) % items.length;
           break;
         case 'Home':
           next = 0;

@@ -28,12 +28,12 @@ Every interactive component draws a `:focus-visible` indicator, so a keyboard us
 place. There are three idioms, one per family — they differ because the shapes differ, not by
 accident, and a component belongs to the family its neighbours belong to.
 
-| Family                                          | Indicator                                        | Utilities                                                       |
-| ----------------------------------------------- | ------------------------------------------------ | --------------------------------------------------------------- |
-| **Fields** — `Input*`, `SelectTrigger`, `InputGroup` | The box border turns brand blue                   | `focus-within:border-ring` · `focus-visible:border-ring`         |
-| **Buttons** — `Button`, `FloatingButton`, `TableHead`, `GnbMenuItem`, nav items | A 2px brand outline, offset from the shape       | `focus-visible:outline-2 outline-offset-2 outline-brand`         |
-| **Controls** — `Checkbox`, `Radio`, `Toggle`     | A 2px brand ring, offset from the box            | `(peer-)focus-visible:ring-2 ring-brand ring-offset-1`           |
-| **Inside a surface** — `Tab`, `Pagination`, `Accordion` | The same ring, drawn inset so it is not clipped  | `focus-visible:ring-2 ring-brand ring-inset`                     |
+| Family                                                                          | Indicator                                       | Utilities                                                |
+| ------------------------------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------- |
+| **Fields** — `Input*`, `SelectTrigger`, `InputGroup`                            | The box border turns brand blue                 | `focus-within:border-ring` · `focus-visible:border-ring` |
+| **Buttons** — `Button`, `FloatingButton`, `TableHead`, `GnbMenuItem`, nav items | A 2px brand outline, offset from the shape      | `focus-visible:outline-2 outline-offset-2 outline-brand` |
+| **Controls** — `Checkbox`, `Radio`, `Toggle`                                    | A 2px brand ring, offset from the box           | `(peer-)focus-visible:ring-2 ring-brand ring-offset-1`   |
+| **Inside a surface** — `Tab`, `Pagination`, `Accordion`                         | The same ring, drawn inset so it is not clipped | `focus-visible:ring-2 ring-brand ring-inset`             |
 
 The field indicator is a **1px border colour change**. That satisfies WCAG 2.1 SC 2.4.7 (Focus
 Visible), which asks only that the state be visible. It is weak against WCAG 2.2 SC 2.4.11 (Focus
@@ -50,15 +50,15 @@ reporting rather than a design decision.
 
 ### Components that name themselves
 
-| Component                                   | Where the name comes from                                                  |
-| ------------------------------------------- | -------------------------------------------------------------------------- |
-| `InputText` and every `InputV2` field type  | the `label` prop, wired with `<label for>` (`aria-labelledby` where `for` cannot bind) |
-| `SelectTrigger`                             | the `label` prop — via `aria-labelledby`, because a `role="combobox"` button takes no name from its content |
-| `Checkbox`                                  | the `label` prop, through the `<label>` it already sits inside              |
-| `Radio`                                     | its children, through the `<label>` it already sits inside                 |
-| `Toggle`                                    | the `label` prop, when given — see below                                   |
-| `Breadcrumb`, `GnbMenu`, `Pagination`             | a built-in `aria-label` on the landmark (`"breadcrumb"`, `"Main"`, `"Pagination"`) |
-| `DateHeader` arrows, `Chip`/`Tag` close, `InputFileUploadItem` actions, `OverflowMenuTrigger`, `LnbToggle` | a `*Label` prop with a working English default you can translate |
+| Component                                                                                                  | Where the name comes from                                                                                   |
+| ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `InputText` and every `InputV2` field type                                                                 | the `label` prop, wired with `<label for>` (`aria-labelledby` where `for` cannot bind)                      |
+| `SelectTrigger`                                                                                            | the `label` prop — via `aria-labelledby`, because a `role="combobox"` button takes no name from its content |
+| `Checkbox`                                                                                                 | the `label` prop, through the `<label>` it already sits inside                                              |
+| `Radio`                                                                                                    | its children, through the `<label>` it already sits inside                                                  |
+| `Toggle`                                                                                                   | the `label` prop, when given — see below                                                                    |
+| `Breadcrumb`, `GnbMenu`, `Pagination`                                                                      | a built-in `aria-label` on the landmark (`"breadcrumb"`, `"Main"`, `"Pagination"`)                          |
+| `DateHeader` arrows, `Chip`/`Tag` close, `InputFileUploadItem` actions, `OverflowMenuTrigger`, `LnbToggle` | a `*Label` prop with a working English default you can translate                                            |
 
 The field family shares one implementation, so all six field types wire `label`, `error` and
 `helperText` the same way: the message is `aria-describedby` the control, an `error` sets
@@ -78,23 +78,23 @@ Most keyboard behaviour comes from Radix UI, which implements the WAI-ARIA Autho
 `Accordion`, `Dialog`, `DropdownMenu`, `OverflowMenu`, `Popover`, `RadioGroup`, `ScrollArea`,
 `Select`, `Slider`, `Tab`, `Toggle` and `Tooltip` all inherit it.
 
-| Component                          | Keys                                                                                     |
-| ---------------------------------- | ---------------------------------------------------------------------------------------- |
-| `Dialog` · `Modal` · `Popup` · `BottomSheet` | Focus is trapped inside while open, `Esc` closes, and focus returns to the trigger on close |
-| `Select`                           | `Enter`/`Space`/`↓` open · `↑` `↓` move · type-ahead jumps · `Enter` chooses · `Esc` closes |
-| `DropdownMenu` · `OverflowMenu`    | `↑` `↓` move · `→` `←` enter and leave a submenu · type-ahead · `Enter`/`Space` select · `Esc` closes |
-| `PopoverMenu`                      | `↑` `↓` move · `Home`/`End` jump to the ends · one item is tabbable, the rest are reached by arrow |
-| `Tab`                              | `←` `→` move between triggers · `Tab` moves on to the panel                               |
-| `RadioGroup`                       | Arrow keys move **and** select · `Tab` moves past the whole group                         |
-| `Rating`                           | Same — it is a real radio group of half-star inputs                                        |
-| `Slider`                           | Arrow keys step · `Home`/`End` jump to the ends · `PageUp`/`PageDown` take a larger step   |
-| `Accordion`                        | `Enter`/`Space` toggle a section                                                           |
-| `Carousel`                         | `←` `→` move slides (`↑` `↓` when vertical), while focus is inside it                     |
-| `Tag` · `Chip`                     | `Enter`/`Space` activate — **only** when you gave them `onClick` or `onClose`               |
-| `InputTag`                         | `Enter` or `,` adds the typed tag · `Backspace` on an empty field removes the last one     |
-| `InputSearch`                      | `Enter` fires `onSearch`                                                                   |
-| `WheelPicker`                      | `↑` `↓` move the focused wheel                                                             |
-| `Calendar` · `DatePicker`          | `Tab` moves day by day — see the note below                                                |
+| Component                                    | Keys                                                                                                  |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `Dialog` · `Modal` · `Popup` · `BottomSheet` | Focus is trapped inside while open, `Esc` closes, and focus returns to the trigger on close           |
+| `Select`                                     | `Enter`/`Space`/`↓` open · `↑` `↓` move · type-ahead jumps · `Enter` chooses · `Esc` closes           |
+| `DropdownMenu` · `OverflowMenu`              | `↑` `↓` move · `→` `←` enter and leave a submenu · type-ahead · `Enter`/`Space` select · `Esc` closes |
+| `PopoverMenu`                                | `↑` `↓` move · `Home`/`End` jump to the ends · one item is tabbable, the rest are reached by arrow    |
+| `Tab`                                        | `←` `→` move between triggers · `Tab` moves on to the panel                                           |
+| `RadioGroup`                                 | Arrow keys move **and** select · `Tab` moves past the whole group                                     |
+| `Rating`                                     | Same — it is a real radio group of half-star inputs                                                   |
+| `Slider`                                     | Arrow keys step · `Home`/`End` jump to the ends · `PageUp`/`PageDown` take a larger step              |
+| `Accordion`                                  | `Enter`/`Space` toggle a section                                                                      |
+| `Carousel`                                   | `←` `→` move slides (`↑` `↓` when vertical), while focus is inside it                                 |
+| `Tag` · `Chip`                               | `Enter`/`Space` activate — **only** when you gave them `onClick` or `onClose`                         |
+| `InputTag`                                   | `Enter` or `,` adds the typed tag · `Backspace` on an empty field removes the last one                |
+| `InputSearch`                                | `Enter` fires `onSearch`                                                                              |
+| `WheelPicker`                                | `↑` `↓` move the focused wheel                                                                        |
+| `Calendar` · `DatePicker`                    | `Tab` moves day by day — see the note below                                                           |
 
 The calendar is the exception to the rule above, and worth knowing before you ship a date field.
 `@daypicker/react` implements no arrow-key navigation, so every day in the grid is an ordinary
@@ -114,12 +114,12 @@ be triggered by keyboard either — `pointer-events-none` alone would have stopp
 
 These components are live regions and are read out when they appear, without any work from you:
 
-| Component                | Role / live                          |
-| ------------------------ | ------------------------------------ |
-| `Toast`, `Snackbar`      | `role="status"`, `aria-live="polite"` |
-| `Spinner`, `Skeleton`    | `role="status"`                       |
+| Component                 | Role / live                                         |
+| ------------------------- | --------------------------------------------------- |
+| `Toast`, `Snackbar`       | `role="status"`, `aria-live="polite"`               |
+| `Spinner`, `Skeleton`     | `role="status"`                                     |
 | A field's `error` message | `role="alert"`, and the control gets `aria-invalid` |
-| `Badge` `variant="dot"`  | `role="status"` with a built-in label |
+| `Badge` `variant="dot"`   | `role="status"` with a built-in label               |
 
 `Button` with `loading` is deliberately **not** `disabled`: a native `disabled` would drop the button
 out of the tab order the moment the user pressed Enter, so focus would fall to `<body>` and the
@@ -213,8 +213,8 @@ Stated plainly, so you can decide whether they matter for your product:
   See [Focus indicators](#focus-indicators).
 - **No dialog sets `aria-modal`, and this one is deliberate.** `Dialog`, `Modal`, `Popup` and
   `BottomSheet` all render Radix's dialog content, which calls `hideOthers()` to mark every
-  sibling `aria-hidden` on mount. Radix's own source calls that the *"better supported equivalent
-  to setting `aria-modal`"*, and we agree: adding the attribute on top would duplicate a mechanism
+  sibling `aria-hidden` on mount. Radix's own source calls that the _"better supported equivalent
+  to setting `aria-modal`"_, and we agree: adding the attribute on top would duplicate a mechanism
   that already has wider assistive-technology support. Expect an automated checklist to flag its
   absence anyway — the background really is hidden, just by the other method.
 - **`SelectTrigger` accepts `disabled` without forwarding it.** A disabled trigger loses its

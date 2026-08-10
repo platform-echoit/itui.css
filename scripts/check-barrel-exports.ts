@@ -55,10 +55,12 @@ const componentsDir = join(root, 'src/components');
 const DIRECTIVE = /^\s*(\/\/[^\n]*\n|\/\*[\s\S]*?\*\/\s*)*['"]use client['"]/;
 
 /** `export * from './X'` and `export * as ns from './X'`. */
-const STAR_EXPORT = /export\s+\*(?:\s+as\s+[A-Za-z_$][\w$]*)?\s+from\s*['"]([^'"]+)['"]/g;
+const STAR_EXPORT =
+  /export\s+\*(?:\s+as\s+[A-Za-z_$][\w$]*)?\s+from\s*['"]([^'"]+)['"]/g;
 
 /** Any `from './X'` — used to follow a named re-export chain. */
-const ANY_EXPORT_FROM = /export\s+(?:type\s+)?(?:\*|\{[\s\S]*?\})(?:\s+as\s+[A-Za-z_$][\w$]*)?\s+from\s*['"]([^'"]+)['"]/g;
+const ANY_EXPORT_FROM =
+  /export\s+(?:type\s+)?(?:\*|\{[\s\S]*?\})(?:\s+as\s+[A-Za-z_$][\w$]*)?\s+from\s*['"]([^'"]+)['"]/g;
 
 /** Any `import … from './X'`, including a bare side-effect import. */
 const ANY_IMPORT_FROM = /import\s+(?:[\s\S]*?\s+from\s*)?['"]([^'"]+)['"]/g;
@@ -129,7 +131,11 @@ function collectSources(dir: string, acc: string[] = []): string[] {
   return acc;
 }
 
-const rel = (file: string) => file.slice(root.length + 1).split(sep).join('/');
+const rel = (file: string) =>
+  file
+    .slice(root.length + 1)
+    .split(sep)
+    .join('/');
 
 // ── Check ────────────────────────────────────────────────────────────────────
 
@@ -174,7 +180,10 @@ for (const file of sources) {
   for (const match of source.matchAll(ANY_IMPORT_FROM)) {
     const target = resolveRelative(file, match[1]);
     if (target && ICON_BARRELS.includes(target)) {
-      iconImports.push({ file: rel(file), statement: match[0].replace(/\s+/g, ' ') });
+      iconImports.push({
+        file: rel(file),
+        statement: match[0].replace(/\s+/g, ' '),
+      });
     }
   }
 }
@@ -221,7 +230,7 @@ if (iconImports.length) {
     '\nImport the file that declares the icon instead — it is a default export:\n' +
       "    import XRegularIcon from '../../icons/ITUI/x/XRegularIcon';\n" +
       '\nThe folder name is the icon name in kebab-case; the 9 hand-written ones\n' +
-      "live in `icons/ITUI/icons` and stay named imports (I-29).\n",
+      'live in `icons/ITUI/icons` and stay named imports (I-29).\n',
   );
 }
 

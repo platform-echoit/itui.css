@@ -40,7 +40,8 @@ function ImagePlaceholder({ className }: { className?: string }) {
 
 export type CardImagePosition = 'top' | 'bottom' | 'center' | 'left';
 
-export interface CardWithImageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+export interface CardWithImageProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   /** Headline of the card. */
   title: ReactNode;
   /** Supporting line under the title. Omit it for a title-only card. */
@@ -58,7 +59,10 @@ export interface CardWithImageProps extends Omit<HTMLAttributes<HTMLDivElement>,
  * children.
  */
 export const CardWithImage = forwardRef<HTMLDivElement, CardWithImageProps>(
-  ({ title, description, image, imagePosition = 'top', className, ...rest }, ref) => {
+  (
+    { title, description, image, imagePosition = 'top', className, ...rest },
+    ref,
+  ) => {
     const isLeft = imagePosition === 'left';
     // `center` insets the image by spacing/lg, so it carries its own radius;
     // `top`/`bottom` bleed to the edge and inherit the shell's clipped corners.
@@ -71,7 +75,9 @@ export const CardWithImage = forwardRef<HTMLDivElement, CardWithImageProps>(
           isInset && 'rounded-xl',
         )}
       >
-        {image ?? <ImagePlaceholder className={isLeft ? 'size-16' : 'size-[140px]'} />}
+        {image ?? (
+          <ImagePlaceholder className={isLeft ? 'size-16' : 'size-[140px]'} />
+        )}
       </div>
     );
     const imageBlock = isInset ? (
@@ -89,7 +95,12 @@ export const CardWithImage = forwardRef<HTMLDivElement, CardWithImageProps>(
     return (
       <div
         ref={ref}
-        className={cn(CARD_SHELL, 'flex', isLeft ? 'flex-row items-start' : 'flex-col', className)}
+        className={cn(
+          CARD_SHELL,
+          'flex',
+          isLeft ? 'flex-row items-start' : 'flex-col',
+          className,
+        )}
         {...rest}
       >
         {imagePosition === 'bottom' ? (
@@ -113,7 +124,8 @@ CardWithImage.displayName = 'CardWithImage';
 
 export type CardActionTone = 'light' | 'dark';
 
-export interface CardWithActionProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+export interface CardWithActionProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   /** Headline of the card. */
   title: ReactNode;
   /** Supporting line under the title. */
@@ -135,7 +147,10 @@ export interface CardWithActionProps extends Omit<HTMLAttributes<HTMLDivElement>
  * is why it drops the border and the footer divider.
  */
 export const CardWithAction = forwardRef<HTMLDivElement, CardWithActionProps>(
-  ({ title, description, actions, tone = 'light', image, className, ...rest }, ref) => {
+  (
+    { title, description, actions, tone = 'light', image, className, ...rest },
+    ref,
+  ) => {
     const isDark = tone === 'dark';
     const body = (
       <>
@@ -159,15 +174,28 @@ export const CardWithAction = forwardRef<HTMLDivElement, CardWithActionProps>(
 
     if (!isDark) {
       return (
-        <div ref={ref} className={cn(CARD_SHELL, 'flex flex-col', className)} {...rest}>
+        <div
+          ref={ref}
+          className={cn(CARD_SHELL, 'flex flex-col', className)}
+          {...rest}
+        >
           {body}
         </div>
       );
     }
 
     return (
-      <div ref={ref} className={cn('relative flex flex-col', className)} {...rest}>
-        <div className={cn(IMAGE_SURFACE, 'absolute inset-0 overflow-hidden rounded-xl')}>
+      <div
+        ref={ref}
+        className={cn('relative flex flex-col', className)}
+        {...rest}
+      >
+        <div
+          className={cn(
+            IMAGE_SURFACE,
+            'absolute inset-0 overflow-hidden rounded-xl',
+          )}
+        >
           {image ?? <ImagePlaceholder className="size-[140px]" />}
         </div>
         {/* color/opacity/black/lg — the scrim text/neutral/inverse is designed against. */}
@@ -190,7 +218,8 @@ export interface PricingFeature {
   included?: boolean;
 }
 
-export interface PricingCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+export interface PricingCardProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   /** Optional highlight badge, e.g. "Most Popular". */
   badge?: ReactNode;
   /** Plan name. */
@@ -208,7 +237,11 @@ export interface PricingCardProps extends Omit<HTMLAttributes<HTMLDivElement>, '
  */
 export const PricingCard = forwardRef<HTMLDivElement, PricingCardProps>(
   ({ badge, title, price, features, className, ...rest }, ref) => (
-    <div ref={ref} className={cn(CARD_SHELL, 'flex flex-col', className)} {...rest}>
+    <div
+      ref={ref}
+      className={cn(CARD_SHELL, 'flex flex-col', className)}
+      {...rest}
+    >
       <div className="flex flex-col gap-1 px-4 pt-4">
         {badge != null && (
           <span className="inline-flex h-6 w-fit items-center justify-center rounded-lg bg-surface-primary-subtle p-2 text-sm leading-6 tracking-md font-medium text-primary">
@@ -219,7 +252,9 @@ export const PricingCard = forwardRef<HTMLDivElement, PricingCardProps>(
           <span className="text-2xl leading-3xl tracking-3xl font-medium text-foreground">
             {title}
           </span>
-          <span className="text-xl leading-2xl tracking-2xl text-primary">{price}</span>
+          <span className="text-xl leading-2xl tracking-2xl text-primary">
+            {price}
+          </span>
         </div>
       </div>
       <ul className="flex flex-col gap-4 p-4">

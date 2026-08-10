@@ -117,7 +117,7 @@ const triggerColorMap: Record<TabType, string> = {
 // ─── Tab (Root) ─────────────────────────────────────────────────────────────
 
 export interface TabProps
-  extends ComponentPropsWithoutRef<typeof RadixTabs.Root> { }
+  extends ComponentPropsWithoutRef<typeof RadixTabs.Root> {}
 
 /**
  * The tab root: it owns which tab is selected, via `value` / `onValueChange` or
@@ -233,7 +233,7 @@ TabTrigger.displayName = 'TabTrigger';
 // ─── TabContent ─────────────────────────────────────────────────────────────
 
 export interface TabContentProps
-  extends ComponentPropsWithoutRef<typeof RadixTabs.Content> { }
+  extends ComponentPropsWithoutRef<typeof RadixTabs.Content> {}
 
 /** The panel for the trigger with the same `value`. Only the selected one is rendered. */
 export const TabContent = forwardRef<

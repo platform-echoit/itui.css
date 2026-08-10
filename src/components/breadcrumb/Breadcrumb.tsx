@@ -130,7 +130,15 @@ BreadcrumbSeparator.displayName = 'BreadcrumbSeparator';
  */
 export const BreadcrumbItem = forwardRef<HTMLElement, BreadcrumbItemProps>(
   (
-    { href, icon, current = false, asChild = false, className, children, ...rest },
+    {
+      href,
+      icon,
+      current = false,
+      asChild = false,
+      className,
+      children,
+      ...rest
+    },
     ref,
   ) => {
     const interactive = !current;

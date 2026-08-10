@@ -118,32 +118,37 @@ export interface BottomNavigationItemProps
 export const BottomNavigationItem = forwardRef<
   HTMLButtonElement,
   BottomNavigationItemProps
->(({ icon, label, active = false, className, type = 'button', ...rest }, ref) => (
-  <button
-    ref={ref}
-    type={type}
-    aria-current={active ? 'page' : undefined}
-    className={cn(
-      'flex min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-1 p-2',
-      'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
-      active ? 'text-primary' : 'text-foreground',
-      className,
-    )}
-    {...rest}
-  >
-    {icon != null && (
-      <span
-        className="flex size-5 shrink-0 items-center justify-center [&>svg]:size-5"
-        aria-hidden="true"
-      >
-        {icon}
-      </span>
-    )}
-    {label != null && (
-      <span className="max-w-full truncate text-sm leading-6 tracking-md font-medium">
-        {label}
-      </span>
-    )}
-  </button>
-));
+>(
+  (
+    { icon, label, active = false, className, type = 'button', ...rest },
+    ref,
+  ) => (
+    <button
+      ref={ref}
+      type={type}
+      aria-current={active ? 'page' : undefined}
+      className={cn(
+        'flex min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-1 p-2',
+        'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
+        active ? 'text-primary' : 'text-foreground',
+        className,
+      )}
+      {...rest}
+    >
+      {icon != null && (
+        <span
+          className="flex size-5 shrink-0 items-center justify-center [&>svg]:size-5"
+          aria-hidden="true"
+        >
+          {icon}
+        </span>
+      )}
+      {label != null && (
+        <span className="max-w-full truncate text-sm leading-6 tracking-md font-medium">
+          {label}
+        </span>
+      )}
+    </button>
+  ),
+);
 BottomNavigationItem.displayName = 'BottomNavigationItem';

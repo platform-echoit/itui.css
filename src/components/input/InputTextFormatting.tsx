@@ -42,11 +42,7 @@ import { mergeRegister } from '@lexical/utils';
 import { $isLinkNode, LinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
 import { cn } from '../../lib/utils';
 import { Divider } from '../divider/Divider';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '../popover/Popover';
+import { Popover, PopoverContent, PopoverTrigger } from '../popover/Popover';
 import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
 import { TextBRegularIcon } from '../../icons/ITUI/text-b';
 import { TextItalicRegularIcon } from '../../icons/ITUI/text-italic';

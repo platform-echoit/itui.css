@@ -196,8 +196,14 @@ export function BottomSheet({
   const footerContent = footer ?? defaultFooter;
 
   return (
-    <RadixDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-      {trigger != null && <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>}
+    <RadixDialog.Root
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+    >
+      {trigger != null && (
+        <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>
+      )}
       <RadixDialog.Portal>
         <RadixDialog.Overlay
           // Tapping the backdrop (outside the sheet content) closes it.

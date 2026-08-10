@@ -57,7 +57,10 @@ function BubbleTail({ className }: { className?: string }) {
  * bubble and, with `tail`, the pointer at its bottom corner.
  */
 export const Bubble = forwardRef<HTMLDivElement, BubbleProps>(
-  ({ sender = 'outgoing', tail = false, className, children, ...rest }, ref) => {
+  (
+    { sender = 'outgoing', tail = false, className, children, ...rest },
+    ref,
+  ) => {
     const isOutgoing = sender === 'outgoing';
     return (
       <div

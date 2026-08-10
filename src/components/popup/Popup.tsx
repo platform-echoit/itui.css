@@ -116,8 +116,14 @@ export function Popup({
   );
 
   return (
-    <RadixDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-      {trigger != null && <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>}
+    <RadixDialog.Root
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+    >
+      {trigger != null && (
+        <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>
+      )}
       <RadixDialog.Portal>
         <RadixDialog.Overlay className="fixed inset-0 z-50 bg-dim-black" />
         <RadixDialog.Content
@@ -130,7 +136,9 @@ export function Popup({
         >
           {isImage ? (
             <div className={cn(CARD, 'flex flex-col')}>
-              <RadixDialog.Title className="sr-only">{title ?? 'Notice'}</RadixDialog.Title>
+              <RadixDialog.Title className="sr-only">
+                {title ?? 'Notice'}
+              </RadixDialog.Title>
               <div className="flex h-[460px] items-center justify-center bg-surface-neutral-subtle text-neutral-subtle">
                 {image ?? <ImagePlaceholder className="size-[140px]" />}
               </div>

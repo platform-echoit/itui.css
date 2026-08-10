@@ -254,7 +254,9 @@ export const ResourceModal: React.FC<ResourceModalProps> = ({
 
           {type === 'delete' && (
             <div className="text-center space-y-2">
-              <p className="text-slate-900 font-medium">{text.deleteQuestion}</p>
+              <p className="text-slate-900 font-medium">
+                {text.deleteQuestion}
+              </p>
               <p className="text-sm text-slate-500">{text.deleteNote}</p>
             </div>
           )}

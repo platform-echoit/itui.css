@@ -82,7 +82,10 @@ function propClassNames(source: ts.SourceFile): Set<string> {
       ts.isObjectBindingPattern(node.name)
     ) {
       for (const element of node.name.elements) {
-        if (ts.isIdentifier(element.name) && CLASS_PROP.test(element.name.text)) {
+        if (
+          ts.isIdentifier(element.name) &&
+          CLASS_PROP.test(element.name.text)
+        ) {
           names.add(element.name.text);
         }
       }
@@ -119,12 +122,18 @@ function enclosingTemplate(node: ts.Node): ts.TemplateExpression | undefined {
 }
 
 /** The array literal this node belongs to, when that array is `.join(...)`-ed. */
-function enclosingJoinedArray(node: ts.Node): ts.ArrayLiteralExpression | undefined {
+function enclosingJoinedArray(
+  node: ts.Node,
+): ts.ArrayLiteralExpression | undefined {
   for (let n: ts.Node | undefined = node.parent; n; n = n.parent) {
     if (!ts.isArrayLiteralExpression(n)) continue;
 
     // Walk the chain hanging off the array: `.filter(Boolean).join(' ')`.
-    for (let outer: ts.Node | undefined = n.parent; outer; outer = outer.parent) {
+    for (
+      let outer: ts.Node | undefined = n.parent;
+      outer;
+      outer = outer.parent
+    ) {
       if (!ts.isPropertyAccessExpression(outer)) break;
       if (outer.name.text === 'join') return n;
       outer = outer.parent; // step over the CallExpression of `.filter(…)`
@@ -201,7 +210,7 @@ function selfTest(): number {
       1,
     ],
     [
-      "cn() spread over the same list → clean",
+      'cn() spread over the same list → clean',
       "const C = ({ fieldClassName }) => <i className={cn('a', fieldClassName)} />;",
       0,
     ],
@@ -228,7 +237,9 @@ function selfTest(): number {
     const got = checkSource('self-test.tsx', code).length;
     const ok = got === expected;
     if (!ok) failed++;
-    console.log(`  ${ok ? 'PASS' : 'FAIL'}  ${name}${ok ? '' : ` (expected ${expected}, got ${got})`}`);
+    console.log(
+      `  ${ok ? 'PASS' : 'FAIL'}  ${name}${ok ? '' : ` (expected ${expected}, got ${got})`}`,
+    );
   }
   console.log('');
   return failed;
@@ -241,14 +252,18 @@ if (process.argv.includes('--self-test')) {
 }
 
 const files = collectFiles(componentsDir);
-const violations = files.flatMap((f) => checkSource(f, readFileSync(f, 'utf8')));
+const violations = files.flatMap((f) =>
+  checkSource(f, readFileSync(f, 'utf8')),
+);
 
 if (violations.length > 0) {
   console.error(
     `✗ class merge: ${violations.length} site(s) concatenate a consumer class instead of passing it to cn()\n`,
   );
   for (const v of violations) {
-    console.error(`  ${relative(root, v.file)}:${v.line}  ${v.name} — ${v.detail}  [${v.rule}]`);
+    console.error(
+      `  ${relative(root, v.file)}:${v.line}  ${v.name} — ${v.detail}  [${v.rule}]`,
+    );
   }
   console.error(
     '\n  cn() runs tailwind-merge; a plain join emits both classes and lets the\n' +

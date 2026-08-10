@@ -123,7 +123,12 @@ export const DateFooter = forwardRef<HTMLDivElement, DateFooterProps>(
             {cancel}
           </>
         ) : (
-          <span className={cn('flex items-center gap-2', confirmFullWidth && 'flex-1')}>
+          <span
+            className={cn(
+              'flex items-center gap-2',
+              confirmFullWidth && 'flex-1',
+            )}
+          >
             {cancel}
             {confirm}
           </span>

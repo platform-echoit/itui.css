@@ -149,7 +149,13 @@ export const shadowClass: Record<
  */
 const Shadow = forwardRef<HTMLDivElement, ShadowProps>(
   (
-    { className, direction = 'downwards', size = 'md', asChild = false, ...props },
+    {
+      className,
+      direction = 'downwards',
+      size = 'md',
+      asChild = false,
+      ...props
+    },
     ref,
   ) => {
     const Component = asChild ? Slot : 'div';

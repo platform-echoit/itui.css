@@ -111,7 +111,9 @@ const rangeEdgeClasses: Record<BaseDateRangeEdge, string> = {
  * `holiday` is not a DayPicker built-in — it is the custom modifier both
  * components document, so `modifiers={{ holiday: [...] }}` paints those days red.
  */
-export function baseDateStateFromModifiers(modifiers: Modifiers): BaseDateState {
+export function baseDateStateFromModifiers(
+  modifiers: Modifiers,
+): BaseDateState {
   if (modifiers.disabled || modifiers.outside) return 'disabled';
   // Every day of a range carries `selected`, so the band has to be claimed first —
   // otherwise the whole range renders as a row of filled circles.

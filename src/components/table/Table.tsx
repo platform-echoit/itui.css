@@ -6,7 +6,7 @@ import {
 } from 'react';
 import { ArrowDownRegularIcon } from '../../icons/ITUI/arrow-down';
 import { ArrowUpRegularIcon } from '../../icons/ITUI/arrow-up';
-import {cn} from '../../lib/utils';
+import { cn } from '../../lib/utils';
 
 // ── Token → Tailwind map ─────────────────────────────────────────────────────
 /*
@@ -40,7 +40,7 @@ import {cn} from '../../lib/utils';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
-export type SortDirection='asc'|'desc';
+export type SortDirection = 'asc' | 'desc';
 
 export interface TableProps extends HTMLAttributes<HTMLTableElement> {
   /** Ref to the `<table>`, not to the scrolling wrapper around it. */
@@ -91,30 +91,30 @@ export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
  * the caller, which is why `TableRow.selected` and `TableHead.sortDirection` are
  * presentational.
  */
-export const Table=({className,...props}: TableProps) => (
+export const Table = ({ className, ...props }: TableProps) => (
   <div className="w-full overflow-x-auto rounded-lg border border-border-neutral-subtle">
-    <table className={cn('w-full bg-inverse',className)} {...props} />
+    <table className={cn('w-full bg-inverse', className)} {...props} />
   </div>
 );
 
 // ── TableHeader ───────────────────────────────────────────────────────────────
 
 /** The `<thead>` — a `TableRow` of `TableHead` cells. */
-export const TableHeader=({className,...props}: TableHeaderProps) => (
+export const TableHeader = ({ className, ...props }: TableHeaderProps) => (
   // No border of its own: the header is a TableRow, which already draws the
   // 1px rule under itself.
-  <thead className={cn('bg-inverse',className)} {...props} />
+  <thead className={cn('bg-inverse', className)} {...props} />
 );
 
 // ── TableBody ─────────────────────────────────────────────────────────────────
 
 /** The `<tbody>` — the data rows. */
-export const TableBody=({className,...props}: TableBodyProps) => (
+export const TableBody = ({ className, ...props }: TableBodyProps) => (
   // The last row drops its rule so the frame's own bottom border is the only
   // line there — a row border would cut straight across the rounded corners.
   // It sits here rather than as `last:` on TableRow, which would also strip the
   // header's rule: that row is the last one in its own <thead>.
-  <tbody className={cn('[&_tr:last-child]:border-b-0',className)} {...props} />
+  <tbody className={cn('[&_tr:last-child]:border-b-0', className)} {...props} />
 );
 
 // ── TableRow ──────────────────────────────────────────────────────────────────
@@ -123,7 +123,7 @@ export const TableBody=({className,...props}: TableBodyProps) => (
  * One row. `disabled` drops its `onClick` **and** its `onKeyDown`, so a disabled
  * row cannot be triggered by Enter either.
  */
-export const TableRow=({
+export const TableRow = ({
   className,
   selected,
   disabled,
@@ -132,29 +132,29 @@ export const TableRow=({
   ...props
 }: TableRowProps) => (
   <tr
-    aria-disabled={disabled||undefined}
-    data-disabled={disabled? '':undefined}
+    aria-disabled={disabled || undefined}
+    data-disabled={disabled ? '' : undefined}
     className={cn(
       'border-b border-border-neutral-subtle',
       selected
         ? 'bg-surface-hover'
-        :disabled
+        : disabled
           ? 'bg-surface-neutral-disabled'
-          :'bg-inverse',
-      disabled&&'pointer-events-none text-neutral-disabled',
+          : 'bg-inverse',
+      disabled && 'pointer-events-none text-neutral-disabled',
       className,
     )}
     // pointer-events-none only stops the mouse, so drop the keyboard path too —
     // otherwise a disabled row still fires the consumer's handlers via Enter.
-    onClick={disabled? undefined:onClick}
-    onKeyDown={disabled? undefined:onKeyDown}
+    onClick={disabled ? undefined : onClick}
+    onKeyDown={disabled ? undefined : onKeyDown}
     {...props}
   />
 );
 
 // ── TableHead ─────────────────────────────────────────────────────────────────
 
-const ARIA_SORT: Record<SortDirection,'ascending'|'descending'> = {
+const ARIA_SORT: Record<SortDirection, 'ascending' | 'descending'> = {
   asc: 'ascending',
   desc: 'descending',
 };
@@ -164,20 +164,24 @@ const ARIA_SORT: Record<SortDirection,'ascending'|'descending'> = {
  * real `<button>` — a `<th>` cannot take focus — so an `onClick` on the cell
  * starts firing on Enter and Space as well.
  */
-export const TableHead=({
+export const TableHead = ({
   className,
   sortDirection,
   sortable,
   children,
   ...props
 }: TableHeadProps) => {
-  const isSortable=sortable||sortDirection!=null;
+  const isSortable = sortable || sortDirection != null;
 
   return (
     <th
       scope="col"
       aria-sort={
-        sortDirection? ARIA_SORT[sortDirection]:isSortable? 'none':undefined
+        sortDirection
+          ? ARIA_SORT[sortDirection]
+          : isSortable
+            ? 'none'
+            : undefined
       }
       className={cn(
         'h-10 px-3 py-2 text-left align-middle',
@@ -186,7 +190,7 @@ export const TableHead=({
       )}
       {...props}
     >
-      {isSortable? (
+      {isSortable ? (
         // A <th> can't take focus, so the sort control has to be a real button.
         // Its click bubbles to the <th>, so an onClick already sitting there
         // keeps working — and now fires on Enter/Space too.
@@ -195,21 +199,21 @@ export const TableHead=({
           className="inline-flex items-center gap-2 cursor-pointer rounded-sm text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         >
           {children}
-          {sortDirection==='asc'? (
+          {sortDirection === 'asc' ? (
             <ArrowUpRegularIcon
               width={12}
               height={12}
               className="shrink-0 [&_path]:fill-current"
             />
-          ):sortDirection==='desc'? (
+          ) : sortDirection === 'desc' ? (
             <ArrowDownRegularIcon
               width={12}
               height={12}
               className="shrink-0 [&_path]:fill-current"
             />
-          ):null}
+          ) : null}
         </button>
-      ):(
+      ) : (
         children
       )}
     </th>
@@ -219,7 +223,7 @@ export const TableHead=({
 // ── TableCell ─────────────────────────────────────────────────────────────────
 
 /** One data cell. Its content does not wrap; give it `whitespace-normal` if it should. */
-export const TableCell=({className,...props}: TableCellProps) => (
+export const TableCell = ({ className, ...props }: TableCellProps) => (
   <td
     className={cn(
       'h-10 px-3 py-2 align-middle',

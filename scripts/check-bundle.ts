@@ -73,7 +73,9 @@ for (const entry of ENTRIES) {
 
 const baseline = results.get('baseline')!;
 
-console.log('\n  entry      JS raw      JS gzip     vs baseline (raw)   CSS        modules');
+console.log(
+  '\n  entry      JS raw      JS gzip     vs baseline (raw)   CSS        modules',
+);
 console.log('  ' + '-'.repeat(74));
 for (const entry of ENTRIES) {
   const m = results.get(entry)!;

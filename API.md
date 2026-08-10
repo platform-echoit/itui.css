@@ -9,9 +9,9 @@ The 6,615 ITUI icon components live behind their own subpath, `@echoit/itui.css/
 Every module is importable two ways:
 
 ```tsx
-import { Button } from '@echoit/itui.css';          // barrel, tree-shakes in production
-import { Button } from '@echoit/itui.css/button';   // subpath, also fast in dev
-import { XIcon } from '@echoit/itui.css/icons';     // icons, subpath only
+import { Button } from '@echoit/itui.css'; // barrel, tree-shakes in production
+import { Button } from '@echoit/itui.css/button'; // subpath, also fast in dev
+import { XIcon } from '@echoit/itui.css/icons'; // icons, subpath only
 ```
 
 The barrel pulls the stylesheet in with it; a subpath does not, so a consumer who only ever imports subpaths has to `@import '@echoit/itui.css/dist/index.css'` as well. See the [README](./README.md) for setup.
@@ -20,64 +20,64 @@ The barrel pulls the stylesheet in with it; a subpath does not, so a consumer wh
 
 ## Index
 
-| Module | Subpath | Components | Also exports |
-| --- | --- | --- | --- |
-| **accordion** | `@echoit/itui.css/accordion` | [Accordion](#accordion), [AccordionContent](#accordioncontent), [AccordionItem](#accordionitem), [AccordionTrigger](#accordiontrigger) | 3 types |
-| **avatar** | `@echoit/itui.css/avatar` | [Avatar](#avatar), [AvatarGroup](#avatargroup) | 1 type |
-| **backdrop** | `@echoit/itui.css/backdrop` | [Backdrop](#backdrop) | 2 types |
-| **badge** | `@echoit/itui.css/badge` | [Badge](#badge) | 1 type |
-| **bottom-sheet** | `@echoit/itui.css/bottom-sheet` | [BottomSheet](#bottomsheet) | 1 type |
-| **breadcrumb** | `@echoit/itui.css/breadcrumb` | [Breadcrumb](#breadcrumb), [BreadcrumbItem](#breadcrumbitem), [BreadcrumbSeparator](#breadcrumbseparator) | 1 type |
-| **bubble** | `@echoit/itui.css/bubble` | [Bubble](#bubble) | 1 type |
-| **button** | `@echoit/itui.css/button` | [Button](#button) | 2 types |
-| **calendar** | `@echoit/itui.css/calendar` | [BaseDate](#basedate), [BaseDateButton](#basedatebutton), [baseDateRangeEdgeFromModifiers](#basedaterangeedgefrommodifiers), [baseDateStateFromModifiers](#basedatestatefrommodifiers), [Calendar](#calendar), [DateFooter](#datefooter), [DateHeader](#dateheader), [DatePicker](#datepicker), [DateWheelPicker](#datewheelpicker), [WheelPicker](#wheelpicker) | 12 types |
-| **card** | `@echoit/itui.css/card` | [Card](#card), [CardAction](#cardaction), [CardContent](#cardcontent), [CardDescription](#carddescription), [CardFooter](#cardfooter), [CardHeader](#cardheader), [CardTitle](#cardtitle), [CardWithAction](#cardwithaction), [CardWithImage](#cardwithimage), [PricingCard](#pricingcard) | 3 types |
-| **carousel** | `@echoit/itui.css/carousel` | [Carousel](#carousel), [CarouselContent](#carouselcontent), [CarouselIndicator](#carouselindicator), [CarouselItem](#carouselitem), [CarouselNext](#carouselnext), [CarouselPrevious](#carouselprevious), [useCarousel](#usecarousel) | 5 types |
-| **checkbox** | `@echoit/itui.css/checkbox` | [Checkbox](#checkbox) | 1 type |
-| **chip** | `@echoit/itui.css/chip` | [Chip](#chip) | 2 types |
-| **colors** | `@echoit/itui.css/colors` | [colorName](#colorname), [Colors](#colors) | 4 types · 3 values |
-| **dialog** | `@echoit/itui.css/dialog` | [Dialog](#dialog), [DialogClose](#dialogclose), [DialogContent](#dialogcontent), [DialogDescription](#dialogdescription), [DialogFooter](#dialogfooter), [DialogHeader](#dialogheader), [DialogOverlay](#dialogoverlay), [DialogPortal](#dialogportal), [DialogTitle](#dialogtitle), [DialogTrigger](#dialogtrigger) | — |
-| **divider** | `@echoit/itui.css/divider` | [Divider](#divider) | 1 type |
-| **dropdown-menu** | `@echoit/itui.css/dropdown-menu` | [DropdownMenu](#dropdownmenu), [DropdownMenuCheckboxItem](#dropdownmenucheckboxitem), [DropdownMenuContent](#dropdownmenucontent), [DropdownMenuGroup](#dropdownmenugroup), [DropdownMenuItem](#dropdownmenuitem), [DropdownMenuLabel](#dropdownmenulabel), [DropdownMenuPortal](#dropdownmenuportal), [DropdownMenuRadioGroup](#dropdownmenuradiogroup), [DropdownMenuRadioItem](#dropdownmenuradioitem), [DropdownMenuSeparator](#dropdownmenuseparator), [DropdownMenuShortcut](#dropdownmenushortcut), [DropdownMenuSub](#dropdownmenusub), [DropdownMenuSubContent](#dropdownmenusubcontent), [DropdownMenuSubTrigger](#dropdownmenusubtrigger), [DropdownMenuTrigger](#dropdownmenutrigger) | — |
-| **empty** | `@echoit/itui.css/empty` | [Empty](#empty) | 1 type |
-| **file-type** | `@echoit/itui.css/file-type` | [FileIcon](#fileicon), [FileType](#filetype), [TxtIcon](#txticon) | 36 logos · 2 types |
-| **floating-button** | `@echoit/itui.css/floating-button` | [FloatingButton](#floatingbutton) | 1 type |
-| **gnb** | `@echoit/itui.css/gnb` | [Gnb](#gnb), [GnbMenu](#gnbmenu), [GnbMenuItem](#gnbmenuitem) | 1 type |
-| **grid** | `@echoit/itui.css/grid` | [Grid](#grid), [GridItem](#griditem), [GridOverlay](#gridoverlay) | 6 types |
-| **input** | `@echoit/itui.css/input` | [Input](#input), [InputDate](#inputdate), [InputDropdown](#inputdropdown), [InputDropdownItem](#inputdropdownitem), [InputDropdownSub](#inputdropdownsub), [InputFileUpload](#inputfileupload), [InputFileUploadItem](#inputfileuploaditem), [InputPhoneNumber](#inputphonenumber), [InputSearch](#inputsearch), [InputTag](#inputtag), [InputText](#inputtext), [InputTextarea](#inputtextarea), [InputTextFormatting](#inputtextformatting), [InputV2](#inputv2), [InputWithButton](#inputwithbutton) | 5 types |
-| **input-group** | `@echoit/itui.css/input-group` | [InputGroup](#inputgroup), [InputGroupAddon](#inputgroupaddon), [InputGroupButton](#inputgroupbutton), [InputGroupInput](#inputgroupinput), [InputGroupText](#inputgrouptext) | — |
-| **label** | `@echoit/itui.css/label` | [Label](#label) | 2 types |
-| **list** | `@echoit/itui.css/list` | [List](#list), [ListItem](#listitem) | 1 type |
-| **lnb** | `@echoit/itui.css/lnb` | [Lnb](#lnb), [LnbFooter](#lnbfooter), [LnbGroup](#lnbgroup), [LnbGroupContent](#lnbgroupcontent), [LnbGroupTrigger](#lnbgrouptrigger), [LnbHeader](#lnbheader), [LnbItem](#lnbitem), [LnbLogo](#lnblogo), [LnbMenu](#lnbmenu), [LnbToggle](#lnbtoggle), [LnbUser](#lnbuser) | 5 types |
-| **modals** | `@echoit/itui.css/modals` | [Modal](#modal), [ResourceModal](#resourcemodal) | 2 types |
-| **navigation** | `@echoit/itui.css/navigation` | [BottomNavigation](#bottomnavigation), [BottomNavigationItem](#bottomnavigationitem), [TopNavigation](#topnavigation) | 1 type |
-| **navigation-v2** | `@echoit/itui.css/navigation-v2` | [BottomNavigationItemV2](#bottomnavigationitemv2), [BottomNavigationV2](#bottomnavigationv2), [TopNavigationV2](#topnavigationv2) | 1 type |
-| **overflow-menu** | `@echoit/itui.css/overflow-menu` | [OverflowMenu](#overflowmenu), [OverflowMenuContent](#overflowmenucontent), [OverflowMenuItem](#overflowmenuitem), [OverflowMenuPortal](#overflowmenuportal), [OverflowMenuTrigger](#overflowmenutrigger) | 1 type |
-| **pagination** | `@echoit/itui.css/pagination` | [Pagination](#pagination) | — |
-| **popover** | `@echoit/itui.css/popover` | [Popover](#popover), [PopoverAnchor](#popoveranchor), [PopoverClose](#popoverclose), [PopoverContent](#popovercontent), [PopoverGroup](#popovergroup), [PopoverHeader](#popoverheader), [PopoverItem](#popoveritem), [PopoverMenu](#popovermenu), [PopoverPanel](#popoverpanel), [PopoverPortal](#popoverportal), [PopoverRoot](#popoverroot), [PopoverSeparator](#popoverseparator), [PopoverTrigger](#popovertrigger) | 5 types |
-| **popup** | `@echoit/itui.css/popup` | [Popup](#popup) | 1 type |
-| **progress** | `@echoit/itui.css/progress` | [Progress](#progress), [SyncProgressBar](#syncprogressbar) | 4 types |
-| **radio** | `@echoit/itui.css/radio` | [Radio](#radio), [RadioGroup](#radiogroup) | 2 types |
-| **radius** | `@echoit/itui.css/radius` | [Radius](#radius) | 1 type · 2 values |
-| **rating** | `@echoit/itui.css/rating` | [Rating](#rating), [RatingStar](#ratingstar) | 1 type |
-| **scroll** | `@echoit/itui.css/scroll` | [ScrollArea](#scrollarea), [ScrollAreaCorner](#scrollareacorner), [ScrollAreaRoot](#scrollarearoot), [ScrollAreaScrollbar](#scrollareascrollbar), [ScrollAreaThumb](#scrollareathumb), [ScrollAreaViewport](#scrollareaviewport) | 7 types |
-| **select** | `@echoit/itui.css/select` | [Select](#select), [SelectContent](#selectcontent), [SelectGroup](#selectgroup), [SelectItem](#selectitem), [SelectLabel](#selectlabel), [SelectScrollDownButton](#selectscrolldownbutton), [SelectScrollUpButton](#selectscrollupbutton), [SelectSeparator](#selectseparator), [SelectTrigger](#selecttrigger), [SelectValue](#selectvalue) | — |
-| **shadow** | `@echoit/itui.css/shadow` | [Shadow](#shadow) | 2 types · 3 values |
-| **sidebar** | `@echoit/itui.css/sidebar` | [Sidebar](#sidebar), [SidebarFooter](#sidebarfooter), [SidebarGroup](#sidebargroup), [SidebarHeader](#sidebarheader), [SidebarItem](#sidebaritem), [SidebarMenu](#sidebarmenu) | — |
-| **skeleton** | `@echoit/itui.css/skeleton` | [Skeleton](#skeleton), [SkeletonText](#skeletontext) | 2 types |
-| **slider** | `@echoit/itui.css/slider` | [Slider](#slider) | 1 type |
-| **snackbar** | `@echoit/itui.css/snackbar` | [snackbar](#snackbar), [Snackbar](#snackbar-1), [SnackbarAction](#snackbaraction), [SnackbarDescription](#snackbardescription), [SnackbarTitle](#snackbartitle), [SnackbarToaster](#snackbartoaster) | 5 types · 1 value |
-| **spacing** | `@echoit/itui.css/spacing` | [Spacing](#spacing) | 2 types · 2 values |
-| **spinner** | `@echoit/itui.css/spinner` | [Spinner](#spinner) | 1 type |
-| **stepper** | `@echoit/itui.css/stepper` | [Stepper](#stepper), [StepperIndicator](#stepperindicator), [StepperItem](#stepperitem) | 3 types |
-| **tab** | `@echoit/itui.css/tab` | [Tab](#tab), [TabContent](#tabcontent), [TabList](#tablist), [TabTrigger](#tabtrigger) | 3 types |
-| **table** | `@echoit/itui.css/table` | [Table](#table), [TableBody](#tablebody), [TableCell](#tablecell), [TableHead](#tablehead), [TableHeader](#tableheader), [TableRow](#tablerow) | 1 type |
-| **tabs** | `@echoit/itui.css/tabs` | [Tabs](#tabs), [TabsContent](#tabscontent), [TabsList](#tabslist), [TabsTrigger](#tabstrigger) | — |
-| **tag** | `@echoit/itui.css/tag` | [Tag](#tag) | 2 types |
-| **toast** | `@echoit/itui.css/toast` | [Toast](#toast), [Toaster](#toaster) | 2 types · 2 re-exports |
-| **toggle** | `@echoit/itui.css/toggle` | [Toggle](#toggle) | 1 type |
-| **tooltip** | `@echoit/itui.css/tooltip` | [Tooltip](#tooltip), [TooltipContent](#tooltipcontent), [TooltipProvider](#tooltipprovider), [TooltipTrigger](#tooltiptrigger) | — |
-| **typography** | `@echoit/itui.css/typography` | [Typography](#typography) | 3 types · 3 values |
+| Module              | Subpath                            | Components                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Also exports           |
+| ------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
+| **accordion**       | `@echoit/itui.css/accordion`       | [Accordion](#accordion), [AccordionContent](#accordioncontent), [AccordionItem](#accordionitem), [AccordionTrigger](#accordiontrigger)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | 3 types                |
+| **avatar**          | `@echoit/itui.css/avatar`          | [Avatar](#avatar), [AvatarGroup](#avatargroup)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | 1 type                 |
+| **backdrop**        | `@echoit/itui.css/backdrop`        | [Backdrop](#backdrop)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | 2 types                |
+| **badge**           | `@echoit/itui.css/badge`           | [Badge](#badge)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 1 type                 |
+| **bottom-sheet**    | `@echoit/itui.css/bottom-sheet`    | [BottomSheet](#bottomsheet)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | 1 type                 |
+| **breadcrumb**      | `@echoit/itui.css/breadcrumb`      | [Breadcrumb](#breadcrumb), [BreadcrumbItem](#breadcrumbitem), [BreadcrumbSeparator](#breadcrumbseparator)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | 1 type                 |
+| **bubble**          | `@echoit/itui.css/bubble`          | [Bubble](#bubble)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 type                 |
+| **button**          | `@echoit/itui.css/button`          | [Button](#button)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 2 types                |
+| **calendar**        | `@echoit/itui.css/calendar`        | [BaseDate](#basedate), [BaseDateButton](#basedatebutton), [baseDateRangeEdgeFromModifiers](#basedaterangeedgefrommodifiers), [baseDateStateFromModifiers](#basedatestatefrommodifiers), [Calendar](#calendar), [DateFooter](#datefooter), [DateHeader](#dateheader), [DatePicker](#datepicker), [DateWheelPicker](#datewheelpicker), [WheelPicker](#wheelpicker)                                                                                                                                                                                                                                                                                                                                  | 12 types               |
+| **card**            | `@echoit/itui.css/card`            | [Card](#card), [CardAction](#cardaction), [CardContent](#cardcontent), [CardDescription](#carddescription), [CardFooter](#cardfooter), [CardHeader](#cardheader), [CardTitle](#cardtitle), [CardWithAction](#cardwithaction), [CardWithImage](#cardwithimage), [PricingCard](#pricingcard)                                                                                                                                                                                                                                                                                                                                                                                                        | 3 types                |
+| **carousel**        | `@echoit/itui.css/carousel`        | [Carousel](#carousel), [CarouselContent](#carouselcontent), [CarouselIndicator](#carouselindicator), [CarouselItem](#carouselitem), [CarouselNext](#carouselnext), [CarouselPrevious](#carouselprevious), [useCarousel](#usecarousel)                                                                                                                                                                                                                                                                                                                                                                                                                                                             | 5 types                |
+| **checkbox**        | `@echoit/itui.css/checkbox`        | [Checkbox](#checkbox)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | 1 type                 |
+| **chip**            | `@echoit/itui.css/chip`            | [Chip](#chip)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | 2 types                |
+| **colors**          | `@echoit/itui.css/colors`          | [colorName](#colorname), [Colors](#colors)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | 4 types · 3 values     |
+| **dialog**          | `@echoit/itui.css/dialog`          | [Dialog](#dialog), [DialogClose](#dialogclose), [DialogContent](#dialogcontent), [DialogDescription](#dialogdescription), [DialogFooter](#dialogfooter), [DialogHeader](#dialogheader), [DialogOverlay](#dialogoverlay), [DialogPortal](#dialogportal), [DialogTitle](#dialogtitle), [DialogTrigger](#dialogtrigger)                                                                                                                                                                                                                                                                                                                                                                              | —                      |
+| **divider**         | `@echoit/itui.css/divider`         | [Divider](#divider)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 1 type                 |
+| **dropdown-menu**   | `@echoit/itui.css/dropdown-menu`   | [DropdownMenu](#dropdownmenu), [DropdownMenuCheckboxItem](#dropdownmenucheckboxitem), [DropdownMenuContent](#dropdownmenucontent), [DropdownMenuGroup](#dropdownmenugroup), [DropdownMenuItem](#dropdownmenuitem), [DropdownMenuLabel](#dropdownmenulabel), [DropdownMenuPortal](#dropdownmenuportal), [DropdownMenuRadioGroup](#dropdownmenuradiogroup), [DropdownMenuRadioItem](#dropdownmenuradioitem), [DropdownMenuSeparator](#dropdownmenuseparator), [DropdownMenuShortcut](#dropdownmenushortcut), [DropdownMenuSub](#dropdownmenusub), [DropdownMenuSubContent](#dropdownmenusubcontent), [DropdownMenuSubTrigger](#dropdownmenusubtrigger), [DropdownMenuTrigger](#dropdownmenutrigger) | —                      |
+| **empty**           | `@echoit/itui.css/empty`           | [Empty](#empty)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 1 type                 |
+| **file-type**       | `@echoit/itui.css/file-type`       | [FileIcon](#fileicon), [FileType](#filetype), [TxtIcon](#txticon)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 36 logos · 2 types     |
+| **floating-button** | `@echoit/itui.css/floating-button` | [FloatingButton](#floatingbutton)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 type                 |
+| **gnb**             | `@echoit/itui.css/gnb`             | [Gnb](#gnb), [GnbMenu](#gnbmenu), [GnbMenuItem](#gnbmenuitem)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | 1 type                 |
+| **grid**            | `@echoit/itui.css/grid`            | [Grid](#grid), [GridItem](#griditem), [GridOverlay](#gridoverlay)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 6 types                |
+| **input**           | `@echoit/itui.css/input`           | [Input](#input), [InputDate](#inputdate), [InputDropdown](#inputdropdown), [InputDropdownItem](#inputdropdownitem), [InputDropdownSub](#inputdropdownsub), [InputFileUpload](#inputfileupload), [InputFileUploadItem](#inputfileuploaditem), [InputPhoneNumber](#inputphonenumber), [InputSearch](#inputsearch), [InputTag](#inputtag), [InputText](#inputtext), [InputTextarea](#inputtextarea), [InputTextFormatting](#inputtextformatting), [InputV2](#inputv2), [InputWithButton](#inputwithbutton)                                                                                                                                                                                           | 5 types                |
+| **input-group**     | `@echoit/itui.css/input-group`     | [InputGroup](#inputgroup), [InputGroupAddon](#inputgroupaddon), [InputGroupButton](#inputgroupbutton), [InputGroupInput](#inputgroupinput), [InputGroupText](#inputgrouptext)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | —                      |
+| **label**           | `@echoit/itui.css/label`           | [Label](#label)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 2 types                |
+| **list**            | `@echoit/itui.css/list`            | [List](#list), [ListItem](#listitem)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | 1 type                 |
+| **lnb**             | `@echoit/itui.css/lnb`             | [Lnb](#lnb), [LnbFooter](#lnbfooter), [LnbGroup](#lnbgroup), [LnbGroupContent](#lnbgroupcontent), [LnbGroupTrigger](#lnbgrouptrigger), [LnbHeader](#lnbheader), [LnbItem](#lnbitem), [LnbLogo](#lnblogo), [LnbMenu](#lnbmenu), [LnbToggle](#lnbtoggle), [LnbUser](#lnbuser)                                                                                                                                                                                                                                                                                                                                                                                                                       | 5 types                |
+| **modals**          | `@echoit/itui.css/modals`          | [Modal](#modal), [ResourceModal](#resourcemodal)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | 2 types                |
+| **navigation**      | `@echoit/itui.css/navigation`      | [BottomNavigation](#bottomnavigation), [BottomNavigationItem](#bottomnavigationitem), [TopNavigation](#topnavigation)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | 1 type                 |
+| **navigation-v2**   | `@echoit/itui.css/navigation-v2`   | [BottomNavigationItemV2](#bottomnavigationitemv2), [BottomNavigationV2](#bottomnavigationv2), [TopNavigationV2](#topnavigationv2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 type                 |
+| **overflow-menu**   | `@echoit/itui.css/overflow-menu`   | [OverflowMenu](#overflowmenu), [OverflowMenuContent](#overflowmenucontent), [OverflowMenuItem](#overflowmenuitem), [OverflowMenuPortal](#overflowmenuportal), [OverflowMenuTrigger](#overflowmenutrigger)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | 1 type                 |
+| **pagination**      | `@echoit/itui.css/pagination`      | [Pagination](#pagination)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | —                      |
+| **popover**         | `@echoit/itui.css/popover`         | [Popover](#popover), [PopoverAnchor](#popoveranchor), [PopoverClose](#popoverclose), [PopoverContent](#popovercontent), [PopoverGroup](#popovergroup), [PopoverHeader](#popoverheader), [PopoverItem](#popoveritem), [PopoverMenu](#popovermenu), [PopoverPanel](#popoverpanel), [PopoverPortal](#popoverportal), [PopoverRoot](#popoverroot), [PopoverSeparator](#popoverseparator), [PopoverTrigger](#popovertrigger)                                                                                                                                                                                                                                                                           | 5 types                |
+| **popup**           | `@echoit/itui.css/popup`           | [Popup](#popup)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 1 type                 |
+| **progress**        | `@echoit/itui.css/progress`        | [Progress](#progress), [SyncProgressBar](#syncprogressbar)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | 4 types                |
+| **radio**           | `@echoit/itui.css/radio`           | [Radio](#radio), [RadioGroup](#radiogroup)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | 2 types                |
+| **radius**          | `@echoit/itui.css/radius`          | [Radius](#radius)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 type · 2 values      |
+| **rating**          | `@echoit/itui.css/rating`          | [Rating](#rating), [RatingStar](#ratingstar)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | 1 type                 |
+| **scroll**          | `@echoit/itui.css/scroll`          | [ScrollArea](#scrollarea), [ScrollAreaCorner](#scrollareacorner), [ScrollAreaRoot](#scrollarearoot), [ScrollAreaScrollbar](#scrollareascrollbar), [ScrollAreaThumb](#scrollareathumb), [ScrollAreaViewport](#scrollareaviewport)                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | 7 types                |
+| **select**          | `@echoit/itui.css/select`          | [Select](#select), [SelectContent](#selectcontent), [SelectGroup](#selectgroup), [SelectItem](#selectitem), [SelectLabel](#selectlabel), [SelectScrollDownButton](#selectscrolldownbutton), [SelectScrollUpButton](#selectscrollupbutton), [SelectSeparator](#selectseparator), [SelectTrigger](#selecttrigger), [SelectValue](#selectvalue)                                                                                                                                                                                                                                                                                                                                                      | —                      |
+| **shadow**          | `@echoit/itui.css/shadow`          | [Shadow](#shadow)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 2 types · 3 values     |
+| **sidebar**         | `@echoit/itui.css/sidebar`         | [Sidebar](#sidebar), [SidebarFooter](#sidebarfooter), [SidebarGroup](#sidebargroup), [SidebarHeader](#sidebarheader), [SidebarItem](#sidebaritem), [SidebarMenu](#sidebarmenu)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | —                      |
+| **skeleton**        | `@echoit/itui.css/skeleton`        | [Skeleton](#skeleton), [SkeletonText](#skeletontext)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | 2 types                |
+| **slider**          | `@echoit/itui.css/slider`          | [Slider](#slider)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 type                 |
+| **snackbar**        | `@echoit/itui.css/snackbar`        | [snackbar](#snackbar), [Snackbar](#snackbar-1), [SnackbarAction](#snackbaraction), [SnackbarDescription](#snackbardescription), [SnackbarTitle](#snackbartitle), [SnackbarToaster](#snackbartoaster)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | 5 types · 1 value      |
+| **spacing**         | `@echoit/itui.css/spacing`         | [Spacing](#spacing)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 2 types · 2 values     |
+| **spinner**         | `@echoit/itui.css/spinner`         | [Spinner](#spinner)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 1 type                 |
+| **stepper**         | `@echoit/itui.css/stepper`         | [Stepper](#stepper), [StepperIndicator](#stepperindicator), [StepperItem](#stepperitem)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | 3 types                |
+| **tab**             | `@echoit/itui.css/tab`             | [Tab](#tab), [TabContent](#tabcontent), [TabList](#tablist), [TabTrigger](#tabtrigger)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | 3 types                |
+| **table**           | `@echoit/itui.css/table`           | [Table](#table), [TableBody](#tablebody), [TableCell](#tablecell), [TableHead](#tablehead), [TableHeader](#tableheader), [TableRow](#tablerow)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | 1 type                 |
+| **tabs**            | `@echoit/itui.css/tabs`            | [Tabs](#tabs), [TabsContent](#tabscontent), [TabsList](#tabslist), [TabsTrigger](#tabstrigger)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | —                      |
+| **tag**             | `@echoit/itui.css/tag`             | [Tag](#tag)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | 2 types                |
+| **toast**           | `@echoit/itui.css/toast`           | [Toast](#toast), [Toaster](#toaster)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | 2 types · 2 re-exports |
+| **toggle**          | `@echoit/itui.css/toggle`          | [Toggle](#toggle)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1 type                 |
+| **tooltip**         | `@echoit/itui.css/tooltip`         | [Tooltip](#tooltip), [TooltipContent](#tooltipcontent), [TooltipProvider](#tooltipprovider), [TooltipTrigger](#tooltiptrigger)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | —                      |
+| **typography**      | `@echoit/itui.css/typography`      | [Typography](#typography)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | 3 types · 3 values     |
 
 ---
 
@@ -91,8 +91,8 @@ Props: `AccordionProps extends ComponentPropsWithoutRef< typeof RadixAccordion.R
 
 > Props are a union, so the table lists only what every arm has in common. The rest depend on the discriminant — set it and autocomplete narrows to them.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
+| Prop       | Type               | Default     | Description                                                                                                                                                                                                                                                  |
+| ---------- | ------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `variant?` | `AccordionVariant` | `'default'` | Which of the four Figma looks the items wear. It is set once on the root and read from context, so it can never disagree between two items of one accordion — `line` is the borderless list variant, `outline` the emphasised one that also tints the title. |
 
 Also accepts the props of `@radix-ui/react-accordion`, `@radix-ui/react-primitive`.
@@ -115,9 +115,9 @@ The clickable header of an `AccordionItem`. It renders its own caret and the `<h
 
 Props: `AccordionTriggerProps extends ComponentPropsWithoutRef<typeof RadixAccordion.Trigger>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon?` | `ReactNode` | — | Optional leading icon (20px). |
+| Prop    | Type        | Default | Description                   |
+| ------- | ----------- | ------- | ----------------------------- |
+| `icon?` | `ReactNode` | —       | Optional leading icon (20px). |
 
 Also accepts the props of `@radix-ui/react-primitive`.
 
@@ -145,12 +145,12 @@ A person or entity as a round photo, initials, or a silhouette — in that order
 
 Props: `AvatarProps extends HTMLAttributes<HTMLSpanElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `AvatarSize` | `'md'` | One of the six Figma profile sizes, 24px through 72px. |
-| `src?` | `string` | — | Photo to show. Without it the avatar falls back to initials, then to the silhouette. |
-| `alt?` | `string` | `''` | Alt text for `src`. Defaults to `''`, which marks the photo decorative — the right call when the person's name is already next to it. Set it when the avatar stands alone. |
-| `backgroundColor?` | `string` | — | Background color for initial/placeholder mode. Pass a valid |
+| Prop               | Type         | Default | Description                                                                                                                                                                |
+| ------------------ | ------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `size?`            | `AvatarSize` | `'md'`  | One of the six Figma profile sizes, 24px through 72px.                                                                                                                     |
+| `src?`             | `string`     | —       | Photo to show. Without it the avatar falls back to initials, then to the silhouette.                                                                                       |
+| `alt?`             | `string`     | `''`    | Alt text for `src`. Defaults to `''`, which marks the photo decorative — the right call when the person's name is already next to it. Set it when the avatar stands alone. |
+| `backgroundColor?` | `string`     | —       | Background color for initial/placeholder mode. Pass a valid                                                                                                                |
 
 ### AvatarGroup
 
@@ -158,10 +158,10 @@ Overlaps its `Avatar` children into a stack and closes it with an optional "+N" 
 
 Props: `AvatarGroupProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `count?` | `number` | — | Total overflow count rendered as a "+N" badge. Omit or set to 0 to hide the badge. |
-| `size?` | `AvatarSize` | `'md'` | Size of the overflow badge — should match the Avatar children. |
+| Prop     | Type         | Default | Description                                                                        |
+| -------- | ------------ | ------- | ---------------------------------------------------------------------------------- |
+| `count?` | `number`     | —       | Total overflow count rendered as a "+N" badge. Omit or set to 0 to hide the badge. |
+| `size?`  | `AvatarSize` | `'md'`  | Size of the overflow badge — should match the Avatar children.                     |
 
 **Types**
 
@@ -179,11 +179,11 @@ The scrim behind an overlay: a full-bleed dim or blur layer at `z-50`. It is pre
 
 Props: `BackdropProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `BackdropVariant` | `'dim'` | Figma `Shape` — `dim` is a flat scrim, `blur` tints and blurs what it covers. |
-| `position?` | `BackdropPosition` | `'fixed'` | `fixed` covers the viewport; `absolute` fills the nearest positioned ancestor. |
-| `asChild?` | `boolean` | `false` | Paint the scrim onto the child instead of a `div`, so an already-behaving element keeps its own logic — e.g. a Radix `Dialog.Overlay`, or a `<button>` that closes a panel on click. |
+| Prop        | Type               | Default   | Description                                                                                                                                                                          |
+| ----------- | ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `variant?`  | `BackdropVariant`  | `'dim'`   | Figma `Shape` — `dim` is a flat scrim, `blur` tints and blurs what it covers.                                                                                                        |
+| `position?` | `BackdropPosition` | `'fixed'` | `fixed` covers the viewport; `absolute` fills the nearest positioned ancestor.                                                                                                       |
+| `asChild?`  | `boolean`          | `false`   | Paint the scrim onto the child instead of a `div`, so an already-behaving element keeps its own logic — e.g. a Radix `Dialog.Overlay`, or a `<button>` that closes a panel on click. |
 
 **Types**
 
@@ -202,11 +202,11 @@ The notification counter — a red circle carrying a number, or a bare dot. It i
 
 Props: `BadgeProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `BadgeVariant` | `'circle'` | `circle` is the fixed 20px counter, `overflow` grows with its content (the one to use for `"99+"`), and `dot` is the contentless red dot. |
-| `children?` | `ReactNode` | — | The count. Ignored by `dot`, and clipped by `circle` past two characters. |
-| `className?` | `string` | `''` | Extra classes on the badge itself. |
+| Prop         | Type           | Default    | Description                                                                                                                               |
+| ------------ | -------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant?`   | `BadgeVariant` | `'circle'` | `circle` is the fixed 20px counter, `overflow` grows with its content (the one to use for `"99+"`), and `dot` is the contentless red dot. |
+| `children?`  | `ReactNode`    | —          | The count. Ignored by `dot`, and clipped by `circle` past two characters.                                                                 |
+| `className?` | `string`       | `''`       | Extra classes on the badge itself.                                                                                                        |
 
 **Types**
 
@@ -224,23 +224,23 @@ The mobile sheet that slides up from the bottom edge. Same family as `Dialog` / 
 
 Props: `BottomSheetProps`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open?` | `boolean` | — | Controlled open state. Pair it with `onOpenChange`, or use `defaultOpen` instead. |
-| `defaultOpen?` | `boolean` | — | Open state for the uncontrolled case — the sheet then owns it. |
-| `onOpenChange?` | `(open: boolean) => void` | — | Fires on every open and close, including Esc, backdrop tap and drag-to-dismiss. |
-| `trigger?` | `ReactNode` | — | Element that opens the sheet. Omit it when you drive `open` yourself. |
-| `size?` | `BottomSheetSize` | `'regular'` | How tall the panel may grow: `full` is a fixed 90dvh, while `tall` and `regular` hug their content up to 90dvh / 75dvh and scroll past it. |
-| `title?` | `ReactNode` | — | Heading text. It is also the sheet's accessible name, so leaving it out costs one. |
-| `showHandle?` | `boolean` | `true` | Show the drag handle affordance at the top. |
-| `children?` | `ReactNode` | — | Body of the sheet. It scrolls on its own once the panel hits its size cap. |
-| `footer?` | `ReactNode` | — | Replace the default footer entirely. |
-| `primaryText?` | `ReactNode` | — | Convenience footer: primary button. |
-| `onPrimary?` | `() => void` | — | Runs on the primary button. It does not close the sheet — do that yourself. |
-| `secondaryText?` | `ReactNode` | — | Convenience footer: secondary (cancel) button — its presence makes it a two-button footer. |
-| `onSecondary?` | `() => void` | — | Runs on the secondary button. It does not close the sheet — do that yourself. |
-| `className?` | `string` | — | Lands on the sliding panel, not on the scrim. |
-| `onCloseAutoFocus?` | `(event: Event) => void` | — | Forwarded to the underlying Radix Dialog.Content. Call `event.preventDefault()` to stop Radix from restoring focus to the trigger on close — lets the caller decide where focus lands (e.g. back into an editor at a specific caret). |
+| Prop                | Type                      | Default     | Description                                                                                                                                                                                                                           |
+| ------------------- | ------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `open?`             | `boolean`                 | —           | Controlled open state. Pair it with `onOpenChange`, or use `defaultOpen` instead.                                                                                                                                                     |
+| `defaultOpen?`      | `boolean`                 | —           | Open state for the uncontrolled case — the sheet then owns it.                                                                                                                                                                        |
+| `onOpenChange?`     | `(open: boolean) => void` | —           | Fires on every open and close, including Esc, backdrop tap and drag-to-dismiss.                                                                                                                                                       |
+| `trigger?`          | `ReactNode`               | —           | Element that opens the sheet. Omit it when you drive `open` yourself.                                                                                                                                                                 |
+| `size?`             | `BottomSheetSize`         | `'regular'` | How tall the panel may grow: `full` is a fixed 90dvh, while `tall` and `regular` hug their content up to 90dvh / 75dvh and scroll past it.                                                                                            |
+| `title?`            | `ReactNode`               | —           | Heading text. It is also the sheet's accessible name, so leaving it out costs one.                                                                                                                                                    |
+| `showHandle?`       | `boolean`                 | `true`      | Show the drag handle affordance at the top.                                                                                                                                                                                           |
+| `children?`         | `ReactNode`               | —           | Body of the sheet. It scrolls on its own once the panel hits its size cap.                                                                                                                                                            |
+| `footer?`           | `ReactNode`               | —           | Replace the default footer entirely.                                                                                                                                                                                                  |
+| `primaryText?`      | `ReactNode`               | —           | Convenience footer: primary button.                                                                                                                                                                                                   |
+| `onPrimary?`        | `() => void`              | —           | Runs on the primary button. It does not close the sheet — do that yourself.                                                                                                                                                           |
+| `secondaryText?`    | `ReactNode`               | —           | Convenience footer: secondary (cancel) button — its presence makes it a two-button footer.                                                                                                                                            |
+| `onSecondary?`      | `() => void`              | —           | Runs on the secondary button. It does not close the sheet — do that yourself.                                                                                                                                                         |
+| `className?`        | `string`                  | —           | Lands on the sliding panel, not on the scrim.                                                                                                                                                                                         |
+| `onCloseAutoFocus?` | `(event: Event) => void`  | —           | Forwarded to the underlying Radix Dialog.Content. Call `event.preventDefault()` to stop Radix from restoring focus to the trigger on close — lets the caller decide where focus lands (e.g. back into an editor at a specific caret). |
 
 **Types**
 
@@ -258,8 +258,8 @@ The trail of pages leading to this one, as a labelled `<nav>` around an `<ol>`. 
 
 Props: `BreadcrumbProps extends HTMLAttributes<HTMLElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
+| Prop         | Type                      | Default   | Description                                                      |
+| ------------ | ------------------------- | --------- | ---------------------------------------------------------------- |
 | `separator?` | `BreadcrumbSeparatorType` | `'slash'` | Defaults to `'slash'`. Inherited by every separator in the list. |
 
 ### BreadcrumbItem
@@ -268,12 +268,12 @@ One level in the trail. It renders an `<a>` when it navigates and a `<span>` wit
 
 Props: `BreadcrumbItemProps extends HTMLAttributes<HTMLElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `href?` | `string` | — | Turns the crumb into a link. Omit it for a crumb that only labels a level. |
-| `icon?` | `ReactNode` | — | Leading 16×16 icon — Figma's `Icon=Yes` variant. |
-| `current?` | `boolean` | `false` | The page you are on: medium weight, not interactive. Figma's `State=Selected`. |
-| `asChild?` | `boolean` | `false` | Render the crumb as its single child (e.g. a router `<Link>`) instead of `<a>`. |
+| Prop       | Type        | Default | Description                                                                     |
+| ---------- | ----------- | ------- | ------------------------------------------------------------------------------- |
+| `href?`    | `string`    | —       | Turns the crumb into a link. Omit it for a crumb that only labels a level.      |
+| `icon?`    | `ReactNode` | —       | Leading 16×16 icon — Figma's `Icon=Yes` variant.                                |
+| `current?` | `boolean`   | `false` | The page you are on: medium weight, not interactive. Figma's `State=Selected`.  |
+| `asChild?` | `boolean`   | `false` | Render the crumb as its single child (e.g. a router `<Link>`) instead of `<a>`. |
 
 ### BreadcrumbSeparator
 
@@ -281,10 +281,10 @@ The glyph between two crumbs. `Breadcrumb` inserts these for you, so write one b
 
 Props: `BreadcrumbSeparatorProps extends Omit<LiHTMLAttributes<HTMLLIElement>, 'type'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type?` | `BreadcrumbSeparatorType` | — | Overrides the type inherited from `<Breadcrumb separator>`. |
-| `children?` | `ReactNode` | — | Replaces the default glyph. |
+| Prop        | Type                      | Default | Description                                                 |
+| ----------- | ------------------------- | ------- | ----------------------------------------------------------- |
+| `type?`     | `BreadcrumbSeparatorType` | —       | Overrides the type inherited from `<Breadcrumb separator>`. |
+| `children?` | `ReactNode`               | —       | Replaces the default glyph.                                 |
 
 **Types**
 
@@ -302,11 +302,11 @@ One chat message as a rounded speech bubble. It sizes itself to its text, so the
 
 Props: `BubbleProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `sender?` | `BubbleSender` | `'outgoing'` | Who is speaking: `outgoing` is the brand-blue bubble with its tail on the right, `incoming` the dark one with its tail on the left. |
-| `tail?` | `boolean` | `false` | Show the speech-bubble tail at the bottom corner. |
-| `children` | `ReactNode` | — | Message text. Newlines are preserved and long words wrap. |
+| Prop       | Type           | Default      | Description                                                                                                                         |
+| ---------- | -------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `sender?`  | `BubbleSender` | `'outgoing'` | Who is speaking: `outgoing` is the brand-blue bubble with its tail on the right, `incoming` the dark one with its tail on the left. |
+| `tail?`    | `boolean`      | `false`      | Show the speech-bubble tail at the bottom corner.                                                                                   |
+| `children` | `ReactNode`    | —            | Message text. Newlines are preserved and long words wrap.                                                                           |
 
 **Types**
 
@@ -324,20 +324,27 @@ The library's action element: a real `<button>` with seven variants, three heigh
 
 Props: `ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `ButtonVariant` | `'primary'` | How much weight the action carries. `primary` is the one filled button per view; `alternative` is the outlined brand button that sits next to it; `secondary` is the neutral outline for everything else.… |
-| `size?` | `ButtonSize` | `'md'` | Height: 48 / 40 / 32px. `icon` is the square variant for a button whose only child is an icon — a plain icon-only `md` button squares itself too, so reach for `icon` when you want that square at a size the label steps do not give. |
-| `iconLeft?` | `ReactNode` | — | Leading icon slot |
-| `iconRight?` | `ReactNode` | — | Trailing icon slot |
-| `loading?` | `boolean` | `false` | Swap the leading icon for a spinner and swallow clicks. Deliberately not `disabled`: the button stays focusable so the `aria-busy` change is announced instead of focus falling to `<body>`. |
-| `fullWidth?` | `boolean` | `false` | Stretch to the container's width. Ignored on an icon-only button. |
+| Prop         | Type            | Default     | Description                                                                                                                                                                                                                            |
+| ------------ | --------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant?`   | `ButtonVariant` | `'primary'` | How much weight the action carries. `primary` is the one filled button per view; `alternative` is the outlined brand button that sits next to it; `secondary` is the neutral outline for everything else.…                             |
+| `size?`      | `ButtonSize`    | `'md'`      | Height: 48 / 40 / 32px. `icon` is the square variant for a button whose only child is an icon — a plain icon-only `md` button squares itself too, so reach for `icon` when you want that square at a size the label steps do not give. |
+| `iconLeft?`  | `ReactNode`     | —           | Leading icon slot                                                                                                                                                                                                                      |
+| `iconRight?` | `ReactNode`     | —           | Trailing icon slot                                                                                                                                                                                                                     |
+| `loading?`   | `boolean`       | `false`     | Swap the leading icon for a spinner and swallow clicks. Deliberately not `disabled`: the button stays focusable so the `aria-busy` change is announced instead of focus falling to `<body>`.                                           |
+| `fullWidth?` | `boolean`       | `false`     | Stretch to the container's width. Ignored on an icon-only button.                                                                                                                                                                      |
 
 **Types**
 
 ```ts
 type ButtonSize = 'lg' | 'md' | 'sm' | 'icon';
-type ButtonVariant = 'primary' | 'alternative' | 'secondary' | 'link' | 'link-underline' | 'ghost' | 'destructive';
+type ButtonVariant =
+  | 'primary'
+  | 'alternative'
+  | 'secondary'
+  | 'link'
+  | 'link-underline'
+  | 'ghost'
+  | 'destructive';
 ```
 
 ---
@@ -350,11 +357,11 @@ One cell of a date grid: the 36px circle plus the range band behind it.
 
 Props: `BaseDateOwnProps`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state?` | `BaseDateState` | `'default'` | How the cell reads. `selected` fills the circle, `range` tints the band between two ends, `primary` marks today, and `error` is the invalid date — red here means "not allowed", not "today". |
-| `rangeEdge?` | `BaseDateRangeEdge` | — | Which end of a range the cell sits on — draws the half band that joins it to the band. |
-| `marker?` | `boolean \| ReactNode` | — | `true` renders the 4px dot from the design; a node renders your own marker row. |
+| Prop         | Type                   | Default     | Description                                                                                                                                                                                   |
+| ------------ | ---------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `state?`     | `BaseDateState`        | `'default'` | How the cell reads. `selected` fills the circle, `range` tints the band between two ends, `primary` marks today, and `error` is the invalid date — red here means "not allowed", not "today". |
+| `rangeEdge?` | `BaseDateRangeEdge`    | —           | Which end of a range the cell sits on — draws the half band that joins it to the band.                                                                                                        |
+| `marker?`    | `boolean \| ReactNode` | —           | `true` renders the 4px dot from the design; a node renders your own marker row.                                                                                                               |
 
 ### BaseDateButton
 
@@ -362,11 +369,11 @@ Props: `BaseDateOwnProps`
 
 Props: `BaseDateOwnProps`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state?` | `BaseDateState` | `'default'` | How the cell reads. `selected` fills the circle, `range` tints the band between two ends, `primary` marks today, and `error` is the invalid date — red here means "not allowed", not "today". |
-| `rangeEdge?` | `BaseDateRangeEdge` | — | Which end of a range the cell sits on — draws the half band that joins it to the band. |
-| `marker?` | `boolean \| ReactNode` | — | `true` renders the 4px dot from the design; a node renders your own marker row. |
+| Prop         | Type                   | Default     | Description                                                                                                                                                                                   |
+| ------------ | ---------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `state?`     | `BaseDateState`        | `'default'` | How the cell reads. `selected` fills the circle, `range` tints the band between two ends, `primary` marks today, and `error` is the invalid date — red here means "not allowed", not "today". |
+| `rangeEdge?` | `BaseDateRangeEdge`    | —           | Which end of a range the cell sits on — draws the half band that joins it to the band.                                                                                                        |
+| `marker?`    | `boolean \| ReactNode` | —           | `true` renders the 4px dot from the design; a node renders your own marker row.                                                                                                               |
 
 ### baseDateRangeEdgeFromModifiers
 
@@ -388,11 +395,11 @@ Props: `CalendarProps extends DayPickerProps`
 
 > Props are a union, so the table lists only what every arm has in common. The rest depend on the discriminant — set it and autocomplete narrows to them.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `CalendarSize` | `'lg'` | `lg` is the desktop grid with event badges; `md` the compact one with dots. |
-| `events?` | `CalendarEvents` | — | What happens on which day, keyed by `yyyy-MM-dd`. |
-| `maxVisibleEvents?` | `number` | `1` | Badges rendered per day before the rest collapse into a `+N` row (size `lg` only). |
+| Prop                | Type             | Default | Description                                                                        |
+| ------------------- | ---------------- | ------- | ---------------------------------------------------------------------------------- |
+| `size?`             | `CalendarSize`   | `'lg'`  | `lg` is the desktop grid with event badges; `md` the compact one with dots.        |
+| `events?`           | `CalendarEvents` | —       | What happens on which day, keyed by `yyyy-MM-dd`.                                  |
+| `maxVisibleEvents?` | `number`         | `1`     | Badges rendered per day before the rest collapse into a `+N` row (size `lg` only). |
 
 Also accepts the props of `react-day-picker`.
 
@@ -402,15 +409,15 @@ The confirm/cancel row under a date picker. Both buttons are opt-in: each one ap
 
 Props: `DateFooterProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `alignment?` | `DateFooterAlignment` | `'center'` | Which of the two layouts to draw. |
-| `confirmText?` | `ReactNode` | — | Label of the primary button. No label, no button — there is no default wording. |
-| `cancelText?` | `ReactNode` | — | Label of the secondary button. Leaving it out makes this a one-button footer. |
-| `onConfirm?` | `() => void` | — | Runs on the primary button. |
-| `onCancel?` | `() => void` | — | Runs on the secondary button. |
-| `confirmDisabled?` | `boolean` | — | Greys out the primary button — for "nothing picked yet". |
-| `children?` | `ReactNode` | — | Left slot of the `right` alignment — the design puts the range summary here. |
+| Prop               | Type                  | Default    | Description                                                                     |
+| ------------------ | --------------------- | ---------- | ------------------------------------------------------------------------------- |
+| `alignment?`       | `DateFooterAlignment` | `'center'` | Which of the two layouts to draw.                                               |
+| `confirmText?`     | `ReactNode`           | —          | Label of the primary button. No label, no button — there is no default wording. |
+| `cancelText?`      | `ReactNode`           | —          | Label of the secondary button. Leaving it out makes this a one-button footer.   |
+| `onConfirm?`       | `() => void`          | —          | Runs on the primary button.                                                     |
+| `onCancel?`        | `() => void`          | —          | Runs on the secondary button.                                                   |
+| `confirmDisabled?` | `boolean`             | —          | Greys out the primary button — for "nothing picked yet".                        |
+| `children?`        | `ReactNode`           | —          | Left slot of the `right` alignment — the design puts the range summary here.    |
 
 ### DateHeader
 
@@ -418,17 +425,17 @@ The month navigation row: previous · caption · next.
 
 Props: `DateHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children?` | `ReactNode` | — | Center slot: the caption text, or the year/month dropdowns. |
-| `onPrevious?` | `() => void` | — | Runs on the left caret. |
-| `onNext?` | `() => void` | — | Runs on the right caret. |
-| `previousDisabled?` | `boolean` | — | Greys out the left caret — for the first month of an allowed range. |
-| `nextDisabled?` | `boolean` | — | Greys out the right caret — for the last month of an allowed range. |
-| `showPrevious?` | `boolean` | `true` | Render the left caret at all. Hidden, it takes no space and the caption re-centres. |
-| `showNext?` | `boolean` | `true` | Render the right caret at all. Hidden, it takes no space and the caption re-centres. |
-| `previousLabel?` | `string` | `'Previous month'` | Accessible name of the left caret — the icon has no text. |
-| `nextLabel?` | `string` | `'Next month'` | Accessible name of the right caret. |
+| Prop                | Type         | Default            | Description                                                                          |
+| ------------------- | ------------ | ------------------ | ------------------------------------------------------------------------------------ |
+| `children?`         | `ReactNode`  | —                  | Center slot: the caption text, or the year/month dropdowns.                          |
+| `onPrevious?`       | `() => void` | —                  | Runs on the left caret.                                                              |
+| `onNext?`           | `() => void` | —                  | Runs on the right caret.                                                             |
+| `previousDisabled?` | `boolean`    | —                  | Greys out the left caret — for the first month of an allowed range.                  |
+| `nextDisabled?`     | `boolean`    | —                  | Greys out the right caret — for the last month of an allowed range.                  |
+| `showPrevious?`     | `boolean`    | `true`             | Render the left caret at all. Hidden, it takes no space and the caption re-centres.  |
+| `showNext?`         | `boolean`    | `true`             | Render the right caret at all. Hidden, it takes no space and the caption re-centres. |
+| `previousLabel?`    | `string`     | `'Previous month'` | Accessible name of the left caret — the icon has no text.                            |
+| `nextLabel?`        | `string`     | `'Next month'`     | Accessible name of the right caret.                                                  |
 
 ### DatePicker
 
@@ -438,16 +445,16 @@ Props: `DatePickerProps extends DayPickerProps`
 
 > Props are a union, so the table lists only what every arm has in common. The rest depend on the discriminant — set it and autocomplete narrows to them.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `confirmText?` | `ReactNode` | — | Renders the confirm button; omit it and no confirm button appears. |
-| `cancelText?` | `ReactNode` | — | Renders the cancel button; omit it and no cancel button appears. |
-| `onConfirm?` | `() => void` | — | Runs on the confirm button. The picker does not close itself — that is yours to do. |
-| `onCancel?` | `() => void` | — | Runs on the cancel button. |
-| `confirmDisabled?` | `boolean` | — | Greys out the confirm button, e.g. until a full range is picked. |
-| `footerAlignment?` | `DateFooterAlignment` | — | Which footer layout to draw. |
-| `summary?` | `ReactNode` | — | Left slot of the inline footer. Defaults to the selected range, formatted. |
-| `formatRangeSummary?` | `(range: DateRange) => ReactNode` | — | Formats the default range summary. Override it to match your locale — the built-in one writes Korean dates (`2026년 1월 26일 - 2026년 2월 3일`). |
+| Prop                  | Type                              | Default | Description                                                                                                                                      |
+| --------------------- | --------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `confirmText?`        | `ReactNode`                       | —       | Renders the confirm button; omit it and no confirm button appears.                                                                               |
+| `cancelText?`         | `ReactNode`                       | —       | Renders the cancel button; omit it and no cancel button appears.                                                                                 |
+| `onConfirm?`          | `() => void`                      | —       | Runs on the confirm button. The picker does not close itself — that is yours to do.                                                              |
+| `onCancel?`           | `() => void`                      | —       | Runs on the cancel button.                                                                                                                       |
+| `confirmDisabled?`    | `boolean`                         | —       | Greys out the confirm button, e.g. until a full range is picked.                                                                                 |
+| `footerAlignment?`    | `DateFooterAlignment`             | —       | Which footer layout to draw.                                                                                                                     |
+| `summary?`            | `ReactNode`                       | —       | Left slot of the inline footer. Defaults to the selected range, formatted.                                                                       |
+| `formatRangeSummary?` | `(range: DateRange) => ReactNode` | —       | Formats the default range summary. Override it to match your locale — the built-in one writes Korean dates (`2026년 1월 26일 - 2026년 2월 3일`). |
 
 Also accepts the props of `react-day-picker`.
 
@@ -457,17 +464,17 @@ Also accepts the props of `react-day-picker`.
 
 Props: `DateWheelPickerProps extends Omit<WheelPickerProps, 'columns' | 'value' | 'onChange'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type?` | `DateWheelPickerType` | `'date'` | Which wheels to show: `date` is year · month · day, `year-month` drops the day, and `time` is the hour wheel. |
-| `value` | `Date` | — | The current date. Only the fields this `type` shows are read from it. |
-| `onChange?` | `(value: Date) => void` | — | Fires with a whole new `Date` — the untouched fields are carried over. |
-| `fromYear?` | `number` | — | First year on the year wheel. |
-| `toYear?` | `number` | — | Last year on the year wheel. |
-| `formatYear?` | `(year: number) => ReactNode` | `String` | Formats the year label. Defaults to the plain number. |
-| `formatMonth?` | `(month: number) => ReactNode` | `(month) => pad2(month + 1)` | `month` is 0-indexed, matching `Date`. |
-| `formatDay?` | `(day: number) => ReactNode` | `pad2` | Formats the day label. Defaults to the plain number. |
-| `formatHour?` | `(hour: number) => ReactNode` | `defaultFormatHour` | `hour` is 0–23. |
+| Prop           | Type                           | Default                      | Description                                                                                                   |
+| -------------- | ------------------------------ | ---------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `type?`        | `DateWheelPickerType`          | `'date'`                     | Which wheels to show: `date` is year · month · day, `year-month` drops the day, and `time` is the hour wheel. |
+| `value`        | `Date`                         | —                            | The current date. Only the fields this `type` shows are read from it.                                         |
+| `onChange?`    | `(value: Date) => void`        | —                            | Fires with a whole new `Date` — the untouched fields are carried over.                                        |
+| `fromYear?`    | `number`                       | —                            | First year on the year wheel.                                                                                 |
+| `toYear?`      | `number`                       | —                            | Last year on the year wheel.                                                                                  |
+| `formatYear?`  | `(year: number) => ReactNode`  | `String`                     | Formats the year label. Defaults to the plain number.                                                         |
+| `formatMonth?` | `(month: number) => ReactNode` | `(month) => pad2(month + 1)` | `month` is 0-indexed, matching `Date`.                                                                        |
+| `formatDay?`   | `(day: number) => ReactNode`   | `pad2`                       | Formats the day label. Defaults to the plain number.                                                          |
+| `formatHour?`  | `(hour: number) => ReactNode`  | `defaultFormatHour`          | `hour` is 0–23.                                                                                               |
 
 ### WheelPicker
 
@@ -475,65 +482,71 @@ Scroll-snapping wheels, one per column. Each column scrolls independently and re
 
 Props: `WheelPickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `columns` | `WheelPickerColumn[]` | — | The wheels, left to right. |
-| `value` | `Record<string, string>` | — | Selected option value per column, keyed by `column.key`. |
-| `onChange?` | `(value: Record<string, string>) => void` | — | Receives the full next selection, not just the column that moved. |
+| Prop        | Type                                      | Default | Description                                                       |
+| ----------- | ----------------------------------------- | ------- | ----------------------------------------------------------------- |
+| `columns`   | `WheelPickerColumn[]`                     | —       | The wheels, left to right.                                        |
+| `value`     | `Record<string, string>`                  | —       | Selected option value per column, keyed by `column.key`.          |
+| `onChange?` | `(value: Record<string, string>) => void` | —       | Receives the full next selection, not just the column that moved. |
 
 ### BaseDateButtonProps
 
 Props of `BaseDateButton` — the same cell as a `<button>`.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state?` | `BaseDateState` | — | How the cell reads. `selected` fills the circle, `range` tints the band between two ends, `primary` marks today, and `error` is the invalid date — red here means "not allowed", not "today". |
-| `rangeEdge?` | `BaseDateRangeEdge` | — | Which end of a range the cell sits on — draws the half band that joins it to the band. |
-| `marker?` | `boolean \| ReactNode` | — | `true` renders the 4px dot from the design; a node renders your own marker row. |
+| Prop         | Type                   | Default | Description                                                                                                                                                                                   |
+| ------------ | ---------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `state?`     | `BaseDateState`        | —       | How the cell reads. `selected` fills the circle, `range` tints the band between two ends, `primary` marks today, and `error` is the invalid date — red here means "not allowed", not "today". |
+| `rangeEdge?` | `BaseDateRangeEdge`    | —       | Which end of a range the cell sits on — draws the half band that joins it to the band.                                                                                                        |
+| `marker?`    | `boolean \| ReactNode` | —       | `true` renders the 4px dot from the design; a node renders your own marker row.                                                                                                               |
 
 ### BaseDateProps
 
 Props of `BaseDate` — the non-interactive cell.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `state?` | `BaseDateState` | — | How the cell reads. `selected` fills the circle, `range` tints the band between two ends, `primary` marks today, and `error` is the invalid date — red here means "not allowed", not "today". |
-| `rangeEdge?` | `BaseDateRangeEdge` | — | Which end of a range the cell sits on — draws the half band that joins it to the band. |
-| `marker?` | `boolean \| ReactNode` | — | `true` renders the 4px dot from the design; a node renders your own marker row. |
+| Prop         | Type                   | Default | Description                                                                                                                                                                                   |
+| ------------ | ---------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `state?`     | `BaseDateState`        | —       | How the cell reads. `selected` fills the circle, `range` tints the band between two ends, `primary` marks today, and `error` is the invalid date — red here means "not allowed", not "today". |
+| `rangeEdge?` | `BaseDateRangeEdge`    | —       | Which end of a range the cell sits on — draws the half band that joins it to the band.                                                                                                        |
+| `marker?`    | `boolean \| ReactNode` | —       | `true` renders the 4px dot from the design; a node renders your own marker row.                                                                                                               |
 
 ### CalendarEvent
 
 One thing happening on a day, drawn as a badge at size `lg` and as a dot at `md`.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `string` | — | Badge text at size `lg`. Size `md` draws a coloured dot only, so the label is not shown. |
-| `tone?` | `CalendarEventTone` | — | Which semantic colour the badge or dot takes. |
+| Prop    | Type                | Default | Description                                                                              |
+| ------- | ------------------- | ------- | ---------------------------------------------------------------------------------------- |
+| `label` | `string`            | —       | Badge text at size `lg`. Size `md` draws a coloured dot only, so the label is not shown. |
+| `tone?` | `CalendarEventTone` | —       | Which semantic colour the badge or dot takes.                                            |
 
 ### WheelPickerColumn
 
 One wheel of a `WheelPicker`.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `key` | `string` | — | Identifies this column in the `value` record. |
-| `options` | `WheelPickerOption[]` | — | Rows of this wheel, top to bottom. |
-| `aria-label?` | `string` | — | Accessible name of the wheel — there is no visible label above it. |
+| Prop          | Type                  | Default | Description                                                        |
+| ------------- | --------------------- | ------- | ------------------------------------------------------------------ |
+| `key`         | `string`              | —       | Identifies this column in the `value` record.                      |
+| `options`     | `WheelPickerOption[]` | —       | Rows of this wheel, top to bottom.                                 |
+| `aria-label?` | `string`              | —       | Accessible name of the wheel — there is no visible label above it. |
 
 ### WheelPickerOption
 
 One row of a wheel.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | — | Identity of the row, as it appears in the picker's `value` record. |
-| `label` | `ReactNode` | — | What the row reads — free to be formatted (`1월`, `01`) while `value` stays raw. |
+| Prop    | Type        | Default | Description                                                                      |
+| ------- | ----------- | ------- | -------------------------------------------------------------------------------- |
+| `value` | `string`    | —       | Identity of the row, as it appears in the picker's `value` record.               |
+| `label` | `ReactNode` | —       | What the row reads — free to be formatted (`1월`, `01`) while `value` stays raw. |
 
 **Types**
 
 ```ts
 type BaseDateRangeEdge = 'start' | 'end';
-type BaseDateState = 'default' | 'primary' | 'error' | 'disabled' | 'selected' | 'range';
+type BaseDateState =
+  | 'default'
+  | 'primary'
+  | 'error'
+  | 'disabled'
+  | 'selected'
+  | 'range';
 type CalendarEvents = Record<string, CalendarEvent[]>;
 type CalendarEventTone = 'primary' | 'success' | 'error';
 type CalendarSize = 'md' | 'lg';
@@ -593,13 +606,13 @@ Ready-made card: title, description and a footer of actions stretched to equal w
 
 Props: `CardWithActionProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `ReactNode` | — | Headline of the card. |
-| `description?` | `ReactNode` | — | Supporting line under the title. |
-| `actions?` | `ReactNode` | — | Footer actions (e.g. Buttons). Rendered in a bordered footer, stretched equally. |
-| `tone?` | `CardActionTone` | `'light'` | `dark` drops the card onto an image and reads through a translucent scrim. |
-| `image?` | `ReactNode` | — | Image behind the `dark` scrim. Falls back to a placeholder. Unused when `light`. |
+| Prop           | Type             | Default   | Description                                                                      |
+| -------------- | ---------------- | --------- | -------------------------------------------------------------------------------- |
+| `title`        | `ReactNode`      | —         | Headline of the card.                                                            |
+| `description?` | `ReactNode`      | —         | Supporting line under the title.                                                 |
+| `actions?`     | `ReactNode`      | —         | Footer actions (e.g. Buttons). Rendered in a bordered footer, stretched equally. |
+| `tone?`        | `CardActionTone` | `'light'` | `dark` drops the card onto an image and reads through a translucent scrim.       |
+| `image?`       | `ReactNode`      | —         | Image behind the `dark` scrim. Falls back to a placeholder. Unused when `light`. |
 
 ### CardWithImage
 
@@ -607,12 +620,12 @@ Ready-made card: an image slot plus a title and description, in the four arrange
 
 Props: `CardWithImageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `ReactNode` | — | Headline of the card. |
-| `description?` | `ReactNode` | — | Supporting line under the title. Omit it for a title-only card. |
-| `image?` | `ReactNode` | — | Image element (e.g. <img>). Falls back to a placeholder when omitted. |
-| `imagePosition?` | `CardImagePosition` | `'top'` | Where the image sits relative to the text. |
+| Prop             | Type                | Default | Description                                                           |
+| ---------------- | ------------------- | ------- | --------------------------------------------------------------------- |
+| `title`          | `ReactNode`         | —       | Headline of the card.                                                 |
+| `description?`   | `ReactNode`         | —       | Supporting line under the title. Omit it for a title-only card.       |
+| `image?`         | `ReactNode`         | —       | Image element (e.g. <img>). Falls back to a placeholder when omitted. |
+| `imagePosition?` | `CardImagePosition` | `'top'` | Where the image sits relative to the text.                            |
 
 ### PricingCard
 
@@ -620,21 +633,21 @@ Ready-made plan card: badge, plan name, price and a checked feature list. It car
 
 Props: `PricingCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `badge?` | `ReactNode` | — | Optional highlight badge, e.g. "Most Popular". |
-| `title` | `ReactNode` | — | Plan name. |
-| `price` | `ReactNode` | — | Price, already formatted — the card does no currency work. |
-| `features` | `PricingFeature[]` | — | The feature list, in order. Excluded lines stay in place, greyed out. |
+| Prop       | Type               | Default | Description                                                           |
+| ---------- | ------------------ | ------- | --------------------------------------------------------------------- |
+| `badge?`   | `ReactNode`        | —       | Optional highlight badge, e.g. "Most Popular".                        |
+| `title`    | `ReactNode`        | —       | Plan name.                                                            |
+| `price`    | `ReactNode`        | —       | Price, already formatted — the card does no currency work.            |
+| `features` | `PricingFeature[]` | —       | The feature list, in order. Excluded lines stay in place, greyed out. |
 
 ### PricingFeature
 
 One line of a `PricingCard`'s feature list.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `ReactNode` | — | What the plan includes, e.g. `"Unlimited members"`. |
-| `included?` | `boolean` | — | false → shown muted with a disabled check (feature not included). |
+| Prop        | Type        | Default | Description                                                       |
+| ----------- | ----------- | ------- | ----------------------------------------------------------------- |
+| `label`     | `ReactNode` | —       | What the plan includes, e.g. `"Unlimited members"`.               |
+| `included?` | `boolean`   | —       | false → shown muted with a disabled check (feature not included). |
 
 **Types**
 
@@ -653,12 +666,12 @@ A slider built on Embla. This is the root: it owns the engine and the keyboard h
 
 Props: `CarouselProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `opts?` | `CarouselOptions` | — | Embla options, e.g. `{ loop: true, align: 'start' }`. |
-| `plugins?` | `CarouselPlugin` | — | Embla plugins, e.g. autoplay. |
-| `orientation?` | `CarouselOrientation` | `'horizontal'` | Which way the slides move, and which arrow keys drive them. |
-| `setApi?` | `(api: CarouselApi) => void` | — | Receives the Embla api once ready, for imperative control from outside. |
+| Prop           | Type                         | Default        | Description                                                             |
+| -------------- | ---------------------------- | -------------- | ----------------------------------------------------------------------- |
+| `opts?`        | `CarouselOptions`            | —              | Embla options, e.g. `{ loop: true, align: 'start' }`.                   |
+| `plugins?`     | `CarouselPlugin`             | —              | Embla plugins, e.g. autoplay.                                           |
+| `orientation?` | `CarouselOrientation`        | `'horizontal'` | Which way the slides move, and which arrow keys drive them.             |
+| `setApi?`      | `(api: CarouselApi) => void` | —              | Receives the Embla api once ready, for imperative control from outside. |
 
 ### CarouselContent
 
@@ -666,9 +679,9 @@ Props: `CarouselProps extends HTMLAttributes<HTMLDivElement>`
 
 Props: `CarouselContentProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `viewportClassName?` | `string` | — | Class for the overflow viewport Embla measures — use it for outer padding. |
+| Prop                 | Type     | Default | Description                                                                |
+| -------------------- | -------- | ------- | -------------------------------------------------------------------------- |
+| `viewportClassName?` | `string` | —       | Class for the overflow viewport Embla measures — use it for outer padding. |
 
 ### CarouselIndicator
 
@@ -676,13 +689,13 @@ Pagination indicator. Inside a `<Carousel>` it binds to Embla automatically; `co
 
 Props: `CarouselIndicatorProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type?` | `CarouselType` | `'pill'` | Indicator shape — `pill` widens the active one, `dot` keeps it round. |
-| `background?` | `boolean` | `false` | Render the pill-shaped surface behind the indicators. |
-| `count?` | `number` | — | Indicator count. Defaults to the parent `<Carousel>`'s snap count. |
-| `activeIndex?` | `number` | — | Active index. Defaults to the parent `<Carousel>`'s selected snap. |
-| `onSelect?` | `(index: number) => void` | — | Click handler. Defaults to scrolling the parent `<Carousel>` to that slide. |
+| Prop           | Type                      | Default  | Description                                                                 |
+| -------------- | ------------------------- | -------- | --------------------------------------------------------------------------- |
+| `type?`        | `CarouselType`            | `'pill'` | Indicator shape — `pill` widens the active one, `dot` keeps it round.       |
+| `background?`  | `boolean`                 | `false`  | Render the pill-shaped surface behind the indicators.                       |
+| `count?`       | `number`                  | —        | Indicator count. Defaults to the parent `<Carousel>`'s snap count.          |
+| `activeIndex?` | `number`                  | —        | Active index. Defaults to the parent `<Carousel>`'s selected snap.          |
+| `onSelect?`    | `(index: number) => void` | —        | Click handler. Defaults to scrolling the parent `<Carousel>` to that slide. |
 
 ### CarouselItem
 
@@ -696,14 +709,14 @@ The "go forward" arrow, positioned against the carousel and disabled at the last
 
 Props: `ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `ButtonVariant` | `'secondary'` | How much weight the action carries. `primary` is the one filled button per view; `alternative` is the outlined brand button that sits next to it; `secondary` is the neutral outline for everything else.… |
-| `size?` | `ButtonSize` | `'icon'` | Height: 48 / 40 / 32px. `icon` is the square variant for a button whose only child is an icon — a plain icon-only `md` button squares itself too, so reach for `icon` when you want that square at a size the label steps do not give. |
-| `iconLeft?` | `ReactNode` | — | Leading icon slot |
-| `iconRight?` | `ReactNode` | — | Trailing icon slot |
-| `loading?` | `boolean` | — | Swap the leading icon for a spinner and swallow clicks. Deliberately not `disabled`: the button stays focusable so the `aria-busy` change is announced instead of focus falling to `<body>`. |
-| `fullWidth?` | `boolean` | — | Stretch to the container's width. Ignored on an icon-only button. |
+| Prop         | Type            | Default       | Description                                                                                                                                                                                                                            |
+| ------------ | --------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant?`   | `ButtonVariant` | `'secondary'` | How much weight the action carries. `primary` is the one filled button per view; `alternative` is the outlined brand button that sits next to it; `secondary` is the neutral outline for everything else.…                             |
+| `size?`      | `ButtonSize`    | `'icon'`      | Height: 48 / 40 / 32px. `icon` is the square variant for a button whose only child is an icon — a plain icon-only `md` button squares itself too, so reach for `icon` when you want that square at a size the label steps do not give. |
+| `iconLeft?`  | `ReactNode`     | —             | Leading icon slot                                                                                                                                                                                                                      |
+| `iconRight?` | `ReactNode`     | —             | Trailing icon slot                                                                                                                                                                                                                     |
+| `loading?`   | `boolean`       | —             | Swap the leading icon for a spinner and swallow clicks. Deliberately not `disabled`: the button stays focusable so the `aria-busy` change is announced instead of focus falling to `<body>`.                                           |
+| `fullWidth?` | `boolean`       | —             | Stretch to the container's width. Ignored on an icon-only button.                                                                                                                                                                      |
 
 ### CarouselPrevious
 
@@ -711,14 +724,14 @@ The "go back" arrow, positioned against the carousel and disabled at the first s
 
 Props: `ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `ButtonVariant` | `'secondary'` | How much weight the action carries. `primary` is the one filled button per view; `alternative` is the outlined brand button that sits next to it; `secondary` is the neutral outline for everything else.… |
-| `size?` | `ButtonSize` | `'icon'` | Height: 48 / 40 / 32px. `icon` is the square variant for a button whose only child is an icon — a plain icon-only `md` button squares itself too, so reach for `icon` when you want that square at a size the label steps do not give. |
-| `iconLeft?` | `ReactNode` | — | Leading icon slot |
-| `iconRight?` | `ReactNode` | — | Trailing icon slot |
-| `loading?` | `boolean` | — | Swap the leading icon for a spinner and swallow clicks. Deliberately not `disabled`: the button stays focusable so the `aria-busy` change is announced instead of focus falling to `<body>`. |
-| `fullWidth?` | `boolean` | — | Stretch to the container's width. Ignored on an icon-only button. |
+| Prop         | Type            | Default       | Description                                                                                                                                                                                                                            |
+| ------------ | --------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant?`   | `ButtonVariant` | `'secondary'` | How much weight the action carries. `primary` is the one filled button per view; `alternative` is the outlined brand button that sits next to it; `secondary` is the neutral outline for everything else.…                             |
+| `size?`      | `ButtonSize`    | `'icon'`      | Height: 48 / 40 / 32px. `icon` is the square variant for a button whose only child is an icon — a plain icon-only `md` button squares itself too, so reach for `icon` when you want that square at a size the label steps do not give. |
+| `iconLeft?`  | `ReactNode`     | —             | Leading icon slot                                                                                                                                                                                                                      |
+| `iconRight?` | `ReactNode`     | —             | Trailing icon slot                                                                                                                                                                                                                     |
+| `loading?`   | `boolean`       | —             | Swap the leading icon for a spinner and swallow clicks. Deliberately not `disabled`: the button stays focusable so the `aria-busy` change is announced instead of focus falling to `<body>`.                                           |
+| `fullWidth?` | `boolean`       | —             | Stretch to the container's width. Ignored on an icon-only button.                                                                                                                                                                      |
 
 ### useCarousel
 
@@ -746,11 +759,11 @@ A checkbox over a real `<input type="checkbox">` — the visual box is CSS on a 
 
 Props: `CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `CheckboxSize` | `'md'` | Box and label size: 20px/`text-sm` or 16px/`text-xs`. |
-| `label?` | `ReactNode` | — | Text beside the box. The input already sits inside a `<label>`, so passing it here both names the checkbox and makes the text part of its hit target — prefer it over wrapping a label of your own. Without it, supply an `aria-label`, or the checkbox has no accessible name. |
-| `onCheckedChange?` | `(checked: boolean) => void` | — | Fires with the next checked state — the same shape as `Radio`, `Toggle`, `Select` and `Rating`, so a form does not switch paradigms mid-way. |
+| Prop               | Type                         | Default | Description                                                                                                                                                                                                                                                                     |
+| ------------------ | ---------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `size?`            | `CheckboxSize`               | `'md'`  | Box and label size: 20px/`text-sm` or 16px/`text-xs`.                                                                                                                                                                                                                           |
+| `label?`           | `ReactNode`                  | —       | Text beside the box. The input already sits inside a `<label>`, so passing it here both names the checkbox and makes the text part of its hit target — prefer it over wrapping a label of your own. Without it, supply an `aria-label`, or the checkbox has no accessible name. |
+| `onCheckedChange?` | `(checked: boolean) => void` | —       | Fires with the next checked state — the same shape as `Radio`, `Toggle`, `Select` and `Rating`, so a form does not switch paradigms mid-way.                                                                                                                                    |
 
 **Types**
 
@@ -768,18 +781,18 @@ A compact label that can carry an icon or avatar, be selected, and be dismissed 
 
 Props: `ChipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `ChipVariant` | `'outline'` | `outline` is the bordered chip on the page background, `filled` the tinted one. |
-| `size?` | `ChipSize` | `'md'` | Height: 32 / 28 / 24px. |
-| `selected?` | `boolean` | `false` | Paints the chosen state. It is presentation only — you own the selection. |
-| `disabled?` | `boolean` | `false` | Greys the chip out and stops it responding to clicks. |
-| `leading?` | `ReactNode` | — | Leading 16px icon — Figma `Type=CheckLabel`. SVG children are sized to 16px and recoloured to the label colour, so the glyph greys out with `disabled`. |
-| `avatar?` | `ReactNode` | — | Leading avatar — Figma `Type=AvatarLabel`. Sized to the chip (24/22/20px for lg/md/sm) whatever size the avatar asks for, and inset tighter than `leading`. |
-| `onClick?` | `() => void` | — | When provided, the chip behaves as a button (e.g. a filter chip). |
-| `onClose?` | `() => void` | — | When provided, renders a trailing close (X) button that calls this handler. |
-| `closeLabel?` | `string` | `'Remove'` | Accessible label for the close button. |
-| `children` | `ReactNode` | — | The chip's label. |
+| Prop          | Type          | Default     | Description                                                                                                                                                 |
+| ------------- | ------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant?`    | `ChipVariant` | `'outline'` | `outline` is the bordered chip on the page background, `filled` the tinted one.                                                                             |
+| `size?`       | `ChipSize`    | `'md'`      | Height: 32 / 28 / 24px.                                                                                                                                     |
+| `selected?`   | `boolean`     | `false`     | Paints the chosen state. It is presentation only — you own the selection.                                                                                   |
+| `disabled?`   | `boolean`     | `false`     | Greys the chip out and stops it responding to clicks.                                                                                                       |
+| `leading?`    | `ReactNode`   | —           | Leading 16px icon — Figma `Type=CheckLabel`. SVG children are sized to 16px and recoloured to the label colour, so the glyph greys out with `disabled`.     |
+| `avatar?`     | `ReactNode`   | —           | Leading avatar — Figma `Type=AvatarLabel`. Sized to the chip (24/22/20px for lg/md/sm) whatever size the avatar asks for, and inset tighter than `leading`. |
+| `onClick?`    | `() => void`  | —           | When provided, the chip behaves as a button (e.g. a filter chip).                                                                                           |
+| `onClose?`    | `() => void`  | —           | When provided, renders a trailing close (X) button that calls this handler.                                                                                 |
+| `closeLabel?` | `string`      | `'Remove'`  | Accessible label for the close button.                                                                                                                      |
+| `children`    | `ReactNode`   | —           | The chip's label.                                                                                                                                           |
 
 **Types**
 
@@ -804,32 +817,48 @@ Paints one named swatch of the ITUI palette as a background. This is a token pri
 
 Props: `ColorsProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `name?` | `ColorName` | `'brand-sky-500'` | Which swatch to paint, e.g. `"brand-sky-500"`. |
-| `asChild?` | `boolean` | `false` | Paint the child instead of a `div`, so an element that already behaves — a `<button>`, an `<img>`, another component's root — keeps its own logic. |
+| Prop       | Type        | Default           | Description                                                                                                                                        |
+| ---------- | ----------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name?`    | `ColorName` | `'brand-sky-500'` | Which swatch to paint, e.g. `"brand-sky-500"`.                                                                                                     |
+| `asChild?` | `boolean`   | `false`           | Paint the child instead of a `div`, so an element that already behaves — a `<button>`, an `<img>`, another component's root — keeps its own logic. |
 
 ### ColorRampSpec
 
 One ramp as the boards present it: its display name and its steps, in order.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ramp` | `ColorRamp` | — | The ramp's token prefix, e.g. `"brand-sky"`. |
-| `label` | `string` | — | The heading Figma gives the ramp on its board. |
-| `steps` | `readonly ColorStep[]` | — | The steps this ramp draws, lightest first — not every ramp ships all ten. |
+| Prop    | Type                   | Default | Description                                                               |
+| ------- | ---------------------- | ------- | ------------------------------------------------------------------------- |
+| `ramp`  | `ColorRamp`            | —       | The ramp's token prefix, e.g. `"brand-sky"`.                              |
+| `label` | `string`               | —       | The heading Figma gives the ramp on its board.                            |
+| `steps` | `readonly ColorStep[]` | —       | The steps this ramp draws, lightest first — not every ramp ships all ten. |
 
 **Types**
 
 ```ts
 type ColorName = keyof typeof COLOR_HEX;
-type ColorRamp = 'brand-sky' | 'brand-neutral' | 'semantic-green' | 'semantic-blue' | 'semantic-red' | 'semantic-orange' | 'scheme-blue-grey' | 'scheme-indigo' | 'scheme-deep-purple' | 'scheme-teal' | 'scheme-cyan' | 'scheme-light-green' | 'scheme-lime' | 'scheme-yellow' | 'scheme-orange' | 'scheme-pink';
+type ColorRamp =
+  | 'brand-sky'
+  | 'brand-neutral'
+  | 'semantic-green'
+  | 'semantic-blue'
+  | 'semantic-red'
+  | 'semantic-orange'
+  | 'scheme-blue-grey'
+  | 'scheme-indigo'
+  | 'scheme-deep-purple'
+  | 'scheme-teal'
+  | 'scheme-cyan'
+  | 'scheme-light-green'
+  | 'scheme-lime'
+  | 'scheme-yellow'
+  | 'scheme-orange'
+  | 'scheme-pink';
 type ColorStep = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
 ```
 
 **Values**
 
-- `COLOR_HEX`: `{ readonly 'brand-sky-50': "#e6f5fc"; readonly 'brand-sky-100': "#b0e0f5"; readonly 'brand-sky-200': "#8ad1f1"; readonly 'brand-sky-300': "#54bdea"; readonly 'b…` — Every swatch on the three boards, `"{ramp}-{step}"` → hex. Exported so callers that need to *measure* a colour rather than paint one — a canvas fill, an inline SVG attribute, a chart series — read the same values the classes below paint, and the two can never drift apart.
+- `COLOR_HEX`: `{ readonly 'brand-sky-50': "#e6f5fc"; readonly 'brand-sky-100': "#b0e0f5"; readonly 'brand-sky-200': "#8ad1f1"; readonly 'brand-sky-300': "#54bdea"; readonly 'b…` — Every swatch on the three boards, `"{ramp}-{step}"` → hex. Exported so callers that need to _measure_ a colour rather than paint one — a canvas fill, an inline SVG attribute, a chart series — read the same values the classes below paint, and the two can never drift apart.
 - `COLOR_RAMPS`: `readonly ColorRampSpec[]` — The three boards in Figma's own order, so a caller can render a ramp without hardcoding which steps it has.
 - `colorBgClass`: `Record<"brand-sky-50" \| "brand-sky-100" \| "brand-sky-200" \| "brand-sky-300" \| "brand-sky-400" \| "brand-sky-500" \| "brand-sky-600" \| "brand-sky-700" \| "brand-sky…` — The same keys → their literal `bg-*` utility.
 
@@ -853,11 +882,11 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 
 The dialog panel, with its portal and scrim included. It splits `children` by position: the **first** child becomes the fixed header (and gets the ✕), and everything after it becomes the scrolling body — so the order of your children is load-bearing, and a header you meant to be a body will end up p…
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton?` | `boolean` | `true` | Render the ✕ in the header. Only appears when there is a header child. |
-| `hideHeaderBorder?` | `boolean` | `true` | Keeps the header borderless. Set `false` for a ruled header. |
-| `contentClassName?` | `string` | — | Lands on the scrolling body. `className` goes to the panel itself. |
+| Prop                | Type      | Default | Description                                                            |
+| ------------------- | --------- | ------- | ---------------------------------------------------------------------- |
+| `showCloseButton?`  | `boolean` | `true`  | Render the ✕ in the header. Only appears when there is a header child. |
+| `hideHeaderBorder?` | `boolean` | `true`  | Keeps the header borderless. Set `false` for a ruled header.           |
+| `contentClassName?` | `string`  | —       | Lands on the scrolling body. `className` goes to the panel itself.     |
 
 Also accepts the props of `@radix-ui/react-dialog`, `@radix-ui/react-dismissable-layer`, `@radix-ui/react-primitive`.
 
@@ -913,10 +942,10 @@ A horizontal rule between sections — 1px, or a 12px band for a heavier break. 
 
 Props: `DividerProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `DividerVariant` | `'normal'` | Line thickness — `normal` (1px) or `thick` (12px). Ignored when `children` is set. |
-| `children?` | `ReactNode` | — | When provided, renders a labeled divider (line · text · line). |
+| Prop        | Type             | Default    | Description                                                                        |
+| ----------- | ---------------- | ---------- | ---------------------------------------------------------------------------------- |
+| `variant?`  | `DividerVariant` | `'normal'` | Line thickness — `normal` (1px) or `thick` (12px). Ignored when `children` is set. |
+| `children?` | `ReactNode`      | —          | When provided, renders a labeled divider (line · text · line).                     |
 
 **Types**
 
@@ -956,9 +985,9 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 
 One action. Use `onSelect` rather than `onClick` — it also fires on Enter and Space.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset?` | `boolean` | — | Indents the row to line up with items that have a check or radio marker. |
+| Prop     | Type      | Default | Description                                                              |
+| -------- | --------- | ------- | ------------------------------------------------------------------------ |
+| `inset?` | `boolean` | —       | Indents the row to line up with items that have a check or radio marker. |
 
 Also accepts the props of `@radix-ui/react-menu`, `@radix-ui/react-primitive`.
 
@@ -966,9 +995,9 @@ Also accepts the props of `@radix-ui/react-menu`, `@radix-ui/react-primitive`.
 
 A non-interactive heading over a group of items.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset?` | `boolean` | — | Indents the heading to line up with items that have a check or radio marker. |
+| Prop     | Type      | Default | Description                                                                  |
+| -------- | --------- | ------- | ---------------------------------------------------------------------------- |
+| `inset?` | `boolean` | —       | Indents the heading to line up with items that have a check or radio marker. |
 
 Also accepts the props of `@radix-ui/react-primitive`.
 
@@ -1018,9 +1047,9 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-men
 
 The row that opens a submenu. It draws its own trailing caret.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset?` | `boolean` | — | Indents the row to line up with items that have a check or radio marker. |
+| Prop     | Type      | Default | Description                                                              |
+| -------- | --------- | ------- | ------------------------------------------------------------------------ |
+| `inset?` | `boolean` | —       | Indents the row to line up with items that have a check or radio marker. |
 
 Also accepts the props of `@radix-ui/react-menu`, `@radix-ui/react-primitive`.
 
@@ -1040,12 +1069,12 @@ The empty state of a list or a search: a 60px illustration over a caption, in th
 
 Props: `EmptyProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type?` | `EmptyType` | `'NoContents'` | Figma `Type` — picks the icon and default caption. |
-| `icon?` | `ReactNode` | — | Overrides the icon the `type` would render. |
-| `title?` | `string` | — | Overrides the caption the `type` would render. Pass `''` to hide it. |
-| `description?` | `string` | — | A second line under the caption. `\n` starts a new line. |
+| Prop           | Type        | Default        | Description                                                          |
+| -------------- | ----------- | -------------- | -------------------------------------------------------------------- |
+| `type?`        | `EmptyType` | `'NoContents'` | Figma `Type` — picks the icon and default caption.                   |
+| `icon?`        | `ReactNode` | —              | Overrides the icon the `type` would render.                          |
+| `title?`       | `string`    | —              | Overrides the caption the `type` would render. Pass `''` to hide it. |
+| `description?` | `string`    | —              | A second line under the caption. `\n` starts a new line.             |
 
 **Types**
 
@@ -1063,12 +1092,12 @@ type EmptyType = 'NoContents' | 'NoSearchResults';
 
 Props: `FileIconProps`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `width?` | `number` | — | Width in px. Defaults to `FileType`'s own size. |
-| `height?` | `number` | — | Height in px. Defaults to `FileType`'s own size. |
-| `iconType?` | `string` | — | What the file is — an extension (`"xlsx"`), a MIME type (`"application/pdf"`), or a category alias (`"image"`, `"archive"`). Case does not matter, and anything unrecognised falls back to the text icon. |
-| `className?` | `string` | — | Extra classes on the rendered `<svg>`. |
+| Prop         | Type     | Default | Description                                                                                                                                                                                               |
+| ------------ | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `width?`     | `number` | —       | Width in px. Defaults to `FileType`'s own size.                                                                                                                                                           |
+| `height?`    | `number` | —       | Height in px. Defaults to `FileType`'s own size.                                                                                                                                                          |
+| `iconType?`  | `string` | —       | What the file is — an extension (`"xlsx"`), a MIME type (`"application/pdf"`), or a category alias (`"image"`, `"archive"`). Case does not matter, and anything unrecognised falls back to the text icon. |
+| `className?` | `string` | —       | Extra classes on the rendered `<svg>`.                                                                                                                                                                    |
 
 ### FileType
 
@@ -1076,13 +1105,13 @@ The file-format badge — 38 document logos plus a folder, in three treatments. 
 
 Props: `FileTypeProps extends Omit<SVGAttributes<SVGSVGElement>, 'width' | 'height'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `logo?` | `FileTypeLogo` | `'zip'` | Which file the badge stands for. Exact — use `FileIcon` to resolve one from an extension or MIME type. |
-| `type?` | `FileTypeVariant` | `'line'` | How the badge is drawn: outlined, flat, or the brand colours. |
-| `ref?` | `Ref<SVGSVGElement>` | — | Ref to the rendered `<svg>`. |
-| `width?` | `number` | `32` | Width in px. |
-| `height?` | `number` | `32` | Height in px. |
+| Prop      | Type                 | Default  | Description                                                                                            |
+| --------- | -------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
+| `logo?`   | `FileTypeLogo`       | `'zip'`  | Which file the badge stands for. Exact — use `FileIcon` to resolve one from an extension or MIME type. |
+| `type?`   | `FileTypeVariant`    | `'line'` | How the badge is drawn: outlined, flat, or the brand colours.                                          |
+| `ref?`    | `Ref<SVGSVGElement>` | —        | Ref to the rendered `<svg>`.                                                                           |
+| `width?`  | `number`             | `32`     | Width in px.                                                                                           |
+| `height?` | `number`             | `32`     | Height in px.                                                                                          |
 
 ### TxtIcon
 
@@ -1099,7 +1128,45 @@ Declares no props of its own beyond the standard DOM attributes.
 **Types**
 
 ```ts
-type FileTypeLogo = 'aep' | 'ai' | 'avi' | 'blend' | 'c4d' | 'cdr' | 'css' | 'csv' | 'dmg' | 'doc' | 'exe' | 'fig' | 'gif' | 'html' | 'ico' | 'java' | 'jpeg' | 'jpg' | 'js' | 'json' | 'mov' | 'mp3' | 'mp4' | 'mpg' | 'pdf' | 'png' | 'ppt' | 'psd' | 'rar' | 'skt' | 'svg' | 'tiff' | 'txt' | 'wav' | 'webp' | 'xls' | 'zip' | 'folder';
+type FileTypeLogo =
+  | 'aep'
+  | 'ai'
+  | 'avi'
+  | 'blend'
+  | 'c4d'
+  | 'cdr'
+  | 'css'
+  | 'csv'
+  | 'dmg'
+  | 'doc'
+  | 'exe'
+  | 'fig'
+  | 'gif'
+  | 'html'
+  | 'ico'
+  | 'java'
+  | 'jpeg'
+  | 'jpg'
+  | 'js'
+  | 'json'
+  | 'mov'
+  | 'mp3'
+  | 'mp4'
+  | 'mpg'
+  | 'pdf'
+  | 'png'
+  | 'ppt'
+  | 'psd'
+  | 'rar'
+  | 'skt'
+  | 'svg'
+  | 'tiff'
+  | 'txt'
+  | 'wav'
+  | 'webp'
+  | 'xls'
+  | 'zip'
+  | 'folder';
 type FileTypeVariant = 'line' | 'flat' | 'color';
 ```
 
@@ -1113,10 +1180,10 @@ The round, shadowed action button that floats over content — a FAB. It draws o
 
 Props: `FloatingButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `FloatingButtonSize` | `'md'` | 56px with a 28px icon, or 40px with a 20px one. |
-| `asChild?` | `boolean` | `false` | Render the child element instead of a `<button>` — e.g. a router `<Link>`. |
+| Prop       | Type                 | Default | Description                                                                |
+| ---------- | -------------------- | ------- | -------------------------------------------------------------------------- |
+| `size?`    | `FloatingButtonSize` | `'md'`  | 56px with a 28px icon, or 40px with a 20px one.                            |
+| `asChild?` | `boolean`            | `false` | Render the child element instead of a `<button>` — e.g. a router `<Link>`. |
 
 **Types**
 
@@ -1134,12 +1201,12 @@ The desktop global navigation bar — a 72px `<header>` with a logo, a menu, an 
 
 Props: `GnbProps extends Omit<HTMLAttributes<HTMLElement>, 'children'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `logo?` | `ReactNode` | — | Brand mark, centered in Figma's 40px `icon_size` box. |
-| `menu?` | `ReactNode` | — | Primary navigation — typically a `<GnbMenu>`. |
-| `search?` | `ReactNode` | — | Search field placed before the actions (Figma `type="Search"`). |
-| `actions?` | `ReactNode` | — | Trailing cluster — buttons, icon buttons, avatar. |
+| Prop       | Type        | Default | Description                                                     |
+| ---------- | ----------- | ------- | --------------------------------------------------------------- |
+| `logo?`    | `ReactNode` | —       | Brand mark, centered in Figma's 40px `icon_size` box.           |
+| `menu?`    | `ReactNode` | —       | Primary navigation — typically a `<GnbMenu>`.                   |
+| `search?`  | `ReactNode` | —       | Search field placed before the actions (Figma `type="Search"`). |
+| `actions?` | `ReactNode` | —       | Trailing cluster — buttons, icon buttons, avatar.               |
 
 ### GnbMenu
 
@@ -1153,9 +1220,9 @@ One top-level nav link. It is a `<button>` by default; pass `asChild` to hand th
 
 Props: `GnbMenuItemProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `active?` | `boolean` | `false` | Marks the current page — paints text-primary and sets aria-current. |
+| Prop       | Type      | Default | Description                                                                |
+| ---------- | --------- | ------- | -------------------------------------------------------------------------- |
+| `active?`  | `boolean` | `false` | Marks the current page — paints text-primary and sets aria-current.        |
 | `asChild?` | `boolean` | `false` | Render the child element instead of a `<button>` — e.g. a router `<Link>`. |
 
 ### GnbMenuProps
@@ -1172,11 +1239,11 @@ The 12-column ITUI page grid: track count, gutter and outer margin at all three 
 
 Props: `GridProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `layout?` | `GridLayout` | `'full-width'` | `beside-sidebar` is the 12-column grid that sits next to a 264px LNB rail (Figma 26866:28999): same track count, 24px desktop margin instead of 32px. Mobile and tablet are identical to `full-width` — the rail is collapsed there. |
-| `withMargin?` | `boolean` | `true` | Outer margin (16 / 24 / 32px). Turn off to nest inside an already-padded shell. |
-| `asChild?` | `boolean` | `false` | Lay out the child instead of a `div`, so an element that already carries meaning — a `<main>`, a `<ul>`, another component's root — keeps its own tag. |
+| Prop          | Type         | Default        | Description                                                                                                                                                                                                                          |
+| ------------- | ------------ | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `layout?`     | `GridLayout` | `'full-width'` | `beside-sidebar` is the 12-column grid that sits next to a 264px LNB rail (Figma 26866:28999): same track count, 24px desktop margin instead of 32px. Mobile and tablet are identical to `full-width` — the rail is collapsed there. |
+| `withMargin?` | `boolean`    | `true`         | Outer margin (16 / 24 / 32px). Turn off to nest inside an already-padded shell.                                                                                                                                                      |
+| `asChild?`    | `boolean`    | `false`        | Lay out the child instead of a `div`, so an element that already carries meaning — a `<main>`, a `<ul>`, another component's root — keeps its own tag.                                                                               |
 
 ### GridItem
 
@@ -1184,11 +1251,11 @@ One cell of a `Grid`, sized in columns rather than in widths. Both `size` and `o
 
 Props: `GridItemProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `Responsive<GridSize>` | — | Columns to span — `6` for every band, or `{ xs: 4, md: 4, xl: 6 }` per band. |
-| `offset?` | `Responsive<GridOffset>` | — | Columns to leave empty before this item. |
-| `asChild?` | `boolean` | `false` | Span the child instead of a `div`, so an element that already carries meaning — a `<section>`, a `<li>`, another component's root — keeps its tag. |
+| Prop       | Type                     | Default | Description                                                                                                                                        |
+| ---------- | ------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `size?`    | `Responsive<GridSize>`   | —       | Columns to span — `6` for every band, or `{ xs: 4, md: 4, xl: 6 }` per band.                                                                       |
+| `offset?`  | `Responsive<GridOffset>` | —       | Columns to leave empty before this item.                                                                                                           |
+| `asChild?` | `boolean`                | `false` | Span the child instead of a `div`, so an element that already carries meaning — a `<section>`, a `<li>`, another component's root — keeps its tag. |
 
 ### GridOverlay
 
@@ -1219,78 +1286,80 @@ The original single-line field, now a thin alias over `InputText`.
 
 Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label?` | `string` | — | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | Hint under the box. `error` replaces it while the field is invalid. |
-| `prefix?` | `ReactNode` | — | Slot rendered on the left of the field — icon, text, or any ReactNode |
-| `suffix?` | `ReactNode` | — | Slot rendered on the right of the field — icon, button, or any ReactNode |
-| `block?` | `boolean` | `false` | Stretch to the container width — see `InputFieldShellProps.block` |
-| `disabledInput?` | `boolean` | — | Disables only the `<input>`; the box and its slots stay interactive |
-| `fieldClassName?` | `string` | — | Extra classes applied to the native `<input>` |
-| `boxClassName?` | `string` | — | Extra classes applied to the bordered box |
-| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?` | `InputFieldShellProps['boxRef']` | — | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
+| Prop              | Type                                 | Default | Description                                                                     |
+| ----------------- | ------------------------------------ | ------- | ------------------------------------------------------------------------------- |
+| `label?`          | `string`                             | —       | Text above the box — it is what names the field for assistive technology.       |
+| `error?`          | `string`                             | —       | Message under the box. It also paints the error border and sets `aria-invalid`. |
+| `helperText?`     | `string`                             | —       | Hint under the box. `error` replaces it while the field is invalid.             |
+| `prefix?`         | `ReactNode`                          | —       | Slot rendered on the left of the field — icon, text, or any ReactNode           |
+| `suffix?`         | `ReactNode`                          | —       | Slot rendered on the right of the field — icon, button, or any ReactNode        |
+| `block?`          | `boolean`                            | `false` | Stretch to the container width — see `InputFieldShellProps.block`               |
+| `disabledInput?`  | `boolean`                            | —       | Disables only the `<input>`; the box and its slots stay interactive             |
+| `fieldClassName?` | `string`                             | —       | Extra classes applied to the native `<input>`                                   |
+| `boxClassName?`   | `string`                             | —       | Extra classes applied to the bordered box                                       |
+| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']` | —       | Click anywhere on the box — note that clicks on the field bubble here too       |
+| `boxRef?`         | `InputFieldShellProps['boxRef']`     | —       | Handle on the bordered box — see `InputFieldShellProps.boxRef`                  |
 
 ### InputDate
 
 `InputText` with a `YYYY.MM.DD` mask and a `DatePicker` popover.
 
 Props: `InputDateProps extends Omit<
-    InputTextProps,
-    'value' | 'defaultValue' | 'type' | 'suffix' | 'onChange' | 'min' | 'max'
-  >`
+InputTextProps,
+'value' | 'defaultValue' | 'type' | 'suffix' | 'onChange' | 'min' | 'max'
 
-| Prop | Type | Default | From | Description |
-| --- | --- | --- | --- | --- |
-| `value?` | `Date \| null` | — | `InputDateProps` | Controlled date. `null` is the empty field — pair it with `onValueChange`. |
-| `defaultValue?` | `Date \| null` | — | `InputDateProps` | Starting date for the uncontrolled case. |
-| `onValueChange?` | `(date: Date \| null) => void` | — | `InputDateProps` | Fires with the parsed date, or `null` while the text is empty or unparseable. |
-| `min?` | `Date` | — | `InputDateProps` | Earliest selectable date — earlier dates are disabled and rejected |
-| `max?` | `Date` | — | `InputDateProps` | Latest selectable date |
-| `invalidMessage?` | `string` | `'Please enter a valid date.'` | `InputDateProps` | Shown when the typed text is not a date in range |
-| `calendarLabel?` | `string` | `'Choose date'` | `InputDateProps` | Accessible name of the calendar button |
-| `calendarProps?` | `Partial< Omit< ComponentProps<typeof DatePicker>, 'mode' \| 'selected' \| 'onSelect' \| 'disabled' > >` | — | `InputDateProps` | Pass-through for the popover calendar (locale, formatters…) |
-| `prefix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode |
-| `label?` | `string` | — | `InputTextProps` | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | `InputTextProps` | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | `InputTextProps` | Hint under the box. `error` replaces it while the field is invalid. |
-| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
-| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
-| `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
-| `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
-| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
+> `
+
+| Prop              | Type                                                                                                     | Default                        | From             | Description                                                                     |
+| ----------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------ | ---------------- | ------------------------------------------------------------------------------- |
+| `value?`          | `Date \| null`                                                                                           | —                              | `InputDateProps` | Controlled date. `null` is the empty field — pair it with `onValueChange`.      |
+| `defaultValue?`   | `Date \| null`                                                                                           | —                              | `InputDateProps` | Starting date for the uncontrolled case.                                        |
+| `onValueChange?`  | `(date: Date \| null) => void`                                                                           | —                              | `InputDateProps` | Fires with the parsed date, or `null` while the text is empty or unparseable.   |
+| `min?`            | `Date`                                                                                                   | —                              | `InputDateProps` | Earliest selectable date — earlier dates are disabled and rejected              |
+| `max?`            | `Date`                                                                                                   | —                              | `InputDateProps` | Latest selectable date                                                          |
+| `invalidMessage?` | `string`                                                                                                 | `'Please enter a valid date.'` | `InputDateProps` | Shown when the typed text is not a date in range                                |
+| `calendarLabel?`  | `string`                                                                                                 | `'Choose date'`                | `InputDateProps` | Accessible name of the calendar button                                          |
+| `calendarProps?`  | `Partial< Omit< ComponentProps<typeof DatePicker>, 'mode' \| 'selected' \| 'onSelect' \| 'disabled' > >` | —                              | `InputDateProps` | Pass-through for the popover calendar (locale, formatters…)                     |
+| `prefix?`         | `ReactNode`                                                                                              | —                              | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode           |
+| `label?`          | `string`                                                                                                 | —                              | `InputTextProps` | Text above the box — it is what names the field for assistive technology.       |
+| `error?`          | `string`                                                                                                 | —                              | `InputTextProps` | Message under the box. It also paints the error border and sets `aria-invalid`. |
+| `helperText?`     | `string`                                                                                                 | —                              | `InputTextProps` | Hint under the box. `error` replaces it while the field is invalid.             |
+| `block?`          | `boolean`                                                                                                | —                              | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block`               |
+| `disabledInput?`  | `boolean`                                                                                                | —                              | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive             |
+| `fieldClassName?` | `string`                                                                                                 | —                              | `InputTextProps` | Extra classes applied to the native `<input>`                                   |
+| `boxClassName?`   | `string`                                                                                                 | —                              | `InputTextProps` | Extra classes applied to the bordered box                                       |
+| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']`                                                                     | —                              | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too       |
+| `boxRef?`         | `InputFieldShellProps['boxRef']`                                                                         | —                              | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef`                  |
 
 ### InputDropdown
 
 `InputText` as a read-only trigger for a radio-list panel.
 
 Props: `InputDropdownProps extends Omit<
-    InputTextProps,
-    'value' | 'defaultValue' | 'type' | 'suffix' | 'onChange' | 'readOnly'
-  >`
+InputTextProps,
+'value' | 'defaultValue' | 'type' | 'suffix' | 'onChange' | 'readOnly'
 
-| Prop | Type | Default | From | Description |
-| --- | --- | --- | --- | --- |
-| `value?` | `string` | — | `InputDropdownProps` | Controlled selection — the `value` of the chosen item. |
-| `defaultValue?` | `string` | — | `InputDropdownProps` | Starting selection for the uncontrolled case. |
-| `onValueChange?` | `(value: string) => void` | — | `InputDropdownProps` | Fires with the chosen item's `value`. |
-| `open?` | `boolean` | — | `InputDropdownProps` | Controlled panel state. Leave it out and the field opens and closes itself. |
-| `onOpenChange?` | `(open: boolean) => void` | — | `InputDropdownProps` | Fires whenever the panel opens or closes. |
-| `panelClassName?` | `string` | — | `InputDropdownProps` | Extra classes on the panel |
-| `children` | `ReactNode` | — | `InputDropdownProps` | `InputDropdownItem` and `InputDropdownSub` rows |
-| `prefix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode |
-| `label?` | `string` | — | `InputTextProps` | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | `InputTextProps` | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | `InputTextProps` | Hint under the box. `error` replaces it while the field is invalid. |
-| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
-| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
-| `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
-| `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
-| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
+> `
+
+| Prop              | Type                                 | Default | From                 | Description                                                                     |
+| ----------------- | ------------------------------------ | ------- | -------------------- | ------------------------------------------------------------------------------- |
+| `value?`          | `string`                             | —       | `InputDropdownProps` | Controlled selection — the `value` of the chosen item.                          |
+| `defaultValue?`   | `string`                             | —       | `InputDropdownProps` | Starting selection for the uncontrolled case.                                   |
+| `onValueChange?`  | `(value: string) => void`            | —       | `InputDropdownProps` | Fires with the chosen item's `value`.                                           |
+| `open?`           | `boolean`                            | —       | `InputDropdownProps` | Controlled panel state. Leave it out and the field opens and closes itself.     |
+| `onOpenChange?`   | `(open: boolean) => void`            | —       | `InputDropdownProps` | Fires whenever the panel opens or closes.                                       |
+| `panelClassName?` | `string`                             | —       | `InputDropdownProps` | Extra classes on the panel                                                      |
+| `children`        | `ReactNode`                          | —       | `InputDropdownProps` | `InputDropdownItem` and `InputDropdownSub` rows                                 |
+| `prefix?`         | `ReactNode`                          | —       | `InputTextProps`     | Slot rendered on the left of the field — icon, text, or any ReactNode           |
+| `label?`          | `string`                             | —       | `InputTextProps`     | Text above the box — it is what names the field for assistive technology.       |
+| `error?`          | `string`                             | —       | `InputTextProps`     | Message under the box. It also paints the error border and sets `aria-invalid`. |
+| `helperText?`     | `string`                             | —       | `InputTextProps`     | Hint under the box. `error` replaces it while the field is invalid.             |
+| `block?`          | `boolean`                            | —       | `InputTextProps`     | Stretch to the container width — see `InputFieldShellProps.block`               |
+| `disabledInput?`  | `boolean`                            | —       | `InputTextProps`     | Disables only the `<input>`; the box and its slots stay interactive             |
+| `fieldClassName?` | `string`                             | —       | `InputTextProps`     | Extra classes applied to the native `<input>`                                   |
+| `boxClassName?`   | `string`                             | —       | `InputTextProps`     | Extra classes applied to the bordered box                                       |
+| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']` | —       | `InputTextProps`     | Click anywhere on the box — note that clicks on the field bubble here too       |
+| `boxRef?`         | `InputFieldShellProps['boxRef']`     | —       | `InputTextProps`     | Handle on the bordered box — see `InputFieldShellProps.boxRef`                  |
 
 ### InputDropdownItem
 
@@ -1298,12 +1367,12 @@ One selectable row. Works at any depth, including inside `InputDropdownSub`.
 
 Props: `InputDropdownItemProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | — | Identity of this row — what `onValueChange` reports and `value` matches against. |
-| `label?` | `string` | — | Text shown in the field once selected — required when `children` isn't a string |
-| `disabled?` | `boolean` | — | Greys the row out and takes it out of keyboard navigation. |
-| `children` | `ReactNode` | — | The row's content. A plain string doubles as the field's text once chosen. |
+| Prop        | Type        | Default | Description                                                                      |
+| ----------- | ----------- | ------- | -------------------------------------------------------------------------------- |
+| `value`     | `string`    | —       | Identity of this row — what `onValueChange` reports and `value` matches against. |
+| `label?`    | `string`    | —       | Text shown in the field once selected — required when `children` isn't a string  |
+| `disabled?` | `boolean`   | —       | Greys the row out and takes it out of keyboard navigation.                       |
+| `children`  | `ReactNode` | —       | The row's content. A plain string doubles as the field's text once chosen.       |
 
 ### InputDropdownSub
 
@@ -1311,37 +1380,38 @@ A category row that opens its own panel to the right. The items inside stay part
 
 Props: `InputDropdownSubProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `ReactNode` | — | Row text — the category, which is not selectable itself |
-| `children` | `ReactNode` | — | `InputDropdownItem` rows shown in the flyout |
-| `panelClassName?` | `string` | — | Extra classes on the flyout panel |
+| Prop              | Type        | Default | Description                                             |
+| ----------------- | ----------- | ------- | ------------------------------------------------------- |
+| `label`           | `ReactNode` | —       | Row text — the category, which is not selectable itself |
+| `children`        | `ReactNode` | —       | `InputDropdownItem` rows shown in the flyout            |
+| `panelClassName?` | `string`    | —       | Extra classes on the flyout panel                       |
 
 ### InputFileUpload
 
 Click-or-drop file field: a dashed dropzone plus one row per file.
 
 Props: `InputFileUploadProps extends Omit<
-    InputHTMLAttributes<HTMLInputElement>,
-    'type' | 'value' | 'defaultValue' | 'onChange' | 'prefix' | 'children'
-  >`
+InputHTMLAttributes<HTMLInputElement>,
+'type' | 'value' | 'defaultValue' | 'onChange' | 'prefix' | 'children'
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label?` | `string` | — | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | Hint under the box. `error` replaces it while the field is invalid. |
-| `files?` | `InputFileUploadItemData[]` | `[]` | Rows under the dropzone. `status` comes from the caller — see the note below. |
-| `onFilesAdded?` | `(files: File[]) => void` | — | Fires with the files that passed `accept` / `maxSize` |
-| `onRemove?` | `(id: string) => void` | — | Fires with a row's `id`. Given it, each row grows a remove button. |
-| `onDownload?` | `(id: string) => void` | — | Fires with a row's `id`. Given it, each row grows a download button. |
-| `onPreview?` | `(id: string) => void` | — | Fires with a row's `id`. Given it, each row grows a preview button. |
-| `maxSize?` | `number` | — | Max bytes per file. A batch containing a bigger file is rejected whole. |
-| `invalidTypeMessage?` | `string` | `'Unsupported file type.'` | Shown when a picked file fails the `accept` filter. |
-| `maxSizeMessage?` | `(maxSizeMb: string) => string` | `(maxSizeMb) => `Files must be under ${maxSizeMb}MB.`` | Shown when a picked file exceeds `maxSize`. A function rather than a string because the limit has to be interpolated in the caller's language. |
-| `description?` | `ReactNode` | `'Drag and drop a file here, or click to upload'` | First line in the dropzone |
-| `hint?` | `ReactNode` | `'PDF, DOCX, XLSX (max 10MB)'` | Second line — the accepted formats hint |
-| `boxClassName?` | `string` | — | Extra classes on the dashed box |
+> `
+
+| Prop                  | Type                            | Default                                                | Description                                                                                                                                    |
+| --------------------- | ------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label?`              | `string`                        | —                                                      | Text above the box — it is what names the field for assistive technology.                                                                      |
+| `error?`              | `string`                        | —                                                      | Message under the box. It also paints the error border and sets `aria-invalid`.                                                                |
+| `helperText?`         | `string`                        | —                                                      | Hint under the box. `error` replaces it while the field is invalid.                                                                            |
+| `files?`              | `InputFileUploadItemData[]`     | `[]`                                                   | Rows under the dropzone. `status` comes from the caller — see the note below.                                                                  |
+| `onFilesAdded?`       | `(files: File[]) => void`       | —                                                      | Fires with the files that passed `accept` / `maxSize`                                                                                          |
+| `onRemove?`           | `(id: string) => void`          | —                                                      | Fires with a row's `id`. Given it, each row grows a remove button.                                                                             |
+| `onDownload?`         | `(id: string) => void`          | —                                                      | Fires with a row's `id`. Given it, each row grows a download button.                                                                           |
+| `onPreview?`          | `(id: string) => void`          | —                                                      | Fires with a row's `id`. Given it, each row grows a preview button.                                                                            |
+| `maxSize?`            | `number`                        | —                                                      | Max bytes per file. A batch containing a bigger file is rejected whole.                                                                        |
+| `invalidTypeMessage?` | `string`                        | `'Unsupported file type.'`                             | Shown when a picked file fails the `accept` filter.                                                                                            |
+| `maxSizeMessage?`     | `(maxSizeMb: string) => string` | `(maxSizeMb) => `Files must be under ${maxSizeMb}MB.`` | Shown when a picked file exceeds `maxSize`. A function rather than a string because the limit has to be interpolated in the caller's language. |
+| `description?`        | `ReactNode`                     | `'Drag and drop a file here, or click to upload'`      | First line in the dropzone                                                                                                                     |
+| `hint?`               | `ReactNode`                     | `'PDF, DOCX, XLSX (max 10MB)'`                         | Second line — the accepted formats hint                                                                                                        |
+| `boxClassName?`       | `string`                        | —                                                      | Extra classes on the dashed box                                                                                                                |
 
 ### InputFileUploadItem
 
@@ -1349,18 +1419,18 @@ One uploaded file: name on the left, status-specific affordances on the right.
 
 Props: `InputFileUploadItemProps extends Omit<HTMLAttributes<HTMLLIElement>, 'children'>, Omit<InputFileUploadItemData, 'id'>`
 
-| Prop | Type | Default | From | Description |
-| --- | --- | --- | --- | --- |
-| `disabled?` | `boolean` | `false` | `InputFileUploadItemProps` | Greys the row out and stops its action buttons responding. |
-| `onRemove?` | `() => void` | — | `InputFileUploadItemProps` | Each action only renders when its handler is given — no dead buttons. |
-| `onDownload?` | `() => void` | — | `InputFileUploadItemProps` | Renders the download button and runs on it. |
-| `onPreview?` | `() => void` | — | `InputFileUploadItemProps` | Renders the preview button and runs on it. |
-| `removeLabel?` | `string` | `'Remove'` | `InputFileUploadItemProps` | Accessible name of the remove button — it is icon-only. |
-| `downloadLabel?` | `string` | `'Download'` | `InputFileUploadItemProps` | Accessible name of the download button. |
-| `previewLabel?` | `string` | `'Preview'` | `InputFileUploadItemProps` | Accessible name of the preview button. |
-| `name` | `string` | — | `InputFileUploadItemData` | File name shown on the row. |
-| `status?` | `InputFileUploadStatus` | `'done'` | `InputFileUploadItemData` | Where the upload stands. It is yours to advance — the field does no uploading. |
-| `error?` | `string` | — | `InputFileUploadItemData` | Message under the row — only rendered while `status` is `'error'` |
+| Prop             | Type                    | Default      | From                       | Description                                                                    |
+| ---------------- | ----------------------- | ------------ | -------------------------- | ------------------------------------------------------------------------------ |
+| `disabled?`      | `boolean`               | `false`      | `InputFileUploadItemProps` | Greys the row out and stops its action buttons responding.                     |
+| `onRemove?`      | `() => void`            | —            | `InputFileUploadItemProps` | Each action only renders when its handler is given — no dead buttons.          |
+| `onDownload?`    | `() => void`            | —            | `InputFileUploadItemProps` | Renders the download button and runs on it.                                    |
+| `onPreview?`     | `() => void`            | —            | `InputFileUploadItemProps` | Renders the preview button and runs on it.                                     |
+| `removeLabel?`   | `string`                | `'Remove'`   | `InputFileUploadItemProps` | Accessible name of the remove button — it is icon-only.                        |
+| `downloadLabel?` | `string`                | `'Download'` | `InputFileUploadItemProps` | Accessible name of the download button.                                        |
+| `previewLabel?`  | `string`                | `'Preview'`  | `InputFileUploadItemProps` | Accessible name of the preview button.                                         |
+| `name`           | `string`                | —            | `InputFileUploadItemData`  | File name shown on the row.                                                    |
+| `status?`        | `InputFileUploadStatus` | `'done'`     | `InputFileUploadItemData`  | Where the upload stands. It is yours to advance — the field does no uploading. |
+| `error?`         | `string`                | —            | `InputFileUploadItemData`  | Message under the row — only rendered while `status` is `'error'`              |
 
 ### InputPhoneNumber
 
@@ -1368,24 +1438,24 @@ Props: `InputFileUploadItemProps extends Omit<HTMLAttributes<HTMLLIElement>, 'ch
 
 Props: `InputPhoneNumberProps extends Omit<InputTextProps, 'value' | 'defaultValue' | 'type'>`
 
-| Prop | Type | Default | From | Description |
-| --- | --- | --- | --- | --- |
-| `value?` | `string` | — | `InputPhoneNumberProps` | Digits only, no separators — e.g. `01012345678` |
-| `defaultValue?` | `string` | — | `InputPhoneNumberProps` | Starting digits for the uncontrolled case — same digits-only shape as `value`. |
-| `onValueChange?` | `(digits: string) => void` | — | `InputPhoneNumberProps` | Receives the digits only, whatever `format` is displayed |
-| `format?` | `'raw' \| 'dashed'` | `'raw'` | `InputPhoneNumberProps` | How the digits are displayed: bare, or split as `010-1234-5678`. |
-| `invalidMessage?` | `string` | `'Please enter a valid mobile number.'` | `InputPhoneNumberProps` | Shown on blur when the value is not a valid KR mobile number |
-| `prefix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode |
-| `label?` | `string` | — | `InputTextProps` | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | `InputTextProps` | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | `InputTextProps` | Hint under the box. `error` replaces it while the field is invalid. |
-| `suffix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the right of the field — icon, button, or any ReactNode |
-| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
-| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
-| `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
-| `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
-| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
+| Prop              | Type                                 | Default                                 | From                    | Description                                                                     |
+| ----------------- | ------------------------------------ | --------------------------------------- | ----------------------- | ------------------------------------------------------------------------------- |
+| `value?`          | `string`                             | —                                       | `InputPhoneNumberProps` | Digits only, no separators — e.g. `01012345678`                                 |
+| `defaultValue?`   | `string`                             | —                                       | `InputPhoneNumberProps` | Starting digits for the uncontrolled case — same digits-only shape as `value`.  |
+| `onValueChange?`  | `(digits: string) => void`           | —                                       | `InputPhoneNumberProps` | Receives the digits only, whatever `format` is displayed                        |
+| `format?`         | `'raw' \| 'dashed'`                  | `'raw'`                                 | `InputPhoneNumberProps` | How the digits are displayed: bare, or split as `010-1234-5678`.                |
+| `invalidMessage?` | `string`                             | `'Please enter a valid mobile number.'` | `InputPhoneNumberProps` | Shown on blur when the value is not a valid KR mobile number                    |
+| `prefix?`         | `ReactNode`                          | —                                       | `InputTextProps`        | Slot rendered on the left of the field — icon, text, or any ReactNode           |
+| `label?`          | `string`                             | —                                       | `InputTextProps`        | Text above the box — it is what names the field for assistive technology.       |
+| `error?`          | `string`                             | —                                       | `InputTextProps`        | Message under the box. It also paints the error border and sets `aria-invalid`. |
+| `helperText?`     | `string`                             | —                                       | `InputTextProps`        | Hint under the box. `error` replaces it while the field is invalid.             |
+| `suffix?`         | `ReactNode`                          | —                                       | `InputTextProps`        | Slot rendered on the right of the field — icon, button, or any ReactNode        |
+| `block?`          | `boolean`                            | —                                       | `InputTextProps`        | Stretch to the container width — see `InputFieldShellProps.block`               |
+| `disabledInput?`  | `boolean`                            | —                                       | `InputTextProps`        | Disables only the `<input>`; the box and its slots stay interactive             |
+| `fieldClassName?` | `string`                             | —                                       | `InputTextProps`        | Extra classes applied to the native `<input>`                                   |
+| `boxClassName?`   | `string`                             | —                                       | `InputTextProps`        | Extra classes applied to the bordered box                                       |
+| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']` | —                                       | `InputTextProps`        | Click anywhere on the box — note that clicks on the field bubble here too       |
+| `boxRef?`         | `InputFieldShellProps['boxRef']`     | —                                       | `InputTextProps`        | Handle on the bordered box — see `InputFieldShellProps.boxRef`                  |
 
 ### InputSearch
 
@@ -1393,42 +1463,43 @@ Props: `InputPhoneNumberProps extends Omit<InputTextProps, 'value' | 'defaultVal
 
 Props: `InputSearchProps extends Omit<InputTextProps, 'prefix' | 'suffix' | 'type'>`
 
-| Prop | Type | Default | From | Description |
-| --- | --- | --- | --- | --- |
-| `onSearch?` | `(value: string) => void` | — | `InputSearchProps` | Fired when Enter is pressed, with the current value |
-| `onClear?` | `() => void` | — | `InputSearchProps` | Fired when the clear button is pressed |
-| `clearLabel?` | `string` | `'Clear search'` | `InputSearchProps` | Accessible name of the clear button |
-| `label?` | `string` | — | `InputTextProps` | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | `InputTextProps` | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | `InputTextProps` | Hint under the box. `error` replaces it while the field is invalid. |
-| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
-| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
-| `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
-| `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
-| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
+| Prop              | Type                                 | Default          | From               | Description                                                                     |
+| ----------------- | ------------------------------------ | ---------------- | ------------------ | ------------------------------------------------------------------------------- |
+| `onSearch?`       | `(value: string) => void`            | —                | `InputSearchProps` | Fired when Enter is pressed, with the current value                             |
+| `onClear?`        | `() => void`                         | —                | `InputSearchProps` | Fired when the clear button is pressed                                          |
+| `clearLabel?`     | `string`                             | `'Clear search'` | `InputSearchProps` | Accessible name of the clear button                                             |
+| `label?`          | `string`                             | —                | `InputTextProps`   | Text above the box — it is what names the field for assistive technology.       |
+| `error?`          | `string`                             | —                | `InputTextProps`   | Message under the box. It also paints the error border and sets `aria-invalid`. |
+| `helperText?`     | `string`                             | —                | `InputTextProps`   | Hint under the box. `error` replaces it while the field is invalid.             |
+| `block?`          | `boolean`                            | —                | `InputTextProps`   | Stretch to the container width — see `InputFieldShellProps.block`               |
+| `disabledInput?`  | `boolean`                            | —                | `InputTextProps`   | Disables only the `<input>`; the box and its slots stay interactive             |
+| `fieldClassName?` | `string`                             | —                | `InputTextProps`   | Extra classes applied to the native `<input>`                                   |
+| `boxClassName?`   | `string`                             | —                | `InputTextProps`   | Extra classes applied to the bordered box                                       |
+| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']` | —                | `InputTextProps`   | Click anywhere on the box — note that clicks on the field bubble here too       |
+| `boxRef?`         | `InputFieldShellProps['boxRef']`     | —                | `InputTextProps`   | Handle on the bordered box — see `InputFieldShellProps.boxRef`                  |
 
 ### InputTag
 
 The input family's tag editor: Enter or `,` adds, Backspace removes the last.
 
 Props: `InputTagProps extends Omit<
-    InputHTMLAttributes<HTMLInputElement>,
-    'value' | 'defaultValue' | 'onChange' | 'prefix'
-  >`
+InputHTMLAttributes<HTMLInputElement>,
+'value' | 'defaultValue' | 'onChange' | 'prefix'
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value?` | `string[]` | — | Controlled list of tags. |
-| `defaultValue?` | `string[]` | — | Starting tags for the uncontrolled case. |
-| `onValueChange?` | `(tags: string[]) => void` | — | Fires with the whole next list, not just the tag that changed. |
-| `maxTags?` | `number` | — | Cap on the list. At the cap the field stops accepting new tags. |
-| `validate?` | `(tag: string) => string \| null` | — | Return a message to reject the tag, or `null` to accept it |
-| `label?` | `string` | — | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | Hint under the box. `error` replaces it while the field is invalid. |
-| `boxClassName?` | `string` | — | Extra classes on the bordered box |
-| `fieldClassName?` | `string` | — | Extra classes on the native `<input>` |
+> `
+
+| Prop              | Type                              | Default | Description                                                                     |
+| ----------------- | --------------------------------- | ------- | ------------------------------------------------------------------------------- |
+| `value?`          | `string[]`                        | —       | Controlled list of tags.                                                        |
+| `defaultValue?`   | `string[]`                        | —       | Starting tags for the uncontrolled case.                                        |
+| `onValueChange?`  | `(tags: string[]) => void`        | —       | Fires with the whole next list, not just the tag that changed.                  |
+| `maxTags?`        | `number`                          | —       | Cap on the list. At the cap the field stops accepting new tags.                 |
+| `validate?`       | `(tag: string) => string \| null` | —       | Return a message to reject the tag, or `null` to accept it                      |
+| `label?`          | `string`                          | —       | Text above the box — it is what names the field for assistive technology.       |
+| `error?`          | `string`                          | —       | Message under the box. It also paints the error border and sets `aria-invalid`. |
+| `helperText?`     | `string`                          | —       | Hint under the box. `error` replaces it while the field is invalid.             |
+| `boxClassName?`   | `string`                          | —       | Extra classes on the bordered box                                               |
+| `fieldClassName?` | `string`                          | —       | Extra classes on the native `<input>`                                           |
 
 ### InputText
 
@@ -1436,19 +1507,19 @@ The plain single-line field — `<InputV2 />` with no `fieldType`.
 
 Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label?` | `string` | — | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | Hint under the box. `error` replaces it while the field is invalid. |
-| `prefix?` | `ReactNode` | — | Slot rendered on the left of the field — icon, text, or any ReactNode |
-| `suffix?` | `ReactNode` | — | Slot rendered on the right of the field — icon, button, or any ReactNode |
-| `block?` | `boolean` | `true` | Stretch to the container width — see `InputFieldShellProps.block` |
-| `disabledInput?` | `boolean` | `false` | Disables only the `<input>`; the box and its slots stay interactive |
-| `fieldClassName?` | `string` | — | Extra classes applied to the native `<input>` |
-| `boxClassName?` | `string` | — | Extra classes applied to the bordered box |
-| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?` | `InputFieldShellProps['boxRef']` | — | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
+| Prop              | Type                                 | Default | Description                                                                     |
+| ----------------- | ------------------------------------ | ------- | ------------------------------------------------------------------------------- |
+| `label?`          | `string`                             | —       | Text above the box — it is what names the field for assistive technology.       |
+| `error?`          | `string`                             | —       | Message under the box. It also paints the error border and sets `aria-invalid`. |
+| `helperText?`     | `string`                             | —       | Hint under the box. `error` replaces it while the field is invalid.             |
+| `prefix?`         | `ReactNode`                          | —       | Slot rendered on the left of the field — icon, text, or any ReactNode           |
+| `suffix?`         | `ReactNode`                          | —       | Slot rendered on the right of the field — icon, button, or any ReactNode        |
+| `block?`          | `boolean`                            | `true`  | Stretch to the container width — see `InputFieldShellProps.block`               |
+| `disabledInput?`  | `boolean`                            | `false` | Disables only the `<input>`; the box and its slots stay interactive             |
+| `fieldClassName?` | `string`                             | —       | Extra classes applied to the native `<input>`                                   |
+| `boxClassName?`   | `string`                             | —       | Extra classes applied to the bordered box                                       |
+| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']` | —       | Click anywhere on the box — note that clicks on the field bubble here too       |
+| `boxRef?`         | `InputFieldShellProps['boxRef']`     | —       | Handle on the bordered box — see `InputFieldShellProps.boxRef`                  |
 
 ### InputTextarea
 
@@ -1456,14 +1527,14 @@ The input family's multi-line field, with an optional character counter.
 
 Props: `InputTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label?` | `string` | — | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | Hint under the box. `error` replaces it while the field is invalid. |
-| `showCount?` | `boolean` | `false` | Renders the character counter — the Figma `TextAreaWithCount` type |
-| `boxClassName?` | `string` | — | Extra classes on the bordered box |
-| `fieldClassName?` | `string` | — | Extra classes on the native `<textarea>` |
+| Prop              | Type      | Default | Description                                                                     |
+| ----------------- | --------- | ------- | ------------------------------------------------------------------------------- |
+| `label?`          | `string`  | —       | Text above the box — it is what names the field for assistive technology.       |
+| `error?`          | `string`  | —       | Message under the box. It also paints the error border and sets `aria-invalid`. |
+| `helperText?`     | `string`  | —       | Hint under the box. `error` replaces it while the field is invalid.             |
+| `showCount?`      | `boolean` | `false` | Renders the character counter — the Figma `TextAreaWithCount` type              |
+| `boxClassName?`   | `string`  | —       | Extra classes on the bordered box                                               |
+| `fieldClassName?` | `string`  | —       | Extra classes on the native `<textarea>`                                        |
 
 ### InputTextFormatting
 
@@ -1471,22 +1542,22 @@ The input family's rich-text field: an ITUI toolbar over a Lexical editor.
 
 Props: `InputTextFormattingProps`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label?` | `string` | — | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | Hint under the box. `error` replaces it while the field is invalid. |
-| `id?` | `string` | — | id of the editable area; one is generated when omitted |
-| `placeholder?` | `string` | `'Enter content'` | Ghost text shown while the editor is empty. |
-| `defaultValue?` | `string` | — | Serialized state to open with — `JSON.stringify(editorState.toJSON())` |
-| `onChange?` | `(value: { json: string; text: string }) => void` | — | `json` round-trips through `defaultValue`; `text` is the plain-text version |
-| `onCommand?` | `(command: InputTextFormattingCommand) => void` | — | Fired by the Image / Video / Code / More buttons, which are drawn but not connected to Lexical — each needs a custom `DecoratorNode` and an upload flow, which belongs to the app rather than the design system. |
-| `onLinkRequest?` | `() => string \| null` | — | Return the URL for the selection; falls back to `window.prompt` |
-| `linkPromptLabel?` | `string` | `'Enter a link URL'` | Prompt text used by that fallback |
-| `labels?` | `Partial<InputTextFormattingLabels>` | — | Overrides for the toolbar's tooltips, `aria-label`s and dropdown rows |
-| `className?` | `string` | — | Extra classes on the outer wrapper — label, box and message together. |
-| `boxClassName?` | `string` | — | Extra classes on the bordered box |
-| `editorClassName?` | `string` | — | Extra classes on the editable area |
+| Prop               | Type                                              | Default              | Description                                                                                                                                                                                                      |
+| ------------------ | ------------------------------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label?`           | `string`                                          | —                    | Text above the box — it is what names the field for assistive technology.                                                                                                                                        |
+| `error?`           | `string`                                          | —                    | Message under the box. It also paints the error border and sets `aria-invalid`.                                                                                                                                  |
+| `helperText?`      | `string`                                          | —                    | Hint under the box. `error` replaces it while the field is invalid.                                                                                                                                              |
+| `id?`              | `string`                                          | —                    | id of the editable area; one is generated when omitted                                                                                                                                                           |
+| `placeholder?`     | `string`                                          | `'Enter content'`    | Ghost text shown while the editor is empty.                                                                                                                                                                      |
+| `defaultValue?`    | `string`                                          | —                    | Serialized state to open with — `JSON.stringify(editorState.toJSON())`                                                                                                                                           |
+| `onChange?`        | `(value: { json: string; text: string }) => void` | —                    | `json` round-trips through `defaultValue`; `text` is the plain-text version                                                                                                                                      |
+| `onCommand?`       | `(command: InputTextFormattingCommand) => void`   | —                    | Fired by the Image / Video / Code / More buttons, which are drawn but not connected to Lexical — each needs a custom `DecoratorNode` and an upload flow, which belongs to the app rather than the design system. |
+| `onLinkRequest?`   | `() => string \| null`                            | —                    | Return the URL for the selection; falls back to `window.prompt`                                                                                                                                                  |
+| `linkPromptLabel?` | `string`                                          | `'Enter a link URL'` | Prompt text used by that fallback                                                                                                                                                                                |
+| `labels?`          | `Partial<InputTextFormattingLabels>`              | —                    | Overrides for the toolbar's tooltips, `aria-label`s and dropdown rows                                                                                                                                            |
+| `className?`       | `string`                                          | —                    | Extra classes on the outer wrapper — label, box and message together.                                                                                                                                            |
+| `boxClassName?`    | `string`                                          | —                    | Extra classes on the bordered box                                                                                                                                                                                |
+| `editorClassName?` | `string`                                          | —                    | Extra classes on the editable area                                                                                                                                                                               |
 
 ### InputV2
 
@@ -1496,13 +1567,13 @@ Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'pref
 
 > Props are a union, so the table lists only what every arm has in common. The rest depend on the discriminant — set it and autocomplete narrows to them.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `fieldType?` | `'text'` | — | Which field to render. It is the discriminant of this union, so setting it narrows the rest of the props to that field's own — omit it and you get the plain single-line field. |
-| `label?` | `string` | — | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | Hint under the box. `error` replaces it while the field is invalid. |
-| `boxClassName?` | `string` | — | Extra classes applied to the bordered box Extra classes on the bordered box Extra classes on the dashed box |
+| Prop            | Type     | Default | Description                                                                                                                                                                     |
+| --------------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fieldType?`    | `'text'` | —       | Which field to render. It is the discriminant of this union, so setting it narrows the rest of the props to that field's own — omit it and you get the plain single-line field. |
+| `label?`        | `string` | —       | Text above the box — it is what names the field for assistive technology.                                                                                                       |
+| `error?`        | `string` | —       | Message under the box. It also paints the error border and sets `aria-invalid`.                                                                                                 |
+| `helperText?`   | `string` | —       | Hint under the box. `error` replaces it while the field is invalid.                                                                                                             |
+| `boxClassName?` | `string` | —       | Extra classes applied to the bordered box Extra classes on the bordered box Extra classes on the dashed box                                                                     |
 
 ### InputWithButton
 
@@ -1510,22 +1581,22 @@ Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'pref
 
 Props: `InputWithButtonProps extends Omit<InputTextProps, 'suffix'>`
 
-| Prop | Type | Default | From | Description |
-| --- | --- | --- | --- | --- |
-| `buttonLabel` | `ReactNode` | — | `InputWithButtonProps` | Text on the trailing button. |
-| `onButtonClick?` | `() => void` | — | `InputWithButtonProps` | Runs on the trailing button. The field's own value is not passed — read it yourself. |
-| `buttonDisabled?` | `boolean` | `false` | `InputWithButtonProps` | Disables only the button — the field stays editable |
-| `buttonProps?` | `Omit<ButtonProps, 'children' \| 'onClick' \| 'disabled'>` | — | `InputWithButtonProps` | Escape hatch for variant/size/icons on the trailing button |
-| `prefix?` | `ReactNode` | — | `InputTextProps` | Slot rendered on the left of the field — icon, text, or any ReactNode |
-| `label?` | `string` | — | `InputTextProps` | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | `InputTextProps` | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | `InputTextProps` | Hint under the box. `error` replaces it while the field is invalid. |
-| `block?` | `boolean` | — | `InputTextProps` | Stretch to the container width — see `InputFieldShellProps.block` |
-| `disabledInput?` | `boolean` | — | `InputTextProps` | Disables only the `<input>`; the box and its slots stay interactive |
-| `fieldClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the native `<input>` |
-| `boxClassName?` | `string` | — | `InputTextProps` | Extra classes applied to the bordered box |
-| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | `InputTextProps` | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?` | `InputFieldShellProps['boxRef']` | — | `InputTextProps` | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
+| Prop              | Type                                                       | Default | From                   | Description                                                                          |
+| ----------------- | ---------------------------------------------------------- | ------- | ---------------------- | ------------------------------------------------------------------------------------ |
+| `buttonLabel`     | `ReactNode`                                                | —       | `InputWithButtonProps` | Text on the trailing button.                                                         |
+| `onButtonClick?`  | `() => void`                                               | —       | `InputWithButtonProps` | Runs on the trailing button. The field's own value is not passed — read it yourself. |
+| `buttonDisabled?` | `boolean`                                                  | `false` | `InputWithButtonProps` | Disables only the button — the field stays editable                                  |
+| `buttonProps?`    | `Omit<ButtonProps, 'children' \| 'onClick' \| 'disabled'>` | —       | `InputWithButtonProps` | Escape hatch for variant/size/icons on the trailing button                           |
+| `prefix?`         | `ReactNode`                                                | —       | `InputTextProps`       | Slot rendered on the left of the field — icon, text, or any ReactNode                |
+| `label?`          | `string`                                                   | —       | `InputTextProps`       | Text above the box — it is what names the field for assistive technology.            |
+| `error?`          | `string`                                                   | —       | `InputTextProps`       | Message under the box. It also paints the error border and sets `aria-invalid`.      |
+| `helperText?`     | `string`                                                   | —       | `InputTextProps`       | Hint under the box. `error` replaces it while the field is invalid.                  |
+| `block?`          | `boolean`                                                  | —       | `InputTextProps`       | Stretch to the container width — see `InputFieldShellProps.block`                    |
+| `disabledInput?`  | `boolean`                                                  | —       | `InputTextProps`       | Disables only the `<input>`; the box and its slots stay interactive                  |
+| `fieldClassName?` | `string`                                                   | —       | `InputTextProps`       | Extra classes applied to the native `<input>`                                        |
+| `boxClassName?`   | `string`                                                   | —       | `InputTextProps`       | Extra classes applied to the bordered box                                            |
+| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']`                       | —       | `InputTextProps`       | Click anywhere on the box — note that clicks on the field bubble here too            |
+| `boxRef?`         | `InputFieldShellProps['boxRef']`                           | —       | `InputTextProps`       | Handle on the bordered box — see `InputFieldShellProps.boxRef`                       |
 
 **Types**
 
@@ -1533,8 +1604,30 @@ Props: `InputWithButtonProps extends Omit<InputTextProps, 'suffix'>`
 type InputFileUploadStatus = 'uploading' | 'success' | 'error' | 'done';
 type InputProps = InputTextProps;
 type InputTextFormattingCommand = 'image' | 'video' | 'code' | 'more';
-type InputV2FieldType = 'text' | 'search' | 'phone' | 'date' | 'dropdown' | 'tag' | 'textarea' | 'button' | 'upload' | 'text-formatting';
-type InputV2Props = ({ /** * Which field to render. It is the discriminant of this union, so setting * it narrows the rest of the props to that field's own — omit it and you * get the plain single-line field. */ fieldType?: 'text'; } & InputTextProps) | ({ fieldType: 'search' } & InputSearchProps) | ({ fieldType: 'phone' } & InputPhoneNumberProps) | ({ fieldType: 'date' } & InputDateProps) | ({ fieldType: 'dropdown' } & InputDropdownProps) | ({ fieldType: 'tag' } & InputTagProps) | ({ fieldType: 'textarea' } & InputTextareaProps) | ({ fieldType: 'button' } & InputWithButtonProps) | ({ fieldType: 'upload' } & InputFileUploadProps) | ({ fieldType: 'text-formatting' } & InputTextFormattingProps);
+type InputV2FieldType =
+  | 'text'
+  | 'search'
+  | 'phone'
+  | 'date'
+  | 'dropdown'
+  | 'tag'
+  | 'textarea'
+  | 'button'
+  | 'upload'
+  | 'text-formatting';
+type InputV2Props =
+  | ({
+      /** * Which field to render. It is the discriminant of this union, so setting * it narrows the rest of the props to that field's own — omit it and you * get the plain single-line field. */ fieldType?: 'text';
+    } & InputTextProps)
+  | ({ fieldType: 'search' } & InputSearchProps)
+  | ({ fieldType: 'phone' } & InputPhoneNumberProps)
+  | ({ fieldType: 'date' } & InputDateProps)
+  | ({ fieldType: 'dropdown' } & InputDropdownProps)
+  | ({ fieldType: 'tag' } & InputTagProps)
+  | ({ fieldType: 'textarea' } & InputTextareaProps)
+  | ({ fieldType: 'button' } & InputWithButtonProps)
+  | ({ fieldType: 'upload' } & InputFileUploadProps)
+  | ({ fieldType: 'text-formatting' } & InputTextFormattingProps);
 ```
 
 ---
@@ -1551,8 +1644,8 @@ Declares no props of its own beyond the standard DOM attributes.
 
 An adornment inside an `InputGroup` — an icon, a unit, a button. Clicking it focuses the control, so it never reads as dead space; a click on a `<button>` inside it is left alone.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
+| Prop     | Type                                                                     | Default          | Description                                                                                                                                        |
+| -------- | ------------------------------------------------------------------------ | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `align?` | `'inline-start' \| 'inline-end' \| 'block-start' \| 'block-end' \| null` | `'inline-start'` | Where the adornment sits. The `inline-*` values put it beside the control; the `block-*` values stack it above or below and make the group taller. |
 
 ### InputGroupButton
@@ -1561,14 +1654,14 @@ A `Button` presized for an `InputGroupAddon` — same props, smaller defaults.
 
 Props: `ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `ButtonVariant` | `'primary'` | How much weight the action carries. `primary` is the one filled button per view; `alternative` is the outlined brand button that sits next to it; `secondary` is the neutral outline for everything else.… |
-| `size?` | `ButtonSize` | `'sm'` | Height: 48 / 40 / 32px. `icon` is the square variant for a button whose only child is an icon — a plain icon-only `md` button squares itself too, so reach for `icon` when you want that square at a size the label steps do not give. |
-| `iconLeft?` | `ReactNode` | — | Leading icon slot |
-| `iconRight?` | `ReactNode` | — | Trailing icon slot |
-| `loading?` | `boolean` | — | Swap the leading icon for a spinner and swallow clicks. Deliberately not `disabled`: the button stays focusable so the `aria-busy` change is announced instead of focus falling to `<body>`. |
-| `fullWidth?` | `boolean` | — | Stretch to the container's width. Ignored on an icon-only button. |
+| Prop         | Type            | Default     | Description                                                                                                                                                                                                                            |
+| ------------ | --------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant?`   | `ButtonVariant` | `'primary'` | How much weight the action carries. `primary` is the one filled button per view; `alternative` is the outlined brand button that sits next to it; `secondary` is the neutral outline for everything else.…                             |
+| `size?`      | `ButtonSize`    | `'sm'`      | Height: 48 / 40 / 32px. `icon` is the square variant for a button whose only child is an icon — a plain icon-only `md` button squares itself too, so reach for `icon` when you want that square at a size the label steps do not give. |
+| `iconLeft?`  | `ReactNode`     | —           | Leading icon slot                                                                                                                                                                                                                      |
+| `iconRight?` | `ReactNode`     | —           | Trailing icon slot                                                                                                                                                                                                                     |
+| `loading?`   | `boolean`       | —           | Swap the leading icon for a spinner and swallow clicks. Deliberately not `disabled`: the button stays focusable so the `aria-busy` change is announced instead of focus falling to `<body>`.                                           |
+| `fullWidth?` | `boolean`       | —           | Stretch to the container's width. Ignored on an icon-only button.                                                                                                                                                                      |
 
 ### InputGroupInput
 
@@ -1576,19 +1669,19 @@ The control of an `InputGroup`: an `Input` with its own border, ring and backgro
 
 Props: `InputTextProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label?` | `string` | — | Text above the box — it is what names the field for assistive technology. |
-| `error?` | `string` | — | Message under the box. It also paints the error border and sets `aria-invalid`. |
-| `helperText?` | `string` | — | Hint under the box. `error` replaces it while the field is invalid. |
-| `prefix?` | `ReactNode` | — | Slot rendered on the left of the field — icon, text, or any ReactNode |
-| `suffix?` | `ReactNode` | — | Slot rendered on the right of the field — icon, button, or any ReactNode |
-| `block?` | `boolean` | — | Stretch to the container width — see `InputFieldShellProps.block` |
-| `disabledInput?` | `boolean` | — | Disables only the `<input>`; the box and its slots stay interactive |
-| `fieldClassName?` | `string` | — | Extra classes applied to the native `<input>` |
-| `boxClassName?` | `string` | — | Extra classes applied to the bordered box |
-| `onBoxClick?` | `InputFieldShellProps['onBoxClick']` | — | Click anywhere on the box — note that clicks on the field bubble here too |
-| `boxRef?` | `InputFieldShellProps['boxRef']` | — | Handle on the bordered box — see `InputFieldShellProps.boxRef` |
+| Prop              | Type                                 | Default | Description                                                                     |
+| ----------------- | ------------------------------------ | ------- | ------------------------------------------------------------------------------- |
+| `label?`          | `string`                             | —       | Text above the box — it is what names the field for assistive technology.       |
+| `error?`          | `string`                             | —       | Message under the box. It also paints the error border and sets `aria-invalid`. |
+| `helperText?`     | `string`                             | —       | Hint under the box. `error` replaces it while the field is invalid.             |
+| `prefix?`         | `ReactNode`                          | —       | Slot rendered on the left of the field — icon, text, or any ReactNode           |
+| `suffix?`         | `ReactNode`                          | —       | Slot rendered on the right of the field — icon, button, or any ReactNode        |
+| `block?`          | `boolean`                            | —       | Stretch to the container width — see `InputFieldShellProps.block`               |
+| `disabledInput?`  | `boolean`                            | —       | Disables only the `<input>`; the box and its slots stay interactive             |
+| `fieldClassName?` | `string`                             | —       | Extra classes applied to the native `<input>`                                   |
+| `boxClassName?`   | `string`                             | —       | Extra classes applied to the bordered box                                       |
+| `onBoxClick?`     | `InputFieldShellProps['onBoxClick']` | —       | Click anywhere on the box — note that clicks on the field bubble here too       |
+| `boxRef?`         | `InputFieldShellProps['boxRef']`     | —       | Handle on the bordered box — see `InputFieldShellProps.boxRef`                  |
 
 ### InputGroupText
 
@@ -1606,11 +1699,11 @@ The brand-coloured marker from the Figma "Label" board — a `div`, not an HTML 
 
 Props: `LabelProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `LabelSize` | `'md'` | Height: 32px or 24px. |
-| `tone?` | `LabelTone` | `'solid'` | Filled brand, tinted, or outlined. |
-| `children` | `ReactNode` | — | The label's text. |
+| Prop       | Type        | Default   | Description                        |
+| ---------- | ----------- | --------- | ---------------------------------- |
+| `size?`    | `LabelSize` | `'md'`    | Height: 32px or 24px.              |
+| `tone?`    | `LabelTone` | `'solid'` | Filled brand, tinted, or outlined. |
+| `children` | `ReactNode` | —         | The label's text.                  |
 
 **Types**
 
@@ -1635,14 +1728,14 @@ One row: a leading slot, a title (its children), an optional second line, and a 
 
 Props: `ListItemProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `leading?` | `ReactNode` | — | Leading slot — a 20×20 icon, an `<Avatar size="md">`, or any node. |
-| `description?` | `ReactNode` | — | Secondary line below the title — turns the row into the two-line layout. |
-| `trailing?` | `ReactNode` | — | Trailing content at the right edge — e.g. a `<Button>` and a kebab menu. |
-| `chevron?` | `boolean` | `false` | Appends a CaretRight indicator after `trailing`, for rows that navigate. |
-| `active?` | `boolean` | `false` | Marks the row as the selected one — renders on the pressed surface. |
-| `asChild?` | `boolean` | `false` | Render the row as its single child element (e.g. an `<a>` or a router link) instead of a `<button>`. That child's own children become the row title. |
+| Prop           | Type        | Default | Description                                                                                                                                          |
+| -------------- | ----------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `leading?`     | `ReactNode` | —       | Leading slot — a 20×20 icon, an `<Avatar size="md">`, or any node.                                                                                   |
+| `description?` | `ReactNode` | —       | Secondary line below the title — turns the row into the two-line layout.                                                                             |
+| `trailing?`    | `ReactNode` | —       | Trailing content at the right edge — e.g. a `<Button>` and a kebab menu.                                                                             |
+| `chevron?`     | `boolean`   | `false` | Appends a CaretRight indicator after `trailing`, for rows that navigate.                                                                             |
+| `active?`      | `boolean`   | `false` | Marks the row as the selected one — renders on the pressed surface.                                                                                  |
+| `asChild?`     | `boolean`   | `false` | Render the row as its single child element (e.g. an `<a>` or a router link) instead of a `<button>`. That child's own children become the row title. |
 
 ### ListProps
 
@@ -1658,8 +1751,8 @@ The left navigation rail: a full-height `<nav>` that toggles between a 264px exp
 
 Props: `LnbProps extends HTMLAttributes<HTMLElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
+| Prop         | Type      | Default | Description                                                           |
+| ------------ | --------- | ------- | --------------------------------------------------------------------- |
 | `collapsed?` | `boolean` | `false` | Collapse to the 52px icon-only rail. Default: false → 264px expanded. |
 
 ### LnbFooter
@@ -1686,10 +1779,10 @@ The row that opens an `LnbGroup`. It draws its own caret and keeps the selected 
 
 Props: `LnbGroupTriggerProps extends ComponentPropsWithoutRef<typeof CollapsiblePrimitive.Trigger>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon?` | `ReactNode` | — | Leading glyph — Figma's 20px `height/icon/lg` slot. |
-| `label?` | `ReactNode` | — | Row label. Visually hidden (but still the accessible name) when collapsed. |
+| Prop     | Type        | Default | Description                                                                |
+| -------- | ----------- | ------- | -------------------------------------------------------------------------- |
+| `icon?`  | `ReactNode` | —       | Leading glyph — Figma's 20px `height/icon/lg` slot.                        |
+| `label?` | `ReactNode` | —       | Row label. Visually hidden (but still the accessible name) when collapsed. |
 
 Also accepts the props of `@radix-ui/react-primitive`.
 
@@ -1705,13 +1798,13 @@ One navigation row. On the collapsed rail the label is visually hidden but stays
 
 Props: `LnbItemProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon?` | `ReactNode` | — | Leading glyph — Figma's 20px `height/icon/lg` slot. Drives the collapsed rail. |
-| `label?` | `ReactNode` | — | Row label. Visually hidden (but still the accessible name) when collapsed. |
-| `active?` | `boolean` | `false` | Figma `State=Select` — paints the pressed fill and sets `aria-current`. |
-| `indented?` | `boolean` | `false` | Sub-item inside an open LnbGroup: 36px indent, muted label, no glyph. |
-| `asChild?` | `boolean` | `false` | Render `children` instead of a `<button>` — e.g. a router `<Link>`. |
+| Prop        | Type        | Default | Description                                                                    |
+| ----------- | ----------- | ------- | ------------------------------------------------------------------------------ |
+| `icon?`     | `ReactNode` | —       | Leading glyph — Figma's 20px `height/icon/lg` slot. Drives the collapsed rail. |
+| `label?`    | `ReactNode` | —       | Row label. Visually hidden (but still the accessible name) when collapsed.     |
+| `active?`   | `boolean`   | `false` | Figma `State=Select` — paints the pressed fill and sets `aria-current`.        |
+| `indented?` | `boolean`   | `false` | Sub-item inside an open LnbGroup: 36px indent, muted label, no glyph.          |
+| `asChild?`  | `boolean`   | `false` | Render `children` instead of a `<button>` — e.g. a router `<Link>`.            |
 
 ### LnbLogo
 
@@ -1719,9 +1812,9 @@ The brand row at the top of the rail. Give it an `action` (usually an `LnbToggle
 
 Props: `LnbLogoProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `action?` | `ReactNode` | — | Trailing collapse control — Figma `Type=Expand (With Folding)`. Omit it for `Expand (Without Folding)`. On the collapsed rail it replaces the logo on hover/focus, which is Figma's `Collapse / Hover` state. |
+| Prop      | Type        | Default | Description                                                                                                                                                                                                   |
+| --------- | ----------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `action?` | `ReactNode` | —       | Trailing collapse control — Figma `Type=Expand (With Folding)`. Omit it for `Expand (Without Folding)`. On the collapsed rail it replaces the logo on hover/focus, which is Figma's `Collapse / Hover` state. |
 
 ### LnbMenu
 
@@ -1735,9 +1828,9 @@ The collapse/expand button. It only reports the intent — flipping `Lnb`'s `col
 
 Props: `LnbToggleProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon?` | `ReactNode` | — | Glyph override. Defaults to Figma's `SidebarSimple` (26864:20157). |
+| Prop    | Type        | Default | Description                                                        |
+| ------- | ----------- | ------- | ------------------------------------------------------------------ |
+| `icon?` | `ReactNode` | —       | Glyph override. Defaults to Figma's `SidebarSimple` (26864:20157). |
 
 ### LnbUser
 
@@ -1745,13 +1838,13 @@ The signed-in user row at the foot of the rail: avatar, name and email. Pass `as
 
 Props: `LnbUserProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'name'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `name?` | `ReactNode` | — | Primary line — `typography/body/md/medium`. Also the collapsed accessible name. |
-| `email?` | `ReactNode` | — | Secondary line — `typography/caption/sm/regular`. |
-| `avatar?` | `ReactNode` | — | Avatar override. Defaults to a 24px `height/profile/sm` Avatar of `name`. |
-| `active?` | `boolean` | `false` | Figma `State=Select` — paints the pressed fill. |
-| `asChild?` | `boolean` | `false` | Render `children` instead of a `<button>` — e.g. a DropdownMenu trigger. |
+| Prop       | Type        | Default | Description                                                                     |
+| ---------- | ----------- | ------- | ------------------------------------------------------------------------------- |
+| `name?`    | `ReactNode` | —       | Primary line — `typography/body/md/medium`. Also the collapsed accessible name. |
+| `email?`   | `ReactNode` | —       | Secondary line — `typography/caption/sm/regular`.                               |
+| `avatar?`  | `ReactNode` | —       | Avatar override. Defaults to a 24px `height/profile/sm` Avatar of `name`.       |
+| `active?`  | `boolean`   | `false` | Figma `State=Select` — paints the pressed fill.                                 |
+| `asChild?` | `boolean`   | `false` | Render `children` instead of a `<button>` — e.g. a DropdownMenu trigger.        |
 
 ### LnbFooterProps
 
@@ -1783,21 +1876,21 @@ The ready-made confirm dialog: title + body + two buttons. Reach for `Dialog` wh
 
 Props: `ModalProps`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open?` | `boolean` | — | Controlled open state. Pair it with `onOpenChange`, or use `defaultOpen`. |
-| `defaultOpen?` | `boolean` | — | Open state for the uncontrolled case — the modal then owns it. |
-| `onOpenChange?` | `(open: boolean) => void` | — | Fires on every open and close, including Esc and the ✕. |
-| `trigger?` | `ReactNode` | — | Optional element that opens the modal (e.g. a Button). |
-| `title` | `ReactNode` | — | Heading, and the modal's accessible name. |
-| `children?` | `ReactNode` | — | Body — centered text, an Input, or any content. |
-| `cancelText?` | `ReactNode` | `'Cancel'` | Label of the cancel button. |
-| `confirmText?` | `ReactNode` | `'Confirm'` | Label of the confirm button. |
-| `onCancel?` | `() => void` | — | Runs on cancel. It does not close the modal — do that yourself. |
-| `onConfirm?` | `() => void` | — | Runs on confirm. It does not close the modal — do that yourself. |
-| `singleButton?` | `boolean` | `false` | Render only the confirm button (Figma "SingleButton"). |
-| `footer?` | `ReactNode` | — | Replace the default footer buttons entirely. |
-| `className?` | `string` | — | Lands on the modal panel, not on the scrim. |
+| Prop            | Type                      | Default     | Description                                                               |
+| --------------- | ------------------------- | ----------- | ------------------------------------------------------------------------- |
+| `open?`         | `boolean`                 | —           | Controlled open state. Pair it with `onOpenChange`, or use `defaultOpen`. |
+| `defaultOpen?`  | `boolean`                 | —           | Open state for the uncontrolled case — the modal then owns it.            |
+| `onOpenChange?` | `(open: boolean) => void` | —           | Fires on every open and close, including Esc and the ✕.                   |
+| `trigger?`      | `ReactNode`               | —           | Optional element that opens the modal (e.g. a Button).                    |
+| `title`         | `ReactNode`               | —           | Heading, and the modal's accessible name.                                 |
+| `children?`     | `ReactNode`               | —           | Body — centered text, an Input, or any content.                           |
+| `cancelText?`   | `ReactNode`               | `'Cancel'`  | Label of the cancel button.                                               |
+| `confirmText?`  | `ReactNode`               | `'Confirm'` | Label of the confirm button.                                              |
+| `onCancel?`     | `() => void`              | —           | Runs on cancel. It does not close the modal — do that yourself.           |
+| `onConfirm?`    | `() => void`              | —           | Runs on confirm. It does not close the modal — do that yourself.          |
+| `singleButton?` | `boolean`                 | `false`     | Render only the confirm button (Figma "SingleButton").                    |
+| `footer?`       | `ReactNode`               | —           | Replace the default footer buttons entirely.                              |
+| `className?`    | `string`                  | —           | Lands on the modal panel, not on the scrim.                               |
 
 ### ResourceModal
 
@@ -1805,52 +1898,52 @@ The five file-manager dialogs — rename, delete, tag, move and properties — a
 
 Props: `ResourceModalProps`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type` | `ResourceModalType \| null` | — | Which of the five modals to render. `null` renders none. |
-| `open` | `boolean` | — | Whether the modal is open. It is always controlled — there is no `defaultOpen`. |
-| `onClose` | `() => void` | — | Fires on Esc, on the scrim, on ✕ and on cancel. Set `open` to `false` here. |
-| `itemName` | `string` | — | Name of the file or folder being acted on, shown in the body copy. |
-| `initialValue?` | `string` | — | Starting text of the `rename` field. |
-| `onConfirm?` | `(value: any) => void` | — | Fires with the modal's result: the new name for `rename`, the tag list for `tag`, the target folder id for `move`, and `null` for `delete` and `properties`. It does not close the modal — do that from `onClose`. |
-| `isLoading?` | `boolean` | — | Disables the confirm button while the request is in flight. |
-| `itemDetails?` | `{ ownerName: string; location: string; sizeBytes: number; createdAt: number; updatedAt: number \| null; }` | — | What the `properties` modal lists. Ignored by the other four. |
-| `formatDate?` | `(date: number) => string` | — | Formats the timestamps in `properties`. Without it the raw epoch number is printed. |
-| `formatBytes?` | `(bytes: number) => string` | — | Formats `sizeBytes` in `properties`. Without it the raw byte count is printed. |
-| `initialTags?` | `{ id: string; name: string }[]` | — | Tags the `tag` modal opens with. |
-| `labels?` | `Partial<ResourceModalLabels>` | — | Overrides for any of the modal's built-in English strings |
+| Prop            | Type                                                                                                        | Default | Description                                                                                                                                                                                                        |
+| --------------- | ----------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `type`          | `ResourceModalType \| null`                                                                                 | —       | Which of the five modals to render. `null` renders none.                                                                                                                                                           |
+| `open`          | `boolean`                                                                                                   | —       | Whether the modal is open. It is always controlled — there is no `defaultOpen`.                                                                                                                                    |
+| `onClose`       | `() => void`                                                                                                | —       | Fires on Esc, on the scrim, on ✕ and on cancel. Set `open` to `false` here.                                                                                                                                        |
+| `itemName`      | `string`                                                                                                    | —       | Name of the file or folder being acted on, shown in the body copy.                                                                                                                                                 |
+| `initialValue?` | `string`                                                                                                    | —       | Starting text of the `rename` field.                                                                                                                                                                               |
+| `onConfirm?`    | `(value: any) => void`                                                                                      | —       | Fires with the modal's result: the new name for `rename`, the tag list for `tag`, the target folder id for `move`, and `null` for `delete` and `properties`. It does not close the modal — do that from `onClose`. |
+| `isLoading?`    | `boolean`                                                                                                   | —       | Disables the confirm button while the request is in flight.                                                                                                                                                        |
+| `itemDetails?`  | `{ ownerName: string; location: string; sizeBytes: number; createdAt: number; updatedAt: number \| null; }` | —       | What the `properties` modal lists. Ignored by the other four.                                                                                                                                                      |
+| `formatDate?`   | `(date: number) => string`                                                                                  | —       | Formats the timestamps in `properties`. Without it the raw epoch number is printed.                                                                                                                                |
+| `formatBytes?`  | `(bytes: number) => string`                                                                                 | —       | Formats `sizeBytes` in `properties`. Without it the raw byte count is printed.                                                                                                                                     |
+| `initialTags?`  | `{ id: string; name: string }[]`                                                                            | —       | Tags the `tag` modal opens with.                                                                                                                                                                                   |
+| `labels?`       | `Partial<ResourceModalLabels>`                                                                              | —       | Overrides for any of the modal's built-in English strings                                                                                                                                                          |
 
 ### ResourceModalLabels
 
 Every string the five modal bodies render. One bag rather than 25 props: they are always translated together and would otherwise bury the eleven behavioural props in autocomplete.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `renameTitle` | `string` | — | Heading of the `rename` modal. |
-| `deleteTitle` | `string` | — | Heading of the `delete` modal. |
-| `tagTitle` | `string` | — | Heading of the `tag` modal. |
-| `moveTitle` | `string` | — | Heading of the `move` modal. |
-| `propertiesTitle` | `string` | — | Heading of the `properties` modal. |
-| `nameLabel` | `string` | — | rename |
-| `namePlaceholder` | `string` | — | Placeholder of the rename field. |
-| `deleteQuestion` | `string` | — | delete |
-| `deleteNote` | `string` | — | Line under the question — the "this cannot be undone" warning. |
-| `currentTagsTitle` | `string` | — | tag |
-| `noTagsText` | `string` | — | Shown in place of the tag list while there are none. |
-| `tagPlaceholder` | `string` | — | Placeholder of the new-tag field. |
-| `addTagText` | `string` | — | Label of the button that adds the typed tag. |
-| `removeTagLabel` | `string` | — | `aria-label` on each tag's remove button |
-| `folderSearchPlaceholder` | `string` | — | move |
-| `rootFolderName` | `string` | — | Name shown for the top-level folder in the move tree. |
-| `newFolderText` | `string` | — | Label of the "create a folder here" row. |
-| `itemTypeText` | `string` | — | properties |
-| `ownerLabel` | `string` | — | Row label for the owner. |
-| `locationLabel` | `string` | — | Row label for the containing folder. |
-| `sizeLabel` | `string` | — | Row label for the file size. |
-| `createdLabel` | `string` | — | Row label for the creation date. |
-| `cancelText` | `string` | — | footer |
-| `confirmText` | `string` | — | Label of the confirm button on every modal but `delete`. |
-| `deleteText` | `string` | — | Label of the confirm button on the `delete` modal — it is destructive. |
+| Prop                      | Type     | Default | Description                                                            |
+| ------------------------- | -------- | ------- | ---------------------------------------------------------------------- |
+| `renameTitle`             | `string` | —       | Heading of the `rename` modal.                                         |
+| `deleteTitle`             | `string` | —       | Heading of the `delete` modal.                                         |
+| `tagTitle`                | `string` | —       | Heading of the `tag` modal.                                            |
+| `moveTitle`               | `string` | —       | Heading of the `move` modal.                                           |
+| `propertiesTitle`         | `string` | —       | Heading of the `properties` modal.                                     |
+| `nameLabel`               | `string` | —       | rename                                                                 |
+| `namePlaceholder`         | `string` | —       | Placeholder of the rename field.                                       |
+| `deleteQuestion`          | `string` | —       | delete                                                                 |
+| `deleteNote`              | `string` | —       | Line under the question — the "this cannot be undone" warning.         |
+| `currentTagsTitle`        | `string` | —       | tag                                                                    |
+| `noTagsText`              | `string` | —       | Shown in place of the tag list while there are none.                   |
+| `tagPlaceholder`          | `string` | —       | Placeholder of the new-tag field.                                      |
+| `addTagText`              | `string` | —       | Label of the button that adds the typed tag.                           |
+| `removeTagLabel`          | `string` | —       | `aria-label` on each tag's remove button                               |
+| `folderSearchPlaceholder` | `string` | —       | move                                                                   |
+| `rootFolderName`          | `string` | —       | Name shown for the top-level folder in the move tree.                  |
+| `newFolderText`           | `string` | —       | Label of the "create a folder here" row.                               |
+| `itemTypeText`            | `string` | —       | properties                                                             |
+| `ownerLabel`              | `string` | —       | Row label for the owner.                                               |
+| `locationLabel`           | `string` | —       | Row label for the containing folder.                                   |
+| `sizeLabel`               | `string` | —       | Row label for the file size.                                           |
+| `createdLabel`            | `string` | —       | Row label for the creation date.                                       |
+| `cancelText`              | `string` | —       | footer                                                                 |
+| `confirmText`             | `string` | —       | Label of the confirm button on every modal but `delete`.               |
+| `deleteText`              | `string` | —       | Label of the confirm button on the `delete` modal — it is destructive. |
 
 **Types**
 
@@ -1878,11 +1971,11 @@ One tab of a `BottomNavigation` — icon over label, brand-coloured while `activ
 
 Props: `BottomNavigationItemProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon?` | `ReactNode` | — | 20px glyph above the label. |
-| `label?` | `ReactNode` | — | Caption under the icon. Truncates rather than wrapping. |
-| `active?` | `boolean` | `false` | Marks the current tab — paints it brand and sets `aria-current="page"`. |
+| Prop      | Type        | Default | Description                                                             |
+| --------- | ----------- | ------- | ----------------------------------------------------------------------- |
+| `icon?`   | `ReactNode` | —       | 20px glyph above the label.                                             |
+| `label?`  | `ReactNode` | —       | Caption under the icon. Truncates rather than wrapping.                 |
+| `active?` | `boolean`   | `false` | Marks the current tab — paints it brand and sets `aria-current="page"`. |
 
 ### TopNavigation
 
@@ -1892,11 +1985,11 @@ The mobile app bar: a 56px header with a leading slot, a centred title and a tra
 
 Props: `TopNavigationProps extends Omit<HTMLAttributes<HTMLElement>, 'title'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `left?` | `ReactNode` | — | Leading slot — back button, menu, or logo. |
-| `title?` | `ReactNode` | — | Centered title. Truncates when space is tight. |
-| `right?` | `ReactNode` | — | Trailing slot — action icons, avatar, or a button. |
+| Prop     | Type        | Default | Description                                        |
+| -------- | ----------- | ------- | -------------------------------------------------- |
+| `left?`  | `ReactNode` | —       | Leading slot — back button, menu, or logo.         |
+| `title?` | `ReactNode` | —       | Centered title. Truncates when space is tight.     |
+| `right?` | `ReactNode` | —       | Trailing slot — action icons, avatar, or a button. |
 
 ### BottomNavigationProps
 
@@ -1912,12 +2005,12 @@ One tab of a `BottomNavigationV2` — icon over label. Pass `asChild` to make it
 
 Props: `BottomNavigationItemV2Props extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon?` | `ReactNode` | — | Glyph slot — rendered in Figma's 20px `height/icon/lg` box. |
-| `label?` | `ReactNode` | — | Caption under the icon. Truncates rather than wrapping. |
-| `active?` | `boolean` | `false` | Figma `State=Select` — paints icon + label text-primary and sets aria-current. |
-| `asChild?` | `boolean` | `false` | Render the child element instead of a `<button>` — e.g. a router `<Link>`. |
+| Prop       | Type        | Default | Description                                                                    |
+| ---------- | ----------- | ------- | ------------------------------------------------------------------------------ |
+| `icon?`    | `ReactNode` | —       | Glyph slot — rendered in Figma's 20px `height/icon/lg` box.                    |
+| `label?`   | `ReactNode` | —       | Caption under the icon. Truncates rather than wrapping.                        |
+| `active?`  | `boolean`   | `false` | Figma `State=Select` — paints icon + label text-primary and sets aria-current. |
+| `asChild?` | `boolean`   | `false` | Render the child element instead of a `<button>` — e.g. a router `<Link>`.     |
 
 ### BottomNavigationV2
 
@@ -1931,12 +2024,12 @@ The mobile app bar: a leading slot, a centred title and a trailing slot. The cur
 
 Props: `TopNavigationV2Props extends Omit<HTMLAttributes<HTMLElement>, 'title'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `left?` | `ReactNode` | — | Leading cluster — back caret, menu button, logo, or any combination. |
-| `title?` | `ReactNode` | — | Centered title. Truncates when the clusters leave too little room. |
-| `right?` | `ReactNode` | — | Trailing cluster — icon buttons, a primary button, or an avatar. |
-| `actionGap?` | `'md' \| 'lg'` | `'md'` | Gap inside both clusters: `spacing/md` (12px) on every Figma cell except BackIcon, which spaces its three icon buttons by `spacing/lg` (16px). |
+| Prop         | Type           | Default | Description                                                                                                                                    |
+| ------------ | -------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `left?`      | `ReactNode`    | —       | Leading cluster — back caret, menu button, logo, or any combination.                                                                           |
+| `title?`     | `ReactNode`    | —       | Centered title. Truncates when the clusters leave too little room.                                                                             |
+| `right?`     | `ReactNode`    | —       | Trailing cluster — icon buttons, a primary button, or an avatar.                                                                               |
+| `actionGap?` | `'md' \| 'lg'` | `'md'`  | Gap inside both clusters: `spacing/md` (12px) on every Figma cell except BackIcon, which spaces its three icon buttons by `spacing/lg` (16px). |
 
 ### BottomNavigationV2Props
 
@@ -1964,9 +2057,9 @@ One action row, with an optional leading glyph. Use `onSelect` rather than `onCl
 
 Props: `OverflowMenuItemProps extends ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon?` | `ReactNode` | — | Leading glyph — rendered in Figma's 16px `height/icon/md` box (type=LabelIcon). |
+| Prop    | Type        | Default | Description                                                                     |
+| ------- | ----------- | ------- | ------------------------------------------------------------------------------- |
+| `icon?` | `ReactNode` | —       | Leading glyph — rendered in Figma's 16px `height/icon/md` box (type=LabelIcon). |
 
 Also accepts the props of `@radix-ui/react-menu`, `@radix-ui/react-primitive`.
 
@@ -1982,9 +2075,9 @@ The button that opens the menu. Left alone it renders the 32px dots button from 
 
 Props: `OverflowMenuTriggerProps extends ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Trigger>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon?` | `ReactNode` | — | Glyph shown in the default trigger. Ignored when `asChild` is set. |
+| Prop    | Type        | Default | Description                                                        |
+| ------- | ----------- | ------- | ------------------------------------------------------------------ |
+| `icon?` | `ReactNode` | —       | Glyph shown in the default trigger. Ignored when `asChild` is set. |
 
 Also accepts the props of `@radix-ui/react-primitive`.
 
@@ -2002,13 +2095,13 @@ The page bar: previous/next, jump-to-edge, and a run of page numbers that collap
 
 Props: `PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `page` | `number` | — | Current page (1-based). |
-| `total` | `number` | — | Total number of pages. |
-| `onPageChange?` | `(page: number) => void` | — | Fires with the requested page. `page` is controlled, so update it here. |
-| `siblingCount?` | `number` | `1` | Pages shown on each side of the current page. |
-| `showEdges?` | `boolean` | `true` | Show the jump-to-first / jump-to-last double-chevron buttons. |
+| Prop            | Type                     | Default | Description                                                             |
+| --------------- | ------------------------ | ------- | ----------------------------------------------------------------------- |
+| `page`          | `number`                 | —       | Current page (1-based).                                                 |
+| `total`         | `number`                 | —       | Total number of pages.                                                  |
+| `onPageChange?` | `(page: number) => void` | —       | Fires with the requested page. `page` is controlled, so update it here. |
+| `siblingCount?` | `number`                 | `1`     | Pages shown on each side of the current page.                           |
+| `showEdges?`    | `boolean`                | `true`  | Show the jump-to-first / jump-to-last double-chevron buttons.           |
 
 ---
 
@@ -2020,9 +2113,9 @@ The popover root — state and context only, it renders no DOM of its own. Pair 
 
 Props: `PopoverProps extends ComponentProps<typeof PopoverPrimitive.Root>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className?` | `never` | — | Not accepted here — the root renders no DOM, so there is nothing to style. `<Popover className="w-56">` was the `1.0.14` panel; it is now `<PopoverPanel className="w-56">`. |
+| Prop         | Type    | Default | Description                                                                                                                                                                  |
+| ------------ | ------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `className?` | `never` | —       | Not accepted here — the root renders no DOM, so there is nothing to style. `<Popover className="w-56">` was the `1.0.14` panel; it is now `<PopoverPanel className="w-56">`. |
 
 Also accepts the props of `@radix-ui/react-popover`.
 
@@ -2032,9 +2125,9 @@ Positions the content against something other than the trigger — e.g. a whole 
 
 Props: `PopoverAnchorProps extends Omit<RadixAnchorProps, 'virtualRef'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `virtualRef?` | `RefObject<Element \| null>` | — | Position against this element instead — nothing is rendered. Use it to anchor to a node the anchor cannot wrap, such as an input's box while the label and error message stay outside the popover's reference rect. |
+| Prop          | Type                         | Default | Description                                                                                                                                                                                                         |
+| ------------- | ---------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `virtualRef?` | `RefObject<Element \| null>` | —       | Position against this element instead — nothing is rendered. Use it to anchor to a node the anchor cannot wrap, such as an input's box while the label and error message stay outside the popover's reference rect. |
 
 Also accepts the props of `@radix-ui/react-primitive`.
 
@@ -2049,15 +2142,16 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 The floating panel: portalled, positioned and styled. Reach for `placement` rather than `side` + `align` — it is the same pair in one prop, and it wins when both are given.
 
 Props: `PopoverContentProps extends Omit<
-    ComponentProps<typeof PopoverPrimitive.Content>,
-    'side' | 'align'
-  >`
+ComponentProps<typeof PopoverPrimitive.Content>,
+'side' | 'align'
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `placement?` | `PopoverPlacement` | — | Convenience shorthand combining side + align. When set, takes precedence over `side` and `align`. |
-| `side?` | `Side` | `'bottom'` | Which edge of the trigger the panel opens from. |
-| `align?` | `Align` | `'start'` | How the panel lines up along that edge. |
+> `
+
+| Prop         | Type               | Default    | Description                                                                                       |
+| ------------ | ------------------ | ---------- | ------------------------------------------------------------------------------------------------- |
+| `placement?` | `PopoverPlacement` | —          | Convenience shorthand combining side + align. When set, takes precedence over `side` and `align`. |
+| `side?`      | `Side`             | `'bottom'` | Which edge of the trigger the panel opens from.                                                   |
+| `align?`     | `Align`            | `'start'`  | How the panel lines up along that edge.                                                           |
 
 Also accepts the props of `@radix-ui/react-dismissable-layer`, `@radix-ui/react-popover`, `@radix-ui/react-popper`, `@radix-ui/react-primitive`.
 
@@ -2073,12 +2167,12 @@ The identity block at the top of a panel: avatar, name, email and actions.
 
 Props: `PopoverHeaderProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `avatar?` | `ReactNode` | — | Leading avatar, usually an `<Avatar size="md">`. |
-| `name?` | `ReactNode` | — | Primary line — the display name. Truncates rather than wrapping. |
-| `email?` | `ReactNode` | — | Secondary line under the name. Truncates rather than wrapping. |
-| `actions?` | `ReactNode` | — | Buttons under the identity row — "Manage account", "Sign out". |
+| Prop       | Type        | Default | Description                                                      |
+| ---------- | ----------- | ------- | ---------------------------------------------------------------- |
+| `avatar?`  | `ReactNode` | —       | Leading avatar, usually an `<Avatar size="md">`.                 |
+| `name?`    | `ReactNode` | —       | Primary line — the display name. Truncates rather than wrapping. |
+| `email?`   | `ReactNode` | —       | Secondary line under the name. Truncates rather than wrapping.   |
+| `actions?` | `ReactNode` | —       | Buttons under the identity row — "Manage account", "Sign out".   |
 
 ### PopoverItem
 
@@ -2086,13 +2180,13 @@ One row of a panel: leading icon, label, optional description and trailing slot.
 
 Props: `PopoverItemProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon?` | `ReactNode` | — | Leading icon slot — render any 20×20 icon node |
-| `description?` | `ReactNode` | — | Secondary description text rendered below the label |
-| `trailing?` | `ReactNode` | — | Trailing content (text or icon) rendered at the right edge |
-| `isSubmenu?` | `boolean` | `false` | Appends a CaretRight indicator for submenu items |
-| `asMenuItem?` | `boolean` | `false` | Renders the item as `role="menuitem"`. Required for items inside `PopoverMenu` — that is the role it finds its items by, and it owns the `tabIndex` from then on. Has no effect outside a `PopoverMenu`. |
+| Prop           | Type        | Default | Description                                                                                                                                                                                              |
+| -------------- | ----------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `icon?`        | `ReactNode` | —       | Leading icon slot — render any 20×20 icon node                                                                                                                                                           |
+| `description?` | `ReactNode` | —       | Secondary description text rendered below the label                                                                                                                                                      |
+| `trailing?`    | `ReactNode` | —       | Trailing content (text or icon) rendered at the right edge                                                                                                                                               |
+| `isSubmenu?`   | `boolean`   | `false` | Appends a CaretRight indicator for submenu items                                                                                                                                                         |
+| `asMenuItem?`  | `boolean`   | `false` | Renders the item as `role="menuitem"`. Required for items inside `PopoverMenu` — that is the role it finds its items by, and it owns the `tabIndex` from then on. Has no effect outside a `PopoverMenu`. |
 
 ### PopoverMenu
 
@@ -2120,9 +2214,9 @@ The popover root under its old name — identical to `Popover`.
 
 Props: `PopoverProps extends ComponentProps<typeof PopoverPrimitive.Root>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className?` | `never` | — | Not accepted here — the root renders no DOM, so there is nothing to style. `<Popover className="w-56">` was the `1.0.14` panel; it is now `<PopoverPanel className="w-56">`. |
+| Prop         | Type    | Default | Description                                                                                                                                                                  |
+| ------------ | ------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `className?` | `never` | —       | Not accepted here — the root renders no DOM, so there is nothing to style. `<Popover className="w-56">` was the `1.0.14` panel; it is now `<PopoverPanel className="w-56">`. |
 
 Also accepts the props of `@radix-ui/react-popover`.
 
@@ -2157,7 +2251,19 @@ No members declared in this package.
 **Types**
 
 ```ts
-type PopoverPlacement = 'top-start' | 'top-center' | 'top-end' | 'bottom-start' | 'bottom-center' | 'bottom-end' | 'left-start' | 'left-center' | 'left-end' | 'right-start' | 'right-center' | 'right-end';
+type PopoverPlacement =
+  | 'top-start'
+  | 'top-center'
+  | 'top-end'
+  | 'bottom-start'
+  | 'bottom-center'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left-center'
+  | 'left-end'
+  | 'right-start'
+  | 'right-center'
+  | 'right-end';
 ```
 
 ---
@@ -2170,23 +2276,23 @@ The announcement card: image slot, body, and an optional "don't show again". Not
 
 Props: `PopupProps`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open?` | `boolean` | — | Controlled open state. Pair it with `onOpenChange`, or use `defaultOpen`. |
-| `defaultOpen?` | `boolean` | — | Open state for the uncontrolled case — the popup then owns it. |
-| `onOpenChange?` | `(open: boolean) => void` | — | Fires on every open and close, including Esc and the ✕. |
-| `trigger?` | `ReactNode` | — | Element that opens the popup. Omit it when you drive `open` yourself. |
-| `variant?` | `PopupVariant` | `'text'` | `text` is the title-and-body card; `image` is the artwork-led one. |
-| `title?` | `ReactNode` | — | Header title (text variant). |
-| `children?` | `ReactNode` | — | Body content (text variant). |
-| `image?` | `ReactNode` | — | Image element (image variant). Falls back to a placeholder. |
-| `actionText?` | `ReactNode` | — | Footer link action (text variant). |
-| `onAction?` | `() => void` | — | Runs on the footer link. It does not close the popup — do that yourself. |
-| `showDontShowAgain?` | `boolean` | `true` | "Don't show again" checkbox. |
-| `dontShowAgain?` | `boolean` | — | Checked state of that checkbox. Persisting the choice is yours to do. |
-| `onDontShowAgainChange?` | `(checked: boolean) => void` | — | Fires with the checkbox's next state. |
-| `dontShowAgainLabel?` | `ReactNode` | `"Don't show again"` | Text beside the checkbox. |
-| `className?` | `string` | — | Lands on the popup card, not on the scrim. |
+| Prop                     | Type                         | Default              | Description                                                               |
+| ------------------------ | ---------------------------- | -------------------- | ------------------------------------------------------------------------- |
+| `open?`                  | `boolean`                    | —                    | Controlled open state. Pair it with `onOpenChange`, or use `defaultOpen`. |
+| `defaultOpen?`           | `boolean`                    | —                    | Open state for the uncontrolled case — the popup then owns it.            |
+| `onOpenChange?`          | `(open: boolean) => void`    | —                    | Fires on every open and close, including Esc and the ✕.                   |
+| `trigger?`               | `ReactNode`                  | —                    | Element that opens the popup. Omit it when you drive `open` yourself.     |
+| `variant?`               | `PopupVariant`               | `'text'`             | `text` is the title-and-body card; `image` is the artwork-led one.        |
+| `title?`                 | `ReactNode`                  | —                    | Header title (text variant).                                              |
+| `children?`              | `ReactNode`                  | —                    | Body content (text variant).                                              |
+| `image?`                 | `ReactNode`                  | —                    | Image element (image variant). Falls back to a placeholder.               |
+| `actionText?`            | `ReactNode`                  | —                    | Footer link action (text variant).                                        |
+| `onAction?`              | `() => void`                 | —                    | Runs on the footer link. It does not close the popup — do that yourself.  |
+| `showDontShowAgain?`     | `boolean`                    | `true`               | "Don't show again" checkbox.                                              |
+| `dontShowAgain?`         | `boolean`                    | —                    | Checked state of that checkbox. Persisting the choice is yours to do.     |
+| `onDontShowAgainChange?` | `(checked: boolean) => void` | —                    | Fires with the checkbox's next state.                                     |
+| `dontShowAgainLabel?`    | `ReactNode`                  | `"Don't show again"` | Text beside the checkbox.                                                 |
+| `className?`             | `string`                     | —                    | Lands on the popup card, not on the scrim.                                |
 
 **Types**
 
@@ -2204,17 +2310,17 @@ A determinate progress indicator, as a bar or a ring. It reports the fraction it
 
 Props: `ProgressProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `ProgressVariant` | `'linear'` | Shape of the progress. Defaults to `'linear'`. |
-| `value?` | `number` | `0` | Current amount of progress, from 0 to `max`. Defaults to `0`. |
-| `max?` | `number` | `100` | Value that counts as complete. Defaults to `100`, so raw counts work too: `value={3} max={7}`. |
-| `status?` | `ProgressStatus` | `'active'` | `'active'` shows the percentage, `'done'` shows a check icon on a full bar, `'error'` turns the bar red and shows an X icon. Defaults to `'active'`. |
-| `size?` | `ProgressSize` | `'lg'` | Ring size. Only applies to `variant="circular"`. Defaults to `'lg'`. |
-| `placement?` | `ProgressPlacement` | — | Where the text block sits. Defaults to `'right'` for linear and `'inside'` for circular; a placement that does not belong to the current variant falls back to that default instead of breaking the layout. |
-| `label?` | `ReactNode` | — | Leading description text. Only rendered when `placement="top"`. |
-| `showValue?` | `boolean` | — | Show the percentage text. Defaults to `true`, except for circular `size="sm"` (matches the design). |
-| `formatValue?` | `(percent: number) => ReactNode` | `(percent) => `${percent}%`` | Custom percentage text. Defaults to ``(percent) => `${percent}%` ``. |
+| Prop           | Type                             | Default                      | Description                                                                                                                                                                                                 |
+| -------------- | -------------------------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant?`     | `ProgressVariant`                | `'linear'`                   | Shape of the progress. Defaults to `'linear'`.                                                                                                                                                              |
+| `value?`       | `number`                         | `0`                          | Current amount of progress, from 0 to `max`. Defaults to `0`.                                                                                                                                               |
+| `max?`         | `number`                         | `100`                        | Value that counts as complete. Defaults to `100`, so raw counts work too: `value={3} max={7}`.                                                                                                              |
+| `status?`      | `ProgressStatus`                 | `'active'`                   | `'active'` shows the percentage, `'done'` shows a check icon on a full bar, `'error'` turns the bar red and shows an X icon. Defaults to `'active'`.                                                        |
+| `size?`        | `ProgressSize`                   | `'lg'`                       | Ring size. Only applies to `variant="circular"`. Defaults to `'lg'`.                                                                                                                                        |
+| `placement?`   | `ProgressPlacement`              | —                            | Where the text block sits. Defaults to `'right'` for linear and `'inside'` for circular; a placement that does not belong to the current variant falls back to that default instead of breaking the layout. |
+| `label?`       | `ReactNode`                      | —                            | Leading description text. Only rendered when `placement="top"`.                                                                                                                                             |
+| `showValue?`   | `boolean`                        | —                            | Show the percentage text. Defaults to `true`, except for circular `size="sm"` (matches the design).                                                                                                         |
+| `formatValue?` | `(percent: number) => ReactNode` | `(percent) => `${percent}%`` | Custom percentage text. Defaults to ``(percent) => `${percent}%` ``.                                                                                                                                        |
 
 ### SyncProgressBar
 
@@ -2222,16 +2328,20 @@ SyncProgressBar component as per Sheetric premium design (Note-5 mockup). Displa
 
 Props: `SyncProgressBarProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value?` | `number` | `0` | Current amount of progress, from 0 to `max`. |
-| `max?` | `number` | `100` | Value that counts as complete, so raw counts work too. |
+| Prop       | Type      | Default | Description                                                                  |
+| ---------- | --------- | ------- | ---------------------------------------------------------------------------- |
+| `value?`   | `number`  | `0`     | Current amount of progress, from 0 to `max`.                                 |
+| `max?`     | `number`  | `100`   | Value that counts as complete, so raw counts work too.                       |
 | `overlay?` | `boolean` | `false` | Centre the bar over a full-screen dimmed layer, blocking the page behind it. |
 
 **Types**
 
 ```ts
-type ProgressPlacement = 'right' /** linear — label on the left + value on the right, above the bar (`LinearTextTop`) */ | 'top' /** linear — value centered below the bar (`LinearTextBottom`) */ | 'bottom' /** circular — value in the middle of the ring */ | 'inside';
+type ProgressPlacement =
+  | 'right' /** linear — label on the left + value on the right, above the bar (`LinearTextTop`) */
+  | 'top' /** linear — value centered below the bar (`LinearTextBottom`) */
+  | 'bottom' /** circular — value in the middle of the ring */
+  | 'inside';
 type ProgressSize = 'sm' | 'md' | 'lg';
 type ProgressStatus = 'active' | 'done' | 'error';
 type ProgressVariant = 'circular' | 'linear';
@@ -2247,10 +2357,10 @@ One option of a `RadioGroup` — it has to sit inside one. The label comes from 
 
 Props: `RadioProps extends ComponentPropsWithoutRef<typeof RadixRadioGroup.Item>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `RadioSize` | `'md'` | Dot and label size: 20px/`text-sm` or 16px/`text-xs`. |
-| `children?` | `ReactNode` | — | Optional label rendered next to the radio. |
+| Prop        | Type        | Default | Description                                           |
+| ----------- | ----------- | ------- | ----------------------------------------------------- |
+| `size?`     | `RadioSize` | `'md'`  | Dot and label size: 20px/`text-sm` or 16px/`text-xs`. |
+| `children?` | `ReactNode` | —       | Optional label rendered next to the radio.            |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-radio-group`.
 
@@ -2280,10 +2390,10 @@ Applies one step of the ITUI corner scale. This is a token primitive, not a surf
 
 Props: `RadiusProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `radius?` | `RadiusScale` | `'md'` | Which step of the ITUI scale to round to. |
-| `asChild?` | `boolean` | `false` | Round the child instead of a `div`, so an element that already behaves — a `<button>`, an `<img>`, another component's root — keeps its own logic. |
+| Prop       | Type          | Default | Description                                                                                                                                        |
+| ---------- | ------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `radius?`  | `RadiusScale` | `'md'`  | Which step of the ITUI scale to round to.                                                                                                          |
+| `asChild?` | `boolean`     | `false` | Round the child instead of a `div`, so an element that already behaves — a `<button>`, an `<img>`, another component's root — keeps its own logic. |
 
 **Types**
 
@@ -2293,7 +2403,7 @@ type RadiusScale = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
 
 **Values**
 
-- `RADIUS_PX`: `Record<RadiusScale, number>` — ITUI radius step → its pixel value. Exported so callers that need to *measure* a corner (an annotation, an SVG clip path, a canvas) read the same numbers the classes below paint, and the two can never drift apart.
+- `RADIUS_PX`: `Record<RadiusScale, number>` — ITUI radius step → its pixel value. Exported so callers that need to _measure_ a corner (an annotation, an SVG clip path, a canvas) read the same numbers the classes below paint, and the two can never drift apart.
 - `radiusClass`: `Record<RadiusScale, string>` — ITUI radius step → Tailwind class. Reach for `radiusClass.md` rather than typing `rounded-md`, which is 6px — a different value on a different scale.
 
 ---
@@ -2306,13 +2416,13 @@ A star rating in half-star steps. Interactive, it is a real radio group — each
 
 Props: `RatingProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value?` | `number` | `0` | Current rating: 0 → `count`, in 0.5 steps. |
-| `onValueChange?` | `(value: number) => void` | — | Called with the picked rating. |
-| `count?` | `number` | `5` | How many stars to draw. |
-| `readOnly?` | `boolean` | `false` | Render as a static display — no inputs, no hover preview. |
-| `name?` | `string` | — | `name` shared by the underlying radios. Defaults to a generated id. |
+| Prop             | Type                      | Default | Description                                                         |
+| ---------------- | ------------------------- | ------- | ------------------------------------------------------------------- |
+| `value?`         | `number`                  | `0`     | Current rating: 0 → `count`, in 0.5 steps.                          |
+| `onValueChange?` | `(value: number) => void` | —       | Called with the picked rating.                                      |
+| `count?`         | `number`                  | `5`     | How many stars to draw.                                             |
+| `readOnly?`      | `boolean`                 | `false` | Render as a static display — no inputs, no hover preview.           |
+| `name?`          | `string`                  | —       | `name` shared by the underlying radios. Defaults to a generated id. |
 
 ### RatingStar
 
@@ -2320,8 +2430,8 @@ One star, drawn as an outline with a coloured layer clipped over it. Exported fo
 
 Props: `RatingStarProps extends HTMLAttributes<HTMLSpanElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
+| Prop    | Type             | Default   | Description                          |
+| ------- | ---------------- | --------- | ------------------------------------ |
 | `fill?` | `RatingStarFill` | `'empty'` | How much of the star is coloured in. |
 
 **Types**
@@ -2340,12 +2450,12 @@ Root + viewport + bar in one element — the common case. Compose `ScrollAreaRoo
 
 Props: `ScrollAreaProps extends ScrollAreaRootProps`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `ScrollbarSize` | `'md'` | Rail width: the standard bar or the narrow one. |
-| `orientation?` | `ScrollAreaOrientation` | `'vertical'` | Which bars to render. Defaults to `vertical`, as Figma specs. |
-| `viewportClassName?` | `string` | — | Reaches the scrolling element, e.g. to pad the content away from the bar. |
-| `scrollbarClassName?` | `string` | — | Reaches both rails. |
+| Prop                  | Type                    | Default      | Description                                                               |
+| --------------------- | ----------------------- | ------------ | ------------------------------------------------------------------------- |
+| `size?`               | `ScrollbarSize`         | `'md'`       | Rail width: the standard bar or the narrow one.                           |
+| `orientation?`        | `ScrollAreaOrientation` | `'vertical'` | Which bars to render. Defaults to `vertical`, as Figma specs.             |
+| `viewportClassName?`  | `string`                | —            | Reaches the scrolling element, e.g. to pad the content away from the bar. |
+| `scrollbarClassName?` | `string`                | —            | Reaches both rails.                                                       |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-scroll-area`.
 
@@ -2367,10 +2477,10 @@ One rail, with its carets and thumb. One per axis you want a bar on.
 
 Props: `ScrollAreaScrollbarProps extends ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Scrollbar>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `ScrollbarSize` | `'md'` | Rail width: the standard bar or the narrow one. |
-| `children?` | `ReactNode` | — | Replaces the default thumb. The carets are always drawn. |
+| Prop        | Type            | Default | Description                                              |
+| ----------- | --------------- | ------- | -------------------------------------------------------- |
+| `size?`     | `ScrollbarSize` | `'md'`  | Rail width: the standard bar or the narrow one.          |
+| `children?` | `ReactNode`     | —       | Replaces the default thumb. The carets are always drawn. |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-scroll-area`.
 
@@ -2389,11 +2499,19 @@ Declares no props of its own — everything is forwarded to `@radix-ui/react-pri
 **Types**
 
 ```ts
-type ScrollAreaCornerProps = ComponentPropsWithoutRef< typeof ScrollAreaPrimitive.Corner >;
+type ScrollAreaCornerProps = ComponentPropsWithoutRef<
+  typeof ScrollAreaPrimitive.Corner
+>;
 type ScrollAreaOrientation = ScrollbarAxis | 'both';
-type ScrollAreaRootProps = ComponentPropsWithoutRef< typeof ScrollAreaPrimitive.Root >;
-type ScrollAreaThumbProps = ComponentPropsWithoutRef< typeof ScrollAreaPrimitive.Thumb >;
-type ScrollAreaViewportProps = ComponentPropsWithoutRef< typeof ScrollAreaPrimitive.Viewport >;
+type ScrollAreaRootProps = ComponentPropsWithoutRef<
+  typeof ScrollAreaPrimitive.Root
+>;
+type ScrollAreaThumbProps = ComponentPropsWithoutRef<
+  typeof ScrollAreaPrimitive.Thumb
+>;
+type ScrollAreaViewportProps = ComponentPropsWithoutRef<
+  typeof ScrollAreaPrimitive.Viewport
+>;
 type ScrollbarAxis = 'vertical' | 'horizontal';
 type ScrollbarSize = 'md' | 'sm';
 ```
@@ -2456,12 +2574,12 @@ The button that opens the list, plus the label and message around it — the sam
 
 Props: `SelectTriggerProps extends React.ComponentProps<typeof SelectPrimitive.Trigger>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `'sm' \| 'default'` | `'default'` | Trigger height: the compact 36px row, or the 48px field. |
-| `label?` | `string` | — | Text above the trigger. It is what names the select for assistive technology. |
-| `error?` | `string` | — | Message under the trigger. It also paints the error border and sets `aria-invalid`. |
-| `placeholder?` | `React.ReactNode` | — | Shorthand for the common trigger body: with no `children`, the trigger renders `<SelectValue placeholder={placeholder} />` for you. Pass your own children when the body needs anything else — they win, and this prop is then unused. |
+| Prop           | Type                | Default     | Description                                                                                                                                                                                                                            |
+| -------------- | ------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `size?`        | `'sm' \| 'default'` | `'default'` | Trigger height: the compact 36px row, or the 48px field.                                                                                                                                                                               |
+| `label?`       | `string`            | —           | Text above the trigger. It is what names the select for assistive technology.                                                                                                                                                          |
+| `error?`       | `string`            | —           | Message under the trigger. It also paints the error border and sets `aria-invalid`.                                                                                                                                                    |
+| `placeholder?` | `React.ReactNode`   | —           | Shorthand for the common trigger body: with no `children`, the trigger renders `<SelectValue placeholder={placeholder} />` for you. Pass your own children when the body needs anything else — they win, and this prop is then unused. |
 
 Also accepts the props of `@radix-ui/react-primitive`.
 
@@ -2481,11 +2599,11 @@ Casts one step of the ITUI elevation ramp. This is a token primitive, not a surf
 
 Props: `ShadowProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `direction?` | `ShadowDirection` | `'downwards'` | Which way the shadow falls. |
-| `size?` | `ShadowSize` | `'md'` | Which step of the ramp to cast. |
-| `asChild?` | `boolean` | `false` | Cast the shadow from the child instead of a `div`, so an element that already behaves — a card, a `<button>`, another component's root — keeps its own logic. |
+| Prop         | Type              | Default       | Description                                                                                                                                                   |
+| ------------ | ----------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `direction?` | `ShadowDirection` | `'downwards'` | Which way the shadow falls.                                                                                                                                   |
+| `size?`      | `ShadowSize`      | `'md'`        | Which step of the ramp to cast.                                                                                                                               |
+| `asChild?`   | `boolean`         | `false`       | Cast the shadow from the child instead of a `div`, so an element that already behaves — a card, a `<button>`, another component's root — keeps its own logic. |
 
 **Types**
 
@@ -2497,7 +2615,7 @@ type ShadowSize = 'sm' | 'md' | 'lg';
 **Values**
 
 - `SHADOW_BLUR`: `Record<ShadowSize, number>` — Step → its blur radius in px. Pairs with {@link SHADOW_OFFSET}.
-- `SHADOW_OFFSET`: `Record<ShadowSize, number>` — Step → its offset in px. Exported so callers that need to *measure* the ramp (an annotation, a scroll shadow, a canvas) read the same numbers the classes below paint, and the two can never drift apart.
+- `SHADOW_OFFSET`: `Record<ShadowSize, number>` — Step → its offset in px. Exported so callers that need to _measure_ the ramp (an annotation, a scroll shadow, a canvas) read the same numbers the classes below paint, and the two can never drift apart.
 - `shadowClass`: `Record<ShadowDirection, Record<ShadowSize, string>>` — Direction → size → Tailwind class. The one place the 4×3 grid is written down, and the only spelling that cannot be confused with the legacy `shadow-sm`/`shadow-md` ramp (see the header block).
 
 ---
@@ -2510,10 +2628,10 @@ The navigation rail, in a form that renders from a Server Component: it takes no
 
 Props: `SidebarProps extends HTMLAttributes<HTMLElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `collapsed?` | `boolean` | `false` | Collapse to icon-only rail (52 px). Default: false → 264 px expanded. |
-| `children?` | `ReactNode` | — | The rail's contents — typically a `SidebarHeader` and a `SidebarFooter`. |
+| Prop         | Type        | Default | Description                                                              |
+| ------------ | ----------- | ------- | ------------------------------------------------------------------------ |
+| `collapsed?` | `boolean`   | `false` | Collapse to icon-only rail (52 px). Default: false → 264 px expanded.    |
+| `children?`  | `ReactNode` | —       | The rail's contents — typically a `SidebarHeader` and a `SidebarFooter`. |
 
 ### SidebarFooter
 
@@ -2521,9 +2639,9 @@ The pinned bottom region of the rail.
 
 Props: `SidebarFooterProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children?` | `ReactNode` | — | Pinned bottom content — settings, the signed-in user. |
+| Prop        | Type        | Default | Description                                           |
+| ----------- | ----------- | ------- | ----------------------------------------------------- |
+| `children?` | `ReactNode` | —       | Pinned bottom content — settings, the signed-in user. |
 
 ### SidebarGroup
 
@@ -2531,16 +2649,16 @@ A collapsible section of a `SidebarMenu`: a header row that expands to reveal it
 
 Props: `SidebarGroupProps`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon?` | `ReactNode` | — | Leading 20px icon (required for the collapsed rail). |
-| `label` | `ReactNode` | — | The group header's text. |
-| `active?` | `boolean` | `false` | Highlight the group header (selected section). |
-| `defaultOpen?` | `boolean` | `false` | Uncontrolled initial open state. |
-| `open?` | `boolean` | — | Controlled open state. |
-| `onOpenChange?` | `(open: boolean) => void` | — | Fires whenever the group opens or closes. |
-| `children?` | `ReactNode` | — | Sub-items — typically <SidebarItem indented>. |
-| `className?` | `string` | — | Lands on the group wrapper, not on its header row. |
+| Prop            | Type                      | Default | Description                                          |
+| --------------- | ------------------------- | ------- | ---------------------------------------------------- |
+| `icon?`         | `ReactNode`               | —       | Leading 20px icon (required for the collapsed rail). |
+| `label`         | `ReactNode`               | —       | The group header's text.                             |
+| `active?`       | `boolean`                 | `false` | Highlight the group header (selected section).       |
+| `defaultOpen?`  | `boolean`                 | `false` | Uncontrolled initial open state.                     |
+| `open?`         | `boolean`                 | —       | Controlled open state.                               |
+| `onOpenChange?` | `(open: boolean) => void` | —       | Fires whenever the group opens or closes.            |
+| `children?`     | `ReactNode`               | —       | Sub-items — typically <SidebarItem indented>.        |
+| `className?`    | `string`                  | —       | Lands on the group wrapper, not on its header row.   |
 
 ### SidebarHeader
 
@@ -2548,9 +2666,9 @@ The top region of the rail — logo and menus.
 
 Props: `SidebarHeaderProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children?` | `ReactNode` | — | Logo and menus. |
+| Prop        | Type        | Default | Description     |
+| ----------- | ----------- | ------- | --------------- |
+| `children?` | `ReactNode` | —       | Logo and menus. |
 
 ### SidebarItem
 
@@ -2558,13 +2676,13 @@ One navigation row. On the collapsed rail only the icon shows, with `label` as i
 
 Props: `SidebarItemProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `active?` | `boolean` | `false` | Selected/active state — bg-secondary + text-foreground. |
-| `icon?` | `ReactNode` | — | Leading 20 px icon slot. Required in collapsed mode for visual identification. |
-| `indented?` | `boolean` | `false` | Sub-item variant: 36 px left indent, no icon. |
-| `label?` | `string` | — | Tooltip text shown to the right of the item when the sidebar is collapsed. Falls back to children if omitted and children is a string. |
-| `children?` | `ReactNode` | — | The row's text. |
+| Prop        | Type        | Default | Description                                                                                                                            |
+| ----------- | ----------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `active?`   | `boolean`   | `false` | Selected/active state — bg-secondary + text-foreground.                                                                                |
+| `icon?`     | `ReactNode` | —       | Leading 20 px icon slot. Required in collapsed mode for visual identification.                                                         |
+| `indented?` | `boolean`   | `false` | Sub-item variant: 36 px left indent, no icon.                                                                                          |
+| `label?`    | `string`    | —       | Tooltip text shown to the right of the item when the sidebar is collapsed. Falls back to children if omitted and children is a string. |
+| `children?` | `ReactNode` | —       | The row's text.                                                                                                                        |
 
 ### SidebarMenu
 
@@ -2572,9 +2690,9 @@ A `<ul>` of `SidebarItem` rows. Use one per section of the rail.
 
 Props: `SidebarMenuProps extends HTMLAttributes<HTMLUListElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children?` | `ReactNode` | — | `SidebarItem` rows and `SidebarGroup`s. |
+| Prop        | Type        | Default | Description                             |
+| ----------- | ----------- | ------- | --------------------------------------- |
+| `children?` | `ReactNode` | —       | `SidebarItem` rows and `SidebarGroup`s. |
 
 ---
 
@@ -2586,10 +2704,10 @@ A loading placeholder in the shape of the content it stands in for. It carries i
 
 Props: `SkeletonProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `SkeletonVariant` | `'text'` | Figma `Style` — the placeholder's default shape and size. |
-| `animation?` | `SkeletonAnimation` | `'wave'` | Figma `Animation` — `none` renders the static fill. |
+| Prop         | Type                | Default  | Description                                               |
+| ------------ | ------------------- | -------- | --------------------------------------------------------- |
+| `variant?`   | `SkeletonVariant`   | `'text'` | Figma `Style` — the placeholder's default shape and size. |
+| `animation?` | `SkeletonAnimation` | `'wave'` | Figma `Animation` — `none` renders the static fill.       |
 
 ### SkeletonText
 
@@ -2597,11 +2715,11 @@ A paragraph of `Skeleton` lines: an optional heading line, then body lines that 
 
 Props: `SkeletonTextProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `lines?` | `number` | `4` | Total line count, including the heading line when `heading` is set. |
-| `heading?` | `boolean` | `true` | Opens the block with the taller, shorter line of Figma's text skeleton. |
-| `animation?` | `SkeletonAnimation` | `'wave'` | Passed through to every line. |
+| Prop         | Type                | Default  | Description                                                             |
+| ------------ | ------------------- | -------- | ----------------------------------------------------------------------- |
+| `lines?`     | `number`            | `4`      | Total line count, including the heading line when `heading` is set.     |
+| `heading?`   | `boolean`           | `true`   | Opens the block with the taller, shorter line of Figma's text skeleton. |
+| `animation?` | `SkeletonAnimation` | `'wave'` | Passed through to every line.                                           |
 
 **Types**
 
@@ -2634,13 +2752,13 @@ Imperatively show a snackbar in the nearest `<SnackbarToaster />`.
 
 Props: `SnackbarOptions extends Omit<ExternalToast, 'toasterId' | 'action'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `tone?` | `SnackbarTone` | — | `light` is the translucent bar, `dark` the solid one. |
-| `icon?` | `ReactNode` | — | Leading 20px glyph. |
-| `title` | `ReactNode` | — | First line of the bar. |
-| `description?` | `ReactNode` | — | Muted second line. |
-| `action?` | `{ label: ReactNode; onClick?: () => void }` | — | Trailing link button. Clicking it dismisses the snackbar, then runs `onClick`. |
+| Prop           | Type                                         | Default | Description                                                                    |
+| -------------- | -------------------------------------------- | ------- | ------------------------------------------------------------------------------ |
+| `tone?`        | `SnackbarTone`                               | —       | `light` is the translucent bar, `dark` the solid one.                          |
+| `icon?`        | `ReactNode`                                  | —       | Leading 20px glyph.                                                            |
+| `title`        | `ReactNode`                                  | —       | First line of the bar.                                                         |
+| `description?` | `ReactNode`                                  | —       | Muted second line.                                                             |
+| `action?`      | `{ label: ReactNode; onClick?: () => void }` | —       | Trailing link button. Clicking it dismisses the snackbar, then runs `onClick`. |
 
 Also accepts the props of `sonner`.
 
@@ -2650,11 +2768,11 @@ The bottom-centre bar with an optional action link. Not a replacement for `Toast
 
 Props: `SnackbarProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `tone?` | `SnackbarTone` | `'light'` | `light` is the translucent bar, `dark` the solid one for use over content. |
-| `icon?` | `ReactNode` | — | Leading icon slot — Figma "icon/content", rendered at 20px |
-| `action?` | `ReactNode` | — | Trailing action slot — pass a `SnackbarAction` |
+| Prop      | Type           | Default   | Description                                                                |
+| --------- | -------------- | --------- | -------------------------------------------------------------------------- |
+| `tone?`   | `SnackbarTone` | `'light'` | `light` is the translucent bar, `dark` the solid one for use over content. |
+| `icon?`   | `ReactNode`    | —         | Leading icon slot — Figma "icon/content", rendered at 20px                 |
+| `action?` | `ReactNode`    | —         | Trailing action slot — pass a `SnackbarAction`                             |
 
 ### SnackbarAction
 
@@ -2662,12 +2780,12 @@ The trailing link button of a `Snackbar`. Its `variant` and `size` are fixed by 
 
 Props: `ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `iconLeft?` | `ReactNode` | — | Leading icon slot |
-| `iconRight?` | `ReactNode` | — | Trailing icon slot |
-| `loading?` | `boolean` | — | Swap the leading icon for a spinner and swallow clicks. Deliberately not `disabled`: the button stays focusable so the `aria-busy` change is announced instead of focus falling to `<body>`. |
-| `fullWidth?` | `boolean` | — | Stretch to the container's width. Ignored on an icon-only button. |
+| Prop         | Type        | Default | Description                                                                                                                                                                                  |
+| ------------ | ----------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `iconLeft?`  | `ReactNode` | —       | Leading icon slot                                                                                                                                                                            |
+| `iconRight?` | `ReactNode` | —       | Trailing icon slot                                                                                                                                                                           |
+| `loading?`   | `boolean`   | —       | Swap the leading icon for a spinner and swallow clicks. Deliberately not `disabled`: the button stays focusable so the `aria-busy` change is announced instead of focus falling to `<body>`. |
+| `fullWidth?` | `boolean`   | —       | Stretch to the container's width. Ignored on an icon-only button.                                                                                                                            |
 
 ### SnackbarDescription
 
@@ -2691,12 +2809,12 @@ Declares no props of its own — everything is forwarded to `sonner`.
 
 Props of `SnackbarAction` — `Button`'s, minus the two it fixes itself.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `iconLeft?` | `ReactNode` | — | Leading icon slot |
-| `iconRight?` | `ReactNode` | — | Trailing icon slot |
-| `loading?` | `boolean` | — | Swap the leading icon for a spinner and swallow clicks. Deliberately not `disabled`: the button stays focusable so the `aria-busy` change is announced instead of focus falling to `<body>`. |
-| `fullWidth?` | `boolean` | — | Stretch to the container's width. Ignored on an icon-only button. |
+| Prop         | Type        | Default | Description                                                                                                                                                                                  |
+| ------------ | ----------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `iconLeft?`  | `ReactNode` | —       | Leading icon slot                                                                                                                                                                            |
+| `iconRight?` | `ReactNode` | —       | Trailing icon slot                                                                                                                                                                           |
+| `loading?`   | `boolean`   | —       | Swap the leading icon for a spinner and swallow clicks. Deliberately not `disabled`: the button stays focusable so the `aria-busy` change is announced instead of focus falling to `<body>`. |
+| `fullWidth?` | `boolean`   | —       | Stretch to the container's width. Ignored on an icon-only button.                                                                                                                            |
 
 ### SnackbarDescriptionProps
 
@@ -2730,22 +2848,33 @@ Holds one step of the ITUI spacing scale open. This is a token primitive, not a 
 
 Props: `SpacingProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `SpacingStep` | `'lg'` | Which step of the ITUI scale to occupy. |
-| `axis?` | `SpacingAxis` | `'vertical'` | `vertical` holds height (a gap between stacked rows), `horizontal` width. |
-| `asChild?` | `boolean` | `false` | Size the child instead of a `div`, so an element that already carries meaning — an `<hr>`, a real divider — keeps it instead of being wrapped in a box. |
+| Prop       | Type          | Default      | Description                                                                                                                                             |
+| ---------- | ------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `size?`    | `SpacingStep` | `'lg'`       | Which step of the ITUI scale to occupy.                                                                                                                 |
+| `axis?`    | `SpacingAxis` | `'vertical'` | `vertical` holds height (a gap between stacked rows), `horizontal` width.                                                                               |
+| `asChild?` | `boolean`     | `false`      | Size the child instead of a `div`, so an element that already carries meaning — an `<hr>`, a real divider — keeps it instead of being wrapped in a box. |
 
 **Types**
 
 ```ts
 type SpacingAxis = 'vertical' | 'horizontal';
-type SpacingStep = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl';
+type SpacingStep =
+  | 'none'
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | '2xl'
+  | '3xl'
+  | '4xl'
+  | '5xl'
+  | '6xl';
 ```
 
 **Values**
 
-- `SPACING_PX`: `Record<SpacingStep, number>` — ITUI step → its pixel value. Exported so callers that need to *measure* the scale (a virtualised list's row gap, a canvas, an annotation) read the same numbers the classes below paint, and the two can never drift apart.
+- `SPACING_PX`: `Record<SpacingStep, number>` — ITUI step → its pixel value. Exported so callers that need to _measure_ the scale (a virtualised list's row gap, a canvas, an annotation) read the same numbers the classes below paint, and the two can never drift apart.
 - `spacingClass`: `Record<"p" \| "gap" \| "px" \| "py", Record<SpacingStep, string>>` — ITUI step → Tailwind class, per property. The one place the ITUI→Tailwind translation is written down, so no caller has to redo it (see the name trap in the header block).
 
 ---
@@ -2758,11 +2887,11 @@ The indeterminate loading ring. It is a live `role="status"` region, so it is an
 
 Props: `SpinnerProps extends HTMLAttributes<HTMLSpanElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `SpinnerSize \| number` | `'md'` | One of the four named sizes (48 / 32 / 20 / 16px), or a pixel number. |
-| `description?` | `string` | — | Caption under the ring. Its presence switches to the stacked layout. |
-| `label?` | `string` | `'Loading'` | Screen-reader name for the `role="status"` region. |
+| Prop           | Type                    | Default     | Description                                                           |
+| -------------- | ----------------------- | ----------- | --------------------------------------------------------------------- |
+| `size?`        | `SpinnerSize \| number` | `'md'`      | One of the four named sizes (48 / 32 / 20 / 16px), or a pixel number. |
+| `description?` | `string`                | —           | Caption under the ring. Its presence switches to the stacked layout.  |
+| `label?`       | `string`                | `'Loading'` | Screen-reader name for the `role="status"` region.                    |
 
 **Types**
 
@@ -2780,12 +2909,12 @@ A numbered progress trail through a multi-step flow. It hands each `StepperItem`
 
 Props: `StepperProps extends OlHTMLAttributes<HTMLOListElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `StepperVariant` | `'filled'` | Defaults to `'filled'`. |
-| `orientation?` | `StepperOrientation` | `'horizontal'` | Defaults to `'horizontal'`. |
-| `current?` | `number` | `0` | Zero-based index of the active step. Earlier steps read as `completed`, later ones as `upcoming`. Defaults to `0`. |
-| `children?` | `ReactNode` | — | `StepperItem` elements. They must be direct children — an item rendered by a wrapper component shares its wrapper's step index. |
+| Prop           | Type                 | Default        | Description                                                                                                                     |
+| -------------- | -------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `variant?`     | `StepperVariant`     | `'filled'`     | Defaults to `'filled'`.                                                                                                         |
+| `orientation?` | `StepperOrientation` | `'horizontal'` | Defaults to `'horizontal'`.                                                                                                     |
+| `current?`     | `number`             | `0`            | Zero-based index of the active step. Earlier steps read as `completed`, later ones as `upcoming`. Defaults to `0`.              |
+| `children?`    | `ReactNode`          | —              | `StepperItem` elements. They must be direct children — an item rendered by a wrapper component shares its wrapper's step index. |
 
 ### StepperIndicator
 
@@ -2793,12 +2922,12 @@ Figma's "Base Stepper" — the circle on its own. Decorative: the readable step 
 
 Props: `StepperIndicatorProps extends HTMLAttributes<HTMLSpanElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `StepperVariant` | `'filled'` | Defaults to `'filled'`. |
-| `status?` | `StepStatus` | `'upcoming'` | Defaults to `'upcoming'`. |
-| `step?` | `number` | — | 1-based number rendered by the `filled` variant. |
-| `children?` | `ReactNode` | — | Replaces the default check glyph / number. |
+| Prop        | Type             | Default      | Description                                      |
+| ----------- | ---------------- | ------------ | ------------------------------------------------ |
+| `variant?`  | `StepperVariant` | `'filled'`   | Defaults to `'filled'`.                          |
+| `status?`   | `StepStatus`     | `'upcoming'` | Defaults to `'upcoming'`.                        |
+| `step?`     | `number`         | —            | 1-based number rendered by the `filled` variant. |
+| `children?` | `ReactNode`      | —            | Replaces the default check glyph / number.       |
 
 ### StepperItem
 
@@ -2806,12 +2935,12 @@ One step. It reads its number and its status from the `Stepper` around it, so ne
 
 Props: `StepperItemProps extends Omit<LiHTMLAttributes<HTMLLIElement>, 'title'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title?` | `ReactNode` | — | The step's name. |
-| `description?` | `ReactNode` | — | Supporting line under the title. |
-| `status?` | `StepStatus` | — | Overrides the status derived from the parent's `current`. |
-| `children?` | `ReactNode` | — | Extra content rendered under the description. |
+| Prop           | Type         | Default | Description                                               |
+| -------------- | ------------ | ------- | --------------------------------------------------------- |
+| `title?`       | `ReactNode`  | —       | The step's name.                                          |
+| `description?` | `ReactNode`  | —       | Supporting line under the title.                          |
+| `status?`      | `StepStatus` | —       | Overrides the status derived from the parent's `current`. |
+| `children?`    | `ReactNode`  | —       | Extra content rendered under the description.             |
 
 **Types**
 
@@ -2843,8 +2972,8 @@ The row of triggers. `type` is set here rather than per trigger, so one tab set 
 
 Props: `TabListProps extends ComponentPropsWithoutRef<typeof RadixTabs.List>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
+| Prop    | Type      | Default     | Description                                  |
+| ------- | --------- | ----------- | -------------------------------------------- |
 | `type?` | `TabType` | `'default'` | Paints every trigger inside. Figma's `Type`. |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-tabs`.
@@ -2855,10 +2984,10 @@ One tab. Its `value` is what `Tab` selects by, and what pairs it with a `TabCont
 
 Props: `TabTriggerProps extends ComponentPropsWithoutRef<typeof RadixTabs.Trigger>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `iconLeft?` | `ReactNode` | — | Leading glyph (16px) — Figma's `Style=LabelIcon`. |
-| `iconRight?` | `ReactNode` | — | Trailing glyph (16px). |
+| Prop         | Type        | Default | Description                                       |
+| ------------ | ----------- | ------- | ------------------------------------------------- |
+| `iconLeft?`  | `ReactNode` | —       | Leading glyph (16px) — Figma's `Style=LabelIcon`. |
+| `iconRight?` | `ReactNode` | —       | Trailing glyph (16px).                            |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-tabs`.
 
@@ -2886,9 +3015,9 @@ A real `<table>` in a bordered, horizontally scrolling frame. It supplies the su
 
 Props: `TableProps extends HTMLAttributes<HTMLTableElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ref?` | `Ref<HTMLTableElement>` | — | Ref to the `<table>`, not to the scrolling wrapper around it. |
+| Prop   | Type                    | Default | Description                                                   |
+| ------ | ----------------------- | ------- | ------------------------------------------------------------- |
+| `ref?` | `Ref<HTMLTableElement>` | —       | Ref to the `<table>`, not to the scrolling wrapper around it. |
 
 ### TableBody
 
@@ -2896,9 +3025,9 @@ The `<tbody>` — the data rows.
 
 Props: `TableBodyProps extends HTMLAttributes<HTMLTableSectionElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ref?` | `Ref<HTMLTableSectionElement>` | — | Ref to the `<tbody>`. |
+| Prop   | Type                           | Default | Description           |
+| ------ | ------------------------------ | ------- | --------------------- |
+| `ref?` | `Ref<HTMLTableSectionElement>` | —       | Ref to the `<tbody>`. |
 
 ### TableCell
 
@@ -2906,9 +3035,9 @@ One data cell. Its content does not wrap; give it `whitespace-normal` if it shou
 
 Props: `TableCellProps extends TdHTMLAttributes<HTMLTableCellElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ref?` | `Ref<HTMLTableCellElement>` | — | Ref to the `<td>`. |
+| Prop   | Type                        | Default | Description        |
+| ------ | --------------------------- | ------- | ------------------ |
+| `ref?` | `Ref<HTMLTableCellElement>` | —       | Ref to the `<td>`. |
 
 ### TableHead
 
@@ -2916,11 +3045,11 @@ A header cell. Given `sortable` or `sortDirection` it wraps its content in a rea
 
 Props: `TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ref?` | `Ref<HTMLTableCellElement>` | — | Ref to the `<th>`. |
-| `sortDirection?` | `SortDirection` | — | Which way this column is currently sorted. It draws the arrow and sets `aria-sort`; doing the sorting is yours. |
-| `sortable?` | `boolean` | — | Marks a sortable column that is not currently sorted, so it still reports `aria-sort="none"` and stays keyboard-reachable. Implied by `sortDirection`. |
+| Prop             | Type                        | Default | Description                                                                                                                                            |
+| ---------------- | --------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ref?`           | `Ref<HTMLTableCellElement>` | —       | Ref to the `<th>`.                                                                                                                                     |
+| `sortDirection?` | `SortDirection`             | —       | Which way this column is currently sorted. It draws the arrow and sets `aria-sort`; doing the sorting is yours.                                        |
+| `sortable?`      | `boolean`                   | —       | Marks a sortable column that is not currently sorted, so it still reports `aria-sort="none"` and stays keyboard-reachable. Implied by `sortDirection`. |
 
 ### TableHeader
 
@@ -2928,9 +3057,9 @@ The `<thead>` — a `TableRow` of `TableHead` cells.
 
 Props: `TableHeaderProps extends HTMLAttributes<HTMLTableSectionElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ref?` | `Ref<HTMLTableSectionElement>` | — | Ref to the `<thead>`. |
+| Prop   | Type                           | Default | Description           |
+| ------ | ------------------------------ | ------- | --------------------- |
+| `ref?` | `Ref<HTMLTableSectionElement>` | —       | Ref to the `<thead>`. |
 
 ### TableRow
 
@@ -2938,16 +3067,16 @@ One row. `disabled` drops its `onClick` **and** its `onKeyDown`, so a disabled r
 
 Props: `TableRowProps extends HTMLAttributes<HTMLTableRowElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ref?` | `Ref<HTMLTableRowElement>` | — | Ref to the `<tr>`. |
-| `selected?` | `boolean` | — | Paints the chosen state. It is presentation only — you own the selection. |
-| `disabled?` | `boolean` | — | Greys the row out and drops both its click and its keyboard handlers. |
+| Prop        | Type                       | Default | Description                                                               |
+| ----------- | -------------------------- | ------- | ------------------------------------------------------------------------- |
+| `ref?`      | `Ref<HTMLTableRowElement>` | —       | Ref to the `<tr>`.                                                        |
+| `selected?` | `boolean`                  | —       | Paints the chosen state. It is presentation only — you own the selection. |
+| `disabled?` | `boolean`                  | —       | Greys the row out and drops both its click and its keyboard handlers.     |
 
 **Types**
 
 ```ts
-type SortDirection = 'asc'|'desc';
+type SortDirection = 'asc' | 'desc';
 ```
 
 ---
@@ -2996,16 +3125,16 @@ A status or tier label — the component to reach for instead of `Badge`, which 
 
 Props: `TagProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onClick'>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `TagVariant` | `'outline'` | `outline` is the bordered tag on the page background, `filled` the tinted one. |
-| `size?` | `TagSize` | `'md'` | Height: 32 / 28 / 24px. |
-| `selected?` | `boolean` | `false` | Paints the chosen state. It is presentation only — you own the selection. |
-| `disabled?` | `boolean` | `false` | Greys the tag out and stops it responding to clicks. |
-| `onClick?` | `() => void` | — | When provided, the tag behaves as a button. |
-| `onClose?` | `() => void` | — | When provided, renders a trailing close (X) button that calls this handler. |
-| `closeLabel?` | `string` | `'Remove'` | Accessible label for the close button. |
-| `children` | `ReactNode` | — | The tag's label. |
+| Prop          | Type         | Default     | Description                                                                    |
+| ------------- | ------------ | ----------- | ------------------------------------------------------------------------------ |
+| `variant?`    | `TagVariant` | `'outline'` | `outline` is the bordered tag on the page background, `filled` the tinted one. |
+| `size?`       | `TagSize`    | `'md'`      | Height: 32 / 28 / 24px.                                                        |
+| `selected?`   | `boolean`    | `false`     | Paints the chosen state. It is presentation only — you own the selection.      |
+| `disabled?`   | `boolean`    | `false`     | Greys the tag out and stops it responding to clicks.                           |
+| `onClick?`    | `() => void` | —           | When provided, the tag behaves as a button.                                    |
+| `onClose?`    | `() => void` | —           | When provided, renders a trailing close (X) button that calls this handler.    |
+| `closeLabel?` | `string`     | `'Remove'`  | Accessible label for the close button.                                         |
+| `children`    | `ReactNode`  | —           | The tag's label.                                                               |
 
 **Types**
 
@@ -3024,11 +3153,11 @@ The top-centre notification. `Snackbar` is not a rival — the two are designed 
 
 Props: `ToastProps extends HTMLAttributes<HTMLDivElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `tone?` | `ToastTone` | `'light'` | `light` is the pale bar, `dark` the solid one. |
+| Prop    | Type        | Default    | Description                                                         |
+| ------- | ----------- | ---------- | ------------------------------------------------------------------- |
+| `tone?` | `ToastTone` | `'light'`  | `light` is the pale bar, `dark` the solid one.                      |
 | `type?` | `ToastType` | `'normal'` | Which status icon leads the bar. `normal` is the icon-less variant. |
-| `icon?` | `ReactNode` | — | Replaces the icon `type` picks, in the same 16px slot. |
+| `icon?` | `ReactNode` | —          | Replaces the icon `type` picks, in the same 16px slot.              |
 
 ### Toaster
 
@@ -3058,10 +3187,10 @@ An on/off switch. Unlike `Checkbox` it is not a form control — Radix renders a
 
 Props: `ToggleProps extends ComponentPropsWithoutRef<typeof RadixSwitch.Root>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size?` | `ToggleSize` | `'md'` | Track size — the standard switch or the compact one. |
-| `label?` | `ReactNode` | — | Text beside the switch, which also becomes its accessible name — the same shape `Checkbox` takes, so a form does not switch paradigms halfway down. |
+| Prop     | Type         | Default | Description                                                                                                                                         |
+| -------- | ------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `size?`  | `ToggleSize` | `'md'`  | Track size — the standard switch or the compact one.                                                                                                |
+| `label?` | `ReactNode`  | —       | Text beside the switch, which also becomes its accessible name — the same shape `Checkbox` takes, so a form does not switch paradigms halfway down. |
 
 Also accepts the props of `@radix-ui/react-primitive`, `@radix-ui/react-switch`.
 
@@ -3109,31 +3238,41 @@ Renders text at one step of the ITUI type scale — size, line height, tracking 
 
 Props: `TypographyProps extends HTMLAttributes<HTMLParagraphElement>`
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant?` | `TypographyVariant` | `'body-md'` | Which step of the ITUI type scale to render. |
-| `weight?` | `TypographyWeight` | `'regular'` | How much emphasis the text carries. |
-| `asChild?` | `boolean` | `false` | Render the child instead of a `p`, so an element that already carries meaning — a heading, a `<label>`, a link — keeps it instead of being wrapped in a paragraph. |
+| Prop       | Type                | Default     | Description                                                                                                                                                        |
+| ---------- | ------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `variant?` | `TypographyVariant` | `'body-md'` | Which step of the ITUI type scale to render.                                                                                                                       |
+| `weight?`  | `TypographyWeight`  | `'regular'` | How much emphasis the text carries.                                                                                                                                |
+| `asChild?` | `boolean`           | `false`     | Render the child instead of a `p`, so an element that already carries meaning — a heading, a `<label>`, a link — keeps it instead of being wrapped in a paragraph. |
 
 ### TypographySpec
 
 The measurements behind one variant, in px.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `fontSize` | `number` | — | Rendered font size. |
-| `lineHeight` | `number` | — | Rendered line box height — the number to use for row heights. |
-| `letterSpacing` | `number` | — | Tracking, negative on the display and heading steps. |
+| Prop            | Type     | Default | Description                                                   |
+| --------------- | -------- | ------- | ------------------------------------------------------------- |
+| `fontSize`      | `number` | —       | Rendered font size.                                           |
+| `lineHeight`    | `number` | —       | Rendered line box height — the number to use for row heights. |
+| `letterSpacing` | `number` | —       | Tracking, negative on the display and heading steps.          |
 
 **Types**
 
 ```ts
-type TypographyVariant = 'display-6xl' | 'display-5xl' | 'heading-4xl' | 'heading-3xl' | 'heading-2xl' | 'heading-xl' | 'body-lg' | 'body-md' | 'caption-sm' | 'caption-xs';
+type TypographyVariant =
+  | 'display-6xl'
+  | 'display-5xl'
+  | 'heading-4xl'
+  | 'heading-3xl'
+  | 'heading-2xl'
+  | 'heading-xl'
+  | 'body-lg'
+  | 'body-md'
+  | 'caption-sm'
+  | 'caption-xs';
 type TypographyWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 ```
 
 **Values**
 
-- `TYPOGRAPHY_SPEC`: `Record<TypographyVariant, TypographySpec>` — Variant → its measurements. Exported so callers that need to *measure* the scale (a canvas, a virtualised row height, an annotation) read the same numbers the classes below paint, and the two can never drift apart.
+- `TYPOGRAPHY_SPEC`: `Record<TypographyVariant, TypographySpec>` — Variant → its measurements. Exported so callers that need to _measure_ the scale (a canvas, a virtualised row height, an annotation) read the same numbers the classes below paint, and the two can never drift apart.
 - `typographyClass`: `Record<TypographyVariant, string>` — Variant → Tailwind classes. The one place the ITUI→Tailwind translation is written down, so no caller has to redo it (see the name trap in the header block) — reach for this from any component that needs a scale style rather than retyping the triple.
 - `typographyWeightClass`: `Record<TypographyWeight, string>` — Weight → Tailwind class. Named for Figma's `font/weight/*`, not the number.

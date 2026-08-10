@@ -50,7 +50,8 @@ const AccordionVariantContext = createContext<AccordionVariant>('default');
 
 const itemVariantMap: Record<AccordionVariant, string> = {
   default: 'bg-inverse rounded-lg',
-  filled: 'bg-surface-neutral-subtle border border-surface-neutral-hover rounded-lg',
+  filled:
+    'bg-surface-neutral-subtle border border-surface-neutral-hover rounded-lg',
   line: 'border-b border-surface-neutral-hover',
   outline: 'bg-inverse border border-brand rounded-lg',
 };

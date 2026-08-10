@@ -185,7 +185,9 @@ function ProgressValue({
   if (!showValue) return null;
 
   return (
-    <span className={cn(valueTextClass, textClass)}>{formatValue(percent)}</span>
+    <span className={cn(valueTextClass, textClass)}>
+      {formatValue(percent)}
+    </span>
   );
 }
 
@@ -219,7 +221,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     const fillColorClass = status === 'error' ? 'bg-destructive' : 'bg-brand';
 
     // Radix reports the real numbers to assistive tech, not the rounded percentage.
-    const ariaValue = status === 'active' ? Math.min(Math.max(value, 0), max) : max;
+    const ariaValue =
+      status === 'active' ? Math.min(Math.max(value, 0), max) : max;
 
     if (isCircular) {
       const { box, stroke, icon, boxClass, textClass } = circularSizes[size];
@@ -322,7 +325,9 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           {...rest}
         >
           <span className="flex w-full items-center justify-between gap-2">
-            <span className={cn(valueTextClass, 'text-sm leading-md tracking-md')}>
+            <span
+              className={cn(valueTextClass, 'text-sm leading-md tracking-md')}
+            >
               {label}
             </span>
             {renderValueSlot('justify-end')}

@@ -92,8 +92,7 @@ function WheelPickerColumnView({
 
   // Row height is read from the DOM rather than hardcoded, so the h-10 row class
   // stays the single source of truth for the pitch.
-  const rowHeight = () =>
-    listRef.current?.firstElementChild?.clientHeight ?? 0;
+  const rowHeight = () => listRef.current?.firstElementChild?.clientHeight ?? 0;
 
   // Park the wheel on the selected option — on mount, and whenever the value
   // changes from the outside. Scrolling that already settled there is left alone.

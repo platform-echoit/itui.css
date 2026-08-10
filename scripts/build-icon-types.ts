@@ -72,7 +72,9 @@ for (const match of readFileSync(srcBarrel, 'utf-8').matchAll(
     process.exit(1);
   }
   const source = readFileSync(target, 'utf-8');
-  const pattern = target.endsWith('index.ts') ? RE_EXPORTED_NAME : DECLARED_NAME;
+  const pattern = target.endsWith('index.ts')
+    ? RE_EXPORTED_NAME
+    : DECLARED_NAME;
   for (const name of source.matchAll(pattern)) names.add(name[1]);
 }
 
@@ -127,10 +129,7 @@ console.log(
 //    tsc skips src/icons/index.ts for the same reason it skips src/index.ts:
 //    nothing in its program imports it. `build:paths` adds the extension.
 
-writeFileSync(
-  join(root, 'dist/icons/index.d.ts'),
-  `export * from './ITUI';\n`,
-);
+writeFileSync(join(root, 'dist/icons/index.d.ts'), `export * from './ITUI';\n`);
 console.log(`✓ dist/icons/index.d.ts`);
 
 // ── 3. Mirror src/index.ts into dist/index.d.ts ──────────────────────────────

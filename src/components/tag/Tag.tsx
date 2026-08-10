@@ -137,7 +137,11 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
           'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
           sizeConfig[size],
           boxClasses(variant, selected, disabled),
-          disabled ? 'pointer-events-none' : isInteractive ? 'cursor-pointer' : '',
+          disabled
+            ? 'pointer-events-none'
+            : isInteractive
+              ? 'cursor-pointer'
+              : '',
           className,
         )}
         role={isInteractive ? 'button' : undefined}

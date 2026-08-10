@@ -8,11 +8,7 @@ export {
   CardContent,
 } from './Card';
 
-export {
-  CardWithImage,
-  CardWithAction,
-  PricingCard,
-} from './CardTemplates';
+export { CardWithImage, CardWithAction, PricingCard } from './CardTemplates';
 
 export type {
   CardWithImageProps,

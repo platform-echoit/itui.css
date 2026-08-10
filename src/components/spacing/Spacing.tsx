@@ -219,7 +219,10 @@ const widthClass: Record<SpacingStep, string> = {
  * measuring anything. aria-hidden because it carries no content.
  */
 const Spacing = forwardRef<HTMLDivElement, SpacingProps>(
-  ({ className, size = 'lg', axis = 'vertical', asChild = false, ...props }, ref) => {
+  (
+    { className, size = 'lg', axis = 'vertical', asChild = false, ...props },
+    ref,
+  ) => {
     const Component = asChild ? Slot : 'div';
 
     return (

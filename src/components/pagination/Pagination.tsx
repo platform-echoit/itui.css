@@ -103,7 +103,13 @@ interface CellButtonProps {
   children: React.ReactNode;
 }
 
-function CellButton({ active, disabled, ariaLabel, onClick, children }: CellButtonProps) {
+function CellButton({
+  active,
+  disabled,
+  ariaLabel,
+  onClick,
+  children,
+}: CellButtonProps) {
   return (
     <button
       type="button"
@@ -159,11 +165,19 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       >
         <div className="flex items-center gap-1">
           {showEdges && (
-            <CellButton ariaLabel="First page" disabled={page <= 1} onClick={() => goTo(1)}>
+            <CellButton
+              ariaLabel="First page"
+              disabled={page <= 1}
+              onClick={() => goTo(1)}
+            >
               <Chevron direction="left" double className="size-5" />
             </CellButton>
           )}
-          <CellButton ariaLabel="Previous page" disabled={page <= 1} onClick={() => goTo(page - 1)}>
+          <CellButton
+            ariaLabel="Previous page"
+            disabled={page <= 1}
+            onClick={() => goTo(page - 1)}
+          >
             <Chevron direction="left" className="size-5" />
           </CellButton>
         </div>
@@ -195,11 +209,19 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         </div>
 
         <div className="flex items-center gap-1">
-          <CellButton ariaLabel="Next page" disabled={page >= total} onClick={() => goTo(page + 1)}>
+          <CellButton
+            ariaLabel="Next page"
+            disabled={page >= total}
+            onClick={() => goTo(page + 1)}
+          >
             <Chevron direction="right" className="size-5" />
           </CellButton>
           {showEdges && (
-            <CellButton ariaLabel="Last page" disabled={page >= total} onClick={() => goTo(total)}>
+            <CellButton
+              ariaLabel="Last page"
+              disabled={page >= total}
+              onClick={() => goTo(total)}
+            >
               <Chevron direction="right" double className="size-5" />
             </CellButton>
           )}

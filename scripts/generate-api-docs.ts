@@ -70,12 +70,19 @@ const check = process.argv.includes('--check');
 
 // ── Program
 
-const config = ts.readConfigFile(join(pkgRoot, 'tsconfig.json'), ts.sys.readFile);
+const config = ts.readConfigFile(
+  join(pkgRoot, 'tsconfig.json'),
+  ts.sys.readFile,
+);
 if (config.error) {
   console.error('✗ cannot read tsconfig.json');
   process.exit(1);
 }
-const { options } = ts.parseJsonConfigFileContent(config.config, ts.sys, pkgRoot);
+const { options } = ts.parseJsonConfigFileContent(
+  config.config,
+  ts.sys,
+  pkgRoot,
+);
 
 const program = ts.createProgram([entry, iconsEntry], options);
 const checker = program.getTypeChecker();
@@ -182,14 +189,18 @@ function declarerOf(declaration: ts.Declaration): Declarer | null {
   const parent = declaration.parent;
 
   if (ts.isInterfaceDeclaration(parent)) {
-    const heritage = parent.heritageClauses?.[0]?.types.map((type) => type.getText());
+    const heritage = parent.heritageClauses?.[0]?.types.map((type) =>
+      type.getText(),
+    );
     return { name: parent.name.text, heritage: heritage?.join(', ') ?? '' };
   }
 
   if (!ts.isTypeLiteralNode(parent)) return null;
 
   // `{ … }` on its own, or one arm of an intersection the alias is built from.
-  const intersection = ts.isIntersectionTypeNode(parent.parent) ? parent.parent : null;
+  const intersection = ts.isIntersectionTypeNode(parent.parent)
+    ? parent.parent
+    : null;
   const alias = (intersection ?? parent).parent;
   if (!ts.isTypeAliasDeclaration(alias)) return null;
 
@@ -298,7 +309,8 @@ function collectProps(
       const pkg = file ? packageOf(file) : null;
       // lib.dom and the React types *are* the standard attribute surface;
       // naming them adds nothing the `extends` clause does not already say.
-      if (pkg && pkg !== '@types/react' && pkg !== 'typescript') foreign.add(pkg);
+      if (pkg && pkg !== '@types/react' && pkg !== 'typescript')
+        foreign.add(pkg);
       continue;
     }
 
@@ -328,7 +340,9 @@ function collectProps(
 function propsTypeLabel(rows: PropRow[]): string {
   const entry = rows.find((row) => row.declaredIn)?.declaredIn;
   if (!entry) return '';
-  return entry.heritage ? `${entry.name} extends ${entry.heritage}` : entry.name;
+  return entry.heritage
+    ? `${entry.name} extends ${entry.heritage}`
+    : entry.name;
 }
 
 function describe(exported: ts.Symbol): ExportDoc | null {
@@ -347,16 +361,21 @@ function describe(exported: ts.Symbol): ExportDoc | null {
   if (!isOwnFile(file)) {
     // A type-only re-export has no value to type; asking for one yields `any`.
     const typeOnly =
-      ts.isInterfaceDeclaration(declaration) || ts.isTypeAliasDeclaration(declaration);
+      ts.isInterfaceDeclaration(declaration) ||
+      ts.isTypeAliasDeclaration(declaration);
     return {
       kind: 'reexport',
       name,
       summary: doc,
       type: typeOnly
         ? ''
-        : clip(flat(checker.typeToString(
-            checker.getTypeOfSymbolAtLocation(symbol, declaration),
-          ))),
+        : clip(
+            flat(
+              checker.typeToString(
+                checker.getTypeOfSymbolAtLocation(symbol, declaration),
+              ),
+            ),
+          ),
       from: packageOf(file) ?? 'an external module',
     };
   }
@@ -364,7 +383,12 @@ function describe(exported: ts.Symbol): ExportDoc | null {
   if (ts.isTypeAliasDeclaration(declaration)) {
     // Source formats long unions with a leading `|` on its own line.
     const text = flat(declaration.type.getText()).replace(/^\|\s*/, '');
-    return { kind: 'alias', name, summary: doc, text: `type ${name} = ${text}` };
+    return {
+      kind: 'alias',
+      name,
+      summary: doc,
+      text: `type ${name} = ${text}`,
+    };
   }
 
   if (ts.isInterfaceDeclaration(declaration)) {
@@ -436,7 +460,9 @@ for (const statement of entrySource.statements) {
   const specifier = statement.moduleSpecifier.text;
   const moduleSymbol = checker.getSymbolAtLocation(statement.moduleSpecifier);
   if (!moduleSymbol) {
-    console.error(`✗ cannot resolve barrel line \`export * from '${specifier}'\``);
+    console.error(
+      `✗ cannot resolve barrel line \`export * from '${specifier}'\``,
+    );
     process.exit(1);
   }
 
@@ -501,7 +527,9 @@ const isLogo = (doc: ExportDoc) =>
   doc.forwardsTo.length === 0;
 
 function propTable(rows: PropRow[]) {
-  const declaring = new Set(rows.map((row) => row.declaredIn?.name).filter(Boolean));
+  const declaring = new Set(
+    rows.map((row) => row.declaredIn?.name).filter(Boolean),
+  );
   const multi = declaring.size > 1;
   const head = ['Prop', 'Type', 'Default', 'Description'];
   if (multi) head.splice(3, 0, 'From');
@@ -546,20 +574,26 @@ function bucket(module: ModuleDoc): Rendered {
   const propsTypes = new Set(components.flatMap((doc) => doc.propsInterfaces));
 
   return {
-    components: collapse ? components.filter((doc) => !isLogo(doc)) : components,
+    components: collapse
+      ? components.filter((doc) => !isLogo(doc))
+      : components,
     logos: collapse ? logos : [],
     shapes: all.filter(
-      (doc): doc is ShapeDoc => doc.kind === 'shape' && !propsTypes.has(doc.name),
+      (doc): doc is ShapeDoc =>
+        doc.kind === 'shape' && !propsTypes.has(doc.name),
     ),
     aliases: all.filter(
-      (doc): doc is AliasDoc => doc.kind === 'alias' && !propsTypes.has(doc.name),
+      (doc): doc is AliasDoc =>
+        doc.kind === 'alias' && !propsTypes.has(doc.name),
     ),
     values: all.filter((doc): doc is ValueDoc => doc.kind === 'value'),
     reexports: all.filter((doc): doc is ReexportDoc => doc.kind === 'reexport'),
   };
 }
 
-const rendered = new Map(modules.map((module) => [module.name, bucket(module)]));
+const rendered = new Map(
+  modules.map((module) => [module.name, bucket(module)]),
+);
 
 // Claim every heading up front, in the order the document writes them, so the
 // index links match the anchors the sections will actually have.
@@ -600,15 +634,20 @@ put();
 put('Every module is importable two ways:');
 put();
 put('```tsx');
-put(`import { Button } from '${PKG_NAME}';          // barrel, tree-shakes in production`);
-put(`import { Button } from '${PKG_NAME}/button';   // subpath, also fast in dev`);
+put(
+  `import { Button } from '${PKG_NAME}';          // barrel, tree-shakes in production`,
+);
+put(
+  `import { Button } from '${PKG_NAME}/button';   // subpath, also fast in dev`,
+);
 put(`import { XIcon } from '${PKG_NAME}/icons';     // icons, subpath only`);
 put('```');
 put();
 put(
   'The barrel pulls the stylesheet in with it; a subpath does not, so a consumer who only ever ' +
     `imports subpaths has to \`@import '${PKG_NAME}/dist/index.css'\` as well. See the ` +
-    '[README](./README.md) for setup.');
+    '[README](./README.md) for setup.',
+);
 put();
 put('---');
 put();
@@ -622,7 +661,8 @@ for (const module of modules) {
     .map((doc) => `[${doc.name}](#${anchors.get(doc)})`)
     .join(', ');
 
-  const count = (n: number, noun: string) => `${n} ${noun}${n === 1 ? '' : 's'}`;
+  const count = (n: number, noun: string) =>
+    `${n} ${noun}${n === 1 ? '' : 's'}`;
 
   const extra: string[] = [];
   if (parts.logos.length > 0) extra.push(count(parts.logos.length, 'logo'));
@@ -748,7 +788,10 @@ for (const module of modules) {
   }
 }
 
-const output = `${lines.join('\n').replace(/\n{3,}/g, '\n\n').trimEnd()}\n`;
+const output = `${lines
+  .join('\n')
+  .replace(/\n{3,}/g, '\n\n')
+  .trimEnd()}\n`;
 
 // ── Write, or compare
 

@@ -559,9 +559,9 @@ This package follows semver, and reads the middle number as the one that matters
 
 | Bump      | What you are agreeing to                                                                              |
 | --------- | ----------------------------------------------------------------------------------------------------- |
-| **patch** | Nothing to do. No export is renamed or removed, and no prop changes meaning. Safe to take unattended.   |
-| **minor** | New exports and new props, plus anything marked `@deprecated`. Your code still compiles.                |
-| **major** | Removals and renames. Read the release notes before upgrading.                                          |
+| **patch** | Nothing to do. No export is renamed or removed, and no prop changes meaning. Safe to take unattended. |
+| **minor** | New exports and new props, plus anything marked `@deprecated`. Your code still compiles.              |
+| **major** | Removals and renames. Read the release notes before upgrading.                                        |
 
 Two consequences worth stating out loud, because both have bitten this package:
 

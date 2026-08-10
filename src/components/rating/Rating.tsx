@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  forwardRef,
-  useId,
-  useState,
-  type HTMLAttributes,
-} from 'react';
+import { forwardRef, useId, useState, type HTMLAttributes } from 'react';
 import { cn } from '../../lib/utils';
 import { StarFillIcon, StarRegularIcon } from '../../icons/ITUI/star';
 
@@ -89,7 +84,10 @@ export const RatingStar = forwardRef<HTMLSpanElement, RatingStarProps>(
   ({ fill = 'empty', className, children, ...rest }, ref) => (
     <span
       ref={ref}
-      className={cn('relative inline-flex h-icon-lg w-icon-lg shrink-0', className)}
+      className={cn(
+        'relative inline-flex h-icon-lg w-icon-lg shrink-0',
+        className,
+      )}
       {...rest}
     >
       <StarRegularIcon

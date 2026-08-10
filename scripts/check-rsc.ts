@@ -75,7 +75,9 @@ function routeChunks(htmlFile: string): string[] {
 
   const html = readFileSync(path, 'utf-8');
   const files = [
-    ...new Set([...html.matchAll(/static\/chunks\/[^"']*?\.js/g)].map((m) => m[0])),
+    ...new Set(
+      [...html.matchAll(/static\/chunks\/[^"']*?\.js/g)].map((m) => m[0]),
+    ),
   ];
 
   return files.map((f) => join(fixture, '.next', f));

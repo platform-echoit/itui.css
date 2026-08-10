@@ -117,7 +117,10 @@ function eventMarkers(events?: CalendarEvent[]) {
   return events.map((event, index) => (
     <span
       key={index}
-      className={cn('size-1 rounded-full', eventToneMarker[event.tone ?? 'primary'])}
+      className={cn(
+        'size-1 rounded-full',
+        eventToneMarker[event.tone ?? 'primary'],
+      )}
     />
   ));
 }

@@ -16,11 +16,7 @@ import { useControllableState } from '../../lib/use-controllable-state';
 import { useForwardedRef } from '../../lib/use-forwarded-ref';
 import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
 import { CaretRightRegularIcon } from '../../icons/ITUI/caret-right';
-import {
-  Popover,
-  PopoverAnchor,
-  PopoverContent,
-} from '../popover/Popover';
+import { Popover, PopoverAnchor, PopoverContent } from '../popover/Popover';
 import { Radio, RadioGroup } from '../radio/Radio';
 import { InputText, type InputTextProps } from './InputText';
 
