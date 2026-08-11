@@ -12,10 +12,10 @@ import {
 import { cn } from '../../lib/utils';
 import { Divider } from '../divider/Divider';
 import { Spinner } from '../spinner/Spinner';
-import { UploadSimpleRegularIcon } from '../../icons/ITUI/upload-simple';
+import { PlusCircleRegularIcon } from '../../icons/ITUI/plus-circle';
 import { CheckCircleRegularIcon } from '../../icons/ITUI/check-circle';
-import { XCircleRegularIcon } from '../../icons/ITUI/xcircle';
-import { WarningRegularIcon } from '../../icons/ITUI/warning';
+import { XCircleFillIcon, XCircleRegularIcon } from '../../icons/ITUI/xcircle';
+import { WarningFillIcon, WarningRegularIcon } from '../../icons/ITUI/warning';
 import { DownloadSimpleRegularIcon } from '../../icons/ITUI/download-simple';
 import { CaretRightRegularIcon } from '../../icons/ITUI/caret-right';
 import { InputFieldShell } from './InputFieldShell';
@@ -24,27 +24,34 @@ import { useFieldA11y } from './useFieldA11y';
 /*
   Token → Tailwind map (Figma 28964:9746 `Upload` · 28985:5360 `UploadedFile`)
   ─────────────────────────────────────────────────────────────────────────────
-  Two pieces that live one under the other, not a single control:
+  The dropzone and the rows are one control: Figma's `UploadFileOpen` nests the
+  rows inside the dashed frame rather than stacking a list under it.
 
   DROPZONE — InputFieldShell's box, made tall and dashed
     content height 124px → min-h-31 (h-auto) · stroke/xs 1px → border border-dashed
     border/neutral/subtle   #ededed → border-input
     border/primary/default  #009ce0 → border-ring        (hover · drag-over · focus-within)
     surface/primary/subtle  #e6f5fc → bg-brand-subtle    (hover · drag-over)
-    spacing/lg 16px → p-4  ·  spacing/sm 8px → gap-2
-    surface/primary/default #009ce0 → bg-surface-primary (the 32px brand icon tile)
-    height/icon/lg 20px → size-5 (ITUI icons default to 32 → width/height are explicit)
-    typography/body/md/regular  14/24/0.2 → text-sm leading-md tracking-md (instruction)
-    typography/caption/sm/regular 12/20/0.3 → text-xs leading-sm tracking-sm (format hint)
+    spacing/lg 16px → p-4  ·  spacing/2xl 24px → gap-6   (prompt ↔ list)
+    Once a file is in, Figma switches the frame to the `UploadFileOpen` shape:
+    radius/md 12px → rounded-xl (the border stays border/neutral/subtle #ededed)
+    surface/primary/default #009ce0 → bg-surface-primary (the 32px brand icon tile,
+    holding a height/icon/md 16px PlusCircle)
+    spacing/md 12px → gap-3 (tile ↔ text)  ·  spacing/xs 4px → gap-1 (line ↔ line)
+    typography/body/md/regular 14/24/0.2 → text-sm leading-md tracking-md (both lines)
     text/neutral/muted    #595858 → text-neutral-muted
-    text/neutral/subtle   #9e9e9e → text-neutral-subtle
     text/neutral/disabled #c2c2c2 → text-neutral-disabled
 
   ROW (`InputFileUploadItem`)
-    height/input 48px → h-12 · spacing/md 12px → px-3 · radius/sm 8px → rounded-lg
-    icon/primary/default    #009ce0 → text-primary          (success check)
-    surface/semantic/error  #feeceb → bg-surface-error-subtle
-    border/semantic/error   #f44336 → border-destructive · text-destructive
+    height/input 48px → h-12 · spacing/md 12px → p-3 · radius/sm 8px → rounded-lg
+    border/neutral/subtle #ededed → border-input           (every non-error row)
+    icon/primary/default  #009ce0 → text-primary           (success check)
+    height/icon/lg 20px → size-5 (ITUI icons default to 32 → width/height are explicit)
+    Actions are text/neutral/default #0f0f0f → text-foreground, spaced spacing/xs
+    4px inside an action and spacing/sm 8px between two of them.
+    ERROR row: surface/semantic/error #feeceb → bg-surface-error-subtle ·
+    border/semantic/error #f44336 → border-destructive · spacing/lg 16px → p-4 ·
+    spacing/md 12px → gap-3, and only the message itself is text-destructive.
 
   `status` is never derived here — the consumer owns the upload, this only draws it.
   ─────────────────────────────────────────────────────────────────────────────
@@ -66,31 +73,19 @@ export interface InputFileUploadItemData {
 
 // ─── Row actions ──────────────────────────────────────────────────────────────
 
-/*
-  Deliberately a plain <button> rather than <Button variant="link">: Button joins
-  its classes without tailwind-merge, so a per-tone text color passed through
-  `className` would race the variant's own color instead of replacing it.
-*/
-const ACTION_TONE = {
-  muted: 'text-neutral-muted hover:text-foreground',
-  error: 'text-destructive hover:opacity-80',
-} as const;
-
 interface RowActionProps {
-  tone?: keyof typeof ACTION_TONE;
   icon?: ReactNode;
   disabled?: boolean;
   onClick: () => void;
   children: ReactNode;
 }
 
-function RowAction({
-  tone = 'muted',
-  icon,
-  disabled,
-  onClick,
-  children,
-}: RowActionProps) {
+/*
+  Deliberately a plain <button> rather than <Button variant="link">: Button joins
+  its classes without tailwind-merge, so a color passed through `className` would
+  race the variant's own color instead of replacing it.
+*/
+function RowAction({ icon, disabled, onClick, children }: RowActionProps) {
   return (
     <button
       type="button"
@@ -98,10 +93,9 @@ function RowAction({
       onClick={onClick}
       className={cn(
         'inline-flex shrink-0 cursor-pointer items-center gap-1 rounded-lg whitespace-nowrap',
-        'text-sm leading-md tracking-md transition-colors duration-150',
-        'focus-visible:focus-ring',
-        'disabled:cursor-not-allowed disabled:text-neutral-disabled disabled:hover:text-neutral-disabled',
-        ACTION_TONE[tone],
+        'text-sm leading-md tracking-md text-foreground transition-opacity duration-150',
+        'hover:opacity-70 focus-visible:focus-ring',
+        'disabled:cursor-not-allowed disabled:text-neutral-disabled disabled:hover:opacity-100',
       )}
     >
       {children}
@@ -120,7 +114,7 @@ function RowAction({
 
 export interface InputFileUploadItemProps
   extends Omit<HTMLAttributes<HTMLLIElement>, 'children'>,
-    Omit<InputFileUploadItemData, 'id'> {
+  Omit<InputFileUploadItemData, 'id'> {
   /** Greys the row out and stops its action buttons responding. */
   disabled?: boolean;
   /** Each action only renders when its handler is given — no dead buttons. */
@@ -167,13 +161,18 @@ export const InputFileUploadItem = forwardRef<
         className={cn(
           'flex w-full flex-col rounded-lg border',
           isError
-            ? 'bg-surface-error-subtle border-destructive'
-            : 'bg-inverse border-input',
+            ? 'bg-surface-error-subtle border-destructive gap-3 p-4'
+            : 'bg-inverse h-12 justify-center p-3',
+          // Every non-error row keeps the field's own subtle border/neutral/subtle
+          // #ededed, whatever stage the upload is at.
+          !isError && 'border-input',
           className,
         )}
         {...rest}
       >
-        <div className="flex h-12 shrink-0 items-center gap-3 px-3">
+        {/* spacing/xs 4px is the row's own gap; the done row's actions sit
+            spacing/sm 8px apart, hence their own container below. */}
+        <div className="flex shrink-0 items-center gap-1">
           <span
             className={cn(
               'min-w-0 flex-1 truncate text-base leading-lg tracking-lg',
@@ -196,8 +195,7 @@ export const InputFileUploadItem = forwardRef<
 
           {isError && onRemove && (
             <RowAction
-              tone="error"
-              icon={<XCircleRegularIcon width={20} height={20} />}
+              icon={<XCircleFillIcon width={20} height={20} className='text-icon-neutral-subtle' />}
               disabled={disabled}
               onClick={onRemove}
             >
@@ -206,9 +204,13 @@ export const InputFileUploadItem = forwardRef<
           )}
 
           {status === 'done' && (
-            <>
+            <span className="flex shrink-0 items-center gap-2">
               {onRemove && (
-                <RowAction disabled={disabled} onClick={onRemove}>
+                <RowAction
+                  icon={<XCircleFillIcon width={20} height={20} className='text-icon-neutral-subtle' />}
+                  disabled={disabled}
+                  onClick={onRemove}
+                >
                   {removeLabel}
                 </RowAction>
               )}
@@ -230,7 +232,7 @@ export const InputFileUploadItem = forwardRef<
                   {previewLabel}
                 </RowAction>
               )}
-            </>
+            </span>
           )}
         </div>
 
@@ -238,16 +240,15 @@ export const InputFileUploadItem = forwardRef<
           <>
             {/* Tinted to the row's own border — a neutral rule reads as a seam
                 inside the red card. Flagged in the spec as a QA check. */}
-            <Divider className="bg-destructive" />
             <p
               role="alert"
-              className="flex items-center gap-1 px-3 py-2 text-xs leading-sm tracking-sm text-destructive"
+              className="flex items-center gap-3 text-sm leading-md tracking-md text-destructive"
             >
-              <WarningRegularIcon
+              <WarningFillIcon
                 width={16}
                 height={16}
                 aria-hidden="true"
-                className="shrink-0 [&_path]:fill-current"
+                className="shrink-0 text-[#F44336] [&_path]:fill-current"
               />
               {error}
             </p>
@@ -406,55 +407,61 @@ export const InputFileUpload = forwardRef<
     };
 
     const textTone = disabled ? 'text-neutral-disabled' : undefined;
+    const hasFiles = files.length > 0;
 
     return (
-      <div className={cn('flex w-full flex-col gap-2', className)}>
-        <InputFieldShell
-          label={label}
-          error={message}
-          helperText={helperText}
-          disabled={disabled}
+      <InputFieldShell
+        label={label}
+        error={message}
+        helperText={helperText}
+        disabled={disabled}
+        htmlFor={fieldId}
+        className={className}
+        boxClassName={cn(
+          'h-auto min-h-31 flex-col items-stretch gap-6 border-dashed p-4',
+          // Figma's `UploadFileOpen`: the frame that holds rows only gets
+          // rounder — it keeps the shell's border/neutral/subtle #ededed.
+          hasFiles && 'rounded-xl',
+          !disabled && !isError && 'hover:border-ring hover:bg-brand-subtle',
+          isDragOver && !disabled && 'border-ring bg-brand-subtle',
+          boxClassName,
+        )}
+      >
+        <label
           htmlFor={fieldId}
-          boxClassName={cn(
-            'h-auto min-h-31 items-stretch border-dashed p-0',
-            !disabled && !isError && 'hover:border-ring hover:bg-brand-subtle',
-            isDragOver && !disabled && 'border-ring bg-brand-subtle',
-            boxClassName,
+          onDragOver={handleDragOver}
+          onDragLeave={() => setIsDragOver(false)}
+          onDrop={handleDrop}
+          className={cn(
+            'flex items-center justify-center',
+            // Empty, the prompt centres itself in the 124px frame; with rows
+            // under it, growing would come out of their height instead.
+            hasFiles ? 'shrink-0' : 'flex-1',
+            disabled ? 'cursor-not-allowed' : 'cursor-pointer',
           )}
         >
-          <label
-            htmlFor={fieldId}
-            onDragOver={handleDragOver}
-            onDragLeave={() => setIsDragOver(false)}
-            onDrop={handleDrop}
-            className={cn(
-              'flex flex-1 items-center justify-center p-4',
-              disabled ? 'cursor-not-allowed' : 'cursor-pointer',
-            )}
-          >
-            {/* pointer-events-none keeps every drag event aimed at the label:
-                entering a child would otherwise bubble a dragleave and make the
-                drag-over highlight flicker. */}
-            <span className="pointer-events-none flex flex-col items-center gap-2 text-center">
-              <span
+          {/* pointer-events-none keeps every drag event aimed at the label:
+              entering a child would otherwise bubble a dragleave and make the
+              drag-over highlight flicker. */}
+          <span className="pointer-events-none flex flex-col items-center gap-3 text-center">
+            <span
+              className={cn(
+                'flex size-8 items-center justify-center rounded-lg',
+                disabled ? 'bg-surface-neutral-disabled' : 'bg-surface-primary',
+              )}
+            >
+              <PlusCircleRegularIcon
+                width={16}
+                height={16}
+                aria-hidden="true"
                 className={cn(
-                  'flex size-8 items-center justify-center rounded-lg',
-                  disabled
-                    ? 'bg-surface-neutral-disabled'
-                    : 'bg-surface-primary',
+                  '[&_path]:fill-current',
+                  disabled ? 'text-neutral-disabled' : 'text-inverse',
                 )}
-              >
-                <UploadSimpleRegularIcon
-                  width={20}
-                  height={20}
-                  aria-hidden="true"
-                  className={cn(
-                    '[&_path]:fill-current',
-                    disabled ? 'text-neutral-disabled' : 'text-inverse',
-                  )}
-                />
-              </span>
+              />
+            </span>
 
+            <span className="flex flex-col items-center gap-1">
               <span
                 className={cn(
                   'text-sm leading-md tracking-md',
@@ -465,30 +472,32 @@ export const InputFileUpload = forwardRef<
               </span>
               <span
                 className={cn(
-                  'text-xs leading-sm tracking-sm',
-                  textTone ?? 'text-neutral-subtle',
+                  'text-sm leading-md tracking-md',
+                  textTone ?? 'text-neutral-muted',
                 )}
               >
                 {hint}
               </span>
             </span>
-          </label>
+          </span>
+        </label>
 
-          <input
-            ref={ref}
-            {...fieldProps}
-            type="file"
-            accept={accept}
-            multiple={multiple}
-            disabled={disabled}
-            onChange={handleChange}
-            className="sr-only"
-            {...rest}
-          />
-        </InputFieldShell>
+        <input
+          ref={ref}
+          {...fieldProps}
+          type="file"
+          accept={accept}
+          multiple={multiple}
+          disabled={disabled}
+          onChange={handleChange}
+          className="sr-only"
+          {...rest}
+        />
 
-        {files.length > 0 && (
-          <ul className="flex w-full flex-col gap-2">
+        {hasFiles && (
+          // The frame's own gap is spacing/2xl 24px, which is what separates the
+          // prompt from the list; inside the list the rows sit spacing/sm apart.
+          <ul className="flex w-full shrink-0 flex-col gap-2">
             {files.map((file) => (
               <InputFileUploadItem
                 key={file.id}
@@ -503,7 +512,7 @@ export const InputFileUpload = forwardRef<
             ))}
           </ul>
         )}
-      </div>
+      </InputFieldShell>
     );
   },
 );

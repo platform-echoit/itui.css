@@ -44,6 +44,9 @@ import { DateFooter, type DateFooterAlignment } from './DateFooter';
   spacing/sm                   8px      → gap-2 (caption ↔ weekdays ↔ week rows)
   height/date-picker           36px     → h-9 (weekday cells, handled by BaseDate for days)
 
+  The frames run the caption row the full width of the panel, so `month_caption`
+  overrides the 280px `DateHeader` carries as a standalone component.
+
   WEEKDAY HEADER — the frame builds these from Base Date instances, using its red
   variant for 일 and its blue one for 토. A plain `th` with the same typography and
   height renders identically, so the weekday row is styled through `classNames`:
@@ -269,6 +272,9 @@ export function DatePicker(props: DatePickerProps) {
           // Panels split the card evenly; the divider is the second panel's border.
           month:
             'flex flex-1 basis-0 flex-col items-center gap-2 border-l border-border-neutral-subtle p-4 first:border-l-0',
+          // Stretches DateHeader past its standalone 280px, so the arrows line up
+          // with the edges of the grid below instead of sitting 23px inside them.
+          month_caption: 'w-full',
 
           // Flex, not table layout, so the 8px row gap from the design applies.
           month_grid: 'flex w-full flex-col gap-2',

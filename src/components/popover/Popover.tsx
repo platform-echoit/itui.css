@@ -227,28 +227,7 @@ export function PopoverContent({
         sideOffset={sideOffset}
         collisionPadding={collisionPadding}
         className={cn(
-          // Same surface as PopoverPanel — the two used to disagree (bg-white vs
-          // bg-inverse, border-secondary vs border-neutral-subtle) even though
-          // Figma draws one panel. `border-border-neutral-subtle` is #ededed;
-          // `border-neutral-subtle` looks like the right token but resolves to
-          // #9e9e9e, the icon/text grey. radius/lg 16px is the panel's radius;
-          // the 8px it used to carry is the radius of an *item*.
           'bg-inverse border border-border-neutral-subtle rounded-2xl shadow-downwards-sm flex flex-col',
-          // size/container/sm — every Figma variant of this panel is 288px wide.
-          // Safe as a default: `cn` puts the caller's className last, and
-          // tailwind-merge drops this for any incoming `w-*` (InputDate uses
-          // `w-auto`, InputDropdown matches the trigger width).
-          'w-72',
-          // The panel is `position: fixed`, so a list taller than the gap between
-          // the trigger and the viewport edge used to be simply cut off: the page
-          // could not scroll to it and `overflow-hidden` clipped the rest. Radix
-          // measures that gap for us (minus `collisionPadding`), so the panel caps
-          // itself there and scrolls inside instead.
-          //
-          // `overflow-x-hidden` rather than dropping the axis: it keeps exactly
-          // what the old `overflow-hidden` was doing sideways — clipping the first
-          // and last row into the rounded corners — and stops a wide child from
-          // adding a horizontal scrollbar that was never there before.
           'max-h-[var(--radix-popover-content-available-height)] overflow-x-hidden overflow-y-auto',
           'z-50 outline-none',
           className,

@@ -231,7 +231,7 @@ export const PopoverItem = forwardRef<HTMLButtonElement, PopoverItemProps>(
         </span>
       )}
       <span className="flex flex-col flex-1 min-w-0 gap-1">
-        <span className="text-sm font-medium leading-5 tracking-md text-foreground text-left">
+        <span className="text-sm font-normal leading-6 tracking-md text-foreground text-left">
           {children}
         </span>
         {description && (

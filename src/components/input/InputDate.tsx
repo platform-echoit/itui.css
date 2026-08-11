@@ -213,7 +213,7 @@ export const InputDate = forwardRef<HTMLInputElement, InputDateProps>(
         <PopoverContent
           align="start"
           sideOffset={4}
-          className="w-auto border-0 bg-transparent p-0 shadow-none"
+          className="w-auto border-0 bg-transparent p-0 shadow-none rounded-xl"
         >
           <DatePicker
             {...calendarProps}

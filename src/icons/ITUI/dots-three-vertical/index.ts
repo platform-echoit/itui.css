@@ -3,3 +3,4 @@ export { default as DotsThreeVerticalFillIcon } from './DotsThreeVerticalFillIco
 export { default as DotsThreeVerticalLightIcon } from './DotsThreeVerticalLightIcon';
 export { default as DotsThreeVerticalRegularIcon } from './DotsThreeVerticalRegularIcon';
 export { default as DotsThreeVerticalThinIcon } from './DotsThreeVerticalThinIcon';
+export { default as DotsThreeVerticalBoldIcon } from './DotsThreeVerticalBoldIcon';

@@ -24,14 +24,16 @@ behaviour to you, this page says so.
 
 ## Focus indicators
 
-> ⚠ **The focus indicator ships turned off.** This is a deliberate design decision, and it is a
-> known failure of **WCAG 2.1 SC 2.4.7 (Focus Visible)**: a keyboard user has no indication of where
-> they are. Read the rest of this section before shipping to an audience that needs it — turning it
-> back on is one declaration.
+> ⚠ **The focus indicator ships as a 0.5px hairline.** It satisfies **WCAG 2.1 SC 2.4.7 (Focus
+> Visible)** — a keyboard user can see where they are — but it is well under the 2px that **WCAG 2.2
+> SC 2.4.11 (Focus Appearance)** asks for, and being sub-pixel it renders unevenly across displays.
+> Read the rest of this section before shipping to an audience that needs it — thickening it is one
+> declaration.
 
 Every interactive component paints its indicator through a single utility, `focus-ring`, whose width
-comes from one custom property. At the shipped `0px` the outline resolves and paints nothing; set the
-width and the indicator returns in **all ~30 components at once**:
+comes from one custom property. The shipped `0.5px` is sub-pixel, so a DPR-1 display rounds it (Chrome
+draws it faint, Firefox may snap it to 1px) and only a 2× display renders it as exactly one device
+pixel. Raise the width and the change lands in **all ~30 components at once**:
 
 ```css
 :root {
@@ -39,18 +41,19 @@ width and the indicator returns in **all ~30 components at once**:
 }
 ```
 
-| Family                                                                          | Indicator                                        | Utilities                                                 |
-| ------------------------------------------------------------------------------- | ------------------------------------------------ | --------------------------------------------------------- |
-| **Fields** — `Input*`, `SelectTrigger`, `InputGroup`                            | The box border turns brand blue — _still on_     | `focus-within:border-ring` · `focus-visible:border-ring`  |
-| **Buttons** — `Button`, `FloatingButton`, `TableHead`, `GnbMenuItem`, nav items | Brand outline, offset from the shape             | `focus-visible:focus-ring`                                |
-| **Controls** — `Checkbox`, `Radio`, `Toggle`, `Rating`                          | The same outline, on the box the input drives    | `peer-focus-visible:` / `has-[:focus-visible]:focus-ring` |
-| **Inside a surface** — `Tab`, `Pagination`, `Accordion`, `Lnb`                  | The same outline; nothing clips it, it is offset | `focus-visible:focus-ring`                                |
+| Family                                                                          | Indicator                                          | Utilities                                                 |
+| ------------------------------------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------- |
+| **Fields** — `Input*`, `SelectTrigger`, `InputGroup`                            | The box border turns brand blue — _not an outline_ | `focus-within:border-ring` · `focus-visible:border-ring`  |
+| **Buttons** — `Button`, `FloatingButton`, `TableHead`, `GnbMenuItem`, nav items | Brand outline, offset from the shape               | `focus-visible:focus-ring`                                |
+| **Controls** — `Checkbox`, `Radio`, `Toggle`, `Rating`                          | The same outline, on the box the input drives      | `peer-focus-visible:` / `has-[:focus-visible]:focus-ring` |
+| **Inside a surface** — `Tab`, `Pagination`, `Accordion`, `Lnb`                  | The same outline; nothing clips it, it is offset   | `focus-visible:focus-ring`                                |
 
-Only the **field** indicator survives the default, because it is a border-colour change rather than an
-outline — `Input`, `SelectTrigger` and `InputGroup` still turn brand blue on focus. That is a **1px
-border colour change**: enough for SC 2.4.7 on its own, weak against WCAG 2.2 SC 2.4.11 (Focus
-Appearance), which asks for 2px. It is a property of the whole field family — if you raise it, raise
-it for all of them at once, or two fields side by side will light up differently.
+The **field** indicator does not read from that property at all, because it is a border-colour change
+rather than an outline — `Input`, `SelectTrigger` and `InputGroup` turn brand blue on focus whatever
+the ring width is. That is a **1px border colour change**: enough for SC 2.4.7 on its own, weak
+against WCAG 2.2 SC 2.4.11 (Focus Appearance), which asks for 2px. It is a property of the whole field
+family — if you raise it, raise it for all of them at once, or two fields side by side will light up
+differently.
 
 Before 1.1 this was eight different idioms across ~30 files (four `outline` flavours, three `ring`
 flavours, plus leftover shadcn `ring-slate-950`), with no single place to change them. A `ring` is a
@@ -223,12 +226,12 @@ handling; the ones that animate purely through CSS transitions inherit whatever 
 
 Stated plainly, so you can decide whether they matter for your product:
 
-- **The focus indicator is off by default, which fails WCAG 2.1 SC 2.4.7.** This is the largest gap
-  in the library and the only one that is a straight failure rather than a weakness. Every component
-  keeps the wiring, so `:root { --itui-focus-ring-width: 2px }` restores it everywhere at once. See
-  [Focus indicators](#focus-indicators).
+- **The focus indicator is a 0.5px hairline.** Visible enough for WCAG 2.1 SC 2.4.7, but under the
+  2px WCAG 2.2 SC 2.4.11 asks for, and sub-pixel widths render unevenly across displays. Every
+  component reads one property, so `:root { --itui-focus-ring-width: 2px }` thickens it everywhere at
+  once. See [Focus indicators](#focus-indicators).
 - **Field focus is a 1px border.** Enough for WCAG 2.1 SC 2.4.7 on its own, weak against WCAG 2.2 SC
-  2.4.11. Unaffected by the switch above — a border is not an outline.
+  2.4.11. Unaffected by the property above — a border is not an outline.
 - **No dialog sets `aria-modal`, and this one is deliberate.** `Dialog`, `Modal`, `Popup` and
   `BottomSheet` all render Radix's dialog content, which calls `hideOthers()` to mark every
   sibling `aria-hidden` on mount. Radix's own source calls that the _"better supported equivalent

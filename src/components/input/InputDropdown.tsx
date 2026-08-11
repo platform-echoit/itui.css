@@ -29,11 +29,12 @@ import { InputText, type InputTextProps } from './InputText';
 
   PANEL — the design is a radio list with optional submenus, not a native select,
   so this is a Popover + RadioGroup rather than the existing Select component.
-    radius/sm 8px → rounded-lg          (PopoverContent)
+    radius/sm 8px → rounded-lg          (PopoverContent, and each row)
     shadow/downwards/sm → shadow-downwards-sm
-    spacing/sm 8px → py-2               (panel padding)
+    spacing/sm 8px → p-2                (panel padding — 8px on all four sides,
+                                         so a hovered row is inset from the edge)
     height/popover/sm 36px → h-9        (row)
-    spacing/md 12px → px-3              (row padding)
+    spacing/sm 8px → px-2               (row padding)
     surface/neutral/secondary/hover #f5f5f5 → hover:bg-surface-neutral-subtle
   The panel is anchored to the box, so it stays glued to the field no matter how
   tall the label and the error message make the component. Its width follows the
@@ -41,8 +42,9 @@ import { InputText, type InputTextProps } from './InputText';
   ─────────────────────────────────────────────────────────────────────────────
 */
 
-/** Rows are 36px tall and share the panel's horizontal rhythm. */
-const ROW_CLASS = 'flex h-9 w-full items-center text-sm leading-6 tracking-md';
+/** Rows are 36px tall, rounded in their own right, and inset from the panel edge. */
+const ROW_CLASS =
+  'flex h-9 w-full items-center rounded-lg text-sm leading-md tracking-md';
 
 /**
  * Marks a submenu panel so the parent panel can tell "the user went into a
@@ -76,7 +78,7 @@ export const InputDropdownItem = forwardRef<
     ref={ref}
     className={cn(
       ROW_CLASS,
-      '[&>label]:h-full [&>label]:flex-1 [&>label]:px-3',
+      '[&>label]:h-full [&>label]:flex-1 [&>label]:px-1',
       !disabled && 'hover:bg-surface-neutral-subtle',
       className,
     )}
@@ -155,7 +157,7 @@ export const InputDropdownSub = forwardRef<
             onKeyDown={handleKeyDown}
             className={cn(
               ROW_CLASS,
-              'gap-2 px-3 text-left',
+              'gap-2 px-2 text-left',
               disabled
                 ? 'cursor-not-allowed text-neutral-disabled'
                 : 'cursor-pointer text-foreground hover:bg-surface-neutral-subtle',
@@ -168,7 +170,7 @@ export const InputDropdownSub = forwardRef<
               width={16}
               height={16}
               className={cn(
-                'shrink-0 text-neutral-muted transition-transform duration-150 [&_path]:fill-current',
+                'shrink-0 text-neutral transition-transform duration-150 [&_path]:fill-current',
                 open && 'rotate-90',
               )}
             />
@@ -178,8 +180,8 @@ export const InputDropdownSub = forwardRef<
         <PopoverContent
           side="right"
           align="start"
-          sideOffset={4}
-          className={cn('min-w-40 rounded-lg py-2', panelClassName)}
+          sideOffset={8}
+          className={cn('min-w-40 rounded-lg p-2', panelClassName)}
           // Keep focus on the row so ArrowLeft/Escape still reach it.
           onOpenAutoFocus={(event) => event.preventDefault()}
           onCloseAutoFocus={(event) => {
@@ -321,7 +323,7 @@ export const InputDropdown = forwardRef<HTMLInputElement, InputDropdownProps>(
               width={16}
               height={16}
               className={cn(
-                'transition-transform duration-150',
+                'transition-transform duration-150 text-icon-neutral',
                 isOpen && 'rotate-180',
               )}
             />
@@ -331,8 +333,14 @@ export const InputDropdown = forwardRef<HTMLInputElement, InputDropdownProps>(
 
         <PopoverContent
           align="start"
+          sideOffset={8}
           className={cn(
-            'w-(--radix-popover-trigger-width) rounded-lg py-2',
+            // The long `w-[var(--radix-popover-trigger-width)]` form, not the v4
+            // shorthand `w-(--…)`: tailwind-merge 2.x does not parse the
+            // shorthand, so it keeps PopoverContent's default `w-72` alongside
+            // it — and Tailwind emits `.w-72` last, so at equal specificity the
+            // panel stayed 288px instead of the field's width.
+            'w-[var(--radix-popover-trigger-width)] rounded-lg p-2',
             panelClassName,
           )}
           // Radix would look for a trigger to restore focus to; there is none.

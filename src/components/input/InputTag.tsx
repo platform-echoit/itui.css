@@ -20,7 +20,8 @@ import { useFieldA11y } from './useFieldA11y';
   (which is why this one composes InputFieldShell rather than InputText — the box
   holds N tags plus the field, not a single control):
     height/input 48px → min-h-12 (h-auto)
-    spacing/sm 8px → py-2   ·  spacing/xs 4px → gap-1 (tag ↔ tag, tag ↔ field)
+    spacing/md 12px → p-3 (from the shell)  ·  spacing/xs 4px → gap-1 (tag ↔ tag,
+    tag ↔ field), which is what makes the filled box 52px rather than 48px
   Tags are the existing Tag component (outline, md) with its close button.
   ─────────────────────────────────────────────────────────────────────────────
 */
@@ -138,7 +139,7 @@ export const InputTag = forwardRef<HTMLInputElement, InputTagProps>(
         helperText={helperText}
         disabled={disabled}
         className={className}
-        boxClassName={cn('h-auto min-h-12 flex-wrap gap-1 py-2', boxClassName)}
+        boxClassName={cn('h-auto min-h-12 flex-wrap gap-1', boxClassName)}
         htmlFor={fieldId}
         onBoxClick={() => inputRef.current?.focus()}
       >

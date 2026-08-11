@@ -15,12 +15,13 @@ import { useFieldA11y } from './useFieldA11y';
   ─────────────────────────────────────────────────────────────────────────────
   Same shell as InputText with a taller, top-aligned box (a <textarea> instead of
   the single-line control is why this one composes InputFieldShell directly):
-    content height 120px → min-h-30 (h-auto) · spacing/md 12px → p-3
-    stacked so the counter can sit under the text → flex-col · spacing/xs 4px → gap-1
-  COUNTER (`TextAreaWithCount`)
+    content height 120px → min-h-30 (h-auto) · spacing/lg 16px → p-4
+  COUNTER (`TextAreaWithCount`) — outside the border, under the box, right-aligned
     typography/caption/sm/regular 12/20/0.3 → text-xs leading-sm tracking-sm
-    text/neutral/muted   #595858 → text-neutral-muted
-    text/semantic/error  #f44336 → text-destructive (over the limit)
+    text/neutral/default #0f0f0f → text-foreground
+    text/semantic/error  #f44336 → text-destructive (over the limit — ours, not
+                                   a Figma state, and the only reason for `cn`)
+    spacing/md 12px gap → the shell's own gap-2 plus mt-1
   ─────────────────────────────────────────────────────────────────────────────
 */
 
@@ -97,11 +98,24 @@ export const InputTextarea = forwardRef<
         helperText={helperText}
         disabled={disabled}
         className={className}
-        boxClassName={cn(
-          'h-auto min-h-30 flex-col items-stretch gap-1 p-3',
-          boxClassName,
-        )}
+        boxClassName={cn('h-auto min-h-30 items-stretch p-4', boxClassName)}
         htmlFor={fieldId}
+        footer={
+          showCount && (
+            <span
+              // The shell's gap-2 plus mt-1 is the 12px Figma leaves here —
+              // cheaper than giving the shell a second gap to reason about.
+              className={cn(
+                'mt-1 self-end text-xs leading-sm tracking-sm',
+                isOverLimit ? 'text-destructive' : 'text-foreground',
+              )}
+            >
+              {maxLength === undefined
+                ? text.length
+                : `${text.length}/${maxLength}`}
+            </span>
+          )
+        }
       >
         <textarea
           ref={ref}
@@ -118,19 +132,6 @@ export const InputTextarea = forwardRef<
           )}
           {...rest}
         />
-
-        {showCount && (
-          <span
-            className={cn(
-              'shrink-0 self-end text-xs leading-sm tracking-sm',
-              isOverLimit ? 'text-destructive' : 'text-neutral-muted',
-            )}
-          >
-            {maxLength === undefined
-              ? text.length
-              : `${text.length}/${maxLength}`}
-          </span>
-        )}
       </InputFieldShell>
     );
   },

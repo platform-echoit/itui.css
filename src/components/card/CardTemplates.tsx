@@ -1,5 +1,5 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
-import { ImageRegularIcon } from '../../icons/ITUI/image';
+import { ImageLightIcon } from '../../icons/ITUI/image';
 import { cn } from '../../lib/utils';
 
 /*
@@ -46,7 +46,7 @@ const CheckIcon = ({ className }: { className: string }) => (
  */
 function ImagePlaceholder({ className }: { className?: string }) {
   return (
-    <ImageRegularIcon
+    <ImageLightIcon
       aria-hidden="true"
       className={cn('opacity-40 [&_path]:fill-current', className)}
     />

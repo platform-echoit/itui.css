@@ -160,10 +160,10 @@ function WheelPickerColumnView({
           onClick={() => onSelect(option.value)}
           className={cn(
             'flex h-10 w-full cursor-pointer snap-center items-center justify-center',
-            'leading-md tracking-md',
+            'text-sm leading-md tracking-md',
             index === selectedIndex
-              ? 'text-sm font-medium text-foreground'
-              : 'text-xs font-medium text-neutral-muted',
+              ? 'font-medium text-foreground'
+              : 'font-normal text-neutral-muted',
           )}
         >
           {option.label}

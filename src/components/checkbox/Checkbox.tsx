@@ -4,7 +4,7 @@ import {
   type InputHTMLAttributes,
   type ReactNode,
 } from 'react';
-import { CheckRegularIcon } from '../../icons/ITUI/check';
+import { CheckBoldIcon } from '../../icons/ITUI/check';
 import { cn } from '../../lib/utils';
 
 /*
@@ -134,7 +134,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           )}
         >
           {checked && (
-            <CheckRegularIcon
+            <CheckBoldIcon
               aria-hidden="true"
               className="size-3 [&_path]:fill-current"
             />

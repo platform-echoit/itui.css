@@ -56,7 +56,6 @@ import { LinkSimpleRegularIcon } from '../../icons/ITUI/link-simple';
 import { ImagesRegularIcon } from '../../icons/ITUI/images';
 import { FilmStripRegularIcon } from '../../icons/ITUI/film-strip';
 import { CodeRegularIcon } from '../../icons/ITUI/code';
-import { DotsThreeRegularIcon } from '../../icons/ITUI/dots-three';
 import { InputFieldShell } from './InputFieldShell';
 import { useFieldA11y } from './useFieldA11y';
 
@@ -66,18 +65,34 @@ import { useFieldA11y } from './useFieldA11y';
   InputFieldShell's box, stacked instead of centered: toolbar on top, editor below.
 
   BOX     h-auto flex-col items-stretch p-0  (the shell's 48px row would clip both)
-  TOOLBAR height/input/sm 40px → min-h-10 · spacing/xs 4px → gap-1 · px-2
-          border/neutral/subtle #ededed → border-b border-input
-          ⚠ flex-wrap: 13 controls do not fit the 358px container on one row, and
-            the box is overflow-hidden — wrapping beats clipping them away.
-  BUTTON  height/icon/lg 20px icon in a 32px hit area → size-8 · radius/sm → rounded-lg
-          icon/neutral/muted     #595858 → text-neutral-muted        (idle)
+          min-w-fit, because the bar is one row in Figma and the box is
+          overflow-hidden: a narrower container has to push past the box rather
+          than clip controls away. It reads the toolbar's own width, so a
+          translated block-style label moves it without a number to update.
+  TOOLBAR spacing/md 12px → px-3 · spacing/sm 8px → py-2 · border-b border-input
+          40px tall: py-2 either side of a 24px lane (line-height/md, the tallest
+          thing on the row).
+          Two lanes: the controls, then a flex-1 lane that pushes `code` to the
+          right edge the way Figma has it.
+          spacing/md 12px → gap-3 between groups.
+  BUTTON  height/icon/lg 20px icon in a 24px box → size-6 · radius/xs → rounded-sm
+          The box is ours — Figma draws bare 20px icons, which is under the 24px
+          pointer-target floor — and it costs the row no width: two abutting 24px
+          boxes leave exactly the spacing/xs 4px Figma puts between two glyphs,
+          which is why a group has no `gap`. The 2px each box adds at either end
+          of a group is pulled back with -mx-0.5, so the glyphs still land on
+          Figma's 12px group padding.
+          icon/neutral/default   #0f0f0f → text-foreground           (idle)
           surface/neutral/hover  #f5f5f5 → hover:bg-surface-neutral-subtle
           surface/primary/subtle #e6f5fc → bg-brand-subtle } active
           icon/primary/default   #009ce0 → text-primary     }
-  EDITOR  content height 60px → min-h-15 · spacing/lg 16px → p-4
+  EDITOR  spacing/lg 16px → p-4, and min-h-23 (92px) puts the empty box within a
+          pixel of the 166px Figma draws, once the 41px bar and the padding are
+          counted (measured: 167).
           typography/body/lg/regular 16/26/0.09 → text-base leading-lg tracking-lg
           text/neutral/muted #595858 → text-neutral-muted (placeholder)
+          wrap-anywhere is Figma's [word-break:break-word]; it also keeps a
+          pasted 400-character "word" from widening the box through min-w-fit.
 
   Two deliberate deviations from the spec sheet, both to stay on ITUI tokens:
     · the block-type menu is a Popover, not the `DropdownMenu` component — that
@@ -88,13 +103,13 @@ import { useFieldA11y } from './useFieldA11y';
 */
 
 /** Buttons the toolbar renders but does not wire — see `onCommand`. */
-export type InputTextFormattingCommand = 'image' | 'video' | 'code' | 'more';
+export type InputTextFormattingCommand = 'image' | 'video' | 'code';
 
 type BlockType = 'paragraph' | Extract<HeadingTagType, 'h1' | 'h2' | 'h3'>;
 
 /**
  * Every string the toolbar renders — as tooltips, `aria-label`s and the block
- * dropdown's visible rows. One bag rather than 18 props: they are always
+ * dropdown's visible rows. One bag rather than 17 props: they are always
  * translated together, and the component already takes 13 behavioural props.
  */
 export interface InputTextFormattingLabels {
@@ -116,7 +131,6 @@ export interface InputTextFormattingLabels {
   image: string;
   video: string;
   code: string;
-  more: string;
 }
 
 const DEFAULT_LABELS: InputTextFormattingLabels = {
@@ -137,7 +151,6 @@ const DEFAULT_LABELS: InputTextFormattingLabels = {
   image: 'Image',
   video: 'Video',
   code: 'Code',
-  more: 'More',
 };
 
 /** Toolbar rows hold a label *key*; the text itself comes from `labels`. */
@@ -192,16 +205,28 @@ const ALIGNMENTS: {
   },
 ];
 
-const EXTRA_COMMANDS: {
+/*
+  Drawn but never wired to Lexical: each needs a custom DecoratorNode plus an
+  upload flow, which belongs to the app — they only fire `onCommand`. Split in
+  two because Figma puts them at opposite ends of the bar.
+*/
+type ExtraCommand = {
   command: InputTextFormattingCommand;
   labelKey: LabelKey;
   icon: ReactNode;
-}[] = [
+};
+
+const MEDIA_COMMANDS: ExtraCommand[] = [
   { command: 'image', labelKey: 'image', icon: <ImagesRegularIcon /> },
   { command: 'video', labelKey: 'video', icon: <FilmStripRegularIcon /> },
-  { command: 'code', labelKey: 'code', icon: <CodeRegularIcon /> },
-  { command: 'more', labelKey: 'more', icon: <DotsThreeRegularIcon /> },
 ];
+
+/** The one control Figma parks on the right edge of the bar. */
+const CODE_COMMAND: ExtraCommand = {
+  command: 'code',
+  labelKey: 'code',
+  icon: <CodeRegularIcon />,
+};
 
 /**
  * Tailwind's preflight strips heading sizes, so every block and inline format
@@ -228,12 +253,15 @@ const EDITOR_THEME: EditorThemeClasses = {
 
 // ─── Toolbar pieces ───────────────────────────────────────────────────────────
 
-/** Vertical rule between toolbar groups. */
+/**
+ * Vertical rule between toolbar groups — the 1×24 #ededed line Figma exports,
+ * which is the height of the row's own content lane.
+ */
 function ToolbarDivider() {
   return (
     <Divider
       aria-orientation="vertical"
-      className="h-5 w-px shrink-0 self-center"
+      className="h-6 w-px shrink-0 self-center"
     />
   );
 }
@@ -258,14 +286,14 @@ function ToolbarButton({ label, active, icon, onClick }: ToolbarButtonProps) {
       }
       onClick={onClick}
       className={cn(
-        'flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg',
+        'flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-sm',
         'transition-colors duration-150',
         'focus-visible:focus-ring',
         // ITUI icons hard-code fill="#101010" and default to 32px.
         '[&_svg]:size-5 [&_path]:fill-current',
         active
           ? 'bg-brand-subtle text-primary'
-          : 'text-neutral-muted hover:bg-surface-neutral-subtle',
+          : 'text-foreground hover:bg-surface-neutral-subtle',
       )}
     >
       {icon}
@@ -290,7 +318,12 @@ function BlockTypeSelect({ value, onChange, labels }: BlockTypeSelectProps) {
           type="button"
           aria-label={labels.blockStyle}
           className={cn(
-            'flex h-8 shrink-0 cursor-pointer items-center gap-1 rounded-lg px-2',
+            /*
+              Figma gives the label no padding of its own, so the hover surface
+              borrows 4px and gives it straight back with -mx-1: the text still
+              starts on the row's 12px padding.
+            */
+            'flex h-6 shrink-0 cursor-pointer items-center gap-1 rounded-sm px-1 -mx-1',
             'text-sm leading-md tracking-md text-foreground',
             'transition-colors duration-150 hover:bg-surface-neutral-subtle',
             'focus-visible:focus-ring',
@@ -303,14 +336,27 @@ function BlockTypeSelect({ value, onChange, labels }: BlockTypeSelectProps) {
             width={16}
             height={16}
             className={cn(
-              'shrink-0 text-neutral-muted transition-transform duration-150 [&_path]:fill-current',
+              'shrink-0 transition-transform duration-150 [&_path]:fill-current',
               open && 'rotate-180',
             )}
           />
         </button>
       </PopoverTrigger>
 
-      <PopoverContent align="start" className="min-w-40 rounded-lg py-2">
+      {/*
+        `w-max` so the panel hugs its four short rows, with the trigger's width
+        as the floor — no fixed number to keep in step with a translated label.
+        It has to be a `w-*`: PopoverContent defaults to `w-72` (288px), and the
+        `min-w-40` this used to carry is a different tailwind-merge group, so it
+        never displaced that default — the panel opened three times too wide.
+        The long `min-w-[var(--radix-popover-trigger-width)]` form, not the v4
+        shorthand `min-w-(--…)`, for the same reason InputDropdown spells it
+        out: tailwind-merge 2.x cannot parse the shorthand.
+      */}
+      <PopoverContent
+        align="start"
+        className="w-max min-w-[var(--radix-popover-trigger-width)] rounded-lg p-2"
+      >
         {BLOCK_TYPES.map((item) => (
           <button
             key={item.type}
@@ -321,8 +367,8 @@ function BlockTypeSelect({ value, onChange, labels }: BlockTypeSelectProps) {
             }}
             className={cn(
               // height/popover/sm 36px → h-9, same row rhythm as InputDropdown.
-              'flex h-9 w-full cursor-pointer items-center px-3 text-left',
-              'text-sm leading-6 tracking-md hover:bg-surface-neutral-subtle',
+              'flex h-9 w-full cursor-pointer items-center rounded-lg px-2 text-left',
+              'text-sm leading-md tracking-md hover:bg-surface-neutral-subtle',
               item.type === value ? 'text-primary' : 'text-foreground',
             )}
           >
@@ -428,54 +474,71 @@ function Toolbar({
   };
 
   return (
-    <div className="flex min-h-10 shrink-0 flex-wrap items-center gap-1 border-b border-input px-2 py-1">
-      <BlockTypeSelect
-        value={blockType}
-        onChange={applyBlockType}
-        labels={text}
-      />
-
-      <ToolbarDivider />
-      {TEXT_FORMATS.map(({ format, labelKey, icon }) => (
-        <ToolbarButton
-          key={format}
-          label={text[labelKey]}
-          icon={icon}
-          active={formats.includes(format)}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, format)}
+    <div className="flex shrink-0 items-start border-b border-input">
+      <div className="flex shrink-0 items-center gap-3 px-3 py-2">
+        <BlockTypeSelect
+          value={blockType}
+          onChange={applyBlockType}
+          labels={text}
         />
-      ))}
 
-      <ToolbarDivider />
-      {ALIGNMENTS.map(({ align: value, labelKey, icon }) => (
+        <ToolbarDivider />
+        {/* No gap, -mx-0.5: see BUTTON in the token map at the top. */}
+        <div className="-mx-0.5 flex items-center">
+          {TEXT_FORMATS.map(({ format, labelKey, icon }) => (
+            <ToolbarButton
+              key={format}
+              label={text[labelKey]}
+              icon={icon}
+              active={formats.includes(format)}
+              onClick={() =>
+                editor.dispatchCommand(FORMAT_TEXT_COMMAND, format)
+              }
+            />
+          ))}
+        </div>
+
+        <ToolbarDivider />
+        <div className="-mx-0.5 flex items-center">
+          {ALIGNMENTS.map(({ align: value, labelKey, icon }) => (
+            <ToolbarButton
+              key={value}
+              label={text[labelKey]}
+              icon={icon}
+              active={align === value}
+              onClick={() =>
+                editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, value)
+              }
+            />
+          ))}
+        </div>
+
+        <ToolbarDivider />
+        <div className="-mx-0.5 flex items-center">
+          <ToolbarButton
+            label={text.link}
+            icon={<LinkSimpleRegularIcon />}
+            active={isLink}
+            onClick={toggleLink}
+          />
+          {MEDIA_COMMANDS.map(({ command, labelKey, icon }) => (
+            <ToolbarButton
+              key={command}
+              label={text[labelKey]}
+              icon={icon}
+              onClick={() => onCommand?.(command)}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="flex min-w-0 flex-1 items-center justify-end px-3 py-2">
         <ToolbarButton
-          key={value}
-          label={text[labelKey]}
-          icon={icon}
-          active={align === value}
-          onClick={() => editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, value)}
+          label={text[CODE_COMMAND.labelKey]}
+          icon={CODE_COMMAND.icon}
+          onClick={() => onCommand?.(CODE_COMMAND.command)}
         />
-      ))}
-
-      <ToolbarDivider />
-      <ToolbarButton
-        label={text.link}
-        icon={<LinkSimpleRegularIcon />}
-        active={isLink}
-        onClick={toggleLink}
-      />
-
-      <ToolbarDivider />
-      {/* Rendered, never wired: each needs a DecoratorNode plus an upload flow,
-          so the app decides what happens. */}
-      {/* {EXTRA_COMMANDS.map(({ command, labelKey, icon }) => (
-        <ToolbarButton
-          key={command}
-          label={text[labelKey]}
-          icon={icon}
-          onClick={() => onCommand?.(command)}
-        />
-      ))} */}
+      </div>
     </div>
   );
 }
@@ -498,9 +561,9 @@ export interface InputTextFormattingProps {
   /** `json` round-trips through `defaultValue`; `text` is the plain-text version */
   onChange?: (value: { json: string; text: string }) => void;
   /**
-   * Fired by the Image / Video / Code / More buttons, which are drawn but not
-   * connected to Lexical — each needs a custom `DecoratorNode` and an upload
-   * flow, which belongs to the app rather than the design system.
+   * Fired by the Image / Video / Code buttons, which are drawn but not connected
+   * to Lexical — each needs a custom `DecoratorNode` and an upload flow, which
+   * belongs to the app rather than the design system.
    */
   onCommand?: (command: InputTextFormattingCommand) => void;
   /** Return the URL for the selection; falls back to `window.prompt` */
@@ -570,7 +633,7 @@ export const InputTextFormatting = forwardRef<
         htmlFor={fieldId}
         labelId={labelProps.id}
         boxClassName={cn(
-          'h-auto flex-col items-stretch gap-0 p-0',
+          'h-auto min-w-fit flex-col items-stretch gap-0 p-0',
           boxClassName,
         )}
       >
@@ -605,7 +668,10 @@ export const InputTextFormatting = forwardRef<
                       {placeholder}
                     </span>
                   }
-                  className={cn('min-h-15 outline-none', editorClassName)}
+                  className={cn(
+                    'min-h-23 outline-none wrap-anywhere',
+                    editorClassName,
+                  )}
                 />
               }
               // The placeholder above already covers it.

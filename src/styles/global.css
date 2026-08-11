@@ -59,10 +59,11 @@
 
   /* --- Focus ring ---
      Width of the focus indicator every component paints through the
-     `focus-ring` utility. 0px is "no indicator", which is what the design
-     brief asked for; see the utility's own comment for the trade-off and for
-     how to turn it back on. */
-  --itui-focus-ring-width: 0px;
+     `focus-ring` utility. 0.5px is a hairline: it is sub-pixel, so a DPR-1
+     display rounds it (Chrome draws it faint, Firefox may snap it to 1px) and
+     only a 2× display renders it as exactly one device pixel. Raise it here to
+     make the indicator thicker in every component at once. */
+  --itui-focus-ring-width: 0.5px;
 
   /* --- Typography / Shape --- */
   --radius: 0.625rem;
@@ -670,9 +671,9 @@
 
    `outline` rather than `ring` on purpose: a ring is a box-shadow, so it cannot
    be suppressed by any `outline` rule and it repaints on every state change.
-   At the default 0px the shorthand still resolves, paints nothing, and overrides
-   the UA's `:focus-visible { outline: auto }` — so no browser ring leaks through
-   either. Restoring the indicator everywhere is one declaration:
+   The shorthand also overrides the UA's `:focus-visible { outline: auto }`, so
+   no browser ring leaks through alongside ours. Changing the indicator
+   everywhere is one declaration:
 
      :root { --itui-focus-ring-width: 2px; }
 
@@ -680,8 +681,9 @@
    or `peer-focus-visible:` / `group-focus-visible:` / `has-[:focus-visible]:`
    where the focusable element and the painted box are different nodes.
 
-   ⚠ Off by default means keyboard users get no focus indicator, which fails
-   WCAG 2.4.7. That is a deliberate, documented choice — see ACCESSIBILITY.md.
+   ⚠ The shipped 0.5px is a hairline and sub-pixel — see the token's comment.
+   WCAG 2.2 SC 2.4.11 asks for 2px, so this is thinner than that bar; it is a
+   deliberate, documented choice — see ACCESSIBILITY.md.
 
    `--color-brand` (not `--color-ring`): it is the colour seven of the eight old
    idioms used, and it comes from a plain `@theme` block, so the custom property

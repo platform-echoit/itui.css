@@ -4,7 +4,7 @@
 
 **494 exports** across **56 modules**, 248 of them components. Every type, default and description below is read out of the source that ships, so this file cannot drift from the code — CI fails if it does.
 
-The 6,616 ITUI icon components live behind their own subpath, `@echoit/itui.css/icons`, and are summarised rather than listed: they share one generated shape — `width`, `height` and every `svg` attribute — and their paths hardcode `fill="#101010"`, so tinting one needs `className="[&_path]:fill-current"` rather than a text colour.
+The 6,617 ITUI icon components live behind their own subpath, `@echoit/itui.css/icons`, and are summarised rather than listed: they share one generated shape — `width`, `height` and every `svg` attribute — and their paths hardcode `fill="#101010"`, so tinting one needs `className="[&_path]:fill-current"` rather than a text colour.
 
 Every module is importable two ways:
 
@@ -1480,7 +1480,7 @@ Props: `InputTextFormattingProps`
 | `placeholder?` | `string` | `'Enter content'` | Ghost text shown while the editor is empty. |
 | `defaultValue?` | `string` | — | Serialized state to open with — `JSON.stringify(editorState.toJSON())` |
 | `onChange?` | `(value: { json: string; text: string }) => void` | — | `json` round-trips through `defaultValue`; `text` is the plain-text version |
-| `onCommand?` | `(command: InputTextFormattingCommand) => void` | — | Fired by the Image / Video / Code / More buttons, which are drawn but not connected to Lexical — each needs a custom `DecoratorNode` and an upload flow, which belongs to the app rather than the design system. |
+| `onCommand?` | `(command: InputTextFormattingCommand) => void` | — | Fired by the Image / Video / Code buttons, which are drawn but not connected to Lexical — each needs a custom `DecoratorNode` and an upload flow, which belongs to the app rather than the design system. |
 | `onLinkRequest?` | `() => string \| null` | — | Return the URL for the selection; falls back to `window.prompt` |
 | `linkPromptLabel?` | `string` | `'Enter a link URL'` | Prompt text used by that fallback |
 | `labels?` | `Partial<InputTextFormattingLabels>` | — | Overrides for the toolbar's tooltips, `aria-label`s and dropdown rows |
@@ -1532,7 +1532,7 @@ Props: `InputWithButtonProps extends Omit<InputTextProps, 'suffix'>`
 ```ts
 type InputFileUploadStatus = 'uploading' | 'success' | 'error' | 'done';
 type InputProps = InputTextProps;
-type InputTextFormattingCommand = 'image' | 'video' | 'code' | 'more';
+type InputTextFormattingCommand = 'image' | 'video' | 'code';
 type InputV2FieldType = 'text' | 'search' | 'phone' | 'date' | 'dropdown' | 'tag' | 'textarea' | 'button' | 'upload' | 'text-formatting';
 type InputV2Props = ({ /** * Which field to render. It is the discriminant of this union, so setting * it narrows the rest of the props to that field's own — omit it and you * get the plain single-line field. */ fieldType?: 'text'; } & InputTextProps) | ({ fieldType: 'search' } & InputSearchProps) | ({ fieldType: 'phone' } & InputPhoneNumberProps) | ({ fieldType: 'date' } & InputDateProps) | ({ fieldType: 'dropdown' } & InputDropdownProps) | ({ fieldType: 'tag' } & InputTagProps) | ({ fieldType: 'textarea' } & InputTextareaProps) | ({ fieldType: 'button' } & InputWithButtonProps) | ({ fieldType: 'upload' } & InputFileUploadProps) | ({ fieldType: 'text-formatting' } & InputTextFormattingProps);
 ```

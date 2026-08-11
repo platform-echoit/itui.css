@@ -7,7 +7,7 @@ import {
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { cn } from '../../lib/utils';
 import { Button } from '../button/Button';
-import { DotsThreeVerticalRegularIcon } from '../../icons/ITUI/dots-three-vertical';
+import { DotsThreeVerticalBoldIcon } from '../../icons/ITUI/dots-three-vertical';
 
 /*
   Token → Tailwind map (Figma node 28392:283 "Overflow Menu")
@@ -123,7 +123,7 @@ export const OverflowMenuTrigger = forwardRef<
           // centring box to land on the button's centre.
           iconLeft={
             <span className="flex size-5 items-center justify-center">
-              {icon ?? <DotsThreeVerticalRegularIcon width={16} height={16} />}
+              {icon ?? <DotsThreeVerticalBoldIcon width={16} height={16} />}
             </span>
           }
         />

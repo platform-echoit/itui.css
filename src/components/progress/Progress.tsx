@@ -1,10 +1,10 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import * as RadixProgress from '@radix-ui/react-progress';
 import { cn } from '../../lib/utils';
-import CheckCircleRegularIcon from '../../icons/ITUI/check-circle/CheckCircleRegularIcon';
 import CheckRegularIcon from '../../icons/ITUI/check/CheckRegularIcon';
-import XCircleRegularIcon from '../../icons/ITUI/xcircle/XCircleRegularIcon';
 import XRegularIcon from '../../icons/ITUI/x/XRegularIcon';
+import CheckCircleFillIcon from '../../icons/ITUI/check-circle/CheckCircleFillIcon';
+import XCircleFillIcon from '../../icons/ITUI/xcircle/XCircleFillIcon';
 
 /*
   Token → Tailwind map (Figma node 27280:1270 "progress bar")
@@ -164,10 +164,10 @@ function ProgressValue({
     const isDone = status === 'done';
     const Icon = isDone
       ? iconStyle === 'circle'
-        ? CheckCircleRegularIcon
+        ? CheckCircleFillIcon
         : CheckRegularIcon
       : iconStyle === 'circle'
-        ? XCircleRegularIcon
+        ? XCircleFillIcon
         : XRegularIcon;
 
     return (

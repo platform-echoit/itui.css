@@ -12,7 +12,6 @@ import { cn } from '../../lib/utils';
 import { Avatar } from '../avatar/Avatar';
 import { CaretDownRegularIcon } from '../../icons/ITUI/caret-down';
 import { SidebarSimpleRegularIcon } from '../../icons/ITUI/sidebar-simple';
-import { UserRegularIcon } from '../../icons/ITUI/user';
 
 /*
   Token → Tailwind map (Figma node 28392:397 "LNB")
@@ -513,25 +512,6 @@ LnbFooter.displayName = 'LnbFooter';
 
 // ─── LnbUser (Base LNB, Type=Avatar) ──────────────────────────────────────────
 
-/**
- * Figma's placeholder profile — a `User` glyph on a neutral circle. Avatar's own
- * default fill is `bg-semantic-red-700`, which has no `@theme` entry and so paints
- * nothing behind its white initial; passing the fill here keeps LnbUser on tokens
- * that exist without touching Avatar's defaults.
- *
- * surface/neutral/subtle/default #f5f5f5 → bg-surface-neutral-subtle
- * icon/neutral/subtle            #9e9e9e → text-neutral-subtle
- */
-const LnbUserAvatar = () => (
-  <Avatar
-    size="sm"
-    className="bg-surface-neutral-subtle text-neutral-subtle"
-    aria-hidden="true"
-  >
-    <UserRegularIcon className="size-4 [&_path]:fill-current" />
-  </Avatar>
-);
-
 // `name` shadows the button's own HTML attribute, so it is omitted — same
 // resolution TopNavigationV2Props reached for `title`.
 export interface LnbUserProps
@@ -587,7 +567,7 @@ export const LnbUser = forwardRef<HTMLButtonElement, LnbUserProps>(
         {...rest}
       >
         <span className="flex min-w-0 items-center gap-2 group-data-collapsed/lnb:gap-3">
-          {avatar ?? <LnbUserAvatar />}
+          {avatar ?? <Avatar size="sm" />}
           <span className="flex min-w-0 flex-col group-data-collapsed/lnb:sr-only">
             <span className="w-full truncate text-sm leading-md tracking-md font-medium text-foreground">
               {name}

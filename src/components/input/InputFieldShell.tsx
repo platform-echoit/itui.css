@@ -8,14 +8,15 @@ import { cn } from '../../lib/utils';
   ─────────────────────────────────────────────────────────────────────────────
   The frame every input field type is built from — label, bordered box, message.
 
-  BOX  (height/input 48px → h-12 · spacing/md 12px → px-3 · spacing/xs 4px → gap-1
+  BOX  (height/input 48px → h-12 · spacing/md 12px → p-3 · spacing/xs 4px → gap-1
         radius/sm 8px → rounded-lg · stroke/xs 1px → border)
     surface/neutral/secondary/default #fafafa → bg-inverse
     border/neutral/subtle             #ededed → border-input     (--input)
     border/primary/default            #009ce0 → border-ring      (--ring, focus-within)
     border/semantic/error             #f44336 → border-destructive
     surface/neutral/disabled/default  #f5f5f5 → bg-surface-neutral-subtle
-    border/neutral/disabled           #c2c2c2 → border-neutral-disabled
+  Disabled keeps `border/neutral/subtle` — only the surface greys out. (The
+  #c2c2c2 `border/neutral/disabled` token is not what the input types draw.)
 
   TEXT
     typography/body/lg/regular 16/26/0.09 → text-base leading-lg tracking-lg
@@ -68,6 +69,11 @@ export interface InputFieldShellProps {
    * (which grows with the label and the error message).
    */
   boxRef?: Ref<HTMLDivElement>;
+  /**
+   * Rendered between the box and the message. Figma hangs the textarea's
+   * character counter here — outside the border, not inside the box.
+   */
+  footer?: ReactNode;
   /** Content of the box — the control itself plus any slots */
   children: ReactNode;
 }
@@ -91,6 +97,7 @@ export function InputFieldShell({
   labelId,
   onBoxClick,
   boxRef,
+  footer,
   children,
 }: InputFieldShellProps) {
   const isError = !!error && !disabled;
@@ -112,10 +119,10 @@ export function InputFieldShell({
         ref={boxRef}
         onClick={onBoxClick}
         className={cn(
-          'flex items-center gap-1 h-12 px-3 rounded-lg border overflow-hidden',
+          'flex items-center gap-1 h-12 p-3 rounded-lg border overflow-hidden',
           'transition-colors duration-150',
           disabled
-            ? 'bg-surface-neutral-subtle border-neutral-disabled pointer-events-none'
+            ? 'bg-surface-neutral-subtle border-input pointer-events-none'
             : isError
               ? 'bg-inverse border-destructive'
               : 'bg-inverse border-input focus-within:border-ring',
@@ -124,6 +131,8 @@ export function InputFieldShell({
       >
         {children}
       </div>
+
+      {footer}
 
       {message && (
         <p

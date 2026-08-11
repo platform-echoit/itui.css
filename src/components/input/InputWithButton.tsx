@@ -1,7 +1,6 @@
 'use client';
 
 import { forwardRef, type ReactNode } from 'react';
-import { cn } from '../../lib/utils';
 import { Button, type ButtonProps } from '../button/Button';
 import { InputText, type InputTextProps } from './InputText';
 
@@ -11,7 +10,8 @@ import { InputText, type InputTextProps } from './InputText';
   InputText box with a trailing action:
     height/button/sm 32px → Button size="sm"   (fits inside the 48px box)
     surface/primary/default #009ce0 → Button variant="primary"
-    spacing/sm 8px → boxClassName="pr-2"       (button sits closer to the edge)
+  The box keeps the shell's uniform spacing/md 12px padding — Figma does not
+  tighten the right edge for this type.
   Disabled is inherited: the shell sets pointer-events-none, and the button gets
   the same `disabled` so it also renders its disabled colors.
   ─────────────────────────────────────────────────────────────────────────────
@@ -40,7 +40,6 @@ export const InputWithButton = forwardRef<
       buttonDisabled = false,
       buttonProps,
       disabled = false,
-      boxClassName,
       ...rest
     },
     ref,
@@ -48,7 +47,6 @@ export const InputWithButton = forwardRef<
     <InputText
       ref={ref}
       disabled={disabled}
-      boxClassName={cn('pr-2', boxClassName)}
       suffix={
         <Button
           size="sm"

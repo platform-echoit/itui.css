@@ -5,13 +5,15 @@ import { cn } from '../../lib/utils';
 import { useControllableState } from '../../lib/use-controllable-state';
 import { useForwardedRef } from '../../lib/use-forwarded-ref';
 import { MagnifyingGlassRegularIcon } from '../../icons/ITUI/magnifying-glass';
-import { XCircleRegularIcon } from '../../icons/ITUI/xcircle';
+import { XCircleFillIcon, XCircleRegularIcon } from '../../icons/ITUI/xcircle';
 import { InputText, type InputTextProps } from './InputText';
 
 /*
   Token → Tailwind map (Figma node 27832:1571 `Search` · 28964:9428 `SearchWithLabel`)
   ─────────────────────────────────────────────────────────────────────────────
-  Box, text and states all come from InputText — only the two slots differ:
+  Box, text and states all come from InputText — only the slots and the box gap
+  differ. This is the one type Figma spaces at spacing/sm 8px instead of the
+  spacing/xs 4px every other type uses, hence the gap-2 override:
     icon/neutral/subtle #9e9e9e → text-neutral-subtle  (leading magnifier)
     icon/neutral/muted  #595858 → text-neutral-muted   (trailing clear, from the slot)
     height/icon/lg 20px → size-5 (ITUI icons default to 32 → width/height are explicit)
@@ -44,6 +46,7 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
       clearLabel = 'Clear search',
       disabled = false,
       fieldClassName,
+      boxClassName,
       ...rest
     },
     ref,
@@ -83,11 +86,12 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         disabled={disabled}
+        boxClassName={cn('gap-2', boxClassName)}
         prefix={
           <MagnifyingGlassRegularIcon
             width={20}
             height={20}
-            className={cn(!disabled && 'text-neutral-subtle')}
+            className={cn(!disabled && 'text-neutral-muted')}
           />
         }
         suffix={
@@ -98,10 +102,10 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
               onClick={handleClear}
               className="flex size-5 cursor-pointer items-center justify-center"
             >
-              <XCircleRegularIcon
+              <XCircleFillIcon
                 width={20}
                 height={20}
-                className="[&_path]:fill-current"
+                className="[&_path]:fill-icon-neutral-subtle"
               />
             </button>
           ) : undefined

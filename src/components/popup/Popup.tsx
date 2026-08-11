@@ -2,7 +2,7 @@
 
 import { type ReactNode } from 'react';
 import * as RadixDialog from '@radix-ui/react-dialog';
-import { ImageRegularIcon } from '../../icons/ITUI/image';
+import { ImageLightIcon } from '../../icons/ITUI/image';
 import { XLightIcon } from '../../icons/ITUI/x';
 import { cn } from '../../lib/utils';
 import { Button } from '../button';
@@ -63,7 +63,7 @@ const CARD =
 /** Stand-in artwork for an empty image slot — same shape `CardTemplates` uses. */
 function ImagePlaceholder({ className }: { className?: string }) {
   return (
-    <ImageRegularIcon
+    <ImageLightIcon
       aria-hidden="true"
       className={cn('opacity-40 [&_path]:fill-current', className)}
     />

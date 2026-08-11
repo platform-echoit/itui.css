@@ -102,7 +102,7 @@ export const Radio = forwardRef<
         outerSizeMap[size],
         'border-neutral-muted',
         'enabled:hover:border-brand',
-        'data-[state=checked]:border-brand',
+        'data-[state=checked]:border-brand data-[state=checked]:border-[1.6px]',
         'disabled:border-neutral-disabled disabled:bg-surface-neutral-disabled',
         'focus-visible:focus-ring',
         className,
