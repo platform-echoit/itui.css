@@ -1,5 +1,12 @@
+'use client';
+
 import * as PopoverPrimitive from '@radix-ui/react-popover';
-import type { ComponentProps, RefObject } from 'react';
+import {
+  useEffect,
+  useState,
+  type ComponentProps,
+  type RefObject,
+} from 'react';
 import { cn } from '../../lib/utils';
 
 // ─── Root / Trigger / Portal / Close ─────────────────────────────────────────
@@ -81,12 +88,49 @@ export function PopoverAnchor({
   virtualRef,
   ...props
 }: PopoverAnchorProps) {
+  /*
+    Why the element goes through state instead of straight into `virtualRef`.
+
+    Radix asserts the anchor from an effect and skips the call whenever
+    `virtualRef.current` holds the same node as last time. Two things then work
+    against a ref that is populated during the same commit:
+
+    1. On the first render `PopoverTrigger` still wraps itself in an anchor of its
+       own — it only stands down once `hasCustomAnchor` flips, which is what our
+       own mount effect does. Its effect runs *after* this subtree's, so the
+       trigger wins that first round.
+    2. On the next render the trigger's anchor unmounts and takes its element with
+       it, leaving Radix holding a detached node. Our ref still reads the same box
+       it read before, so Radix sees no change and never re-asserts.
+
+    The result is an anchor that measures 0×0 at the viewport origin: the panel
+    lands at the top-left corner instead of under the field. Putting the element in
+    state gives Radix a null on the first pass and the real node on the second, so
+    the identity change it is watching for actually happens — after the trigger has
+    stood down. `InputDropdown` never hit this only because it has no
+    `PopoverTrigger` at all; `InputDate` does.
+
+    No dependency array, mirroring Radix's own anchor effect: re-reading every
+    render is what keeps up with a box that remounts, and `setState` bails out when
+    the node is unchanged, so this settles after one extra render.
+  */
+  const [anchor, setAnchor] = useState<Element | null>(null);
+  useEffect(() => {
+    setAnchor(virtualRef?.current ?? null);
+  });
+
   return (
     <PopoverPrimitive.Anchor
       className={cn(className)}
-      // Radix's types predate refs that are null before mount; the runtime only
-      // reads the ref once it is measuring.
-      virtualRef={virtualRef as RadixAnchorProps['virtualRef']}
+      // A plain `{ current }` object, not a ref: Radix only reads `.current` off
+      // it, and passing the live element (rather than a virtual rect) is what lets
+      // floating-ui keep tracking the box as it moves or resizes. Radix's types
+      // predate refs that are null before mount, hence the cast.
+      virtualRef={
+        virtualRef
+          ? ({ current: anchor } as RadixAnchorProps['virtualRef'])
+          : undefined
+      }
       {...props}
     />
   );
@@ -167,6 +211,7 @@ export function PopoverContent({
   placement,
   side: sideProp = 'bottom',
   align: alignProp = 'start',
+  collisionPadding = 8,
   children,
   ...rest
 }: PopoverContentProps) {
@@ -180,14 +225,32 @@ export function PopoverContent({
         side={side}
         align={align}
         sideOffset={sideOffset}
+        collisionPadding={collisionPadding}
         className={cn(
-          'bg-inverse border border-secondary rounded-lg shadow-downwards-sm flex flex-col overflow-hidden',
+          // Same surface as PopoverPanel — the two used to disagree (bg-white vs
+          // bg-inverse, border-secondary vs border-neutral-subtle) even though
+          // Figma draws one panel. `border-border-neutral-subtle` is #ededed;
+          // `border-neutral-subtle` looks like the right token but resolves to
+          // #9e9e9e, the icon/text grey. radius/lg 16px is the panel's radius;
+          // the 8px it used to carry is the radius of an *item*.
+          'bg-inverse border border-border-neutral-subtle rounded-2xl shadow-downwards-sm flex flex-col',
+          // size/container/sm — every Figma variant of this panel is 288px wide.
+          // Safe as a default: `cn` puts the caller's className last, and
+          // tailwind-merge drops this for any incoming `w-*` (InputDate uses
+          // `w-auto`, InputDropdown matches the trigger width).
+          'w-72',
+          // The panel is `position: fixed`, so a list taller than the gap between
+          // the trigger and the viewport edge used to be simply cut off: the page
+          // could not scroll to it and `overflow-hidden` clipped the rest. Radix
+          // measures that gap for us (minus `collisionPadding`), so the panel caps
+          // itself there and scrolls inside instead.
+          //
+          // `overflow-x-hidden` rather than dropping the axis: it keeps exactly
+          // what the old `overflow-hidden` was doing sideways — clipping the first
+          // and last row into the rounded corners — and stops a wide child from
+          // adding a horizontal scrollbar that was never there before.
+          'max-h-[var(--radix-popover-content-available-height)] overflow-x-hidden overflow-y-auto',
           'z-50 outline-none',
-          'data-[state=open]:animate-in data-[state=closed]:animate-out',
-          'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-          'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-          'data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2',
-          'data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2',
           className,
         )}
         {...rest}

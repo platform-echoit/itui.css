@@ -82,7 +82,7 @@ export const FloatingButton = forwardRef<
           'bg-surface-primary text-inverse',
           'hover:bg-surface-primary-hover',
           'active:bg-surface-primary-pressed',
-          'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
+          'focus-visible:focus-ring',
           'disabled:pointer-events-none disabled:bg-secondary disabled:text-neutral-disabled disabled:shadow-none',
           '[&_svg]:shrink-0 [&_path]:fill-current',
           root,

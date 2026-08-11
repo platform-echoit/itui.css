@@ -56,7 +56,7 @@ export interface DateHeaderProps
 const navButtonClasses = cn(
   'flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-lg p-1',
   'transition-colors duration-150 ease-out hover:bg-muted active:bg-secondary',
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+  'focus-visible:focus-ring',
   'disabled:pointer-events-none disabled:opacity-50',
 );
 

@@ -130,7 +130,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               : checked
                 ? 'bg-brand border-transparent text-inverse hover:bg-brand-pressed'
                 : 'bg-inverse border-neutral-muted hover:border-brand',
-            'peer-focus-visible:ring-2 peer-focus-visible:ring-brand peer-focus-visible:ring-offset-1',
+            'peer-focus-visible:focus-ring',
           )}
         >
           {checked && (

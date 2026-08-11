@@ -26,6 +26,12 @@ export default defineConfig([
     // must be flattened into a single stylesheet. `@import "tailwindcss"` stays
     // external on purpose — the consumer's Tailwind resolves it.
     // Entry key `index` is what keeps the published path at dist/index.css.
+    //
+    // styles/fonts.css is deliberately NOT an entry here: esbuild resolves a CSS
+    // `url()` like an import, so its root-absolute /fonts/*.woff2 fail the build
+    // looking for files on disk, and `external` is not forwarded to the CSS
+    // pipeline. It has no @import to flatten either, so it is copied verbatim by
+    // the `build:css` script instead.
     entry: { index: 'src/styles/global.css' },
     // Would wipe the JS emit from the config above.
     clean: false,

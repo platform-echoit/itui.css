@@ -57,9 +57,27 @@
   --sidebar-border: #ededed;
   --sidebar-ring: #009ce0;
 
+  /* --- Focus ring ---
+     Width of the focus indicator every component paints through the
+     `focus-ring` utility. 0px is "no indicator", which is what the design
+     brief asked for; see the utility's own comment for the trade-off and for
+     how to turn it back on. */
+  --itui-focus-ring-width: 0px;
+
   /* --- Typography / Shape --- */
   --radius: 0.625rem;
-  --font-sans: Pretendard, system-ui;
+  /* `--font-pretendard` is the variable next/font writes for its generated
+     family, so an app loading Pretendard that way wins without touching this.
+     The *inline* fallback is load-bearing: an undefined custom property with no
+     fallback is the guaranteed-invalid value, which makes this whole declaration
+     invalid at computed-value time — font-family would end up unset rather than
+     falling through the rest of the list. Storybook defines no such variable.
+     Then the literal family (registered by styles/fonts.css) and last a system
+     stack carrying Korean faces, so Hangul never lands on a serif. */
+  --font-sans:
+    var(--font-pretendard, 'Pretendard Variable'), Pretendard, system-ui,
+    -apple-system, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic',
+    sans-serif;
   --font-mono: Geist Mono;
   --font-serif: Georgia, serif;
 }
@@ -643,6 +661,34 @@
   .animate-collapsible-up {
     animation-duration: 1ms;
   }
+}
+
+/* The single source for every component's focus indicator. It replaced eight
+   different focus idioms spread over ~30 files — four flavours of
+   `focus-visible:outline-*`, three of `focus-visible:ring-*`, plus leftover
+   shadcn `ring-slate-950` — none of which could be switched off from one place.
+
+   `outline` rather than `ring` on purpose: a ring is a box-shadow, so it cannot
+   be suppressed by any `outline` rule and it repaints on every state change.
+   At the default 0px the shorthand still resolves, paints nothing, and overrides
+   the UA's `:focus-visible { outline: auto }` — so no browser ring leaks through
+   either. Restoring the indicator everywhere is one declaration:
+
+     :root { --itui-focus-ring-width: 2px; }
+
+   Pair it with the variant the component needs: `focus-visible:focus-ring`,
+   or `peer-focus-visible:` / `group-focus-visible:` / `has-[:focus-visible]:`
+   where the focusable element and the painted box are different nodes.
+
+   ⚠ Off by default means keyboard users get no focus indicator, which fails
+   WCAG 2.4.7. That is a deliberate, documented choice — see ACCESSIBILITY.md.
+
+   `--color-brand` (not `--color-ring`): it is the colour seven of the eight old
+   idioms used, and it comes from a plain `@theme` block, so the custom property
+   is guaranteed to exist at runtime the way an `@theme inline` one is not. */
+@utility focus-ring {
+  outline: var(--itui-focus-ring-width, 0px) solid var(--color-brand);
+  outline-offset: 2px;
 }
 
 /* Scrollable, but with no visible scrollbar — the wheel picker scrolls by drag/snap. */

@@ -99,7 +99,7 @@ function RowAction({
       className={cn(
         'inline-flex shrink-0 cursor-pointer items-center gap-1 rounded-lg whitespace-nowrap',
         'text-sm leading-md tracking-md transition-colors duration-150',
-        'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
+        'focus-visible:focus-ring',
         'disabled:cursor-not-allowed disabled:text-neutral-disabled disabled:hover:text-neutral-disabled',
         ACTION_TONE[tone],
       )}

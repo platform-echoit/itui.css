@@ -10,6 +10,12 @@ import { cn } from '../../lib/utils';
   existing screens keep compiling; every part carries `@deprecated` so
   autocomplete says what the README's "Picking between similar names" table
   already says.
+
+  The focus classes are the exception: they now go through `focus-ring` like the
+  rest of the library, so the one lever that turns the focus indicator on and off
+  reaches this family too. The `slate-*` left below is surface and text colour,
+  which is a separate (still open) piece of debt — repainting it would silently
+  restyle screens that deliberately use the legacy look.
 */
 
 /**
@@ -51,7 +57,7 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      'inline-flex items-center justify-center white-space-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-white data-[state=active]:text-slate-950 data-[state=active]:shadow-sm dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300 dark:data-[state=active]:bg-slate-950 dark:data-[state=active]:text-slate-50',
+      'inline-flex items-center justify-center white-space-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all focus-visible:focus-ring disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-white data-[state=active]:text-slate-950 data-[state=active]:shadow-sm dark:data-[state=active]:bg-slate-950 dark:data-[state=active]:text-slate-50',
       className,
     )}
     {...props}
@@ -70,10 +76,7 @@ const TabsContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
-    className={cn(
-      'mt-2 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300',
-      className,
-    )}
+    className={cn('mt-2 focus-visible:focus-ring', className)}
     {...props}
   />
 ));

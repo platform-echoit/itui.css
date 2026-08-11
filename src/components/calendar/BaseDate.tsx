@@ -194,7 +194,9 @@ export const BaseDateButton = forwardRef<
       ref={ref}
       className={cn(
         cellClasses,
-        'group cursor-pointer focus-visible:outline-none',
+        // The ring is painted by the inner circle via `group-focus-visible`, so
+        // the button itself only has to keep the UA outline out of the way.
+        'group cursor-pointer outline-none',
         'disabled:pointer-events-none',
         state === 'range' && 'bg-surface-primary-subtle',
         rangeEdge && rangeEdgeClasses[rangeEdge],
@@ -210,7 +212,7 @@ export const BaseDateButton = forwardRef<
           state === 'selected'
             ? 'group-hover:bg-brand-hover group-active:bg-brand-pressed'
             : 'group-hover:bg-muted group-active:bg-secondary',
-          'group-focus-visible:ring-2 group-focus-visible:ring-ring',
+          'group-focus-visible:focus-ring',
         )}
       >
         {children}

@@ -162,7 +162,7 @@ export const GnbMenuItem = forwardRef<HTMLButtonElement, GnbMenuItemProps>(
           'text-base leading-lg tracking-lg font-medium',
           'transition-colors duration-150 ease-out',
           'hover:text-primary',
-          'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
+          'focus-visible:focus-ring',
           'disabled:pointer-events-none disabled:text-neutral-disabled',
           active ? 'text-primary' : 'text-foreground',
           className,

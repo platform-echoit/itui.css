@@ -94,9 +94,9 @@ import { UserRegularIcon } from '../../icons/ITUI/user';
  * 8px-padded, 8px-radius row that shrinks to Figma's 36×36 square on the collapsed rail.
  */
 const ROW_BASE = [
-  'flex w-full cursor-pointer items-center gap-2 rounded-lg p-2 text-left select-none outline-none',
+  'flex w-full cursor-pointer items-center gap-2 rounded-lg p-2 text-left select-none outline-none text-sm font-medium',
   'transition-colors duration-150 ease-out',
-  'focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
+  'focus-visible:focus-ring',
   'disabled:pointer-events-none disabled:text-neutral-disabled',
   'group-data-collapsed/lnb:w-9 group-data-collapsed/lnb:justify-center',
 ].join(' ');
@@ -266,7 +266,7 @@ export const LnbToggle = forwardRef<HTMLButtonElement, LnbToggleProps>(
         'flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-lg p-2 outline-none',
         'text-foreground transition-colors duration-150 ease-out',
         'hover:bg-muted active:bg-secondary',
-        'focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
+        'focus-visible:focus-ring',
         '[&>svg]:size-5 [&_path]:fill-current',
         className,
       )}

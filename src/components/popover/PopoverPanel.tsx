@@ -11,16 +11,32 @@ import { CaretRight } from '../../icons/ITUI/icons';
   Token → Tailwind class reference (Figma node 28208:791)
   ─────────────────────────────────────────────────────────────────────────────
   CONTAINER
-  surface/neutral/secondary/default  white    → bg-white
-  border/neutral/subtle              #ededed  → border border-neutral-subtle
-  radius/sm                          8px      → rounded-[8px]
+  surface/neutral/secondary/default  #fafafa  → bg-inverse
+  border/neutral/subtle              #ededed  → border border-border-neutral-subtle
+  radius/lg                          16px     → rounded-2xl
   shadow/downwards/sm                         → shadow-downwards-sm
+  size/container/sm                  288px    → w-72
+
+  ⚠ `border-neutral-subtle` is NOT this token. It reads like it, but it resolves to
+  --color-neutral-subtle = #9e9e9e, the icon/text grey. border/neutral/subtle is
+  --color-border-neutral-subtle, hence the doubled word.
+  ⚠ radius/sm (8px) is the radius of an ITEM, not of the container.
 
   ITEM — spacing & heights
-  static/space/8  8px → p-2 (item padding), gap-2 (icon-to-label gap)
-  static/space/4  4px → gap-1 (label-to-description gap)
-  height/popover/sm  auto: p-2 + 20px line    = 36px (label-only row)
-  height/popover/md  auto: p-2 + 20+4+16px   = 56px (description row)
+  static/space/8  8px  → p-2 (item padding), gap-2 (icon-to-label gap)
+  static/space/4  4px  → gap-1 (label-to-description gap)
+  static/space/12 12px → py-3, for the one row that needs it (see below)
+  height/popover/sm  auto: p-2 + 20px line        = 36px (label-only row)
+  height/popover/md  auto: p-2 + 20+4+16px        = 56px (description row)
+  (no token, 64px)   auto: py-3 + 20+4+16px       = 64px (icon + description)
+
+  DEVIATION — line-height. The text styles say body/md is 14/24 and caption/sm is
+  12/20, but the height tokens above only come out at 36 / 56 / 64px if the line
+  boxes are 20 / 16px. The two sources contradict each other inside the same Figma
+  file and cannot both be satisfied. We follow the height tokens (a named variable
+  beats a shared text style), so leading-5 / leading-4 below are deliberate. Moving
+  to leading-md / leading-sm would make the rows 40 / 64px and change every Popover
+  story's height — check with design first.
 
   ITEM — interactive states (CSS-only, RSC compatible)
   hover    surface/neutral/secondary/hover    #f5f5f5 → hover:bg-muted
@@ -93,7 +109,7 @@ export const PopoverPanel = forwardRef<HTMLDivElement, PopoverPanelProps>(
     <div
       ref={ref}
       className={cn(
-        'bg-white border border-neutral-subtle rounded-[8px] shadow-downwards-sm flex flex-col overflow-hidden',
+        'bg-inverse border border-border-neutral-subtle rounded-2xl shadow-downwards-sm flex flex-col overflow-hidden w-72',
         className,
       )}
       {...rest}
@@ -112,7 +128,7 @@ export const PopoverHeader = forwardRef<HTMLDivElement, PopoverHeaderProps>(
     <div
       ref={ref}
       className={cn(
-        'flex flex-col gap-3 px-5 py-4 border-b border-neutral-subtle shrink-0',
+        'flex flex-col gap-3 px-5 py-4 border-b border-border-neutral-subtle shrink-0',
         className,
       )}
       {...rest}
@@ -163,7 +179,7 @@ export const PopoverSeparator = forwardRef<
 >(({ className, ...rest }, ref) => (
   <div
     ref={ref}
-    className={cn('h-px bg-neutral-subtle shrink-0', className)}
+    className={cn('h-px bg-border-neutral-subtle shrink-0', className)}
     {...rest}
   />
 ));
@@ -198,7 +214,11 @@ export const PopoverItem = forwardRef<HTMLButtonElement, PopoverItemProps>(
       // tabindex). Static attributes only, so this file stays server-safe.
       tabIndex={asMenuItem ? -1 : undefined}
       className={cn(
-        'flex w-full items-center gap-2 p-2 rounded-lg cursor-pointer select-none leading-md',
+        'flex w-full items-center gap-2 rounded-lg cursor-pointer select-none',
+        // Rows are height tokens in Figma, and only one of them needs a different
+        // vertical padding: label 36px and description 56px both come out of
+        // spacing/sm, but icon + description is 64px = 12 + (20 + 4 + 16) + 12.
+        icon && description ? 'px-2 py-3' : 'p-2',
         'bg-inverse hover:bg-muted active:bg-secondary',
         'disabled:cursor-not-allowed disabled:opacity-50',
         className,

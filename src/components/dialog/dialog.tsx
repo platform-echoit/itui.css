@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { cn } from '../../lib/utils';
-import XRegularIcon from '../../icons/ITUI/x/XRegularIcon';
+import XLightIcon from '../../icons/ITUI/x/XLightIcon';
 
 /**
  * The primitive you compose freely — `Modal`, `Popup` and `BottomSheet` are
@@ -121,7 +121,15 @@ function DialogContent({
                 data-slot="dialog-close"
                 className="cursor-pointer absolute top-1/2 -translate-y-1/2 right-4 transition-opacity hover:opacity-100 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
               >
-                <XRegularIcon />
+                {/* Size passed explicitly rather than left to the parent's
+                    `[&_svg:not([class*='size-'])]:size-4`, and `fill-current`
+                    because the ITUI paths carry a hard-coded `fill="#101010"`
+                    that ignores the surrounding `text-*`. */}
+                <XLightIcon
+                  width={16}
+                  height={16}
+                  className="[&_path]:fill-current"
+                />
                 <span className="sr-only">Close</span>
               </DialogPrimitive.Close>
             )}

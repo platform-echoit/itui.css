@@ -119,7 +119,7 @@ function CellButton({
       onClick={onClick}
       className={cn(
         CELL,
-        'cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
+        'cursor-pointer focus-visible:focus-ring',
         active
           ? 'bg-brand text-inverse'
           : 'bg-inverse text-foreground hover:bg-brand-subtle',
