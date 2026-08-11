@@ -120,6 +120,26 @@ function resolveStatus(index: number, current: number): StepStatus {
   return 'upcoming';
 }
 
+const StepperCheckIcon = ({ className }: { className: string }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      className={className}
+    >
+      <path
+        d="M10.5005 2.6118C10.703 2.61181 10.8974 2.69226 11.0405 2.83543C11.1837 2.97861 11.2642 3.173 11.2642 3.37547C11.2642 3.57795 11.1837 3.77234 11.0405 3.91551L10.8989 4.05711L10.8979 4.05614L5.03955 9.91454C4.96876 9.98551 4.88409 10.0421 4.7915 10.0806C4.69897 10.1189 4.59969 10.1382 4.49951 10.1382C4.39934 10.1382 4.30006 10.1189 4.20752 10.0806C4.16107 10.0613 4.11628 10.0371 4.07471 10.0093L3.95947 9.91454L1.33447 7.28954C1.26359 7.21864 1.2078 7.13411 1.16943 7.04149C1.13109 6.94888 1.11084 6.84973 1.11084 6.7495C1.11084 6.64926 1.13108 6.55012 1.16943 6.4575C1.2078 6.36487 1.26358 6.28035 1.33447 6.20946C1.40536 6.13857 1.4899 6.08278 1.58252 6.04442C1.67513 6.00607 1.77427 5.98582 1.87451 5.98582C1.97475 5.98582 2.07389 6.00607 2.1665 6.04442C2.25913 6.08278 2.34366 6.13857 2.41455 6.20946L4.49951 8.29539L9.96045 2.83543C10.1036 2.69227 10.298 2.6118 10.5005 2.6118Z"
+        fill="#009CE0"
+        stroke="#009CE0"
+        stroke-width="0.4"
+      />
+    </svg>
+  );
+};
+
 // ─── StepperIndicator ─────────────────────────────────────────────────────────
 
 export interface StepperIndicatorProps extends HTMLAttributes<HTMLSpanElement> {
@@ -210,7 +230,7 @@ export const StepperIndicator = forwardRef<
         >
           {children ?? (
             // ITUI icons hardcode fill="#101010", so `fill-current` is the only way to recolour them.
-            <CheckRegularIcon className="h-icon-sm w-icon-sm text-icon-primary [&_path]:fill-current" />
+            <StepperCheckIcon className="h-icon-sm w-icon-sm text-icon-primary [&_path]:fill-current" />
           )}
         </span>
       );
@@ -304,7 +324,7 @@ export const StepperItem = forwardRef<HTMLLIElement, StepperItemProps>(
             <span
               aria-hidden="true"
               className={cn(
-                'w-0 min-h-12 flex-1 border-l',
+                'w-0 min-h-12 flex-1 border-l-2',
                 connectorColor,
                 CONNECTOR_BASE,
               )}
@@ -335,7 +355,7 @@ export const StepperItem = forwardRef<HTMLLIElement, StepperItemProps>(
             <span
               aria-hidden="true"
               className={cn(
-                'h-0 min-w-px flex-1 border-t',
+                'h-0 min-w-px flex-1 border-t-2',
                 connectorColor,
                 CONNECTOR_BASE,
               )}
@@ -368,7 +388,7 @@ export const StepperItem = forwardRef<HTMLLIElement, StepperItemProps>(
             <span
               aria-hidden="true"
               className={cn(
-                'h-0 min-w-px flex-1 border-t',
+                'h-0 min-w-px flex-1 border-t-2',
                 connectorColor,
                 CONNECTOR_BASE,
               )}

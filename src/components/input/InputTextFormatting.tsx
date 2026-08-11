@@ -260,7 +260,7 @@ function ToolbarButton({ label, active, icon, onClick }: ToolbarButtonProps) {
       className={cn(
         'flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg',
         'transition-colors duration-150',
-        'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
+        'focus-visible:focus-ring',
         // ITUI icons hard-code fill="#101010" and default to 32px.
         '[&_svg]:size-5 [&_path]:fill-current',
         active
@@ -293,7 +293,7 @@ function BlockTypeSelect({ value, onChange, labels }: BlockTypeSelectProps) {
             'flex h-8 shrink-0 cursor-pointer items-center gap-1 rounded-lg px-2',
             'text-sm leading-md tracking-md text-foreground',
             'transition-colors duration-150 hover:bg-surface-neutral-subtle',
-            'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
+            'focus-visible:focus-ring',
           )}
         >
           <span className="whitespace-nowrap">

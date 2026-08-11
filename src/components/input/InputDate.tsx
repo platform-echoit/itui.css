@@ -202,8 +202,17 @@ export const InputDate = forwardRef<HTMLInputElement, InputDateProps>(
           {...rest}
         />
 
+        {/* 4px rather than PopoverContent's 2px default: it is the gap the other
+            date inputs use, and stating it here keeps this field from moving if
+            that default ever changes. The panel used to open at the top-left
+            corner of the viewport instead — see the anchor note in PopoverAnchor,
+            which is where that was fixed. PopoverContent's available-height cap is
+            deliberately left in place: it keeps the card anchored to the field and
+            scrolls it on a short viewport, where lifting the cap would let
+            floating-ui slide the whole panel away from the field instead. */}
         <PopoverContent
           align="start"
+          sideOffset={4}
           className="w-auto border-0 bg-transparent p-0 shadow-none"
         >
           <DatePicker

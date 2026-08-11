@@ -3,7 +3,7 @@
 import { type ReactNode } from 'react';
 import * as RadixDialog from '@radix-ui/react-dialog';
 import { ImageRegularIcon } from '../../icons/ITUI/image';
-import { XRegularIcon } from '../../icons/ITUI/x';
+import { XLightIcon } from '../../icons/ITUI/x';
 import { cn } from '../../lib/utils';
 import { Button } from '../button';
 import { Checkbox } from '../checkbox';
@@ -106,12 +106,9 @@ export function Popup({
   const closeButton = (
     <RadixDialog.Close
       aria-label="Close"
-      className="inline-flex size-5 shrink-0 cursor-pointer items-center justify-center text-icon-neutral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+      className="inline-flex size-5 shrink-0 cursor-pointer items-center justify-center text-icon-neutral focus-visible:focus-ring"
     >
-      <XRegularIcon
-        aria-hidden="true"
-        className="size-5 [&_path]:fill-current"
-      />
+      <XLightIcon aria-hidden="true" className="size-5 [&_path]:fill-current" />
     </RadixDialog.Close>
   );
 

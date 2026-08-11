@@ -6,6 +6,7 @@ import {
 } from 'react';
 import { ArrowDownRegularIcon } from '../../icons/ITUI/arrow-down';
 import { ArrowUpRegularIcon } from '../../icons/ITUI/arrow-up';
+import { ArrowsDownUpRegularIcon } from '../../icons/ITUI/arrows-down-up';
 import { cn } from '../../lib/utils';
 
 // ── Token → Tailwind map ─────────────────────────────────────────────────────
@@ -77,6 +78,16 @@ export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
    * `aria-sort="none"` and stays keyboard-reachable. Implied by `sortDirection`.
    */
   sortable?: boolean;
+  /**
+   * Called with the direction to move to when the sort control is activated,
+   * cycling `asc → desc → undefined` (back to unsorted). The cell stays
+   * presentational: it tells you what was asked for and paints whatever
+   * `sortDirection` you hand back.
+   *
+   * Reach for `useTableSort` unless you are sorting on the server — it keeps
+   * this wired for you.
+   */
+  onSortChange?: (next: SortDirection | undefined) => void;
 }
 export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
   /** Ref to the `<td>`. */
@@ -87,9 +98,14 @@ export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
 
 /**
  * A real `<table>` in a bordered, horizontally scrolling frame. It supplies the
- * surface and the type scale only — sorting, selection and pagination stay with
- * the caller, which is why `TableRow.selected` and `TableHead.sortDirection` are
- * presentational.
+ * surface and the type scale only — which state a row or column is in stays with
+ * the caller, so `TableRow.selected` and `TableHead.sortDirection` are
+ * presentational and this file stays server-renderable.
+ *
+ * For sorting that means: `TableHead` reports the next direction through
+ * `onSortChange` and paints the `sortDirection` you give back. `useTableSort`
+ * holds that state and does the comparison for client-side data; drive the two
+ * props yourself when the server sorts.
  */
 export const Table = ({ className, ...props }: TableProps) => (
   <div className="w-full overflow-x-auto rounded-lg border border-border-neutral-subtle">
@@ -160,6 +176,19 @@ const ARIA_SORT: Record<SortDirection, 'ascending' | 'descending'> = {
 };
 
 /**
+ * The tri-state cycle every sort control walks. Unsorted is a real state, not a
+ * missing one: it is how a user gets the original row order back.
+ */
+const NEXT_DIRECTION: Record<
+  'none' | SortDirection,
+  SortDirection | undefined
+> = {
+  none: 'asc',
+  asc: 'desc',
+  desc: undefined,
+};
+
+/**
  * A header cell. Given `sortable` or `sortDirection` it wraps its content in a
  * real `<button>` — a `<th>` cannot take focus — so an `onClick` on the cell
  * starts firing on Enter and Space as well.
@@ -168,6 +197,7 @@ export const TableHead = ({
   className,
   sortDirection,
   sortable,
+  onSortChange,
   children,
   ...props
 }: TableHeadProps) => {
@@ -196,7 +226,11 @@ export const TableHead = ({
         // keeps working — and now fires on Enter/Space too.
         <button
           type="button"
-          className="inline-flex items-center gap-2 cursor-pointer rounded-sm text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          className="inline-flex items-center gap-2 cursor-pointer rounded-sm text-left focus-visible:focus-ring"
+          onClick={
+            onSortChange &&
+            (() => onSortChange(NEXT_DIRECTION[sortDirection ?? 'none']))
+          }
         >
           {children}
           {sortDirection === 'asc' ? (
@@ -211,7 +245,16 @@ export const TableHead = ({
               height={12}
               className="shrink-0 [&_path]:fill-current"
             />
-          ) : null}
+          ) : (
+            // Sortable but unsorted used to render nothing at all, which left the
+            // column with no sign it could be clicked. Muted so it reads as an
+            // affordance rather than as a third sort state.
+            <ArrowsDownUpRegularIcon
+              width={12}
+              height={12}
+              className="shrink-0 text-neutral-subtle [&_path]:fill-current"
+            />
+          )}
         </button>
       ) : (
         children

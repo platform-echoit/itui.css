@@ -191,7 +191,7 @@ export const BottomNavigationItemV2 = forwardRef<
         className={cn(
           'flex min-w-14 flex-1 cursor-pointer flex-col items-center justify-center gap-1 p-2 select-none',
           'transition-colors duration-150 ease-out',
-          'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
+          'focus-visible:focus-ring',
           'disabled:pointer-events-none disabled:text-neutral-disabled',
           active ? 'text-primary' : 'text-foreground',
           className,

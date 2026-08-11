@@ -5,7 +5,7 @@ import {
   type MouseEvent,
   type ReactNode,
 } from 'react';
-import { XRegularIcon } from '../../icons/ITUI/x';
+import { XLightIcon } from '../../icons/ITUI/x';
 import { cn } from '../../lib/utils';
 
 /*
@@ -134,7 +134,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
         className={cn(
           'inline-flex shrink-0 items-center gap-1 px-2 rounded-lg',
           'font-medium whitespace-nowrap select-none',
-          'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
+          'focus-visible:focus-ring',
           sizeConfig[size],
           boxClasses(variant, selected, disabled),
           disabled
@@ -162,9 +162,9 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
             onClick={handleClose}
             disabled={disabled}
             aria-label={closeLabel}
-            className="inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full text-current hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-brand"
+            className="inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full text-current hover:opacity-70 focus-visible:focus-ring"
           >
-            <XRegularIcon
+            <XLightIcon
               aria-hidden="true"
               className="size-4 [&_path]:fill-current"
             />

@@ -75,7 +75,7 @@ export const Toggle = forwardRef<
       className={cn(
         'inline-flex shrink-0 cursor-pointer items-center rounded-full p-0.5 transition-colors',
         'data-[state=checked]:bg-brand data-[state=unchecked]:bg-surface-neutral-disabled',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
+        'focus-visible:focus-ring',
         'disabled:cursor-not-allowed disabled:opacity-50',
         trackSizeMap[size],
         className,

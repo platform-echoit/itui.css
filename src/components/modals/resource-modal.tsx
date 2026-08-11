@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { FolderRegularIcon } from '../../icons/ITUI/folder';
 import { InfoRegularIcon } from '../../icons/ITUI/info';
 import { MagnifyingGlassRegularIcon } from '../../icons/ITUI/magnifying-glass';
-import { XRegularIcon } from '../../icons/ITUI/x';
+import { XLightIcon } from '../../icons/ITUI/x';
 import {
   Dialog,
   DialogContent,
@@ -280,7 +280,7 @@ export const ResourceModal: React.FC<ResourceModalProps> = ({
                         onClick={() => setTags(tags.filter((t) => t !== tag))}
                         className="text-slate-400 hover:text-red-500"
                       >
-                        <XRegularIcon className="size-3.5 [&_path]:fill-current" />
+                        <XLightIcon className="size-3.5 [&_path]:fill-current" />
                       </button>
                     </div>
                   ))}

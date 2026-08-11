@@ -1,5 +1,4 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
-import { CheckRegularIcon } from '../../icons/ITUI/check';
 import { ImageRegularIcon } from '../../icons/ITUI/image';
 import { cn } from '../../lib/utils';
 
@@ -21,6 +20,24 @@ const TITLE = 'text-base leading-lg tracking-lg font-medium';
 const BODY = 'text-sm leading-6 tracking-md';
 const IMAGE_SURFACE =
   'flex items-center justify-center bg-surface-neutral-subtle text-neutral-subtle';
+
+const CheckIcon = ({ className }: { className: string }) => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <path
+      d="M17.5005 4.58704C17.7761 4.58704 18.041 4.69587 18.2358 4.89075C18.4307 5.08562 18.5396 5.35052 18.5396 5.6261C18.5395 5.90148 18.4305 6.1657 18.2358 6.36047L18.1646 6.43176L18.1626 6.42883L8.23389 16.3585C8.1375 16.4552 8.02308 16.5327 7.89697 16.5851C7.77102 16.6373 7.63588 16.6641 7.49951 16.6642C7.36296 16.6642 7.22718 16.6374 7.10107 16.5851C6.97499 16.5327 6.86053 16.4552 6.76416 16.3585L2.38916 11.9835C2.29284 11.8871 2.21671 11.7725 2.16455 11.6466C2.11235 11.5206 2.08545 11.3856 2.08545 11.2491C2.08546 11.1127 2.11234 10.9777 2.16455 10.8517C2.21672 10.7258 2.29281 10.6112 2.38916 10.5148C2.48555 10.4184 2.60015 10.3414 2.72607 10.2892C2.85215 10.237 2.98805 10.2101 3.12451 10.2101C3.26086 10.2101 3.396 10.237 3.52197 10.2892C3.648 10.3414 3.76242 10.4183 3.85889 10.5148L7.49951 14.1544L16.7661 4.89075C16.9609 4.69606 17.2251 4.5871 17.5005 4.58704Z"
+      fill="#009CE0"
+      stroke="#009CE0"
+      stroke-width="0.2"
+    />
+  </svg>
+);
 
 /**
  * Stand-in artwork for an empty image slot. `[&_path]:fill-current` because
@@ -252,7 +269,7 @@ export const PricingCard = forwardRef<HTMLDivElement, PricingCardProps>(
           <span className="text-2xl leading-3xl tracking-3xl font-medium text-foreground">
             {title}
           </span>
-          <span className="text-xl leading-2xl tracking-2xl text-primary">
+          <span className="text-xl leading-2xl tracking-2xl text-primary font-normal">
             {price}
           </span>
         </div>
@@ -262,7 +279,7 @@ export const PricingCard = forwardRef<HTMLDivElement, PricingCardProps>(
           const included = feature.included !== false;
           return (
             <li key={index} className="flex items-center gap-2">
-              <CheckRegularIcon
+              <CheckIcon
                 aria-hidden="true"
                 className={cn(
                   'size-5 shrink-0 [&_path]:fill-current',
@@ -271,7 +288,7 @@ export const PricingCard = forwardRef<HTMLDivElement, PricingCardProps>(
               />
               <span
                 className={cn(
-                  'min-w-0 flex-1 text-sm leading-6 tracking-md',
+                  'min-w-0 flex-1 text-sm leading-6 tracking-md font-normal',
                   included ? 'text-foreground' : 'text-neutral-disabled',
                 )}
               >

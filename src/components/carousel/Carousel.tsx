@@ -343,7 +343,7 @@ export const CarouselIndicator = forwardRef<
               aria-current={isActive || undefined}
               onClick={() => select(index)}
               className={cn(
-                'cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
+                'cursor-pointer focus-visible:focus-ring',
                 indicatorClass,
               )}
             />

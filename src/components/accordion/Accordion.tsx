@@ -146,7 +146,7 @@ export const AccordionTrigger = forwardRef<
           'group flex h-12 w-full cursor-pointer items-center justify-between gap-2 px-5',
           'text-base leading-lg tracking-lg font-medium outline-none',
           'transition-colors duration-150 ease-out motion-reduce:transition-none',
-          'focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
+          'focus-visible:focus-ring',
           'disabled:cursor-not-allowed disabled:text-neutral-disabled',
           triggerColorMap[variant],
           className,

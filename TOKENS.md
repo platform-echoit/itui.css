@@ -376,14 +376,27 @@ unused.
 
 ### 4.1 Font Family
 
-| Token                              | CSS Variable        | Value                    | Tailwind Class                              |
-| ---------------------------------- | ------------------- | ------------------------ | ------------------------------------------- |
-| `typography.fontFamily.sans`       | `--font-sans`       | `Geist, system-ui`       | `font-sans`                                 |
-| `typography.fontFamily.mono`       | `--font-mono`       | `Geist Mono`             | `font-mono`                                 |
-| `typography.fontFamily.serif`      | `--font-serif`      | `Georgia, serif`         | `font-serif`                                |
-| `typography.fontFamily.pretendard` | `--font-pretendard` | `Pretendard, sans-serif` | `font-pretendard` · **TODO: register font** |
+| Token                         | CSS Variable   | Value                                                                                                                                                 | Tailwind Class |
+| ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| `typography.fontFamily.sans`  | `--font-sans`  | `var(--font-pretendard, 'Pretendard Variable'), Pretendard, system-ui, -apple-system, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif` | `font-sans`    |
+| `typography.fontFamily.mono`  | `--font-mono`  | `Geist Mono`                                                                                                                                          | `font-mono`    |
+| `typography.fontFamily.serif` | `--font-serif` | `Georgia, serif`                                                                                                                                      | `font-serif`   |
 
-> `Pretendard` is used in Figma designs (e.g. Badge, Button). Register via `@font-face` and add `--font-pretendard` to `@theme`.
+> Pretendard is the family every Figma text style names, and it is what `font-sans`
+> resolves to. There is no separate `--font-pretendard` token in `@theme`: the name is
+> reserved for the variable **your app** may already define — `next/font/localFont`
+> writes one, and the chain above lets it win.
+>
+> The package ships the `@font-face` blocks in a **separate, opt-in** sheet so it never
+> forces `/fonts/*` on an app that loads the font its own way:
+>
+> ```css
+> @import '@echoit/itui.css/fonts.css'; /* needs 4 .woff2 files at /fonts */
+> ```
+>
+> Copy `Pretendard-{Regular,Medium,SemiBold,Bold}.woff2` into your web root's `/fonts`
+> (see `apps/storybook/public/fonts`). Skip the import if you register the family
+> yourself — the fallback chain finds it either way.
 
 ### 4.2 Font Size
 
@@ -720,7 +733,7 @@ so `Typography` inherits rather than seizing the colour axis.
 
 All four Figma families (`typography/family/{display,heading,body,caption}`) resolve
 to the same Pretendard binding — `--font-sans`, i.e. `font-sans`. No family token was
-added. The `@font-face` for Pretendard is still unregistered; see _Missing Tokens_.
+added. The `@font-face` blocks ship in `@echoit/itui.css/fonts.css`; see _Font Family_.
 
 ### Stepper
 
@@ -1580,50 +1593,50 @@ steps already existed on the Tailwind spacing scale. See §2.3 for the scale tab
 
 ### Missing Tokens
 
-| Token                              | Reason                                                                                                                    | Resolution                                                                                                                                          |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `typography.fontFamily.pretendard` | `--font-sans` is `Pretendard, system-ui`, but no `@font-face` ships it — everything renders in the `system-ui` fallback   | Register `@font-face` (or a CDN import). No new variable needed: all four Figma families resolve to the same Pretendard binding `--font-sans` holds |
-| `color.status.reconciliation`      | Two status ramps coexist: shadcn `--success`/`--info`/`--warning`/`--destructive` (oklch) vs Figma `color/semantic/*`     | Decide which wins, then re-point the loser. A re-point, not an addition — see the ⚠ note under _Colors_                                            |
-| `component.progress.ring.stroke`   | Only `lg` has a Figma variable (`Border Width/200 = 8`); `md` (5px) and `sm` (~3.6px) were measured off the rendered node | Kept as an SVG `strokeWidth` constant in `progress/Progress.tsx` — SVG stroke is an attribute, not a Tailwind utility, so no `@theme` entry applies |
+| Token                            | Reason                                                                                                                    | Resolution                                                                                                                                          |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `color.status.reconciliation`    | Two status ramps coexist: shadcn `--success`/`--info`/`--warning`/`--destructive` (oklch) vs Figma `color/semantic/*`     | Decide which wins, then re-point the loser. A re-point, not an addition — see the ⚠ note under _Colors_                                            |
+| `component.progress.ring.stroke` | Only `lg` has a Figma variable (`Border Width/200 = 8`); `md` (5px) and `sm` (~3.6px) were measured off the rendered node | Kept as an SVG `strokeWidth` constant in `progress/Progress.tsx` — SVG stroke is an attribute, not a Tailwind utility, so no `@theme` entry applies |
 
 ### Resolved (previously missing)
 
-| Token                             | Figma Source                        | Added As                          | Used By                                 |
-| --------------------------------- | ----------------------------------- | --------------------------------- | --------------------------------------- |
-| `color.surface.hover`             | `surface/neutral/secondary/hover`   | `--color-surface-hover`           | Button (ghost) · Avatar                 |
-| `color.surface.pressed`           | `surface/neutral/secondary/pressed` | `--color-surface-pressed`         | Button (ghost) · Avatar                 |
-| `color.surface.snackbar.dark`     | `color/opacity/black/lg`            | `--color-surface-snackbar-dark`   | Snackbar                                |
-| `component.snackbar.width`        | `size/container/md`                 | `--width-snackbar`                | Snackbar                                |
-| `color.surface.success.muted`     | `color/semantic/green/600@30`       | `--color-surface-success-muted`   | Calendar                                |
-| `color.surface.error.muted`       | `color/semantic/red/600@30`         | `--color-surface-error-muted`     | Calendar                                |
-| `color.surface.error.subtle`      | `surface/semantic/error`            | `--color-surface-error-subtle`    | Input Field (FileUploadInput error row) |
-| `component.calendar.width.md`     | `size/container/md`                 | `--width-calendar-md`             | Calendar                                |
-| `component.calendar.width.lg`     | `size/container/lg`                 | `--width-calendar-lg`             | Calendar                                |
-| `component.calendar.width.xl`     | RangePicker frame `27729:706`       | `--width-calendar-xl`             | DatePicker                              |
-| `component.calendar.width.panel`  | RangePicker panel `27729:708`       | `--width-calendar-panel`          | DatePicker                              |
-| `size.container.md`               | `size/container/md`                 | `--width-container-md`            | GNB                                     |
-| `shadow.upwards.sm`               | `shadow/upwards/sm`                 | `--shadow-upwards-sm`             | Navigation V2                           |
-| `size.container.xs`               | `size/container/xs`                 | `--width-container-xs`            | OverflowMenu                            |
-| `shadow.rightwards.sm`            | `shadow/rightwards/sm`              | `--shadow-rightwards-sm`          | LNB                                     |
-| `motion.animate.collapsible`      | — (Radix Collapsible)               | `--animate-collapsible-down/-up`  | LNB                                     |
-| `radius.component.xl`             | `radius/xl` (20px)                  | `--radius-component-xl`           | Radius                                  |
-| `radius.component.2xl`            | `radius/2xl` (28px)                 | `--radius-component-2xl`          | Radius                                  |
-| `component.badge.color.bg`        | `color/semantic/red/500`            | `--color-semantic-red-500`        | Colors · Badge                          |
-| `color.brand.sky.*`               | `color/brand/sky/*` (10)            | `--color-brand-sky-{50…900}`      | Colors                                  |
-| `color.brand.neutral.*`           | `color/brand/neutral/*` (10)        | `--color-brand-neutral-{50…950}`  | Colors                                  |
-| `color.semantic.*`                | `color/semantic/{hue}/{50,500}`     | `--color-semantic-{hue}-{50,500}` | Colors                                  |
-| `color.semantic.red.700`          | — (Avatar fallback, unspecced)      | `--color-semantic-red-700`        | Colors · Avatar                         |
-| `color.scheme.*`                  | `color/scheme/{hue}/*` (100)        | `--color-scheme-{hue}-{50…900}`   | Colors                                  |
-| `shadow.upwards.md`               | `shadow/upwards/md`                 | `--shadow-upwards-md`             | Shadow                                  |
-| `shadow.upwards.lg`               | `shadow/upwards/lg`                 | `--shadow-upwards-lg`             | Shadow                                  |
-| `shadow.leftwards.sm`             | — (derived; no Figma variable)      | `--shadow-leftwards-sm`           | Shadow                                  |
-| `shadow.leftwards.md`             | `shadow/leftwards/md`               | `--shadow-leftwards-md`           | Shadow                                  |
-| `shadow.rightwards.md`            | `shadow/rightwards/md`              | `--shadow-rightwards-md`          | Shadow                                  |
-| `shadow.rightwards.lg`            | `shadow/rightwards/lg`              | `--shadow-rightwards-lg`          | Shadow                                  |
-| `typography.fontSize.caption-xs`  | `typography/size/11`                | `--text-caption-xs`               | Typography · Avatar                     |
-| `typography.fontSize.heading-4xl` | `typography/size/32`                | `--text-heading-4xl`              | Typography                              |
-| `typography.fontSize.display-5xl` | `typography/size/40`                | `--text-display-5xl`              | Typography                              |
-| `typography.letterSpacing.lg`     | `typography/letter-spacing/lg`      | `--tracking-lg` = `0.09px`        | Typography · Button                     |
+| Token                              | Figma Source                        | Added As                          | Used By                                 |
+| ---------------------------------- | ----------------------------------- | --------------------------------- | --------------------------------------- |
+| `color.surface.hover`              | `surface/neutral/secondary/hover`   | `--color-surface-hover`           | Button (ghost) · Avatar                 |
+| `color.surface.pressed`            | `surface/neutral/secondary/pressed` | `--color-surface-pressed`         | Button (ghost) · Avatar                 |
+| `color.surface.snackbar.dark`      | `color/opacity/black/lg`            | `--color-surface-snackbar-dark`   | Snackbar                                |
+| `component.snackbar.width`         | `size/container/md`                 | `--width-snackbar`                | Snackbar                                |
+| `color.surface.success.muted`      | `color/semantic/green/600@30`       | `--color-surface-success-muted`   | Calendar                                |
+| `color.surface.error.muted`        | `color/semantic/red/600@30`         | `--color-surface-error-muted`     | Calendar                                |
+| `color.surface.error.subtle`       | `surface/semantic/error`            | `--color-surface-error-subtle`    | Input Field (FileUploadInput error row) |
+| `component.calendar.width.md`      | `size/container/md`                 | `--width-calendar-md`             | Calendar                                |
+| `component.calendar.width.lg`      | `size/container/lg`                 | `--width-calendar-lg`             | Calendar                                |
+| `component.calendar.width.xl`      | RangePicker frame `27729:706`       | `--width-calendar-xl`             | DatePicker                              |
+| `component.calendar.width.panel`   | RangePicker panel `27729:708`       | `--width-calendar-panel`          | DatePicker                              |
+| `size.container.md`                | `size/container/md`                 | `--width-container-md`            | GNB                                     |
+| `shadow.upwards.sm`                | `shadow/upwards/sm`                 | `--shadow-upwards-sm`             | Navigation V2                           |
+| `size.container.xs`                | `size/container/xs`                 | `--width-container-xs`            | OverflowMenu                            |
+| `shadow.rightwards.sm`             | `shadow/rightwards/sm`              | `--shadow-rightwards-sm`          | LNB                                     |
+| `motion.animate.collapsible`       | — (Radix Collapsible)               | `--animate-collapsible-down/-up`  | LNB                                     |
+| `radius.component.xl`              | `radius/xl` (20px)                  | `--radius-component-xl`           | Radius                                  |
+| `radius.component.2xl`             | `radius/2xl` (28px)                 | `--radius-component-2xl`          | Radius                                  |
+| `component.badge.color.bg`         | `color/semantic/red/500`            | `--color-semantic-red-500`        | Colors · Badge                          |
+| `color.brand.sky.*`                | `color/brand/sky/*` (10)            | `--color-brand-sky-{50…900}`      | Colors                                  |
+| `color.brand.neutral.*`            | `color/brand/neutral/*` (10)        | `--color-brand-neutral-{50…950}`  | Colors                                  |
+| `color.semantic.*`                 | `color/semantic/{hue}/{50,500}`     | `--color-semantic-{hue}-{50,500}` | Colors                                  |
+| `color.semantic.red.700`           | — (Avatar fallback, unspecced)      | `--color-semantic-red-700`        | Colors · Avatar                         |
+| `typography.fontFamily.pretendard` | `typography/family/*`               | `@echoit/itui.css/fonts.css`      | every component (via `font-sans`)       |
+| `color.scheme.*`                   | `color/scheme/{hue}/*` (100)        | `--color-scheme-{hue}-{50…900}`   | Colors                                  |
+| `shadow.upwards.md`                | `shadow/upwards/md`                 | `--shadow-upwards-md`             | Shadow                                  |
+| `shadow.upwards.lg`                | `shadow/upwards/lg`                 | `--shadow-upwards-lg`             | Shadow                                  |
+| `shadow.leftwards.sm`              | — (derived; no Figma variable)      | `--shadow-leftwards-sm`           | Shadow                                  |
+| `shadow.leftwards.md`              | `shadow/leftwards/md`               | `--shadow-leftwards-md`           | Shadow                                  |
+| `shadow.rightwards.md`             | `shadow/rightwards/md`              | `--shadow-rightwards-md`          | Shadow                                  |
+| `shadow.rightwards.lg`             | `shadow/rightwards/lg`              | `--shadow-rightwards-lg`          | Shadow                                  |
+| `typography.fontSize.caption-xs`   | `typography/size/11`                | `--text-caption-xs`               | Typography · Avatar                     |
+| `typography.fontSize.heading-4xl`  | `typography/size/32`                | `--text-heading-4xl`              | Typography                              |
+| `typography.fontSize.display-5xl`  | `typography/size/40`                | `--text-display-5xl`              | Typography                              |
+| `typography.letterSpacing.lg`      | `typography/letter-spacing/lg`      | `--tracking-lg` = `0.09px`        | Typography · Button                     |
 
 > `--width-container-md` is the canonical `size/container/md` (358px).
 > `--width-calendar-md` and `--width-snackbar` are older component-scoped aliases of

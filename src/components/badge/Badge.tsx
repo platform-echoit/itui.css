@@ -40,10 +40,9 @@ export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
             (#ef4444). Arbitrary values are forbidden for color. bg-red-500 is the
             nearest named semantic equivalent.
 
-  UNMAPPED TOKENS:
-    font/family/body    "Pretendard" → font-sans (Geist). Token absent from @theme.
-    font/family/caption "Pretendard" → font-sans (Geist). Token absent from @theme.
-    Resolution: add --font-pretendard to @theme and register the font to resolve.
+  FAMILY:
+    font/family/{body,caption} "Pretendard" → font-sans, which now heads its
+    fallback chain with Pretendard and is registered by styles/fonts.css.
 */
 
 // ─── Badge ────────────────────────────────────────────────────────────────────

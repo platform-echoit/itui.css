@@ -211,7 +211,7 @@ export const TabTrigger = forwardRef<
         'inline-flex h-8 cursor-pointer items-center justify-center gap-2 px-3 whitespace-nowrap',
         'text-sm leading-md tracking-md font-medium outline-none',
         'transition-colors duration-150 ease-out motion-reduce:transition-none',
-        'focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
+        'focus-visible:focus-ring',
         // Figma specs no disabled state; borrowed from Accordion so the family greys out alike.
         'disabled:cursor-not-allowed disabled:text-neutral-disabled',
         // Hover is a state of the *unselected* tab in Figma, so it must not reach the selected one.
@@ -247,7 +247,7 @@ export const TabContent = forwardRef<
     <RadixTabs.Content
       ref={ref}
       className={cn(
-        'rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-brand',
+        'rounded-lg outline-none focus-visible:focus-ring',
         className,
       )}
       {...props}

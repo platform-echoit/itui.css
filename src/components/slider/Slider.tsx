@@ -70,7 +70,7 @@ export const Slider = forwardRef<
             'border-surface-primary-muted',
             'hover:border-brand hover:ring-2 hover:ring-brand-subtle',
             'active:border-brand active:ring-2 active:ring-brand-subtle',
-            'focus-visible:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-subtle',
+            'focus-visible:border-brand focus-visible:focus-ring',
             'data-[disabled]:cursor-not-allowed data-[disabled]:border-neutral-disabled data-[disabled]:ring-0',
           )}
         />

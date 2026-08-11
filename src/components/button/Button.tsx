@@ -199,7 +199,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const classes = cn(
       'inline-flex items-center justify-center shrink-0 cursor-pointer',
       'font-semibold rounded-lg whitespace-nowrap select-none',
-      'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
+      'focus-visible:focus-ring',
       'disabled:pointer-events-none',
       size === 'icon' ? sz.label : isIconOnly ? sz.iconOnly : sz.label,
       variantConfig[variant],

@@ -1,0 +1,42 @@
+/* Pretendard, the family `--font-sans` names. Deliberately NOT imported by
+   global.css: doing so would force every consumer to serve /fonts/*.woff2,
+   including apps that already load Pretendard their own way (apps/web goes
+   through next/font). Opt in instead:
+
+     @import '@echoit/itui.css/fonts.css';
+
+   The paths are absolute and fixed. url() cannot read a custom property, so
+   there is no way to make the directory configurable from CSS — copy the four
+   .woff2 files to your web root's /fonts (see apps/storybook/public/fonts).
+
+   Four weights, exactly the four in src/tokens/tokens.json (400/500/600/700).
+   `swap` rather than `block`: if /fonts ever stops being served the failure is
+   visible text in the wrong font instead of three seconds of no text at all. */
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

@@ -129,7 +129,7 @@ export const BottomNavigationItem = forwardRef<
       aria-current={active ? 'page' : undefined}
       className={cn(
         'flex min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-1 p-2',
-        'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
+        'transition-colors focus-visible:focus-ring',
         active ? 'text-primary' : 'text-foreground',
         className,
       )}

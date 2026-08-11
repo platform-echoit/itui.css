@@ -71,11 +71,6 @@ const dotSizeMap: Record<RadioSize, string> = {
   sm: 'size-2.5',
 };
 
-const labelTypeMap: Record<RadioSize, string> = {
-  md: 'text-sm leading-6 tracking-md',
-  sm: 'text-xs leading-5 tracking-sm',
-};
-
 export interface RadioProps
   extends ComponentPropsWithoutRef<typeof RadixRadioGroup.Item> {
   /** Dot and label size: 20px/`text-sm` or 16px/`text-xs`. */
@@ -109,7 +104,7 @@ export const Radio = forwardRef<
         'enabled:hover:border-brand',
         'data-[state=checked]:border-brand',
         'disabled:border-neutral-disabled disabled:bg-surface-neutral-disabled',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
+        'focus-visible:focus-ring',
         className,
       )}
       {...props}
@@ -125,7 +120,7 @@ export const Radio = forwardRef<
       <span
         className={cn(
           'font-normal peer-data-[state=checked]:font-medium',
-          labelTypeMap[size],
+          'text-sm leading-6 tracking-md font-normal',
           'text-foreground peer-disabled:text-neutral-disabled',
         )}
       >

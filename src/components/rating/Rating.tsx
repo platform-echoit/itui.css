@@ -172,7 +172,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(
           <RatingStar
             key={index}
             fill={fill}
-            className="rounded-sm has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand has-[:focus-visible]:ring-offset-1"
+            className="rounded-sm has-[:focus-visible]:focus-ring"
           >
             {[STEP, 1].map((offset) => {
               const starValue = index + offset;
