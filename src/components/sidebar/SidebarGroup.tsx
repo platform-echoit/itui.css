@@ -68,6 +68,7 @@ export function SidebarGroup({
         className={cn(
           'flex h-9 w-full cursor-pointer items-center gap-2 rounded-lg p-2',
           'font-sans text-sm font-medium leading-5 tracking-md hover:bg-sidebar-accent',
+          'focus-visible:focus-ring',
           'group-data-collapsed/sidebar:w-9 group-data-collapsed/sidebar:justify-center',
           active
             ? 'bg-secondary text-foreground'

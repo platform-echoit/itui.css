@@ -194,6 +194,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement, SidebarItemProps>(
           aria-current={active ? 'page' : undefined}
           className={cn(
             'flex items-center rounded-lg font-medium text-sm leading-5 tracking-md font-sans cursor-pointer hover:bg-sidebar-accent',
+            'focus-visible:focus-ring',
             // Expanded defaults
             'gap-2 h-9 w-full',
             indented ? 'px-9 py-2' : 'p-2',

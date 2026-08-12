@@ -158,7 +158,10 @@ export const BreadcrumbItem = forwardRef<HTMLElement, BreadcrumbItemProps>(
           className={cn(
             'group flex items-center gap-2 text-sm leading-md tracking-md text-foreground',
             current ? 'font-medium' : 'font-normal',
-            interactive && 'cursor-pointer hover:text-neutral-subtle',
+            // Only the navigating crumbs get an indicator: `current` renders a
+            // <span> with no href, so it is not a tab stop and never focuses.
+            interactive &&
+              'cursor-pointer hover:text-neutral-subtle rounded-sm focus-visible:focus-ring',
             className,
           )}
           {...rest}

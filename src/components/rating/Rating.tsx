@@ -18,7 +18,7 @@ import { StarFillIcon } from '../../icons/ITUI/star';
   INTERACTIVE STATES (not drawn in Figma — mapped onto the existing primary ramp)
   icon/primary/hover       #33b0e6  → text-icon-primary-hover          (hover preview)
   icon/primary/pressed     #008ecc  → active:text-icon-primary-pressed
-  focus ring                        → ring-2 ring-brand ring-offset-1  (Radio/Checkbox convention)
+  focus ring                        → focus-ring (the shared outline utility)
 
   DESIGN NOTES
   - Figma builds the half star from two mask groups over the same Star glyph.
@@ -31,7 +31,8 @@ import { StarFillIcon } from '../../icons/ITUI/star';
   - Group semantics, arrow-key navigation and form participation come from native
     `<input type="radio">` sharing one `name`, hidden with `sr-only` — the same
     hidden-input pattern as Checkbox. The ring is keyed off `has-[:focus-visible]`
-    because the focused input sits inside the overlaying label, not beside the star.
+    on each half `<label>`: the focused input sits inside that label rather than
+    beside it, and the half — not the star — is the option being picked.
   ─────────────────────────────────────────────────────────────────────────────
 */
 
@@ -166,11 +167,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(
         {...rest}
       >
         {stars.map((fill, index) => (
-          <RatingStar
-            key={index}
-            fill={fill}
-            className="rounded-sm has-[:focus-visible]:focus-ring"
-          >
+          <RatingStar key={index} fill={fill}>
             {[STEP, 1].map((offset) => {
               const starValue = index + offset;
               return (
@@ -178,6 +175,10 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(
                   key={offset}
                   className={cn(
                     'absolute inset-y-0 w-1/2 cursor-pointer',
+                    // The indicator belongs on the half that owns the focused
+                    // radio, not on the star: each half is its own option, so a
+                    // ring around the whole star pointed at the wrong target.
+                    'rounded-sm has-[:focus-visible]:focus-ring',
                     offset === STEP ? 'left-0' : 'right-0',
                   )}
                   onMouseEnter={() => setPreview(starValue)}

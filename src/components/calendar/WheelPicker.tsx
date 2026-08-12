@@ -145,9 +145,12 @@ function WheelPickerColumnView({
       className={cn(
         'scrollbar-none relative h-50 flex-1 basis-0 overflow-y-auto py-20',
         'snap-y snap-mandatory',
-        // A scroll container, not a DS control — it paints no focus ring, so all
-        // it needs is the UA outline out of the way.
-        'outline-none',
+        // It scrolls, but it is also the control: `tabIndex={0}` plus arrow keys
+        // on `role="listbox"` make this the only focus stop in the column, so it
+        // has to paint an indicator. `outline-none` clears the UA default;
+        // `focus-visible:focus-ring` wins over it on specificity. Its own
+        // `overflow-y-auto` does not clip its own outline — only descendants'.
+        'outline-none focus-visible:focus-ring',
       )}
     >
       {column.options.map((option, index) => (

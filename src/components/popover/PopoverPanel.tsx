@@ -220,6 +220,12 @@ export const PopoverItem = forwardRef<HTMLButtonElement, PopoverItemProps>(
         // spacing/sm, but icon + description is 64px = 12 + (20 + 4 + 16) + 12.
         icon && description ? 'px-2 py-3' : 'p-2',
         'bg-inverse hover:bg-muted active:bg-secondary',
+        // The plain ring, not the inset one: PopoverPanel clips with
+        // `overflow-hidden`, but PopoverGroup's `p-2` leaves 8px around the row
+        // and the ring sits 2px out, so nothing reaches the clip. An item
+        // dropped straight into a panel with no group does get clipped — pass
+        // `focus-visible:focus-ring-inset` there.
+        'focus-visible:focus-ring',
         'disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}

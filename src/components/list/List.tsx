@@ -136,6 +136,7 @@ export const ListItem = forwardRef<HTMLButtonElement, ListItemProps>(
 
     const rowClassName = cn(
       'flex w-full items-center justify-between gap-2 p-2 rounded-lg text-left select-none',
+      'focus-visible:focus-ring',
       description ? 'min-h-14' : 'min-h-10',
       active
         ? 'bg-surface-neutral-hover'

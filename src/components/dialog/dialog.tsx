@@ -119,7 +119,7 @@ function DialogContent({
             {showCloseButton && (
               <DialogPrimitive.Close
                 data-slot="dialog-close"
-                className="cursor-pointer absolute top-1/2 -translate-y-1/2 right-4 transition-opacity hover:opacity-100 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+                className="cursor-pointer absolute top-1/2 -translate-y-1/2 right-4 transition-opacity hover:opacity-100 focus-visible:focus-ring disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
               >
                 {/* Size passed explicitly rather than left to the parent's
                     `[&_svg:not([class*='size-'])]:size-4`, and `fill-current`

@@ -96,11 +96,14 @@ export const InputSearch = forwardRef<HTMLInputElement, InputSearchProps>(
         }
         suffix={
           currentValue.length > 0 ? (
+            // The inset ring, because the shell's box is `overflow-hidden`: an
+            // outline drawn outside this button lands in the clipped strip
+            // between it and the field border, so it would never be painted.
             <button
               type="button"
               aria-label={clearLabel}
               onClick={handleClear}
-              className="flex size-5 cursor-pointer items-center justify-center"
+              className="flex size-5 cursor-pointer items-center justify-center focus-visible:focus-ring-inset"
             >
               <XCircleFillIcon
                 width={20}

@@ -740,9 +740,15 @@
   backdrop-filter: blur(calc(var(--shadow-downwards-blur-small, 4px) / 2));
 }
 
-/* Show sidebar item tooltip only when the sidebar is collapsed */
+/* Show sidebar item tooltip only when the sidebar is collapsed. `:focus-within`
+   sits beside `:hover` because a collapsed rail hides the row's label: the
+   tooltip is the only thing naming the row, and reaching it by pointer only
+   would leave a keyboard user tabbing through unlabelled icons. */
 [data-sidebar][data-collapsed]
   [data-sidebar-item]:hover
+  [data-sidebar-tooltip],
+[data-sidebar][data-collapsed]
+  [data-sidebar-item]:focus-within
   [data-sidebar-tooltip] {
   display: flex;
 }

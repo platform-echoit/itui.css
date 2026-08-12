@@ -128,7 +128,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             disabled
               ? 'bg-surface-neutral-disabled border-neutral-disabled text-neutral-disabled'
               : checked
-                ? 'bg-brand border-transparent text-inverse hover:bg-brand-pressed'
+                ? 'bg-brand border-brand text-inverse hover:bg-brand-pressed'
                 : 'bg-inverse border-neutral-muted hover:border-brand',
             'peer-focus-visible:focus-ring',
           )}

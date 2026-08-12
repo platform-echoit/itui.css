@@ -157,7 +157,7 @@ export const InputDropdownSub = forwardRef<
             onKeyDown={handleKeyDown}
             className={cn(
               ROW_CLASS,
-              'gap-2 px-2 text-left',
+              'gap-2 px-2 text-left focus-visible:focus-ring',
               disabled
                 ? 'cursor-not-allowed text-neutral-disabled'
                 : 'cursor-pointer text-foreground hover:bg-surface-neutral-subtle',

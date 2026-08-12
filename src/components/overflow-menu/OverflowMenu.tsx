@@ -190,8 +190,10 @@ export const OverflowMenuItem = forwardRef<
       'flex w-full cursor-pointer items-center gap-2 rounded-lg p-2 select-none outline-none',
       'text-sm leading-md tracking-md text-foreground',
       'transition-colors duration-150 ease-out',
-      // Radix sets data-highlighted on both pointer hover and keyboard focus.
-      'data-[highlighted]:bg-muted',
+      // Radix sets data-highlighted on both pointer hover and keyboard focus, so
+      // it carries the hover surface only; the ring stays on `:focus-visible` so
+      // a mouse hover does not draw one.
+      'data-[highlighted]:bg-muted focus-visible:focus-ring',
       'data-[disabled]:pointer-events-none data-[disabled]:text-neutral-disabled',
       className,
     )}
