@@ -74,8 +74,14 @@ export interface SelectTriggerProps
   placeholder?: React.ReactNode;
 }
 
+/*
+  `focus-visible:focus-ring` lives on the base and not in a variant so the
+  disabled and error triggers get it too — an errored select already draws a
+  destructive border, which left it with nothing that changes on focus. The
+  trigger's own `overflow-hidden` is harmless: a box never clips its own outline.
+*/
 const triggerBase =
-  'group flex items-center justify-between gap-2 h-12 px-3 rounded-lg border overflow-hidden outline-none cursor-pointer';
+  'group flex items-center justify-between gap-2 h-12 px-3 rounded-lg border overflow-hidden outline-none cursor-pointer focus-visible:focus-ring';
 
 const triggerVariants = {
   disabled: 'bg-neutral-100 border-input pointer-events-none',
@@ -151,10 +157,20 @@ function SelectTrigger({
         </label>
       )}
 
+      {/*
+        `disabled` was destructured but never forwarded, so a disabled trigger
+        lost its pointer events (`pointer-events-none` in the variant) and kept
+        everything else: it stayed a tab stop, still opened by keyboard, and told
+        assistive technology nothing. Forwarding it makes the button natively
+        disabled — out of the tab order and announced. Safe to change because
+        `SelectTrigger` is a tab stop on its own and nothing focusable sits
+        inside it, so nothing loses reachability.
+      */}
       <SelectPrimitive.Trigger
         {...fieldProps}
         data-slot="select-trigger"
         data-size={size}
+        disabled={isDisabled}
         className={cn(triggerBase, variant, className)}
         {...props}
       >

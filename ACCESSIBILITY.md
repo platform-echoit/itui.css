@@ -24,11 +24,10 @@ behaviour to you, this page says so.
 
 ## Focus indicators
 
-> ⚠ **The focus indicator ships as a 0.5px hairline.** It satisfies **WCAG 2.1 SC 2.4.7 (Focus
-> Visible)** — a keyboard user can see where they are — but it is well under the 2px that **WCAG 2.2
-> SC 2.4.11 (Focus Appearance)** asks for, and being sub-pixel it renders unevenly across displays.
-> Read the rest of this section before shipping to an audience that needs it — thickening it is one
-> declaration.
+> ⚠ **The focus indicator ships at 1px.** It satisfies **WCAG 2.1 SC 2.4.7 (Focus Visible)** — a
+> keyboard user can see where they are — but it is under the 2px that **WCAG 2.2 SC 2.4.11 (Focus
+> Appearance)** asks for. Read the rest of this section before shipping to an audience that needs
+> it; thickening it is one declaration.
 
 > ⚠ **A global outline reset in your app switches every indicator below off.** A rule like
 > `*:focus { outline: none !important }` in the consuming app removes the focus indicator of all ~30
@@ -39,30 +38,31 @@ behaviour to you, this page says so.
 > `outline: none` first, and scope the rule to the subtree that actually needed it (a rich-text
 > editor, usually).
 
-Every interactive component paints its indicator through a single utility, `focus-ring`, whose width
-comes from one custom property. The shipped `0.5px` is sub-pixel, so a DPR-1 display rounds it (Chrome
-draws it faint, Firefox may snap it to 1px) and only a 2× display renders it as exactly one device
-pixel. Raise the width and the change lands in **all ~30 components at once**:
+Every interactive component paints its indicator through a single utility — `focus-ring`, or
+`focus-ring-inset` where an ancestor clips — and both read their width from one custom property.
+`1px` is the only width in the library: nothing hard-codes a thicker one, and a component that
+appears to want one is a bug rather than a special case. Raise the property and the change lands in
+**all ~30 components at once**:
 
 ```css
 :root {
-  --itui-focus-ring-width: 2px; /* brand outline, 2px offset — the pre-1.1 look */
+  --itui-focus-ring-width: 2px; /* the width WCAG 2.2 SC 2.4.11 asks for */
 }
 ```
 
-| Family                                                                                   | Indicator                                          | Utilities                                                 |
-| ---------------------------------------------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------- |
-| **Fields** — `Input*`, `SelectTrigger`, `InputGroup`                                     | The box border turns brand blue — _not an outline_ | `focus-within:border-ring` · `focus-visible:border-ring`  |
-| **Buttons** — `Button`, `FloatingButton`, `TableHead`, `GnbMenuItem`, nav items          | Brand outline, offset from the shape               | `focus-visible:focus-ring`                                |
-| **Controls** — `Checkbox`, `Radio`, `Toggle`, `Rating`                                   | The same outline, on the box the input drives      | `peer-focus-visible:` / `has-[:focus-visible]:focus-ring` |
-| **Inside a surface** — `Tab`, `Pagination`, list and menu rows                            | The same outline, offset outward from the shape    | `focus-visible:focus-ring`                                |
-| **Inside a clipping ancestor** — `Accordion`, `Lnb`, the `InputSearch`/`InputDate` slots  | The same outline, painted inward instead           | `focus-visible:focus-ring-inset`                          |
+| Family                                                                                   | Indicator                                       | Utilities                                                      |
+| ---------------------------------------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------- |
+| **Fields** — `Input*`, `SelectTrigger`                                                   | The same outline, plus a brand-blue border tint | `has-[:focus-visible]:focus-ring` · `focus-visible:focus-ring` |
+| **Buttons** — `Button`, `FloatingButton`, `TableHead`, `GnbMenuItem`, nav items          | Brand outline, offset from the shape            | `focus-visible:focus-ring`                                     |
+| **Controls** — `Checkbox`, `Radio`, `Toggle`, `Rating`                                   | The same outline, on the box the input drives   | `peer-focus-visible:` / `has-[:focus-visible]:focus-ring`      |
+| **Inside a surface** — `Tab`, `Pagination`, list and menu rows                           | The same outline, offset outward from the shape | `focus-visible:focus-ring`                                     |
+| **Inside a clipping ancestor** — `Accordion`, `Lnb`, the `InputSearch`/`InputDate` slots | The same outline, painted inward instead        | `focus-visible:focus-ring-inset`                               |
 
 `focus-ring` offsets the outline **outward**, which puts it in exactly the region an ancestor with
 `overflow-hidden` — or any scroll container — cuts away. Being offset does not save it; only the
 element's own overflow is harmless, since a box never clips its own outline. `focus-ring-inset` is
 the same indicator with a negative offset for those places, and it needs the control to carry enough
-padding to hold it (offset plus width, ~3px at the shipped values).
+padding to hold it — offset plus width, so 3px at the shipped values.
 
 Give an element one variant or the other, **never both**: `tailwind-merge` knows neither utility, so
 `cn('focus-ring', 'focus-ring-inset')` keeps the pair and the winner is whichever lands later in the
@@ -74,15 +74,28 @@ it a scroll area, and `Table` wraps its `<table>` in `overflow-x-auto` — which
 axis to `auto` as well, so it clips both. The library cannot fix these from the inside: the clipping
 is the feature, and the control at risk is **your** content, not ours. Anything focusable you put in
 a slide, in a scroll viewport, or in a `TableCell` should carry `focus-visible:focus-ring-inset`, or
-sit far enough from the edge — roughly 3px at the shipped values — that the outward ring clears it.
+sit far enough from the edge — 3px at the shipped values — that the outward ring clears it.
 `TableCell`'s own `px-3 py-2` is already enough for a control that does not fill the cell.
 
-The **field** indicator does not read from that property at all, because it is a border-colour change
-rather than an outline — `Input`, `SelectTrigger` and `InputGroup` turn brand blue on focus whatever
-the ring width is. That is a **1px border colour change**: enough for SC 2.4.7 on its own, weak
-against WCAG 2.2 SC 2.4.11 (Focus Appearance), which asks for 2px. It is a property of the whole field
-family — if you raise it, raise it for all of them at once, or two fields side by side will light up
-differently.
+The **field** family used to be the exception. It signalled focus by turning its border brand blue
+and painted no outline at all, which meant it ignored the width property, and an errored field —
+already red-bordered — changed nothing whatsoever when it took focus. Fields paint the same outline
+as everything else now, in all three states, and the border tint rides on top of it as the "this
+field is active" cue. The border itself stays **1px** and deliberately does not follow
+`--itui-focus-ring-width`: an `h-12` field is `border-box`, so thickening its border would move the
+content inside it every time you tabbed in.
+
+Expect one difference from the rest of the library: a field shows its ring on a **mouse click** too,
+where a `Button` does not. That is `:focus-visible` behaving as specified — a browser always
+indicates focus on a control that takes text input, whatever moved focus there — and no CSS can
+separate the two cases, since `:focus-visible` is the mechanism rather than something layered on top
+of it. `SelectTrigger` is the exception inside the family: it is a `<button role="combobox">`, not a
+text field, so clicking it opens the list without painting a ring.
+
+One field-shaped component is still outside all of this: `InputGroup` is an unadapted shadcn
+container that draws its own `3px` `box-shadow` ring and never reads the width property. It has no
+consumer, no story and no docs entry — treat it as not-yet-adopted rather than as a second idiom to
+copy.
 
 Before 1.1 this was eight different idioms across ~30 files (four `outline` flavours, three `ring`
 flavours, plus leftover shadcn `ring-slate-950`), with no single place to change them. A `ring` is a
@@ -255,20 +268,22 @@ handling; the ones that animate purely through CSS transitions inherit whatever 
 
 Stated plainly, so you can decide whether they matter for your product:
 
-- **The focus indicator is a 0.5px hairline.** Visible enough for WCAG 2.1 SC 2.4.7, but under the
-  2px WCAG 2.2 SC 2.4.11 asks for, and sub-pixel widths render unevenly across displays. Every
-  component reads one property, so `:root { --itui-focus-ring-width: 2px }` thickens it everywhere at
-  once. See [Focus indicators](#focus-indicators).
-- **Field focus is a 1px border.** Enough for WCAG 2.1 SC 2.4.7 on its own, weak against WCAG 2.2 SC
-  2.4.11. Unaffected by the property above — a border is not an outline.
+- **The focus indicator is 1px.** Visible enough for WCAG 2.1 SC 2.4.7, but under the 2px WCAG 2.2
+  SC 2.4.11 asks for. Every component reads one property, so
+  `:root { --itui-focus-ring-width: 2px }` thickens it everywhere at once. See
+  [Focus indicators](#focus-indicators).
+- **The ring's brand blue is short of 3:1 on grey surfaces.** `#009ce0` measures 3.07:1 against
+  white, which clears WCAG 2.2 SC 1.4.11, but 2.82:1 against `#f5f5f5` and 2.63:1 against `#ededed`
+  — so a ring drawn on a subtle surface (`Lnb` rows, `Accordion` headers, `Tab` strips) is just
+  under the bar. Kept as-is on purpose: the indicator being _the brand colour_ is what makes it read
+  as one system. `:root { --itui-focus-ring-color: #008ecc }` takes the grey case to 3.36:1 without
+  visibly changing the hue.
 - **No dialog sets `aria-modal`, and this one is deliberate.** `Dialog`, `Modal`, `Popup` and
   `BottomSheet` all render Radix's dialog content, which calls `hideOthers()` to mark every
   sibling `aria-hidden` on mount. Radix's own source calls that the _"better supported equivalent
   to setting `aria-modal`"_, and we agree: adding the attribute on top would duplicate a mechanism
   that already has wider assistive-technology support. Expect an automated checklist to flag its
   absence anyway — the background really is hidden, just by the other method.
-- **`SelectTrigger` accepts `disabled` without forwarding it.** A disabled trigger loses its
-  pointer events but stays focusable and still opens by keyboard.
 - **The `dropdown-menu` and `tabs` families paint themselves with raw palette classes.** Their
   keyboard behaviour is sound — it is Radix's — but their colours ignore your theme, including any
   high-contrast overrides. `OverflowMenu` and `Tab` are the token-based replacements.

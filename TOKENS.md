@@ -1597,7 +1597,7 @@ property, never by restyling components.
 
 | Token                     | CSS Variable                     | Value                            | Read by                           |
 | ------------------------- | -------------------------------- | -------------------------------- | --------------------------------- |
-| `focus.ring.width`        | `--itui-focus-ring-width`        | `0.5px`                          | `focus-ring` · `focus-ring-inset` |
+| `focus.ring.width`        | `--itui-focus-ring-width`        | `1px`                            | `focus-ring` · `focus-ring-inset` |
 | `focus.ring.color`        | `--itui-focus-ring-color`        | `var(--color-brand)` — `#009ce0` | `focus-ring` · `focus-ring-inset` |
 | `focus.ring.offset`       | `--itui-focus-ring-offset`       | `2px`                            | `focus-ring`                      |
 | `focus.ring.offset.inset` | `--itui-focus-ring-offset-inset` | `-2px`                           | `focus-ring-inset`                |
@@ -1607,10 +1607,12 @@ property, never by restyling components.
 > it. Give an element one or the other, **never both**: `tailwind-merge` knows neither utility, so
 > `cn()` keeps the pair and source order decides the winner.
 >
-> **`0.5px` is sub-pixel and deliberate.** A DPR-1 display rounds it (Chrome draws it faint, Firefox
-> may snap it to 1px); only a 2× display renders exactly one device pixel. It clears WCAG 2.1 SC
-> 2.4.7 but sits under the 2px WCAG 2.2 SC 2.4.11 asks for — see `ACCESSIBILITY.md`. A consumer that
-> needs the thicker bar sets `:root { --itui-focus-ring-width: 2px }` and every component follows.
+> **`1px` is the only width in the library.** No component hard-codes a thicker one, so this row is
+> the single place the indicator's weight is decided. It replaced a `0.5px` hairline, which was
+> sub-pixel: a DPR-1 display rounded it and only a 2× display drew exactly one device pixel. `1px`
+> clears WCAG 2.1 SC 2.4.7 but still sits under the 2px WCAG 2.2 SC 2.4.11 asks for — see
+> `ACCESSIBILITY.md`. A consumer that needs the thicker bar sets
+> `:root { --itui-focus-ring-width: 2px }` and every component follows.
 >
 > **The colour goes through `--color-brand`, not `--color-ring`.** `--color-brand` comes from a plain
 > `@theme` block, so the custom property is guaranteed to exist at runtime the way an `@theme inline`

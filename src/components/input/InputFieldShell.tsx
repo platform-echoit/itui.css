@@ -121,6 +121,25 @@ export function InputFieldShell({
         className={cn(
           'flex items-center gap-1 h-12 p-3 rounded-lg border overflow-hidden',
           'transition-colors duration-150',
+          /*
+            Outside the ternary on purpose: the border-colour idiom below only
+            fires in the default branch, so an *errored* field used to have no
+            focus indicator at all — its border was already destructive-red and
+            stayed that colour while focused. The ring is the field's real
+            indicator now and the border tint is the extra that reads as "this
+            field is active"; a keyboard user gets the same thing in all three
+            states.
+
+            `has-[:focus-visible]:` and not `focus-within:`: the box is not the
+            focusable node — the control inside it is — and the outward form is
+            safe here because the box's own `overflow-hidden` cannot clip its
+            own outline and nothing above it clips either.
+
+            The width does not change with it: an `h-12` box with
+            `border-box` sizing would visibly jump if the border thickened, so
+            the outline carries the weight instead.
+          */
+          'has-[:focus-visible]:focus-ring',
           disabled
             ? 'bg-surface-neutral-subtle border-input pointer-events-none'
             : isError

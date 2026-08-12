@@ -58,16 +58,19 @@
   --sidebar-ring: #009ce0;
 
   /* --- Focus ring ---
-     Width of the focus indicator every component paints through the
-     `focus-ring` utility. 0.5px is a hairline: it is sub-pixel, so a DPR-1
-     display rounds it (Chrome draws it faint, Firefox may snap it to 1px) and
-     only a 2× display renders it as exactly one device pixel. Raise it here to
-     make the indicator thicker in every component at once.
+     Width of the focus indicator every component paints, through `focus-ring`
+     or `focus-ring-inset`. It is the *only* width in the library: no component
+     hard-codes one, and a component that wants a thicker indicator is a sign
+     this token should move rather than that component.
 
-     Deliberately left at 0.5px here: the indicator work lands additively first,
-     and moving the width is the one step that changes how every screen looks, so
-     it ships on its own rather than hidden inside a refactor. */
-  --itui-focus-ring-width: 0.5px;
+     1px, not the 0.5px hairline that shipped before. Sub-pixel meant the common
+     case — a DPR-1 display — rounded it to something faint, and only a 2×
+     display drew exactly one device pixel; 1px renders the same on both.
+
+     Still under the 2px WCAG 2.2 SC 2.4.11 asks for. That is deliberate and
+     written down in ACCESSIBILITY.md; a consumer who needs the full 2px raises
+     it here and all ~30 components follow from one declaration. */
+  --itui-focus-ring-width: 1px;
 
   /* Colour and offset were hard-coded inside the utility. They are tokens now so
      the inset variant can share them, and so darkening the ring for contrast is
@@ -703,9 +706,8 @@
    or `peer-focus-visible:` / `group-focus-visible:` / `has-[:focus-visible]:`
    where the focusable element and the painted box are different nodes.
 
-   ⚠ The shipped 0.5px is a hairline and sub-pixel — see the token's comment.
-   WCAG 2.2 SC 2.4.11 asks for 2px, so this is thinner than that bar; it is a
-   deliberate, documented choice — see ACCESSIBILITY.md.
+   ⚠ The shipped 1px is thinner than the 2px WCAG 2.2 SC 2.4.11 asks for; it is
+   a deliberate, documented choice — see ACCESSIBILITY.md.
 
    Width, colour and offset all read from the `--itui-focus-ring-*` tokens, so
    `focus-ring-inset` below is the same indicator with one value swapped.
@@ -722,7 +724,7 @@
    `overflow-hidden` or `overflow-*-auto` box cuts a descendant's outline, and a
    positive offset puts the ring exactly in the part that gets cut. The clip
    region cannot reach an outline drawn inside the border box. A control needs
-   enough padding to hold it — offset plus width, so ~3px at the shipped values. */
+   enough padding to hold it — offset plus width, so 3px at the shipped values. */
 @utility focus-ring-inset {
   outline: var(--itui-focus-ring-width, 0px) solid var(--itui-focus-ring-color);
   outline-offset: var(--itui-focus-ring-offset-inset);
@@ -744,9 +746,7 @@
    sits beside `:hover` because a collapsed rail hides the row's label: the
    tooltip is the only thing naming the row, and reaching it by pointer only
    would leave a keyboard user tabbing through unlabelled icons. */
-[data-sidebar][data-collapsed]
-  [data-sidebar-item]:hover
-  [data-sidebar-tooltip],
+[data-sidebar][data-collapsed] [data-sidebar-item]:hover [data-sidebar-tooltip],
 [data-sidebar][data-collapsed]
   [data-sidebar-item]:focus-within
   [data-sidebar-tooltip] {
