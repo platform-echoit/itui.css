@@ -62,8 +62,30 @@
      `focus-ring` utility. 0.5px is a hairline: it is sub-pixel, so a DPR-1
      display rounds it (Chrome draws it faint, Firefox may snap it to 1px) and
      only a 2× display renders it as exactly one device pixel. Raise it here to
-     make the indicator thicker in every component at once. */
+     make the indicator thicker in every component at once.
+
+     Deliberately left at 0.5px here: the indicator work lands additively first,
+     and moving the width is the one step that changes how every screen looks, so
+     it ships on its own rather than hidden inside a refactor. */
   --itui-focus-ring-width: 0.5px;
+
+  /* Colour and offset were hard-coded inside the utility. They are tokens now so
+     the inset variant can share them, and so darkening the ring for contrast is
+     one declaration rather than an edit in two utilities.
+
+     `--color-brand` and not `--color-ring`: it is the colour seven of the eight
+     old idioms used, and it comes from a plain `@theme` block, so the custom
+     property is guaranteed to exist at runtime the way an `@theme inline` one is
+     not. */
+  --itui-focus-ring-color: var(--color-brand);
+  --itui-focus-ring-offset: 2px;
+
+  /* For a control whose ancestor clips — an Accordion item, an Lnb row, a field
+     slot button, a ScrollArea or Carousel viewport — the same indicator painted
+     inward, so the clip region cannot cut it. An element picks one variant or the
+     other, never both: `tailwind-merge` knows neither utility, so `cn()` would
+     keep the pair and let source order decide the winner. */
+  --itui-focus-ring-offset-inset: -2px;
 
   /* --- Typography / Shape --- */
   --radius: 0.625rem;
@@ -685,12 +707,25 @@
    WCAG 2.2 SC 2.4.11 asks for 2px, so this is thinner than that bar; it is a
    deliberate, documented choice — see ACCESSIBILITY.md.
 
-   `--color-brand` (not `--color-ring`): it is the colour seven of the eight old
-   idioms used, and it comes from a plain `@theme` block, so the custom property
-   is guaranteed to exist at runtime the way an `@theme inline` one is not. */
+   Width, colour and offset all read from the `--itui-focus-ring-*` tokens, so
+   `focus-ring-inset` below is the same indicator with one value swapped.
+
+   ⚠ Give an element one variant or the other, never both. `tailwind-merge` knows
+   neither utility, so `cn('focus-ring', 'focus-ring-inset')` keeps the pair and
+   the winner is whichever lands later in the source — cascade, not merge. */
 @utility focus-ring {
-  outline: var(--itui-focus-ring-width, 0px) solid var(--color-brand);
-  outline-offset: 2px;
+  outline: var(--itui-focus-ring-width, 0px) solid var(--itui-focus-ring-color);
+  outline-offset: var(--itui-focus-ring-offset);
+}
+
+/* The same indicator painted inward, for a control whose ancestor clips: an
+   `overflow-hidden` or `overflow-*-auto` box cuts a descendant's outline, and a
+   positive offset puts the ring exactly in the part that gets cut. The clip
+   region cannot reach an outline drawn inside the border box. A control needs
+   enough padding to hold it — offset plus width, so ~3px at the shipped values. */
+@utility focus-ring-inset {
+  outline: var(--itui-focus-ring-width, 0px) solid var(--itui-focus-ring-color);
+  outline-offset: var(--itui-focus-ring-offset-inset);
 }
 
 /* Scrollable, but with no visible scrollbar — the wheel picker scrolls by drag/snap. */

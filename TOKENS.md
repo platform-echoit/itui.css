@@ -1587,6 +1587,35 @@ steps already existed on the Tailwind spacing scale. See §2.3 for the scale tab
 > exist** in `global.css`; `text-ink` compiles to nothing. `#0f0f0f` is `--foreground`, so
 > `text-foreground` is what the story uses.
 
+### Focus ring
+
+Cross-cutting rather than component-specific: every interactive component paints its focus indicator
+through one utility, and these four properties are what it reads. They are plain `:root` custom
+properties, **not** `@theme` entries — they generate no Tailwind class of their own. They feed the two
+`@utility` blocks in `src/styles/global.css`, so a consumer redefines the indicator by overriding a
+property, never by restyling components.
+
+| Token                     | CSS Variable                     | Value                            | Read by                           |
+| ------------------------- | -------------------------------- | -------------------------------- | --------------------------------- |
+| `focus.ring.width`        | `--itui-focus-ring-width`        | `0.5px`                          | `focus-ring` · `focus-ring-inset` |
+| `focus.ring.color`        | `--itui-focus-ring-color`        | `var(--color-brand)` — `#009ce0` | `focus-ring` · `focus-ring-inset` |
+| `focus.ring.offset`       | `--itui-focus-ring-offset`       | `2px`                            | `focus-ring`                      |
+| `focus.ring.offset.inset` | `--itui-focus-ring-offset-inset` | `-2px`                           | `focus-ring-inset`                |
+
+> **Two utilities, one indicator.** `focus-ring` offsets the outline outward; `focus-ring-inset` uses
+> the negative offset so an ancestor with `overflow-hidden` — or any scroll container — cannot clip
+> it. Give an element one or the other, **never both**: `tailwind-merge` knows neither utility, so
+> `cn()` keeps the pair and source order decides the winner.
+>
+> **`0.5px` is sub-pixel and deliberate.** A DPR-1 display rounds it (Chrome draws it faint, Firefox
+> may snap it to 1px); only a 2× display renders exactly one device pixel. It clears WCAG 2.1 SC
+> 2.4.7 but sits under the 2px WCAG 2.2 SC 2.4.11 asks for — see `ACCESSIBILITY.md`. A consumer that
+> needs the thicker bar sets `:root { --itui-focus-ring-width: 2px }` and every component follows.
+>
+> **The colour goes through `--color-brand`, not `--color-ring`.** `--color-brand` comes from a plain
+> `@theme` block, so the custom property is guaranteed to exist at runtime the way an `@theme inline`
+> one is not.
+
 ---
 
 ## Validation Report

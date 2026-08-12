@@ -30,6 +30,15 @@ behaviour to you, this page says so.
 > Read the rest of this section before shipping to an audience that needs it — thickening it is one
 > declaration.
 
+> ⚠ **A global outline reset in your app switches every indicator below off.** A rule like
+> `*:focus { outline: none !important }` in the consuming app removes the focus indicator of all ~30
+> components at once, because `:focus-visible` is a subset of `:focus` and an author `!important`
+> declaration beats a normal one regardless of specificity. Nothing this package can do reaches it —
+> not even `!important`, which would only start an escalation war between the two stylesheets. If
+> tabbing through your app shows no indicator anywhere, grep your global stylesheet for
+> `outline: none` first, and scope the rule to the subtree that actually needed it (a rich-text
+> editor, usually).
+
 Every interactive component paints its indicator through a single utility, `focus-ring`, whose width
 comes from one custom property. The shipped `0.5px` is sub-pixel, so a DPR-1 display rounds it (Chrome
 draws it faint, Firefox may snap it to 1px) and only a 2× display renders it as exactly one device
@@ -41,12 +50,23 @@ pixel. Raise the width and the change lands in **all ~30 components at once**:
 }
 ```
 
-| Family                                                                          | Indicator                                          | Utilities                                                 |
-| ------------------------------------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------- |
-| **Fields** — `Input*`, `SelectTrigger`, `InputGroup`                            | The box border turns brand blue — _not an outline_ | `focus-within:border-ring` · `focus-visible:border-ring`  |
-| **Buttons** — `Button`, `FloatingButton`, `TableHead`, `GnbMenuItem`, nav items | Brand outline, offset from the shape               | `focus-visible:focus-ring`                                |
-| **Controls** — `Checkbox`, `Radio`, `Toggle`, `Rating`                          | The same outline, on the box the input drives      | `peer-focus-visible:` / `has-[:focus-visible]:focus-ring` |
-| **Inside a surface** — `Tab`, `Pagination`, `Accordion`, `Lnb`                  | The same outline; nothing clips it, it is offset   | `focus-visible:focus-ring`                                |
+| Family                                                                                   | Indicator                                          | Utilities                                                 |
+| ---------------------------------------------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------- |
+| **Fields** — `Input*`, `SelectTrigger`, `InputGroup`                                     | The box border turns brand blue — _not an outline_ | `focus-within:border-ring` · `focus-visible:border-ring`  |
+| **Buttons** — `Button`, `FloatingButton`, `TableHead`, `GnbMenuItem`, nav items          | Brand outline, offset from the shape               | `focus-visible:focus-ring`                                |
+| **Controls** — `Checkbox`, `Radio`, `Toggle`, `Rating`                                   | The same outline, on the box the input drives      | `peer-focus-visible:` / `has-[:focus-visible]:focus-ring` |
+| **Inside a surface** — `Tab`, `Pagination`, `Accordion`, `Lnb`                           | The same outline, offset outward from the shape    | `focus-visible:focus-ring`                                |
+| **Inside a clipping ancestor** — a control under `overflow-hidden` or a scroll container | The same outline, painted inward instead           | `focus-visible:focus-ring-inset`                          |
+
+`focus-ring` offsets the outline **outward**, which puts it in exactly the region an ancestor with
+`overflow-hidden` — or any scroll container — cuts away. Being offset does not save it; only the
+element's own overflow is harmless, since a box never clips its own outline. `focus-ring-inset` is
+the same indicator with a negative offset for those places, and it needs the control to carry enough
+padding to hold it (offset plus width, ~3px at the shipped values).
+
+Give an element one variant or the other, **never both**: `tailwind-merge` knows neither utility, so
+`cn('focus-ring', 'focus-ring-inset')` keeps the pair and the winner is whichever lands later in the
+source.
 
 The **field** indicator does not read from that property at all, because it is a border-colour change
 rather than an outline — `Input`, `SelectTrigger` and `InputGroup` turn brand blue on focus whatever
