@@ -223,6 +223,10 @@ export const CarouselContent = forwardRef<HTMLDivElement, CarouselContentProps>(
     return (
       <div
         ref={carouselRef}
+        // Embla measures this box, so `overflow-hidden` is not negotiable — and
+        // it clips the focus outline of anything focusable inside a slide.
+        // That content is the caller's, so the fix has to be too: give it
+        // `focus-visible:focus-ring-inset`. See ACCESSIBILITY.md.
         className={cn('overflow-hidden', viewportClassName)}
       >
         <div

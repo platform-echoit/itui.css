@@ -146,7 +146,12 @@ export const AccordionTrigger = forwardRef<
           'group flex h-12 w-full cursor-pointer items-center justify-between gap-2 px-5',
           'text-base leading-lg tracking-lg font-medium outline-none',
           'transition-colors duration-150 ease-out motion-reduce:transition-none',
-          'focus-visible:focus-ring',
+          // The inset ring: the trigger fills its item's width and height, and
+          // `AccordionItem` is `overflow-hidden` — it has to be, it is what
+          // rounds the corners of the `filled` and `outline` variants — so an
+          // outline drawn outside this box is cut on every side. `px-5` leaves
+          // room to draw it inside instead.
+          'focus-visible:focus-ring-inset',
           'disabled:cursor-not-allowed disabled:text-neutral-disabled',
           triggerColorMap[variant],
           className,

@@ -55,8 +55,8 @@ pixel. Raise the width and the change lands in **all ~30 components at once**:
 | **Fields** — `Input*`, `SelectTrigger`, `InputGroup`                                     | The box border turns brand blue — _not an outline_ | `focus-within:border-ring` · `focus-visible:border-ring`  |
 | **Buttons** — `Button`, `FloatingButton`, `TableHead`, `GnbMenuItem`, nav items          | Brand outline, offset from the shape               | `focus-visible:focus-ring`                                |
 | **Controls** — `Checkbox`, `Radio`, `Toggle`, `Rating`                                   | The same outline, on the box the input drives      | `peer-focus-visible:` / `has-[:focus-visible]:focus-ring` |
-| **Inside a surface** — `Tab`, `Pagination`, `Accordion`, `Lnb`                           | The same outline, offset outward from the shape    | `focus-visible:focus-ring`                                |
-| **Inside a clipping ancestor** — a control under `overflow-hidden` or a scroll container | The same outline, painted inward instead           | `focus-visible:focus-ring-inset`                          |
+| **Inside a surface** — `Tab`, `Pagination`, list and menu rows                            | The same outline, offset outward from the shape    | `focus-visible:focus-ring`                                |
+| **Inside a clipping ancestor** — `Accordion`, `Lnb`, the `InputSearch`/`InputDate` slots  | The same outline, painted inward instead           | `focus-visible:focus-ring-inset`                          |
 
 `focus-ring` offsets the outline **outward**, which puts it in exactly the region an ancestor with
 `overflow-hidden` — or any scroll container — cuts away. Being offset does not save it; only the
@@ -67,6 +67,15 @@ padding to hold it (offset plus width, ~3px at the shipped values).
 Give an element one variant or the other, **never both**: `tailwind-merge` knows neither utility, so
 `cn('focus-ring', 'focus-ring-inset')` keeps the pair and the winner is whichever lands later in the
 source.
+
+Three components clip on purpose and cannot stop: `CarouselContent`'s viewport is `overflow-hidden`
+because Embla measures it that way, `ScrollAreaRoot` is `overflow-hidden` because that is what makes
+it a scroll area, and `Table` wraps its `<table>` in `overflow-x-auto` — which computes the vertical
+axis to `auto` as well, so it clips both. The library cannot fix these from the inside: the clipping
+is the feature, and the control at risk is **your** content, not ours. Anything focusable you put in
+a slide, in a scroll viewport, or in a `TableCell` should carry `focus-visible:focus-ring-inset`, or
+sit far enough from the edge — roughly 3px at the shipped values — that the outward ring clears it.
+`TableCell`'s own `px-3 py-2` is already enough for a control that does not fill the cell.
 
 The **field** indicator does not read from that property at all, because it is a border-colour change
 rather than an outline — `Input`, `SelectTrigger` and `InputGroup` turn brand blue on focus whatever

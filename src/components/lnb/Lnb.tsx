@@ -95,7 +95,11 @@ import { SidebarSimpleRegularIcon } from '../../icons/ITUI/sidebar-simple';
 const ROW_BASE = [
   'flex w-full cursor-pointer items-center gap-2 rounded-lg p-2 text-left select-none outline-none text-sm font-medium',
   'transition-colors duration-150 ease-out',
-  'focus-visible:focus-ring',
+  // The inset ring, and one line covers both clip points: the scrolling body
+  // (`overflow-y-auto` makes the horizontal axis clip too) and the group content
+  // (`overflow-hidden`, which the open/close height keyframes depend on). The
+  // row's `p-2` is 8px, so the 3px the ring needs stays inside the padding.
+  'focus-visible:focus-ring-inset',
   'disabled:pointer-events-none disabled:text-neutral-disabled',
   'group-data-collapsed/lnb:w-9 group-data-collapsed/lnb:justify-center',
 ].join(' ');
@@ -265,7 +269,10 @@ export const LnbToggle = forwardRef<HTMLButtonElement, LnbToggleProps>(
         'flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-lg p-2 outline-none',
         'text-foreground transition-colors duration-150 ease-out',
         'hover:bg-muted active:bg-secondary',
-        'focus-visible:focus-ring',
+        // Inset like the rows: the toggle sits in `LnbLogo` at the top-right of
+        // `LnbHeader`, which scrolls, so an outward ring is cut on exactly the
+        // two sides that touch the scrollport. Its `p-2` holds the 3px.
+        'focus-visible:focus-ring-inset',
         '[&>svg]:size-5 [&_path]:fill-current',
         className,
       )}

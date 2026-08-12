@@ -150,6 +150,10 @@ export const ScrollAreaRoot = forwardRef<
 >(({ className, ...rest }, ref) => (
   <ScrollAreaPrimitive.Root
     ref={ref}
+    // `overflow-hidden` here is what makes this a scroll area, so it stays, and
+    // it clips the focus outline of focusable content in the viewport. That
+    // content is the caller's: give it `focus-visible:focus-ring-inset`.
+    // See ACCESSIBILITY.md.
     className={cn('relative overflow-hidden', className)}
     {...rest}
   />
