@@ -114,7 +114,7 @@ function RowAction({ icon, disabled, onClick, children }: RowActionProps) {
 
 export interface InputFileUploadItemProps
   extends Omit<HTMLAttributes<HTMLLIElement>, 'children'>,
-  Omit<InputFileUploadItemData, 'id'> {
+    Omit<InputFileUploadItemData, 'id'> {
   /** Greys the row out and stops its action buttons responding. */
   disabled?: boolean;
   /** Each action only renders when its handler is given — no dead buttons. */
@@ -195,7 +195,13 @@ export const InputFileUploadItem = forwardRef<
 
           {isError && onRemove && (
             <RowAction
-              icon={<XCircleFillIcon width={20} height={20} className='text-icon-neutral-subtle' />}
+              icon={
+                <XCircleFillIcon
+                  width={20}
+                  height={20}
+                  className="text-icon-neutral-subtle"
+                />
+              }
               disabled={disabled}
               onClick={onRemove}
             >
@@ -207,7 +213,13 @@ export const InputFileUploadItem = forwardRef<
             <span className="flex shrink-0 items-center gap-2">
               {onRemove && (
                 <RowAction
-                  icon={<XCircleFillIcon width={20} height={20} className='text-icon-neutral-subtle' />}
+                  icon={
+                    <XCircleFillIcon
+                      width={20}
+                      height={20}
+                      className="text-icon-neutral-subtle"
+                    />
+                  }
                   disabled={disabled}
                   onClick={onRemove}
                 >

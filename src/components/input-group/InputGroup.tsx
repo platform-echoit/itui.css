@@ -6,6 +6,28 @@ import { Button, ButtonProps } from '../button';
 import { Input, InputProps } from '../input/Input';
 // import { Textarea } from "@/components/ui/textarea";
 
+/*
+  Focus indicator — where this family stands today (checked, not assumed).
+
+  The group frame is the indicator: it watches the control with
+  `has-[[data-slot=input-group-control]:focus-visible]` and answers with a
+  `ring-[3px]` box-shadow, an idiom no other component here uses. That ring is
+  NOT the library's `focus-ring`, so `--itui-focus-ring-width` does not reach it
+  — a consumer who raises the token to 2px for WCAG 2.2 leaves this family at 3px.
+
+  `InputGroupInput`'s reset does not cancel the ring `InputFieldShell` draws, for
+  two separate reasons: `focus-visible:ring-0` clears a Tailwind `ring`
+  (box-shadow) while the shell's indicator is an `outline`, and the reset lands
+  on the wrong node anyway — `Input` is an alias of `InputText`, whose
+  `className` addresses the outer wrapper, not the bordered box. So the box keeps
+  its border, its height and its own focus ring inside the group's frame.
+
+  Left as-is on purpose: nothing imports this family — no story, no screen, no
+  entry in the docs — so there is no composition to verify a fix against.
+  Reach for `InputText` with `prefix` / `suffix`, which is the same idea drawn
+  from the Figma spec and carries the library's focus ring.
+*/
+
 /**
  * A single bordered frame around one control and its adornments, so a prefix,
  * a unit, or a trailing button read as part of the field rather than as

@@ -278,7 +278,7 @@ export const ResourceModal: React.FC<ResourceModalProps> = ({
                         type="button"
                         aria-label={text.removeTagLabel}
                         onClick={() => setTags(tags.filter((t) => t !== tag))}
-                        className="text-slate-400 hover:text-red-500"
+                        className="rounded-sm text-slate-400 hover:text-red-500 focus-visible:focus-ring"
                       >
                         <XLightIcon className="size-3.5 [&_path]:fill-current" />
                       </button>

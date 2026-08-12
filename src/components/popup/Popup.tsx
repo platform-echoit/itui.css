@@ -127,7 +127,10 @@ export function Popup({
           aria-describedby={undefined}
           className={cn(
             'fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2',
-            'flex w-[358px] max-w-[calc(100vw-2rem)] flex-col gap-4 focus:outline-none',
+            // `focus-visible:` and not `focus:`: the popup box is focused by
+            // script on open and is never tabbed to, so this suppresses exactly
+            // the case a browser would paint. The controls inside keep theirs.
+            'flex w-[358px] max-w-[calc(100vw-2rem)] flex-col gap-4 focus-visible:outline-none',
             className,
           )}
         >

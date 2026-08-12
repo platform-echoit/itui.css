@@ -177,7 +177,11 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(
         className={cn(
           'inline-flex shrink-0 items-center gap-1 px-2 rounded-full',
           'font-medium whitespace-nowrap select-none',
-          'focus-visible:focus-ring',
+          // Gated on the same flag as `tabIndex` below: a decorative chip is a
+          // plain <div> with no tab stop, so an unconditional ring class could
+          // never match — it only made the component read as though it focused.
+          // The close button keeps its own ring; it is a real <button> either way.
+          isInteractive && 'focus-visible:focus-ring',
           box,
           // After px-2 so tailwind-merge keeps the 8px right pad and drops the left.
           avatar != null && avatarPad,
@@ -189,6 +193,10 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(
               : '',
           className,
         )}
+        // Pass `onClick` or `onClose`, not both: together they nest the close
+        // <button> inside this role="button", which is invalid ARIA and gives one
+        // chip two tab stops with two different meanings. No consumer does today.
+        // See ACCESSIBILITY.md, "Chip and Tag: one interaction each".
         role={isInteractive ? 'button' : undefined}
         tabIndex={isInteractive ? 0 : undefined}
         aria-pressed={isInteractive ? selected : undefined}

@@ -103,7 +103,11 @@ export function Modal({
             'fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2',
             'flex w-[358px] max-w-[calc(100vw-2rem)] flex-col',
             'rounded-xl border border-surface-neutral-hover bg-inverse shadow-downwards-sm',
-            'focus:outline-none',
+            // The dialog box is focused by script on open, never tabbed to, so it
+            // wants no ring of its own — the first control inside it gets one.
+            // `focus-visible:` and not `focus:` so it suppresses exactly the case
+            // a browser would paint, and nothing wider.
+            'focus-visible:outline-none',
             className,
           )}
         >

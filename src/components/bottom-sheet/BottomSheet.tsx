@@ -216,7 +216,10 @@ export function BottomSheet({
           className={cn(
             'itui-bottom-sheet-content',
             'fixed inset-x-0 bottom-0 z-70 flex w-full flex-col',
-            'rounded-t-[28px] bg-inverse focus:outline-none',
+            // `focus-visible:` and not `focus:`: the sheet is focused by script on
+            // open and is never tabbed to, so this suppresses exactly the case a
+            // browser would paint. The controls inside keep their own ring.
+            'rounded-t-[28px] bg-inverse focus-visible:outline-none',
             // Slide up on open, slide down on close. The keyframes are injected
             // by ensureBottomSheetStyles (the tailwindcss-animate utilities used
             // before were no-ops here); Radix keeps the node mounted until the

@@ -172,7 +172,15 @@ export const ScrollAreaViewport = forwardRef<
   <ScrollAreaPrimitive.Viewport
     ref={ref}
     // `rounded-[inherit]` keeps the clipped content following the root's radius.
-    className={cn('size-full rounded-[inherit]', className)}
+    //
+    // Radix gives the viewport `tabIndex={0}` so the area can be scrolled from
+    // the keyboard, which makes it a real tab stop that used to draw nothing.
+    // The ring has to be the inset one: the root above is `overflow-hidden`, so
+    // an outward ring on its own child would be clipped on every side.
+    className={cn(
+      'size-full rounded-[inherit] focus-visible:focus-ring-inset',
+      className,
+    )}
     {...rest}
   />
 ));
@@ -189,6 +197,9 @@ export const ScrollAreaThumb = forwardRef<
 >(({ className, ...rest }, ref) => (
   <ScrollAreaPrimitive.Thumb
     ref={ref}
+    // focus-ok: a drag handle for the mouse, never in the tab order. The
+    // keyboard route into a scroll area is `ScrollAreaViewport`, which Radix
+    // makes a tab stop and which draws the inset ring for it.
     className={cn(
       'rounded-full bg-secondary transition-colors duration-150 ease-out motion-reduce:transition-none',
       // Figma's State=Hover. Keyed off the whole rail, not the thumb, so the 18px

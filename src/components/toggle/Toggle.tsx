@@ -83,6 +83,8 @@ export const Toggle = forwardRef<
       {...props}
     >
       <RadixSwitch.Thumb
+        // focus-ok: `pointer-events-none` decoration inside the switch. The
+        // `RadixSwitch.Root` above is the tab stop and rings the whole track.
         className={cn(
           'pointer-events-none block rounded-full bg-inverse transition-transform',
           'translate-x-0',

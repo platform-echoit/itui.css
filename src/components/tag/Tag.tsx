@@ -134,7 +134,11 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
         className={cn(
           'inline-flex shrink-0 items-center gap-1 px-2 rounded-lg',
           'font-medium whitespace-nowrap select-none',
-          'focus-visible:focus-ring',
+          // Gated on the same flag as `tabIndex` below: a decorative tag is a
+          // plain <div> with no tab stop, so an unconditional ring class could
+          // never match — it only made the component read as though it focused.
+          // The close button keeps its own ring; it is a real <button> either way.
+          isInteractive && 'focus-visible:focus-ring',
           sizeConfig[size],
           boxClasses(variant, selected, disabled),
           disabled
@@ -144,6 +148,10 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
               : '',
           className,
         )}
+        // Pass `onClick` or `onClose`, not both: together they nest the close
+        // <button> inside this role="button", which is invalid ARIA and gives one
+        // tag two tab stops with two different meanings. No consumer does today.
+        // See ACCESSIBILITY.md, "Chip and Tag: one interaction each".
         role={isInteractive ? 'button' : undefined}
         tabIndex={isInteractive ? 0 : undefined}
         aria-pressed={isInteractive ? selected : undefined}

@@ -287,7 +287,12 @@ export function DatePicker(props: DatePickerProps) {
 
           // Dropdown caption: the native select sits transparently over the label.
           dropdowns: 'flex items-center gap-2',
-          dropdown_root: 'relative flex items-center',
+          // The <select> is the tab stop but it is `opacity-0`, which hides its
+          // own indicator along with it — the browser default ring included. So
+          // the root draws the ring instead: it is the box the label fills, and
+          // it is the only node here a keyboard user can actually see.
+          dropdown_root:
+            'relative flex items-center rounded-sm has-[:focus-visible]:focus-ring',
           dropdown: 'absolute inset-0 cursor-pointer opacity-0',
           caption_label:
             'flex items-center gap-1 whitespace-nowrap text-sm font-medium leading-md tracking-md text-foreground',

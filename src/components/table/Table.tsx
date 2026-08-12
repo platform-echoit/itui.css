@@ -160,6 +160,15 @@ export const TableRow = ({
       disabled && 'pointer-events-none text-neutral-disabled',
       className,
     )}
+    // A clickable row stays the caller's to make reachable. A <tr> is not
+    // focusable, so `onClick` on its own is mouse-only: pass `tabIndex={0}`, an
+    // `onKeyDown` that answers Enter, and `focus-visible:focus-ring-inset`
+    // through `className` — the frame around the table scrolls on x, so an
+    // outward ring on a row would be clipped. Deliberately not done here:
+    // `role="button"` is the obvious pairing and it is wrong (it drops the row
+    // out of the table for a screen reader), and adding `tabIndex` unasked would
+    // turn every row of every existing table into a tab stop. See ACCESSIBILITY.md.
+    //
     // pointer-events-none only stops the mouse, so drop the keyboard path too —
     // otherwise a disabled row still fires the consumer's handlers via Enter.
     onClick={disabled ? undefined : onClick}

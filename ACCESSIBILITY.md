@@ -17,6 +17,7 @@ behaviour to you, this page says so.
 - [Announcements](#announcements)
 - [What you have to supply](#what-you-have-to-supply)
 - [`Checkbox.label` vs `Radio` children](#checkboxlabel-vs-radio-children)
+- [Chip and Tag: one interaction each](#chip-and-tag-one-interaction-each)
 - [Reduced motion](#reduced-motion)
 - [Known gaps](#known-gaps)
 
@@ -50,13 +51,13 @@ appears to want one is a bug rather than a special case. Raise the property and 
 }
 ```
 
-| Family                                                                                   | Indicator                                       | Utilities                                                      |
-| ---------------------------------------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------- |
-| **Fields** — `Input*`, `SelectTrigger`                                                   | The same outline, plus a brand-blue border tint | `has-[:focus-visible]:focus-ring` · `focus-visible:focus-ring` |
-| **Buttons** — `Button`, `FloatingButton`, `TableHead`, `GnbMenuItem`, nav items          | Brand outline, offset from the shape            | `focus-visible:focus-ring`                                     |
-| **Controls** — `Checkbox`, `Radio`, `Toggle`, `Rating`                                   | The same outline, on the box the input drives   | `peer-focus-visible:` / `has-[:focus-visible]:focus-ring`      |
-| **Inside a surface** — `Tab`, `Pagination`, list and menu rows                           | The same outline, offset outward from the shape | `focus-visible:focus-ring`                                     |
-| **Inside a clipping ancestor** — `Accordion`, `Lnb`, the `InputSearch`/`InputDate` slots | The same outline, painted inward instead        | `focus-visible:focus-ring-inset`                               |
+| Family                                                                                                         | Indicator                                       | Utilities                                                      |
+| -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------- |
+| **Fields** — `Input*`, `SelectTrigger`                                                                         | The same outline, plus a brand-blue border tint | `has-[:focus-visible]:focus-ring` · `focus-visible:focus-ring` |
+| **Buttons** — `Button`, `FloatingButton`, `TableHead`, `GnbMenuItem`, nav items                                | Brand outline, offset from the shape            | `focus-visible:focus-ring`                                     |
+| **Controls** — `Checkbox`, `Radio`, `Toggle`, `Rating`                                                         | The same outline, on the box the input drives   | `peer-focus-visible:` / `has-[:focus-visible]:focus-ring`      |
+| **Inside a surface** — `Tab`, `Pagination`, list and menu rows                                                 | The same outline, offset outward from the shape | `focus-visible:focus-ring`                                     |
+| **Inside a clipping ancestor** — `Accordion`, `Lnb`, `ScrollAreaViewport`, the `InputSearch`/`InputDate` slots | The same outline, painted inward instead        | `focus-visible:focus-ring-inset`                               |
 
 `focus-ring` offsets the outline **outward**, which puts it in exactly the region an ancestor with
 `overflow-hidden` — or any scroll container — cuts away. Being offset does not save it; only the
@@ -77,6 +78,17 @@ a slide, in a scroll viewport, or in a `TableCell` should carry `focus-visible:f
 sit far enough from the edge — 3px at the shipped values — that the outward ring clears it.
 `TableCell`'s own `px-3 py-2` is already enough for a control that does not fill the cell.
 
+`ScrollAreaViewport` is the one node inside those three that the library owns rather than you: Radix
+gives it `tabIndex={0}` so the area can be scrolled from the keyboard, which makes it a real tab
+stop, and it carries the inset ring itself for exactly the reason your own content has to.
+
+A handful of indicators are painted by a node other than the one holding focus, because the
+focusable node cannot show one. `Checkbox`, `Radio` and `Rating` hide a real `<input>` and ring the
+box beside it; the field family rings the shell around the control; and `DatePicker`'s dropdown
+caption rings the label wrapper, because the `<select>` that takes focus is laid over that label at
+`opacity-0`, which would hide its own ring along with it. If you are auditing a component by reading
+computed style off the focused element, walk up its ancestors before concluding it has no indicator.
+
 The **field** family used to be the exception. It signalled focus by turning its border brand blue
 and painted no outline at all, which meant it ignored the width property, and an errored field —
 already red-bordered — changed nothing whatsoever when it took focus. Fields paint the same outline
@@ -93,9 +105,13 @@ of it. `SelectTrigger` is the exception inside the family: it is a `<button role
 text field, so clicking it opens the list without painting a ring.
 
 One field-shaped component is still outside all of this: `InputGroup` is an unadapted shadcn
-container that draws its own `3px` `box-shadow` ring and never reads the width property. It has no
-consumer, no story and no docs entry — treat it as not-yet-adopted rather than as a second idiom to
-copy.
+container that draws its own `3px` `box-shadow` ring and never reads the width property. Its
+`InputGroupInput` reset does not strip the inner field either — `focus-visible:ring-0` clears a
+Tailwind `ring`, which is a `box-shadow`, while the field's indicator is an `outline`, and the reset
+lands on the field's outer wrapper rather than on its bordered box — so a group renders a full field
+inside its own frame, ring included. It has no consumer, no story and no docs entry; treat it as
+not-yet-adopted rather than as a second idiom to copy, and reach for `InputText` with
+`prefix` / `suffix` instead.
 
 Before 1.1 this was eight different idioms across ~30 files (four `outline` flavours, three `ring`
 flavours, plus leftover shadcn `ring-slate-950`), with no single place to change them. A `ring` is a
@@ -234,6 +250,22 @@ or repeat the day's events in text.
 a state and nothing more — no `aria-selected`, no `aria-pressed`, because only you know what kind of
 selection it is. Add the right attribute for your case.
 
+**Make a clickable `TableRow` reachable.** A `<tr>` is not focusable, so a row with `onClick` is
+mouse-only until you say otherwise — and the library will not decide that for you, because
+`tabIndex` on `TableRow` would turn every row of every existing table into a tab stop, and the
+obvious partner `role="button"` is wrong: it drops the row out of the table for a screen reader.
+Opt a row in yourself, and use the **inset** ring — the frame around the table scrolls on x, so an
+outward ring on a row is clipped:
+
+```tsx
+<TableRow
+  tabIndex={0}
+  onClick={open}
+  onKeyDown={(e) => e.key === 'Enter' && open()}
+  className="focus-visible:focus-ring-inset"
+/>
+```
+
 ---
 
 ## `Checkbox.label` vs `Radio` children
@@ -252,6 +284,26 @@ would be a breaking change on one of them in exchange for symmetry alone.
 
 For accessibility they behave identically: both put the control inside a `<label>`, so the text names
 it and clicking the text toggles it.
+
+---
+
+## Chip and Tag: one interaction each
+
+Both components stay a plain `<div>` until you hand them a handler, and which handler you pass
+decides what they become:
+
+- `onClick` makes the whole shape the control — `role="button"`, one tab stop, `Enter`/`Space`
+  activate it, and the focus ring is drawn around the shape.
+- `onClose` adds a real `<button>` at the trailing edge — its own tab stop, its own ring, named by
+  `closeLabel`.
+- Neither leaves a label: no tab stop, no role, and no focus ring, which is why the ring class is
+  attached only in the `onClick` case rather than sitting on the root unconditionally.
+
+**Passing both is not supported.** It nests the close `<button>` inside a `role="button"`, which is
+invalid ARIA, and it gives one visual object two tab stops that do opposite things — the first
+selects, the second deletes, and nothing in the shape says which one you are on. Split it instead:
+if a chip must be both selectable and removable, that is a `Chip` with `onClick` beside a separate,
+separately labelled remove control.
 
 ---
 

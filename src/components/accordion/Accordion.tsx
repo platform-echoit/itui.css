@@ -114,6 +114,9 @@ export const AccordionItem = forwardRef<
   return (
     <RadixAccordion.Item
       ref={ref}
+      // focus-ok: a section wrapper, not a tab stop — `AccordionTrigger` inside
+      // it is the button, and it carries the inset ring this `overflow-hidden`
+      // makes necessary.
       className={cn('overflow-hidden', itemVariantMap[variant], className)}
       {...props}
     />

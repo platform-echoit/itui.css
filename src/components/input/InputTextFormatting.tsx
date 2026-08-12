@@ -369,6 +369,9 @@ function BlockTypeSelect({ value, onChange, labels }: BlockTypeSelectProps) {
               // height/popover/sm 36px → h-9, same row rhythm as InputDropdown.
               'flex h-9 w-full cursor-pointer items-center rounded-lg px-2 text-left',
               'text-sm leading-md tracking-md hover:bg-surface-neutral-subtle',
+              // The outward ring, not the inset one: `PopoverContent`'s own `p-2`
+              // leaves 8px around the row and the ring reaches 3px into it.
+              'focus-visible:focus-ring',
               item.type === value ? 'text-primary' : 'text-foreground',
             )}
           >

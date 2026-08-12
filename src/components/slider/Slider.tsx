@@ -68,6 +68,12 @@ export const Slider = forwardRef<
           className={cn(
             'block size-5 shrink-0 cursor-pointer rounded-full border bg-inverse transition-colors',
             'border-surface-primary-muted',
+            // The hover ring and the focus ring stack, they do not collide:
+            // `ring-2` is a box-shadow filling 0→2px outward from the border box,
+            // and the outline lands at 2→3px behind it (offset 2px, width 1px).
+            // Measured, not assumed — a thumb that is hovered *and* focused reads
+            // as one 3px halo, pale inside and brand outside, so neither
+            // indicator needs pushing further out to clear the other.
             'hover:border-brand hover:ring-2 hover:ring-brand-subtle',
             'active:border-brand active:ring-2 active:ring-brand-subtle',
             'focus-visible:border-brand focus-visible:focus-ring',
