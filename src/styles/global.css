@@ -688,10 +688,10 @@
    `--color-brand` (not `--color-ring`): it is the colour seven of the eight old
    idioms used, and it comes from a plain `@theme` block, so the custom property
    is guaranteed to exist at runtime the way an `@theme inline` one is not. */
-@utility focus-ring {
+/* @utility focus-ring {
   outline: var(--itui-focus-ring-width, 0px) solid var(--color-brand);
   outline-offset: 2px;
-}
+} */
 
 /* Scrollable, but with no visible scrollbar — the wheel picker scrolls by drag/snap. */
 @utility scrollbar-none {
