@@ -132,20 +132,21 @@ export function InputFieldShell({
         {children}
       </div>
 
-      {footer}
-
-      {message && (
-        <p
-          id={inputMessageId(htmlFor)}
-          role={isError ? 'alert' : undefined}
-          className={cn(
-            'text-sm leading-md tracking-md',
-            isError ? 'text-destructive' : 'text-neutral-muted',
-          )}
-        >
-          {message}
-        </p>
-      )}
+      <div className='flex items-center justify-between'>
+        {message && (
+          <p
+            id={inputMessageId(htmlFor)}
+            role={isError ? 'alert' : undefined}
+            className={cn(
+              'text-sm leading-md tracking-md',
+              isError ? 'text-destructive' : 'text-neutral-muted',
+            )}
+          >
+            {message}
+          </p>
+        )}
+        {footer}
+      </div>
     </div>
   );
 }

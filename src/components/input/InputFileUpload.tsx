@@ -436,7 +436,7 @@ export const InputFileUpload = forwardRef<
             'flex items-center justify-center',
             // Empty, the prompt centres itself in the 124px frame; with rows
             // under it, growing would come out of their height instead.
-            hasFiles ? 'shrink-0' : 'flex-1',
+            hasFiles ? 'shrink-0 text-neutral' : 'flex-1',
             disabled ? 'cursor-not-allowed' : 'cursor-pointer',
           )}
         >
@@ -464,16 +464,18 @@ export const InputFileUpload = forwardRef<
             <span className="flex flex-col items-center gap-1">
               <span
                 className={cn(
-                  'text-sm leading-md tracking-md',
+                  'text-sm leading-md tracking-md font-semibold',
                   textTone ?? 'text-neutral-muted',
+                  hasFiles && 'text-neutral',
                 )}
               >
                 {description}
               </span>
               <span
                 className={cn(
-                  'text-sm leading-md tracking-md',
+                  'text-sm leading-md tracking-md font-normal',
                   textTone ?? 'text-neutral-muted',
+                  hasFiles && 'text-neutral',
                 )}
               >
                 {hint}

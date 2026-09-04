@@ -84,7 +84,8 @@ export const InputDropdownItem = forwardRef<
     )}
     {...rest}
   >
-    <Radio value={value} disabled={disabled}>
+    <Radio value={value} disabled={disabled} className={cn(
+      'hover:border-icon-neutral!',)}>
       {children}
     </Radio>
   </div>
