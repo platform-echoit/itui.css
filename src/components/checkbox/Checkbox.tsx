@@ -136,7 +136,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           {checked && (
             <CheckBoldIcon
               aria-hidden="true"
-              className="size-3 [&_path]:fill-current"
+              width={12}
+              height={12}
+              className="[&_path]:fill-current"
             />
           )}
         </span>
