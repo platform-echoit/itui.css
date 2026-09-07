@@ -471,7 +471,7 @@ Props: `DateWheelPickerProps extends Omit<WheelPickerProps, 'columns' | 'value' 
 
 ### WheelPicker
 
-Scroll-snapping wheels, one per column. Each column scrolls independently and reports the option resting under the highlight.
+Scroll-snapping wheels, one per column. Each column scrolls independently, loops once it holds five options or more, and reports the option resting under the highlight.
 
 Props: `WheelPickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>`
 
@@ -2316,7 +2316,7 @@ Props: `RatingProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'd
 
 ### RatingStar
 
-One star, drawn as an outline with a coloured layer clipped over it. Exported for building a legend or a static score; `Rating` draws its own.
+One star, drawn as a grey solid with a coloured layer clipped over it. Exported for building a legend or a static score; `Rating` draws its own.
 
 Props: `RatingStarProps extends HTMLAttributes<HTMLSpanElement>`
 
