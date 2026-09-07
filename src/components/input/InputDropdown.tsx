@@ -84,11 +84,11 @@ export const InputDropdownItem = forwardRef<
     )}
     {...rest}
   >
-    <Radio value={value} disabled={disabled} className={cn(
-      'hover:border-icon-neutral!',)}>
+    <Radio value={value} disabled={disabled} className={cn('enabled:hover:not-data-[state=checked]:border-neutral'
+    )}>
       {children}
     </Radio>
-  </div>
+  </div >
 ));
 
 InputDropdownItem.displayName = 'InputDropdownItem';

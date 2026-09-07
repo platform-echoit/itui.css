@@ -19,7 +19,8 @@ import { cn } from '../../lib/utils';
                                           centred inside — same rhythm, but a whole-row
                                           scroll step, which is what snapping needs
   5 visible rows                        → h-50 (5 × 40px) · py-20 (2 rows of lead-in,
-                                          so the first and last option can reach centre)
+                                          so a wheel too short to loop can still
+                                          bring its first and last option to centre)
 
   SELECTED ROW
   surface/primary/subtle       #e6f5fc  → bg-surface-primary-subtle
@@ -65,12 +66,30 @@ export interface WheelPickerProps
   /** Receives the full next selection, not just the column that moved. */
   onChange?: (value: Record<string, string>) => void;
 }
-
 // How long the wheel must sit still before its resting row counts as the choice.
 // `scrollend` would be the precise signal, but Safari does not fire it.
 const SCROLL_SETTLE_MS = 120;
 
+// Rows the window shows at once — `h-50` over `h-10` rows. A wheel with fewer
+// options than that cannot loop: one turn would be shorter than the window, so
+// the same option would have to appear twice on screen at the same time.
+const VISIBLE_ROWS = 5;
+
+// Rows of slack a looping wheel keeps on each side of centre. It is the budget
+// for one throw: the strip is only re-centred once the wheel stops, so a throw
+// that travels further than this reaches the end of the strip and stops there.
+// At 40px a row, 50 rows is ~2000px — more than a flick covers in a 200px window.
+const LOOP_RUNWAY_ROWS = 50;
+
 // ─── Column ───────────────────────────────────────────────────────────────────
+
+// Rows never take a `className` from outside, so their classes are settled here
+// once instead of being merged per row on every render — a wheel is a hundred
+// rows deep, and it re-renders on every notch it turns.
+const ROW =
+  'flex h-10 w-full cursor-pointer snap-center items-center justify-center text-sm leading-md tracking-md';
+const ROW_SELECTED = `${ROW} font-medium text-foreground`;
+const ROW_UNSELECTED = `${ROW} font-normal text-neutral-muted`;
 
 interface WheelPickerColumnViewProps {
   column: WheelPickerColumn;
@@ -86,27 +105,52 @@ function WheelPickerColumnView({
   const listRef = useRef<HTMLDivElement>(null);
   const settleTimer = useRef<number | undefined>(undefined);
 
-  const selectedIndex = column.options.findIndex(
-    (option) => option.value === value,
-  );
+  const options = column.options;
+  const count = options.length;
+  const selectedIndex = options.findIndex((option) => option.value === value);
+
+  // A looping wheel draws its options over and over and rests in the middle
+  // copy, which leaves `LOOP_RUNWAY_ROWS` of strip to scroll into either way.
+  const isLooping = count >= VISIBLE_ROWS;
+  const copies = isLooping ? 2 * Math.ceil(LOOP_RUNWAY_ROWS / count) + 1 : 1;
+  const homeCopy = (copies - 1) / 2;
 
   // Row height is read from the DOM rather than hardcoded, so the h-10 row class
   // stays the single source of truth for the pitch.
   const rowHeight = () => listRef.current?.firstElementChild?.clientHeight ?? 0;
 
-  // Park the wheel on the selected option — on mount, and whenever the value
-  // changes from the outside. Scrolling that already settled there is left alone.
+  /** Which row of the whole strip — clones included — sits under the highlight. */
+  const rowAt = (scrollTop: number, height: number) =>
+    Math.round(scrollTop / height);
+
+  /** The option that row lands on, as an index into `options`. */
+  const indexAt = (row: number) =>
+    isLooping
+      ? ((row % count) + count) % count
+      : Math.min(Math.max(row, 0), count - 1);
+
+  /** Where the strip should sit for `index` — always in the middle copy. */
+  const scrollTopFor = (index: number, height: number) =>
+    (homeCopy * count + index) * height;
+
+  // Park the wheel on the selected option — on mount, whenever the value changes
+  // from the outside, and when the options themselves change (a shorter month
+  // moves every row below it). A wheel already resting on that option is left
+  // alone, whichever copy it happens to rest in.
   useEffect(() => {
     const list = listRef.current;
-    if (!list || selectedIndex < 0) return;
+    const height = rowHeight();
+    if (!list || !height || selectedIndex < 0) return;
+    if (indexAt(rowAt(list.scrollTop, height)) === selectedIndex) return;
 
-    const top = selectedIndex * rowHeight();
-    if (Math.abs(list.scrollTop - top) < 1) return;
-    list.scrollTop = top;
-  }, [selectedIndex]);
+    list.scrollTop = scrollTopFor(selectedIndex, height);
+  }, [selectedIndex, count]);
 
   useEffect(() => () => window.clearTimeout(settleTimer.current), []);
 
+  // Nothing touches the wheel while it is moving. Writing `scrollTop` mid-flight
+  // cancels the browser's own scroll animation, and a throw that dies halfway
+  // reads as a stutter, so all the work waits for the wheel to come to rest.
   const handleScroll = () => {
     window.clearTimeout(settleTimer.current);
     settleTimer.current = window.setTimeout(() => {
@@ -114,11 +158,18 @@ function WheelPickerColumnView({
       const height = rowHeight();
       if (!list || !height) return;
 
-      const index = Math.min(
-        Math.max(Math.round(list.scrollTop / height), 0),
-        column.options.length - 1,
-      );
-      const option = column.options[index];
+      const row = rowAt(list.scrollTop, height);
+      const index = indexAt(row);
+
+      // Only once the wheel has wandered out of the middle copy is it worth
+      // moving: every copy draws the same rows, so sliding back a whole turn
+      // lands on identical pixels — nothing moves on screen, the wheel just
+      // gets its runway back for the next throw.
+      if (isLooping && Math.floor(row / count) !== homeCopy) {
+        list.scrollTop = scrollTopFor(index, height);
+      }
+
+      const option = options[index];
       if (option && option.value !== value) onSelect(option.value);
     }, SCROLL_SETTLE_MS);
   };
@@ -128,7 +179,13 @@ function WheelPickerColumnView({
       event.key === 'ArrowDown' ? 1 : event.key === 'ArrowUp' ? -1 : 0;
     if (!step) return;
 
-    const next = column.options[selectedIndex + step];
+    // A looping wheel has no ends: past the last option comes the first again.
+    const next =
+      options[
+        isLooping
+          ? (selectedIndex + step + count) % count
+          : selectedIndex + step
+      ];
     if (!next) return;
     event.preventDefault();
     onSelect(next.value);
@@ -150,25 +207,31 @@ function WheelPickerColumnView({
         'outline-none',
       )}
     >
-      {column.options.map((option, index) => (
-        <button
-          key={option.value}
-          type="button"
-          role="option"
-          aria-selected={index === selectedIndex}
-          tabIndex={-1}
-          onClick={() => onSelect(option.value)}
-          className={cn(
-            'flex h-10 w-full cursor-pointer snap-center items-center justify-center',
-            'text-sm leading-md tracking-md',
-            index === selectedIndex
-              ? 'font-medium text-foreground'
-              : 'font-normal text-neutral-muted',
-          )}
-        >
-          {option.label}
-        </button>
-      ))}
+      {Array.from({ length: copies }, (_, copy) =>
+        options.map((option, index) => {
+          // Only the middle copy is the list. The ones around it are the same
+          // rows again, there to be scrolled into, so they stay out of the
+          // accessibility tree instead of repeating every option to a reader.
+          const isClone = copy !== homeCopy;
+
+          return (
+            <div
+              key={`${copy}-${option.value}`}
+              // Rows are plain elements, not buttons: they were never reachable
+              // by Tab — the wheel itself takes the focus and the arrow keys.
+              role={isClone ? undefined : 'option'}
+              aria-selected={isClone ? undefined : index === selectedIndex}
+              aria-hidden={isClone || undefined}
+              onClick={() => onSelect(option.value)}
+              className={
+                index === selectedIndex ? ROW_SELECTED : ROW_UNSELECTED
+              }
+            >
+              {option.label}
+            </div>
+          );
+        }),
+      )}
     </div>
   );
 }
@@ -176,8 +239,9 @@ function WheelPickerColumnView({
 // ─── WheelPicker ──────────────────────────────────────────────────────────────
 
 /**
- * Scroll-snapping wheels, one per column. Each column scrolls independently and
- * reports the option resting under the highlight.
+ * Scroll-snapping wheels, one per column. Each column scrolls independently,
+ * loops once it holds five options or more, and reports the option resting under
+ * the highlight.
  *
  * Generic on purpose — `DateWheelPicker` builds the date columns on top of it.
  */

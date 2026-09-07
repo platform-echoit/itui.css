@@ -1,10 +1,10 @@
 import {
   forwardRef,
+  SVGProps,
   type ChangeEvent,
   type InputHTMLAttributes,
   type ReactNode,
 } from 'react';
-import { CheckBoldIcon } from '../../icons/ITUI/check';
 import { cn } from '../../lib/utils';
 
 /*
@@ -76,6 +76,13 @@ const labelTypeMap: Record<CheckboxSize, string> = {
   sm: 'text-xs leading-5 tracking-sm',
 };
 
+
+const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" {...props}>
+    <path d="M10.5005 2.7124C10.6764 2.71241 10.8448 2.78232 10.9692 2.90674C11.0937 3.03116 11.1636 3.19953 11.1636 3.37549C11.1636 3.55144 11.0937 3.71981 10.9692 3.84424L10.8989 3.91553L10.897 3.91357L4.96826 9.84229L4.96924 9.84326C4.90769 9.90503 4.83395 9.95436 4.75342 9.98779C4.67293 10.0212 4.58666 10.0386 4.49951 10.0386C4.41237 10.0386 4.32609 10.0212 4.24561 9.98779C4.16508 9.95436 4.09133 9.90503 4.02979 9.84326V9.84229L1.40576 7.21826C1.34416 7.15666 1.29457 7.08391 1.26123 7.00342C1.22793 6.92296 1.21143 6.83659 1.21143 6.74951C1.21143 6.66242 1.22791 6.57607 1.26123 6.49561C1.29457 6.41511 1.34415 6.34237 1.40576 6.28076C1.46737 6.21916 1.54012 6.16957 1.62061 6.13623C1.70107 6.10292 1.78743 6.08643 1.87451 6.08643C1.9616 6.08643 2.04796 6.10292 2.12842 6.13623C2.20891 6.16957 2.28166 6.21916 2.34326 6.28076L4.49951 8.43604L10.0317 2.90674C10.1562 2.78232 10.3245 2.7124 10.5005 2.7124Z" fill="#FAFAFA" stroke="#FAFAFA" stroke-width="0.2" />
+  </svg>
+)
+
 /**
  * A checkbox over a real `<input type="checkbox">` — the visual box is CSS on a
  * visually-hidden input, so forms, `required`, and `react-hook-form`'s
@@ -134,7 +141,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           )}
         >
           {checked && (
-            <CheckBoldIcon
+            <CheckIcon
               aria-hidden="true"
               width={12}
               height={12}
