@@ -247,7 +247,7 @@ export const SidebarFooter = forwardRef<HTMLDivElement, SidebarFooterProps>(
     <div
       ref={ref}
       className={cn(
-        'flex flex-col gap-2 shrink-0 w-full',
+        'flex flex-col gap-1 shrink-0 w-full',
         'group-data-collapsed/sidebar:items-center group-data-collapsed/sidebar:w-auto',
         className,
       )}
