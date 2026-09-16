@@ -78,7 +78,7 @@ export const InputDropdownItem = forwardRef<
     ref={ref}
     className={cn(
       ROW_CLASS,
-      '[&>label]:h-full [&>label]:flex-1 [&>label]:px-1',
+      '[&>label]:h-full [&>label]:flex-1 [&>label]:px-2',
       !disabled && 'hover:bg-surface-neutral-subtle',
       className,
     )}
