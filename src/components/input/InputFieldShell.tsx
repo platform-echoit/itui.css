@@ -10,7 +10,7 @@ import { cn } from '../../lib/utils';
 
   BOX  (height/input 48px → h-12 · spacing/md 12px → p-3 · spacing/xs 4px → gap-1
         radius/sm 8px → rounded-lg · stroke/xs 1px → border)
-    surface/neutral/secondary/default #fafafa → bg-inverse
+    surface/neutral/secondary/default #ffffff → bg-inverse
     border/neutral/subtle             #ededed → border-input     (--input)
     border/primary/default            #009ce0 → border-ring      (--ring, focus-within)
     border/semantic/error             #f44336 → border-destructive

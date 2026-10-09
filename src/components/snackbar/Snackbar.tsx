@@ -45,7 +45,7 @@ import { Button, type ButtonProps } from '../button/Button';
   TEXT COLORS
   text/neutral/default           #0f0f0f              → text-foreground   (light title)
   text/neutral/muted             #595858              → text-neutral-muted (light description)
-  text/neutral/inverse           #fafafa              → text-inverse       (dark, both lines)
+  text/neutral/inverse           #ffffff              → text-inverse       (dark, both lines)
 
   ACTION — "Button/Alternative/Link Label/Default/Small"
   Height/Button/Small            32px                 → h-button-sm (via <Button size="sm">)

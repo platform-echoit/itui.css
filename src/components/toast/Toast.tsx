@@ -33,7 +33,7 @@ import { cn } from '../../lib/utils';
   bar grows taller rather than the column growing wider.
   typography/body/md/semibold    14px/24px/0.2px      → text-sm font-semibold leading-6 tracking-md
   text/neutral/muted             #595858              → text-neutral-muted (light)
-  text/neutral/inverse           #fafafa              → text-inverse       (dark)
+  text/neutral/inverse           #ffffff              → text-inverse       (dark)
 
   ICON — 16px slot, one icon per Type. Type=Normal is the icon-less variant.
   The icons carry their own Figma fills (#4CAF50 / #009CE0 / #FFAD33 / #F44336)

@@ -33,7 +33,9 @@
   --warning-foreground: #ffffff;
   --info: #1677ff;
   --info-foreground: #ffffff;
-  --inverse: #fafafa;
+  /* Figma color/static/white — the text/icon/border/surface "inverse" tokens
+     and surface/neutral/secondary/default all alias it. */
+  --inverse: #ffffff;
 
   /* --- Border / Input / Ring --- */
   --border: #dadada;

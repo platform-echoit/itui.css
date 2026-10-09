@@ -31,7 +31,7 @@ import { DateFooter, type DateFooterAlignment } from './DateFooter';
   (Figma 27729:651 DateRange · 27733:2626 SingleDate · 27729:706 RangePicker)
   ─────────────────────────────────────────────────────────────────────────────
   CARD
-  surface/neutral/secondary/default #fafafa → bg-inverse
+  surface/neutral/secondary/default #ffffff → bg-inverse
   border/neutral/subtle        #ededed  → border-border-neutral-subtle
   radius/md                    12px     → rounded-xl
   shadow/downwards/sm                   → shadow-downwards-sm

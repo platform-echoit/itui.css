@@ -16,7 +16,7 @@ import { cn } from '../../lib/utils';
     On  surface/primary/default          #009ce0 → bg-brand
     Off surface/neutral/disabled/inverse #ededed → bg-surface-neutral-disabled
 
-  THUMB (icon/primary/inverse #fafafa → bg-inverse · rounded-full)
+  THUMB (icon/primary/inverse #ffffff → bg-inverse · rounded-full)
     Md  height/dot/xl 28px → size-7 · slide 60-4-28 = 28px → translate-x-7
     Sm  height/dot/lg 20px → size-5 · slide 44-4-20 = 20px → translate-x-5
 

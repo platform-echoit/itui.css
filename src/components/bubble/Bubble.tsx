@@ -6,7 +6,7 @@ import { cn } from '../../lib/utils';
   ─────────────────────────────────────────────────────────────────────────────
   BOX (radius/md 12px → rounded-xl · padding spacing/sm 8px → p-2)
     text  body/lg/regular 16px/26/0.09 → text-base leading-lg tracking-lg
-    text/primary/inverse #fafafa → text-inverse  (both senders)
+    text/primary/inverse #ffffff → text-inverse  (both senders)
 
   TONE
     Outgoing (Primary)    surface/primary/default        #009ce0 → bg-brand · tail bottom-right

@@ -6,7 +6,7 @@ import { Button } from '../button';
 /*
   Token → Tailwind map (Figma node 27260:2855)
   ─────────────────────────────────────────────────────────────────────────────
-  PANEL  surface/neutral/secondary #fafafa → bg-inverse · border/neutral/subtle #ededed
+  PANEL  surface/neutral/secondary #ffffff → bg-inverse · border/neutral/subtle #ededed
          radius/md 12px → rounded-xl · shadow/downwards/sm → shadow-downwards-sm
          size/container/md 358px → w-[358px]
   TITLE  heading/2xl/semibold 20px/32/-0.24 → text-xl leading-2xl tracking-2xl font-semibold

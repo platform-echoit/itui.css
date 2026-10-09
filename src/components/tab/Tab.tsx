@@ -35,7 +35,7 @@ import { cn } from '../../lib/utils';
     Unselected  text/neutral/default #0f0f0f → text-foreground
     Hover       text/neutral/subtle  #9e9e9e → text-neutral-subtle
     Selected    default · line       #009ce0 → text-primary
-                segment · pill       #fafafa → text-inverse
+                segment · pill       #ffffff → text-inverse
   Icons inherit currentColor (they follow the label colour).
 
   LIST (Tab)

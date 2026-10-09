@@ -13,7 +13,7 @@ import { cn } from '../../lib/utils';
     surface/neutral/subtle/default  #f5f5f5 → bg-surface-neutral-subtle  (rail / inactive)
     surface/primary/default         #009ce0 → bg-brand                   (range / active)
 
-  THUMB ("Dot" Lg, height/dot/lg 20px → size-5 · radius/full · bg surface/neutral/secondary #fafafa → bg-inverse)
+  THUMB ("Dot" Lg, height/dot/lg 20px → size-5 · radius/full · bg surface/neutral/secondary #ffffff → bg-inverse)
     border/primary/subtle    #b0e0f5 → border-surface-primary-muted   (default)
     border/primary/default   #009ce0 → border-brand                   (hover / pressed / focus)
     border/primary/focus     #e6f5fc → ring-brand-subtle (2px ring)   (hover / pressed / focus)

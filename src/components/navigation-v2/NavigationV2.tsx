@@ -17,7 +17,7 @@ import { cn } from '../../lib/utils';
   height/navigation/md       56px      → h-14   (--size-navigation-md exists but the
                                         --size-* namespace only generates the square
                                         size-* utility, never h-* — see TOKENS.md §9)
-  surface/neutral/secondary  #fafafa   → bg-inverse           (--color-inverse)
+  surface/neutral/secondary  #ffffff   → bg-inverse           (--color-inverse)
   spacing/lg                 16px      → px-4
   spacing/sm                 8px       → py-2   (bottom bar only)
   shadow/downwards/sm                  → shadow-downwards-sm  (0 4px 16px rgba(26,26,26,.08))

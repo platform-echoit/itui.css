@@ -18,9 +18,9 @@ import { cn } from '../../lib/utils';
   ─────────────────────────────────────────────────────────────────────────────
   CELL  height/pagination 32px → h-8 w-8 · radius/xs 4px → rounded-sm
         body/md/regular 14px/24/0.2 → text-sm leading-6 tracking-md · icon 20px → size-5
-    PageNumber Default  surface/neutral/secondary #fafafa → bg-inverse · text-foreground
+    PageNumber Default  surface/neutral/secondary #ffffff → bg-inverse · text-foreground
     PageNumber Hover    surface/primary/subtle    #e6f5fc → bg-brand-subtle
-    PageNumber Active   surface/primary/default   #009ce0 → bg-brand · text/neutral/inverse #fafafa → text-inverse
+    PageNumber Active   surface/primary/default   #009ce0 → bg-brand · text/neutral/inverse #ffffff → text-inverse
   ROW   gap between arrow clusters spacing/lg 16px → gap-4 · arrows gap-1 (4px) · numbers gap-2 (8px)
   ─────────────────────────────────────────────────────────────────────────────
 */

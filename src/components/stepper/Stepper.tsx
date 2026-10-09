@@ -26,7 +26,7 @@ import CheckRegularIcon from '../../icons/ITUI/check/CheckRegularIcon';
 
     surface/primary/muted            #b0e0f5 → bg-surface-primary-muted  (completed)
     surface/primary/default          #009ce0 → bg-surface-primary        (current core · current dot)
-    text/primary/inverse             #fafafa → bg-inverse · text-inverse (current ring bg · number)
+    text/primary/inverse             #ffffff → bg-inverse · text-inverse (current ring bg · number)
     surface/neutral/disabled/default #f5f5f5 → bg-surface-neutral-subtle (upcoming — same value under
                                                the canonical name, see TOKENS.md "Duplicates Removed")
     border/primary/default           #009ce0 → border-border-primary     (current ring)

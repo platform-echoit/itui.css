@@ -23,7 +23,7 @@ import { SidebarSimpleRegularIcon } from '../../icons/ITUI/sidebar-simple';
   RAIL — Type=Collapse | Expand (With Folding) | Expand (Without Folding)
   collapsed width                    52px    → w-13   (3.25rem)
   expanded width                    264px    → w-66   (16.5rem)
-  surface/neutral/secondary/default #fafafa  → bg-inverse   (--color-inverse)
+  surface/neutral/secondary/default #ffffff  → bg-inverse   (--color-inverse)
   border/neutral/subtle             #ededed  → border-r border-border-neutral-subtle
   stroke/xs                            1px   → border-r
   shadow/rightwards/sm    4px 0 16px #1a1a1a14 → shadow-rightwards-sm
@@ -43,7 +43,7 @@ import { SidebarSimpleRegularIcon } from '../../icons/ITUI/sidebar-simple';
   height/icon/md                      16px   → size-4 (caret)
   height/profile/sm                   24px   → Avatar size="sm"
   sub-item indent                     36px   → px-9
-  surface/neutral/secondary/default #fafafa  → bg-inverse       (State=Default)
+  surface/neutral/secondary/default #ffffff  → bg-inverse       (State=Default)
   surface/neutral/secondary/hover   #f5f5f5  → hover:bg-muted   (State=Hover)
   surface/neutral/secondary/pressed #ededed  → bg-secondary     (State=Select)
   text|icon/neutral/default         #0f0f0f  → text-foreground

@@ -9,8 +9,8 @@ import { cn } from '../../lib/utils';
   icon/neutral/subtle             #9e9e9e → bg-neutral-subtle         (Initial, "+N" badge)
   surface/neutral/subtle/default  #f5f5f5 → bg-surface-neutral-subtle (Default placeholder)
   icon/neutral/subtle             #9e9e9e → text-icon-neutral-subtle  (placeholder silhouette)
-  text/sematic/inverse            #fafafa → text-inverse
-  border/neutral/inverse          #fafafa → border-inverse
+  text/sematic/inverse            #ffffff → text-inverse
+  border/neutral/inverse          #ffffff → border-inverse
   color/semantic/red/700          #ad3026 → bg-semantic-red-700  (opt-in via backgroundColor)
 
   RADIUS
