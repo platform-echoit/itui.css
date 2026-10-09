@@ -11,7 +11,7 @@ import { CaretRight } from '../../icons/ITUI/icons';
   Token → Tailwind class reference (Figma node 28208:791)
   ─────────────────────────────────────────────────────────────────────────────
   CONTAINER
-  surface/neutral/secondary/default  #fafafa  → bg-inverse
+  surface/neutral/secondary/default  #ffffff  → bg-inverse
   border/neutral/subtle              #ededed  → border border-border-neutral-subtle
   radius/lg                          16px     → rounded-2xl
   shadow/downwards/sm                         → shadow-downwards-sm

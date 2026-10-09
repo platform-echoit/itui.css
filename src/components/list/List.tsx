@@ -15,7 +15,7 @@ import { CaretRight } from '../../icons/ITUI/icons';
   Token → Tailwind class reference (Figma node 27901:1443 — "List")
   ─────────────────────────────────────────────────────────────────────────────
   CONTAINER (List — Figma node 27901:1785)
-  surface/neutral/secondary/default  #fafafa  → bg-inverse
+  surface/neutral/secondary/default  #ffffff  → bg-inverse
   border/neutral/subtle              #ededed  → border border-border-neutral-subtle
   radius/sm                          8px      → rounded-lg
   shadow/downwards/sm                         → shadow-downwards-sm
@@ -28,7 +28,7 @@ import { CaretRight } from '../../icons/ITUI/icons';
   height/list/md                     56px     → min-h-14  (row with description)
 
   ROW — interactive states (CSS-only, RSC compatible)
-  surface/neutral/secondary/default  #fafafa  → bg-inverse                      (default)
+  surface/neutral/secondary/default  #ffffff  → bg-inverse                      (default)
   surface/neutral/secondary/hover    #f5f5f5  → hover:bg-surface-neutral-subtle (hover)
   surface/neutral/secondary/pressed  #ededed  → active:bg-surface-neutral-hover (pressed)
   surface/neutral/secondary/pressed  #ededed  → bg-surface-neutral-hover        (active prop)
@@ -62,7 +62,7 @@ import { CaretRight } from '../../icons/ITUI/icons';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export interface ListProps extends HTMLAttributes<HTMLDivElement> {}
+export interface ListProps extends HTMLAttributes<HTMLDivElement> { }
 
 export interface ListItemProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Leading slot — a 20×20 icon, an `<Avatar size="md">`, or any node. */
@@ -136,7 +136,7 @@ export const ListItem = forwardRef<HTMLButtonElement, ListItemProps>(
 
     const rowClassName = cn(
       'flex w-full items-center justify-between gap-2 p-2 rounded-lg text-left select-none',
-      description ? 'min-h-14' : 'min-h-10',
+      description ? 'h-14' : 'h-10',
       active
         ? 'bg-surface-neutral-hover'
         : 'bg-inverse hover:bg-surface-neutral-subtle active:bg-surface-neutral-hover',

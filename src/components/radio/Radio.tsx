@@ -15,7 +15,7 @@ import { cn } from '../../lib/utils';
     dot    height/dot/md   12px → size-3   ·  height/dot/sm   10px → size-2.5
 
   COLORS — circle
-    surface/neutral/secondary/default #fafafa → bg-inverse                 (unchecked / checked bg)
+    surface/neutral/secondary/default #ffffff → bg-inverse                 (unchecked / checked bg)
     border/neutral/default            #595858 → border-neutral-muted       (unchecked border)
     border/primary/default            #009ce0 → border-brand               (checked border)
     surface/primary/default           #009ce0 → bg-brand                   (checked dot)

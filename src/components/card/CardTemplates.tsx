@@ -5,7 +5,7 @@ import { cn } from '../../lib/utils';
 /*
   Prebuilt Card templates (Figma node 27174:3251) — separate from the shadcn-style
   primitives in Card.tsx. Shared shell:
-    surface/neutral/secondary #fafafa → bg-inverse
+    surface/neutral/secondary #ffffff → bg-inverse
     border/neutral/subtle      #ededed → border-surface-neutral-hover
     radius/md 12px → rounded-xl · padding spacing/lg 16px → p-4
   Title  body/lg/medium 16/26/0.09 → text-base leading-lg tracking-lg font-medium

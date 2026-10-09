@@ -22,7 +22,7 @@ import { cn } from '../../lib/utils';
   CONTENT (padding px-5 pb-5 · body/md/regular 14px/24/0.2 → text-sm leading-6 tracking-md)
 
   TYPE
-    Default  surface/neutral/secondary #fafafa → bg-inverse · rounded-lg (no border)
+    Default  surface/neutral/secondary #ffffff → bg-inverse · rounded-lg (no border)
     Filled   surface/neutral/subtle #f5f5f5 → bg-surface-neutral-subtle · border-surface-neutral-hover · rounded-lg
     Line     border-b border-surface-neutral-hover (no bg, no radius)
     Outline  bg-inverse · border-brand · rounded-lg · title text-brand

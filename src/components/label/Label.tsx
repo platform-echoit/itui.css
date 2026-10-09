@@ -14,10 +14,10 @@ import { cn } from '../../lib/utils';
 
   COLORS — by tone
     Solid  surface/primary/default            #009ce0 → bg-brand
-           text/primary/inverse               #fafafa → text-inverse
+           text/primary/inverse               #ffffff → text-inverse
     Tint   surface/primary/muted              #b0e0f5 → bg-surface-primary-muted
            text/primary/default               #009ce0 → text-brand
-    Line   surface/neutral/secondary/default  #fafafa → bg-inverse
+    Line   surface/neutral/secondary/default  #ffffff → bg-inverse
            border/primary/default             #009ce0 → border border-brand
            text/primary/default               #009ce0 → text-brand
   ─────────────────────────────────────────────────────────────────────────────

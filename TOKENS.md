@@ -793,7 +793,7 @@ no new CSS variable was added.
 | `surface/primary/default` | `#009ce0`               | `--color-surface-primary`         | `bg-surface-primary`                     |
 | `surface/primary/hover`   | `#54bdea`               | `--color-surface-primary-hover`   | `hover:bg-surface-primary-hover`         |
 | `surface/primary/pressed` | `#008ecc`               | `--color-surface-primary-pressed` | `active:bg-surface-primary-pressed`      |
-| `icon/primary/inverse`    | `#fafafa`               | `--color-inverse`                 | `text-inverse` + `[&_path]:fill-current` |
+| `icon/primary/inverse`    | `#ffffff`               | `--color-inverse`                 | `text-inverse` + `[&_path]:fill-current` |
 | `shadow/downwards/md`     | `0 12px 24px #1a1a1a14` | `--shadow-downwards-md`           | `shadow-downwards-md`                    |
 | `spacing/sm`              | `8px`                   | `--spacing-2`                     | `p-2`                                    |
 | `radius/full`             | `999px`                 | `--radius-full`                   | `rounded-full`                           |
@@ -829,7 +829,7 @@ value resolved to a token that already existed.
 | `spacing/xl`                | `20px`                 | `--spacing-5`                    | `gap-5` (Login action cluster)                 |
 | `spacing/lg`                | `16px`                 | `--spacing-4`                    | `gap-4` (search ↔ actions)                    |
 | `spacing/md`                | `12px`                 | `--spacing-3`                    | `gap-3` (between actions)                      |
-| `color/static/white`        | `#fafafa`              | `--color-inverse`                | `bg-inverse`                                   |
+| `color/static/white`        | `#ffffff`              | `--color-inverse`                | `bg-inverse`                                   |
 | `border/neutral/subtle`     | `#ededed`              | `--color-border-neutral-subtle`  | `border-b border-border-neutral-subtle`        |
 | `stroke/xs`                 | `1px`                  | —                                | `border-b`                                     |
 | `shadow/downwards/sm`       | `0 4px 16px #1a1a1a14` | `--shadow-downwards-sm`          | `shadow-downwards-sm`                          |
@@ -865,7 +865,7 @@ other value resolved to a token that already existed.
 | Figma Token                 | Value                   | CSS Variable                     | Tailwind Class                                 |
 | --------------------------- | ----------------------- | -------------------------------- | ---------------------------------------------- |
 | `height/navigation/md`      | `56px`                  | `--size-navigation-md`           | `h-14` (see caveat below)                      |
-| `surface/neutral/secondary` | `#fafafa`               | `--color-inverse`                | `bg-inverse`                                   |
+| `surface/neutral/secondary` | `#ffffff`               | `--color-inverse`                | `bg-inverse`                                   |
 | `shadow/downwards/sm`       | `0 4px 16px #1a1a1a14`  | `--shadow-downwards-sm`          | `shadow-downwards-sm` (top bar)                |
 | `shadow/upwards/sm`         | `0 -4px 16px #1a1a1a14` | `--shadow-upwards-sm`            | `shadow-upwards-sm` (bottom bar)               |
 | `spacing/lg`                | `16px`                  | `--spacing-4`                    | `px-4` · `gap-4` (BackIcon cluster)            |
@@ -896,7 +896,7 @@ other value resolved to a token that already existed.
 > difference between the cells is the cluster gap — 16px on BackIcon, 12px elsewhere —
 > which is the `actionGap` prop.
 >
-> The icon buttons ("General / Button", 32×32, `#fafafa` on a 1px `#ededed` border,
+> The icon buttons ("General / Button", 32×32, `#ffffff` on a 1px `#ededed` border,
 > `radius/sm` 8px) are the existing `Button variant="secondary" size="sm"`, which
 > already matches that fill, border and height exactly. Figma draws the back caret as
 > a bare 18px glyph; the story wraps it in `Button variant="ghost" size="sm"` so it
@@ -918,7 +918,7 @@ other value resolved to a token that already existed.
 | Figma Token                         | Value                   | CSS Variable                     | Tailwind Class                          |
 | ----------------------------------- | ----------------------- | -------------------------------- | --------------------------------------- |
 | `size/container/xs`                 | `160px`                 | `--width-container-xs`           | `w-container-xs` (panel)                |
-| `surface/neutral/secondary/default` | `#fafafa`               | `--color-inverse`                | `bg-inverse`                            |
+| `surface/neutral/secondary/default` | `#ffffff`               | `--color-inverse`                | `bg-inverse`                            |
 | `surface/neutral/secondary/hover`   | `#f5f5f5`               | `--muted`                        | `data-[highlighted]:bg-muted`           |
 | `border/neutral/subtle`             | `#ededed`               | `--color-border-neutral-subtle`  | `border border-border-neutral-subtle`   |
 | `stroke/xs`                         | `1px`                   | —                                | `border`                                |
@@ -939,7 +939,7 @@ other value resolved to a token that already existed.
 > The `--size-*` namespace could not have produced an `h-*` utility anyway — see the
 > Calendar / List caveats above.
 >
-> The trigger is Figma's "General / Button" (32×32, `#fafafa` on a 1px `#ededed`
+> The trigger is Figma's "General / Button" (32×32, `#ffffff` on a 1px `#ededed`
 > border, `radius/sm` 8px), which is exactly the existing
 > `Button variant="secondary" size="sm"` — same resolution GNB and Navigation V2 reached.
 >
@@ -957,7 +957,7 @@ value resolved to a token that already existed.
 | rail width, `Type=Expand`           | `264px`                | spacing scale                    | `w-66` (16.5rem)                              |
 | `height/lnb/sm`                     | `36px`                 | `--size-lnb-sm`                  | `h-9` · `size-9` (see caveat below)           |
 | `height/lnb/md`                     | `48px`                 | `--size-lnb-md`                  | `h-12` (Avatar row)                           |
-| `surface/neutral/secondary/default` | `#fafafa`              | `--color-inverse`                | `bg-inverse` (rail · `State=Default`)         |
+| `surface/neutral/secondary/default` | `#ffffff`              | `--color-inverse`                | `bg-inverse` (rail · `State=Default`)         |
 | `surface/neutral/secondary/hover`   | `#f5f5f5`              | `--muted`                        | `hover:bg-muted` (`State=Hover`)              |
 | `surface/neutral/secondary/pressed` | `#ededed`              | `--secondary`                    | `bg-secondary` (`State=Select`)               |
 | `border/neutral/subtle`             | `#ededed`              | `--color-border-neutral-subtle`  | `border-r border-border-neutral-subtle`       |
@@ -1122,7 +1122,7 @@ value resolved to a token that already existed — no new CSS variable was added
 | `text/neutral/default`      | `#0f0f0f`       | `--color-neutral`                | `text-foreground` (`State=Unselected`)              |
 | `text/neutral/subtle`       | `#9e9e9e`       | `--color-neutral-subtle`         | `data-[state=inactive]:hover:text-neutral-subtle`   |
 | `text/primary/default`      | `#009ce0`       | `--color-primary`                | `data-[state=active]:text-primary` (default · line) |
-| `text/primary/inverse`      | `#fafafa`       | `--color-inverse`                | `data-[state=active]:text-inverse` (segment · pill) |
+| `text/primary/inverse`      | `#ffffff`       | `--color-inverse`                | `data-[state=active]:text-inverse` (segment · pill) |
 | `typography/body/md/medium` | `14 / 24 / 0.2` | `--leading-md` · `--tracking-md` | `text-sm leading-md tracking-md font-medium`        |
 | `size/container/md`         | `358px`         | `--width-container-md`           | `w-container-md` (not the default — see below)      |
 | — (motion, not in Figma)    | `150ms`         | `--duration-150` · `--ease-out`  | `transition-colors duration-150 ease-out`           |
@@ -1308,7 +1308,7 @@ recorded for Grid and Backdrop below/above.
 | `radius/2xl`                             | `28px`                  | `--radius-component-2xl` **(new)** | `rounded-component-2xl`                      |
 | `Radius old/Size/Full`                   | `512px`                 | `--radius-full`                    | `rounded-full` (9999px — see below)          |
 | tile field, `surface/primary/subtle`     | `#e6f5fc`               | `--color-surface-primary-subtle`   | `bg-surface-primary-subtle` (story only)     |
-| tile card, `color/static/white`          | `#fafafa`               | `--color-inverse`                  | `bg-inverse` (story only)                    |
+| tile card, `color/static/white`          | `#ffffff`               | `--color-inverse`                  | `bg-inverse` (story only)                    |
 | tile card shadow                         | `16px 0 24px #8989891a` | `--shadow-md`                      | `shadow-md` — reuse, see below (story only)  |
 | annotation, `text/primary/default`       | `#009ce0`               | `--color-primary`                  | `text-primary` · `border-primary`            |
 | `typography/caption/sm/regular`          | `12 / 20 / 0.3`         | `--leading-sm` · `--tracking-sm`   | `text-xs leading-sm tracking-sm`             |
@@ -1581,8 +1581,9 @@ steps already existed on the Tailwind spacing scale. See §2.3 for the scale tab
 > auto-layout hug widths, not tokens, so they round to `w-11` / `w-10`.
 >
 > **Two `TOKENS.md` inaccuracies this board surfaced, left uncorrected on request** (both are
-> pre-existing rows in §1.3, not introduced here): `color/static/white` resolves to `#fafafa`
-> in this file, not the `#ffffff`/`bg-white` recorded there — `--color-inverse` is the accurate
+> pre-existing rows in §1.3, not introduced here): `color/static/white` is `--color-inverse` /
+> `bg-inverse` in this package, not the `bg-white` recorded there. Both paint `#ffffff` since
+> Figma moved the primitive off `#fafafa` (2026-10-09), but only `--color-inverse` tracks the
 > token. And `color.neutral.ink` / `--color-ink` / `text-ink` is documented but **does not
 > exist** in `global.css`; `text-ink` compiles to nothing. `#0f0f0f` is `--foreground`, so
 > `text-foreground` is what the story uses.

@@ -9,7 +9,7 @@ import { cn } from '../../lib/utils';
 /*
   Token → Tailwind map (Figma node 28390:4665)
   ─────────────────────────────────────────────────────────────────────────────
-  BAR    height/navigation/md 56px → h-14 · surface/neutral/secondary #fafafa → bg-inverse
+  BAR    height/navigation/md 56px → h-14 · surface/neutral/secondary #ffffff → bg-inverse
          padding spacing/lg 16px → px-4 · top shadow/downwards/sm · bottom shadow upwards
   TOP    title body/lg/medium 16/26/0.09 → text-base leading-lg tracking-lg font-medium (centered, truncate)
   BOTTOM item gap spacing/xs 4px → gap-1 · icon 20px → size-5

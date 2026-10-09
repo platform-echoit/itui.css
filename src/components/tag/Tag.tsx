@@ -21,10 +21,10 @@ import { cn } from '../../lib/utils';
     sm    caption/sm/medium 12px leading-20 0.30px → text-xs leading-5 tracking-sm
 
   COLORS — Outline (border/neutral/subtle #ededed → border-surface-neutral-hover · text-foreground)
-    surface/neutral/secondary/default #fafafa → bg-inverse                 (default)
+    surface/neutral/secondary/default #ffffff → bg-inverse                 (default)
     surface/neutral/secondary/hover   #f5f5f5 → hover:bg-surface-neutral-subtle
     surface/neutral/secondary/pressed #ededed → bg-surface-neutral-hover   (selected)
-    text/neutral/disabled             #c2c2c2 → text-neutral-disabled      (disabled keeps #fafafa bg + border)
+    text/neutral/disabled             #c2c2c2 → text-neutral-disabled      (disabled keeps #ffffff bg + border)
 
   COLORS — Filled (no border)
     surface/neutral/subtle/default    #f5f5f5 → bg-surface-neutral-subtle  (default)

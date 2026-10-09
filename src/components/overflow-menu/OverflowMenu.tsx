@@ -18,7 +18,7 @@ import { DotsThreeVerticalBoldIcon } from '../../icons/ITUI/dots-three-vertical'
 
   TRIGGER — Figma "General / Button" (28959:730)
   height/button/sm       32px     → Button variant="secondary" size="sm", which
-                                    already paints #fafafa on a 1px #ededed
+                                    already paints #ffffff on a 1px #ededed
                                     border at radius/sm — no extra classes
   height/icon/md         16px     → a 16px DotsThreeVertical inside a size-5
                                     centring box — Button's own icon slot is a
@@ -26,7 +26,7 @@ import { DotsThreeVerticalBoldIcon } from '../../icons/ITUI/dots-three-vertical'
 
   CONTENT — Figma "OverFlow" (28959:732)
   size/container/xs      160px    → w-container-xs   (--width-container-xs)
-  surface/neutral/secondary/default #fafafa → bg-inverse        (--color-inverse)
+  surface/neutral/secondary/default #ffffff → bg-inverse        (--color-inverse)
   border/neutral/subtle  #ededed  → border-border-neutral-subtle
   stroke/xs              1px      → border
   radius/sm              8px      → rounded-lg  (Tailwind 0.5rem = 8px)

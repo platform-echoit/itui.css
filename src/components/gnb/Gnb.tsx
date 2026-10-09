@@ -15,7 +15,7 @@ import { cn } from '../../lib/utils';
                                        namespace only generates the square size-*
                                        utility, never h-* — see TOKENS.md §9)
   padding                  48px      → px-12
-  color/static/white       #fafafa   → bg-inverse            (--color-inverse)
+  color/static/white       #ffffff   → bg-inverse            (--color-inverse)
   border/neutral/subtle    #ededed   → border-border-neutral-subtle
   stroke/xs                1px       → border-b
   shadow/downwards/sm                → shadow-downwards-sm   (0 4px 16px 0

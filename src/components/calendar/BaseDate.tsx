@@ -23,12 +23,12 @@ import { cn } from '../../lib/utils';
                                           confirmed with the designer, so it is `error` here)
   text/neutral/disabled        #c2c2c2  → text-neutral-disabled  (Disabled · outside days)
   surface/primary/default      #009ce0  → bg-brand               (Active — selected circle)
-  text/primary/inverse         #fafafa  → text-inverse           (Active label)
+  text/primary/inverse         #ffffff  → text-inverse           (Active label)
   surface/primary/subtle       #e6f5fc  → bg-surface-primary-subtle       (Range band)
   surface/primary/hover        #54bdea  → text-surface-primary-hover      (Range label)
 
   MARKER — 4px dot, filled with the state's own text colour (#0f0f0f on Default,
-  #fafafa inside the Active circle) → size-1 rounded-full bg-current.
+  #ffffff inside the Active circle) → size-1 rounded-full bg-current.
 
   TYPOGRAPHY
   body/md/regular  14px 400 leading-24 0.20px → text-sm font-normal leading-md tracking-md

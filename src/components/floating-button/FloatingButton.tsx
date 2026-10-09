@@ -20,7 +20,7 @@ import { cn } from '../../lib/utils';
   surface/primary/pressed  #008ecc → active:bg-surface-primary-pressed
 
   ICON
-  icon/primary/inverse  #fafafa → text-inverse + [&_path]:fill-current
+  icon/primary/inverse  #ffffff → text-inverse + [&_path]:fill-current
                                   (ITUI icons hardcode fill="#101010" on the path,
                                   so a text-* class alone cannot recolour them)
   height/icon/lg        20px    → [&_svg]:size-5  (size sm)

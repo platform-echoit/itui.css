@@ -8,7 +8,7 @@ import CaretRightRegularIcon from '../../icons/ITUI/caret-right/CaretRightRegula
   ─────────────────────────────────────────────────────────────────────────────
   ROW
   size 280×36                           → w-date-header (--width-date-header) · h-9
-  surface/neutral/secondary/default #fafafa → bg-inverse
+  surface/neutral/secondary/default #ffffff → bg-inverse
   radius/sm                    8px      → rounded-lg
 
   NAV BUTTON

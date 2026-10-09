@@ -22,7 +22,7 @@ import { DateHeader } from './DateHeader';
   Token → Tailwind class reference (Figma node 27735:4206)
   ─────────────────────────────────────────────────────────────────────────────
   CONTAINER
-  surface/neutral/secondary/default  #fafafa  → bg-inverse
+  surface/neutral/secondary/default  #ffffff  → bg-inverse
   border/neutral/subtle              #ededed  → border-border-neutral-subtle
                                                  (NOT `border-neutral-subtle`, which is #9e9e9e)
   typography/family/body             Pretendard → font-sans

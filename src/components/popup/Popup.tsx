@@ -11,7 +11,7 @@ import { Checkbox } from '../checkbox';
 /*
   Token → Tailwind map (Figma node 28500:5020)
   ─────────────────────────────────────────────────────────────────────────────
-  CARD  surface/neutral/secondary #fafafa → bg-inverse · border/neutral/subtle #ededed
+  CARD  surface/neutral/secondary #ffffff → bg-inverse · border/neutral/subtle #ededed
         radius/md 12px → rounded-xl · shadow/downwards/sm → shadow-downwards-sm · w 358px
   TITLE heading/2xl/semibold 20px/32/-0.24 → text-xl leading-2xl tracking-2xl font-semibold
   BODY  body/lg/regular 16px/26/0.09 → text-base leading-lg tracking-lg

@@ -11,7 +11,7 @@ import { cn } from '../../lib/utils';
 
 // ── Token → Tailwind map ─────────────────────────────────────────────────────
 /*
-  surface/neutral/secondary/default (#fafafa) → bg-inverse
+  surface/neutral/secondary/default (#ffffff) → bg-inverse
   surface/neutral/secondary/hover   (#f5f5f5) → bg-surface-hover             (@theme)
   surface/neutral/disabled/inverse  (#ededed) → bg-surface-neutral-disabled  (@theme)
   border/neutral/subtle             (#ededed) → border-border-neutral-subtle (@theme)

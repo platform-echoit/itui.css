@@ -17,7 +17,7 @@ const DRAG_CLOSE_THRESHOLD = 80;
 /*
   Token → Tailwind map (Figma node 28375:7517)
   ─────────────────────────────────────────────────────────────────────────────
-  PANEL  surface/neutral/secondary #fafafa → bg-inverse · radius/2xl 28px → rounded-t-[28px]
+  PANEL  surface/neutral/secondary #ffffff → bg-inverse · radius/2xl 28px → rounded-t-[28px]
   HANDLE tab 44×6 · border/neutral/subtle #ededed → bg-surface-neutral-hover · radius/xs 4px → rounded-sm
          wrapper padding spacing/md 12px → p-3
   TITLE  heading/2xl/semibold 20px/32/-0.24 → text-xl leading-2xl tracking-2xl font-semibold · h-[54px]
