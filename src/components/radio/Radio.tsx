@@ -20,7 +20,12 @@ import { cn } from '../../lib/utils';
     border/primary/default            #009ce0 → border-brand               (checked border)
     surface/primary/default           #009ce0 → bg-brand                   (checked dot)
     surface/neutral/disabled/inverse  #ededed → bg-surface-neutral-disabled (disabled bg)
-    border/neutral/disabled           #c2c2c2 → border-neutral-disabled    (disabled border + disabled dot)
+
+  DISABLED — Figma puts the circle in a group at opacity 0.3 → disabled:opacity-30.
+    Inside it the ring and the dot stay border/neutral/default #595858 (≈ #cdcdcd
+    on white). The checked one is filled surface/neutral/disabled/default #f5f5f5,
+    which at 30% is 2/255 off #ededed, so both share bg-surface-neutral-disabled.
+    The label sits outside the group and is not faded.
 
   COLORS — label text
     text/neutral/default   #0f0f0f → text-foreground
@@ -31,7 +36,8 @@ import { cn } from '../../lib/utils';
     sm caption/sm  12px leading-20 0.30px → text-xs leading-5 tracking-sm
 
   NOTE: built from Figma metadata + variables + screenshot (the per-node design
-  context tool was unavailable). Hover affordance added for parity with Checkbox.
+  context tool was unavailable); the disabled states were re-read from design
+  context + the exported SVGs. Hover affordance added for parity with Checkbox.
   ─────────────────────────────────────────────────────────────────────────────
 */
 
@@ -102,8 +108,10 @@ export const Radio = forwardRef<
         outerSizeMap[size],
         'border-neutral-muted',
         'enabled:hover:border-brand',
-        'data-[state=checked]:border-brand data-[state=checked]:border-[1.6px]',
-        'disabled:border-neutral-disabled disabled:bg-surface-neutral-disabled',
+        // `enabled:` — a bare data-* variant is emitted after `disabled:` and
+        // would keep the brand ring on a disabled, checked item.
+        'data-[state=checked]:border-[1.6px] enabled:data-[state=checked]:border-brand',
+        'disabled:opacity-30 disabled:bg-surface-neutral-disabled',
         'focus-visible:focus-ring',
         className,
       )}
@@ -111,7 +119,7 @@ export const Radio = forwardRef<
     >
       <RadixRadioGroup.Indicator
         className={cn(
-          'block rounded-full bg-brand data-[disabled]:bg-neutral-disabled',
+          'block rounded-full bg-brand data-[disabled]:bg-neutral-muted',
           dotSizeMap[size],
         )}
       />
