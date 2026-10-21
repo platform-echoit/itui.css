@@ -14,10 +14,10 @@ import { DotsThreeRegularIcon } from '../../icons/ITUI/dots-three';
 import { cn } from '../../lib/utils';
 
 /*
-  Token → Tailwind map (Figma node 27277:112)
+  Token → Tailwind map (Figma nodes 27277:112, 27276:1189)
   ─────────────────────────────────────────────────────────────────────────────
   CELL  height/pagination 32px → h-8 w-8 · radius/xs 4px → rounded-sm
-        body/md/regular 14px/24/0.2 → text-sm leading-6 tracking-md · icon 20px → size-5
+        body/md/regular 14px/24/0.2 → text-sm leading-6 tracking-md · icon 16px → size-4
     PageNumber Default  surface/neutral/secondary #ffffff → bg-inverse · text-foreground
     PageNumber Hover    surface/primary/subtle    #e6f5fc → bg-brand-subtle
     PageNumber Active   surface/primary/default   #009ce0 → bg-brand · text/neutral/inverse #ffffff → text-inverse
@@ -170,7 +170,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
               disabled={page <= 1}
               onClick={() => goTo(1)}
             >
-              <Chevron direction="left" double className="size-5" />
+              <Chevron direction="left" double className="size-4" />
             </CellButton>
           )}
           <CellButton
@@ -178,7 +178,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
             disabled={page <= 1}
             onClick={() => goTo(page - 1)}
           >
-            <Chevron direction="left" className="size-5" />
+            <Chevron direction="left" className="size-4" />
           </CellButton>
         </div>
 
@@ -192,7 +192,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
               >
                 <DotsThreeRegularIcon
                   aria-hidden="true"
-                  className="size-5 [&_path]:fill-current"
+                  className="size-4 [&_path]:fill-current"
                 />
               </span>
             ) : (
@@ -214,7 +214,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
             disabled={page >= total}
             onClick={() => goTo(page + 1)}
           >
-            <Chevron direction="right" className="size-5" />
+            <Chevron direction="right" className="size-4" />
           </CellButton>
           {showEdges && (
             <CellButton
@@ -222,7 +222,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
               disabled={page >= total}
               onClick={() => goTo(total)}
             >
-              <Chevron direction="right" double className="size-5" />
+              <Chevron direction="right" double className="size-4" />
             </CellButton>
           )}
         </div>
