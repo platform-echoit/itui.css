@@ -11,6 +11,13 @@
 //
 // Exports this page cannot render are listed in `referenced` at the bottom,
 // each with the reason. That list is the fixture's honest coverage gap.
+//
+// Three exports render under <Suspense>: InputTextFormatting, Calendar and
+// DatePicker read a random value or the clock while rendering, which the
+// `cacheComponents` mode in next.config.ts only allows under a boundary. The
+// README tells consumers to wrap them the same way; everything else stays bare,
+// so a fourth export that needs a boundary fails this build (ISS-27).
+import { Suspense } from 'react';
 import {
   Accordion,
   AccordionContent,
@@ -707,7 +714,9 @@ export default function AllExportsPage() {
         <InputDate label="date" />
         <InputPhoneNumber label="phone" />
         <InputWithButton label="with button" buttonLabel="send" />
-        <InputTextFormatting label="rich text" />
+        <Suspense fallback={null}>
+          <InputTextFormatting label="rich text" />
+        </Suspense>
         <InputFileUpload
           label="upload"
           files={[{ id: '1', name: 'file.pdf', status: 'done' }]}
@@ -734,8 +743,12 @@ export default function AllExportsPage() {
 
       {/* ── Date & time ────────────────────────────────────────────────── */}
       <section>
-        <Calendar />
-        <DatePicker />
+        <Suspense fallback={null}>
+          <Calendar />
+        </Suspense>
+        <Suspense fallback={null}>
+          <DatePicker />
+        </Suspense>
         <DateHeader>caption</DateHeader>
         <DateFooter />
         <BaseDate>1</BaseDate>

@@ -35,11 +35,17 @@ current time or a random value while prerendering fails the build unless a
 `<Suspense>` boundary sits above it — so a fixture without the flag would stay
 green on code that breaks the default scaffold. That is how F-25 shipped.
 
-`/all` therefore renders every export **bare**, with no Suspense of its own. If
-the page wrapped a component, the gate would only prove that the page wraps it.
+Three exports need that boundary, and the package does not supply it — the
+README tells consumers to wrap them (decided for `1.1.4`; an internal boundary
+was tried and set aside). So `/all` wraps exactly those three in
+`<Suspense>`, the way the README says, and renders every other export **bare**.
+A green build proves two things: the documented wrapping is enough for the
+three, and nothing else needs it. A fourth export that starts reading the clock
+or a random value fails this build, because nothing wraps it.
 
-Measured on the `1.1.3` code (2026-10-23, Next 16.2.3), by wrapping all three
-and then leaving each one bare in turn:
+What the gate does not prove is that the three work without the wrapper — they
+do not. Measured on the `1.1.3` code (2026-10-23, Next 16.2.3), by wrapping all
+three and then leaving each one bare in turn:
 
 | Left bare                | `next build`                                                                                                                |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
