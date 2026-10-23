@@ -22,11 +22,13 @@ dates are the npm publish dates and the entries were reconstructed from the comm
   stylesheet regardless of what you import, and drops three stale claims (module counts, a
   Storybook that is not in this repo, a comment saying API.md is not in the tarball).
   `check:readme` now verifies names and subpaths against the build in CI.
-- README _Next.js_: under Next 16 `cacheComponents` (what `create-next-app@16` scaffolds),
-  `Calendar`, `DatePicker` and `InputTextFormatting` must be wrapped in `<Suspense>` by the page —
-  they read the clock or a random value while prerendering, and `next build` stops otherwise. The
-  section now says so with a snippet, drops the unconditional "works as-is", and names
-  `@tailwindcss/turbopack` next to `@tailwindcss/postcss`. The components themselves are unchanged.
+- README _Next.js_: under Next 16 `cacheComponents` (what `create-next-app@16` scaffolds), the page
+  must wrap `Calendar`, `DatePicker`, `InputTextFormatting` and `InputV2 fieldType="text-formatting"`
+  in `<Suspense>`, and also `InputDate` / `InputV2 fieldType="date"` when they hold a date — they
+  read the clock or a random value while prerendering, and `next build` stops otherwise. Under the
+  boundary they render in the browser after hydration, so the section gives fallback sizes. It also
+  drops the unconditional "works as-is" and names `@tailwindcss/turbopack` next to
+  `@tailwindcss/postcss`. The components themselves are unchanged.
 
 ### Fixed
 
@@ -39,7 +41,7 @@ dates are the npm publish dates and the entries were reconstructed from the comm
 ### Internal
 
 - `fixtures/next-app` is back, built with `cacheComponents: true`, and the `rsc-fixture` CI job runs
-  again: every export renders on a Server Component page, the three above under the `<Suspense>`
+  again: every export renders on a Server Component page, the cases above under the `<Suspense>`
   the README prescribes and every other one bare.
 
 ## [1.1.3] - 2026-10-23
@@ -48,8 +50,9 @@ No git tag — `package.json` still said `1.1.0` when this was published.
 
 ### Changed
 
-- `Avatar` gains its border treatment and `Pagination` its updated controls; `CardsThree` icon
-  added to the ITUI set (#83).
+- `Avatar` draws its outline as a ring outside the box (1px on the default placeholder and on
+  photos, 2px inside `AvatarGroup`), so the avatar no longer shrinks to make room for it.
+- `Pagination` arrow icons are 16px instead of 20px, matching Figma (#83).
 
 ## 1.1.2
 
@@ -65,8 +68,9 @@ No git tag — `package.json` still said `1.1.0` when this was published.
   package registers no font by itself, so `--font-sans` now starts at `var(--font-pretendard)` (what
   `next/font` writes) and falls back to `Pretendard`, then `system-ui`. The `.woff2` files are not in
   the package; `fonts.css` expects them under `/fonts/`.
-- `TableHead` `onSortChange` — the sortable header's button had no click handler at all.
-- New ITUI icons (`CardsThree`, folder variants and others).
+- `TableHead` `onSortChange` — the sortable header's button had no click handler at all — and the
+  `useTableSort` hook that drives it.
+- ITUI icons `CardsThree`, `CheckBoldIcon`, `DotsThreeVerticalBoldIcon` and `PackageOpenIcon`.
 
 ### Fixed
 

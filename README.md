@@ -158,29 +158,6 @@ runs through whichever loader your app already has — `@tailwindcss/turbopack`,
 import './globals.css';
 ```
 
-### `cacheComponents` (Next 16)
-
-`create-next-app@16` scaffolds `cacheComponents: true`. Under it, a Client Component that reads the
-current time or a random value while a route prerenders has to sit under a `<Suspense>` boundary, or
-`next build` stops with _"used `new Date()` inside a Client Component without a Suspense boundary
-above it"_. Three exports do exactly that, inside the libraries they wrap: `Calendar` and
-`DatePicker` ask DayPicker for "today", and `InputTextFormatting` lets Lexical draw a random editor
-key. On such a route, wrap each of them yourself:
-
-```tsx
-import { Suspense } from 'react';
-import { Calendar } from '@echoit/itui.css';
-
-<Suspense fallback={<div className="h-[386px]" />}>
-  <Calendar />
-</Suspense>;
-```
-
-The fallback is what the static shell shows until the component streams in with the first request,
-so give it roughly the component's size — a five-week `Calendar` is 386px tall — and the page does
-not jump when it arrives. Every other export prerenders to static HTML with no boundary, and
-without `cacheComponents` none of this applies.
-
 Two things this does **not** do for you:
 
 - **Your own file still needs `"use client"` when you write a handler.** Passing a function across
@@ -193,8 +170,43 @@ Two things this does **not** do for you:
 The boundary is a build gate rather than a convention: `check:client` rejects a module that uses
 client-only React or hands a handler to a DOM prop without declaring itself, and `check:rsc` packs
 the tarball and runs a real `next build`, with `cacheComponents: true`, over a fixture that renders
-**every** export. The fixture wraps those three exports exactly as above and leaves every other one
-bare, so a fourth that needs a boundary fails the build. Both run in CI.
+**every** export. Both run in CI.
+
+### `cacheComponents` (Next 16)
+
+`create-next-app@16` scaffolds `cacheComponents: true`. Under it, a Client Component that reads the
+current time or a random value while a route prerenders has to sit under a `<Suspense>` boundary, or
+`next build` stops with _"used `new Date()` inside a Client Component without a Suspense boundary
+above it"_. These exports do that, inside the libraries they wrap or while reading a date:
+
+- **`Calendar` and `DatePicker`** — DayPicker asks for "today".
+- **`InputTextFormatting`**, and **`InputV2` with `fieldType="text-formatting"`** — Lexical draws a
+  random editor key.
+- **`InputDate` holding a date** (`value` or `defaultValue`), and **`InputV2` with
+  `fieldType="date"`** holding one — the text is parsed against today's date. An empty `InputDate`
+  prerenders fine.
+
+On such a route, wrap each of them yourself:
+
+```tsx
+import { Suspense } from 'react';
+import { Calendar } from '@echoit/itui.css';
+
+<Suspense fallback={<div className="h-[386px]" />}>
+  <Calendar />
+</Suspense>;
+```
+
+Under the boundary they are not rendered on the server: the route's static HTML carries the
+fallback, and the component renders in the browser once the page hydrates. So give the fallback
+roughly the component's size and nothing jumps when it arrives — about 386px for a five-week
+`Calendar` (a six-week month is one row taller), 334px for a one-month `DatePicker` without a
+footer, and 167px for the `InputTextFormatting` box below its label. Every other export prerenders
+to static HTML with no boundary, and without `cacheComponents` none of this applies.
+
+The fixture behind `check:rsc` wraps the cases listed here and renders every other export bare, so
+an export that starts reading the clock or a random value fails the build — for the props the
+fixture passes, which are listed in its `app/all/page.tsx`.
 
 ---
 

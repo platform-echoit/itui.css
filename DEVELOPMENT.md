@@ -58,12 +58,16 @@ _Note: If you have already configured `publishConfig` in `package.json`, you can
 
 ## Release checklist
 
-1. Move the `[Unreleased]` section of `CHANGELOG.md` to `[x.y.z] - YYYY-MM-DD` and add the compare link.
+1. Move the `[Unreleased]` section of `CHANGELOG.md` to `[x.y.z] - YYYY-MM-DD`, add the compare
+   link, and **commit it** (`docs: release x.y.z`). `pnpm version` refuses to run on a tree with
+   uncommitted changes ("Git working directory not clean").
 2. `pnpm version patch|minor` — commits `package.json` and creates tag `vx.y.z`. Never publish from an unbumped tree.
-3. `git push --follow-tags origin main`.
-4. GitHub release `vx.y.z`, body copied from the CHANGELOG section.
-5. `pnpm build && pnpm publish --access public`.
-6. In the consuming monorepo, bump the `packages/ui` submodule pointer in its own commit.
+3. `pnpm build && npm publish --dry-run` — before anything leaves your machine, so a failing build
+   never leaves a pushed tag with no npm version behind it.
+4. `git push --follow-tags origin main`.
+5. GitHub release `vx.y.z`, body copied from the CHANGELOG section.
+6. `pnpm publish --access public`.
+7. In the consuming monorepo, bump the `packages/ui` submodule pointer in its own commit.
 
 A rename must keep the old name as a `@deprecated` alias whose JSDoc names the new one; a removal
 only ships in a major. (`1.1.0` shipped `variant` → `fieldType` without the alias — see ISS-25.)

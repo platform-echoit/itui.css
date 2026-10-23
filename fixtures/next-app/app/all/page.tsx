@@ -12,11 +12,13 @@
 // Exports this page cannot render are listed in `referenced` at the bottom,
 // each with the reason. That list is the fixture's honest coverage gap.
 //
-// Three exports render under <Suspense>: InputTextFormatting, Calendar and
-// DatePicker read a random value or the clock while rendering, which the
+// Six cases render under <Suspense>: InputTextFormatting, Calendar, DatePicker,
+// InputDate holding a date, and InputV2 as `text-formatting` and as `date` with
+// a date. Each reads a random value or the clock while rendering, which the
 // `cacheComponents` mode in next.config.ts only allows under a boundary. The
 // README tells consumers to wrap them the same way; everything else stays bare,
-// so a fourth export that needs a boundary fails this build (ISS-27).
+// so a new clock or random read fails this build — for the props passed here
+// (ISS-27).
 import { Suspense } from 'react';
 import {
   Accordion,
@@ -716,6 +718,25 @@ export default function AllExportsPage() {
         <InputWithButton label="with button" buttonLabel="send" />
         <Suspense fallback={null}>
           <InputTextFormatting label="rich text" />
+        </Suspense>
+        {/* An empty InputDate prerenders; one holding a date parses it against
+            `new Date()` while rendering, so it needs the boundary. InputV2's
+            `date` and `text-formatting` types render the same two fields. */}
+        <Suspense fallback={null}>
+          <InputDate
+            label="date with a value"
+            defaultValue={new Date('2026-01-15T00:00:00Z')}
+          />
+        </Suspense>
+        <Suspense fallback={null}>
+          <InputV2 fieldType="text-formatting" label="v2 rich text" />
+        </Suspense>
+        <Suspense fallback={null}>
+          <InputV2
+            fieldType="date"
+            label="v2 date with a value"
+            defaultValue={new Date('2026-01-15T00:00:00Z')}
+          />
         </Suspense>
         <InputFileUpload
           label="upload"

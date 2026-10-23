@@ -35,24 +35,39 @@ current time or a random value while prerendering fails the build unless a
 `<Suspense>` boundary sits above it — so a fixture without the flag would stay
 green on code that breaks the default scaffold. That is how F-25 shipped.
 
-Three exports need that boundary, and the package does not supply it — the
+Some exports need that boundary, and the package does not supply it — the
 README tells consumers to wrap them (decided for `1.1.4`; an internal boundary
-was tried and set aside). So `/all` wraps exactly those three in
-`<Suspense>`, the way the README says, and renders every other export **bare**.
-A green build proves two things: the documented wrapping is enough for the
-three, and nothing else needs it. A fourth export that starts reading the clock
-or a random value fails this build, because nothing wraps it.
+was tried and set aside). `/all` wraps exactly the cases the README lists in
+`<Suspense>` and renders every other export **bare**:
 
-What the gate does not prove is that the three work without the wrapper — they
-do not. Measured on the `1.1.3` code (2026-10-23, Next 16.2.3), by wrapping all
-three and then leaving each one bare in turn:
+- `InputTextFormatting`, and `InputV2 fieldType="text-formatting"` (Lexical's
+  random editor key);
+- `Calendar` and `DatePicker` (DayPicker's "today");
+- `InputDate` holding a date, and `InputV2 fieldType="date"` holding one (the
+  text is parsed against `new Date()`). An empty `InputDate` stays bare.
 
-| Left bare                | `next build`                                                                                                                |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| none (all three wrapped) | exit 0 — every other export prerenders                                                                                      |
-| `InputTextFormatting`    | ``Route "/all" used `Math.random()` inside a Client Component without a Suspense boundary above it`` (Lexical's editor key) |
-| `Calendar`               | ``Route "/all" used `new Date()` inside a Client Component without a Suspense boundary above it`` (DayPicker's "today")     |
-| `DatePicker`             | same `new Date()` error                                                                                                     |
+A green build proves the documented wrapping is enough for those cases, and
+that nothing else reads the clock or a random value **with the props `/all`
+passes**. A prop combination the page does not render is not covered — that is
+how the `InputDate` case was missed on the first pass.
+
+What the gate does not prove is that those cases work without the wrapper —
+they do not. Measured on 2026-10-23 (Next 16.2.3) by wrapping all of them and
+then leaving one bare at a time:
+
+| Left bare                               | `next build`                                                                                                                |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| none (all wrapped)                      | exit 0 — every other export prerenders                                                                                      |
+| `InputTextFormatting`                   | ``Route "/all" used `Math.random()` inside a Client Component without a Suspense boundary above it`` (Lexical's editor key) |
+| `Calendar`                              | ``Route "/all" used `new Date()` inside a Client Component without a Suspense boundary above it`` (DayPicker's "today")     |
+| `DatePicker`                            | same `new Date()` error                                                                                                     |
+| `InputDate` with a `defaultValue`       | same `new Date()` error (`parse(text, 'yyyy.MM.dd', new Date())`)                                                           |
+| `InputV2 fieldType="text-formatting"`   | same `Math.random()` error                                                                                                  |
+| `InputV2 fieldType="date"` with a value | same `new Date()` error                                                                                                     |
+
+Under the boundary none of them is rendered on the server: the built HTML
+resolves each boundary with `BAILOUT_TO_CLIENT_SIDE_RENDERING`, so the page
+carries the fallback and the component renders in the browser after hydration.
 
 `/all` also lists, at the bottom of the file, the exports it cannot render:
 token maps, class helpers, hooks, the imperative `toast()` / `snackbar()`
