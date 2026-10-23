@@ -10,15 +10,19 @@ import { cn } from '../../lib/utils';
   surface/neutral/subtle/default  #f5f5f5 → bg-surface-neutral-subtle (Default placeholder)
   icon/neutral/subtle             #9e9e9e → text-icon-neutral-subtle  (placeholder silhouette)
   text/sematic/inverse            #ffffff → text-inverse
-  border/neutral/inverse          #ffffff → border-inverse
+  border/neutral/subtle           #ededed → ring-border-neutral-subtle (NOT ring-neutral-subtle, that is #9e9e9e)
+  border/neutral/inverse          #ffffff → ring-inverse
   color/semantic/red/700          #ad3026 → bg-semantic-red-700  (opt-in via backgroundColor)
 
   RADIUS
   radius/full  999px → rounded-full
 
-  BORDER (AvatarGroup overlap outline)
-  stroke/sm    2px → border-2
-  stroke/none  0px → (omit border)
+  BORDER — Figma draws every stroke OUTSIDE the box, so they are rings (box-shadow),
+  not borders: the 24–72px box stays the fill and nothing shrinks.
+  Figma Profile frame 26950:4337 — Type=Default 27779:584…617, Type=Initial 26957:4584 / 27627:1697…1806
+  stroke/xs    1px → ring-1  (Default placeholder and photo)
+  stroke/none  0px → (omit ring: Initial)
+  stroke/sm    2px → ring-2  (inside AvatarGroup only, see below)
 
   SIZES (from @theme — --height/width-profile-*)
   height/profile/sm   24px → h-profile-sm  w-profile-sm
@@ -36,9 +40,12 @@ import { cn } from '../../lib/utils';
   2XL: font/size/24=24px    → text-2xl  leading-8  tracking-3xl  (font/line-height/3xl=32px, font/letter-spacing/3xl=-0.55px)
   3XL: Border Radius/xxl=32px → text-32 leading-11 tracking-4xl  (font/line-height/4xl=44px, font/letter-spacing/4xl=-0.64px)
 
-  AVATAR GROUP
+  AVATAR GROUP (Figma Avatar/Group — Type=Default 27627:1883, Type=Number 27627:1884)
   static/space/8  8px → -mr-2 (overlap) / pr-2 (container right padding)
-  stroke/sm       2px → border-2 (inverse outline between overlapping avatars)
+  stroke/sm       2px → [&>[data-slot=avatar]]:ring-2 ring-border-neutral-subtle (avatars) / ring-2 ring-inverse ("+N" badge)
+  The group rings only `[data-slot=avatar]` children: class + attribute outranks the
+  child's own ring-1, and the badge's ring-inverse is left alone (with a bare
+  `[&>*]` the parent's colour won the tie and the badge rang #ededed — measured).
   ─────────────────────────────────────────────────────────────────────────────
 */
 
@@ -144,6 +151,9 @@ function AvatarPlaceholder() {
  * A person or entity as a round photo, initials, or a silhouette — in that order
  * of preference, so it degrades on its own when `src` is missing or fails to
  * load. Pass the display name as children and only the first letter is rendered.
+ *
+ * Photos and the placeholder wear a 1px border/neutral/subtle ring outside the
+ * box; initials alone do not (Figma `stroke/none`).
  */
 export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
   (
@@ -172,6 +182,9 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
       typeof children === 'string'
         ? children.charAt(0).toUpperCase()
         : children;
+    // Figma: Initial is the one variant with stroke/none. Everything else — the
+    // light placeholder and photos — gets stroke/xs so it still reads on white.
+    const isInitialsOnly = hasInitials && !src;
 
     return (
       <RadixAvatar.Root
@@ -180,9 +193,12 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
           'relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full text-inverse',
           containerSizeMap[size],
           !src && bgClass,
+          !isInitialsOnly && 'ring-1 ring-border-neutral-subtle',
           className,
         )}
         style={bgStyle}
+        // AvatarGroup targets this to ring its avatars but not its "+N" badge.
+        data-slot="avatar"
         {...rest}
       >
         {src && (
@@ -220,7 +236,12 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
       ref={ref}
       className={cn(
         'flex items-center pr-2',
-        '[&>*]:-mr-2 [&>*]:border-2 [&>*]:border-inverse',
+        // Figma: every avatar in a group wears stroke/sm in border/neutral/subtle.
+        // Target `[data-slot=avatar]`, not `*`: the attribute gives this rule a
+        // higher specificity than the child's own `ring-1`, and keeps the badge
+        // below out of it so its `ring-inverse` stands.
+        '[&>*]:-mr-2',
+        '[&>[data-slot=avatar]]:ring-2 [&>[data-slot=avatar]]:ring-border-neutral-subtle',
         className,
       )}
       {...rest}
@@ -232,7 +253,9 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
             // `relative` keeps the badge on top of the stack: Avatar is itself
             // positioned, so a static badge would paint *under* its neighbour.
             'relative shrink-0 rounded-full flex items-center justify-center',
-            'bg-neutral-subtle border-2 border-inverse',
+            // The badge is the one child on border/neutral/inverse; the parent
+            // only rings `[data-slot=avatar]`, so nothing competes with this.
+            'bg-neutral-subtle ring-2 ring-inverse',
             containerSizeMap[size],
           )}
           aria-label={`${count} more`}
