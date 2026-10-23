@@ -15,6 +15,14 @@ dates are the npm publish dates and the entries were reconstructed from the comm
 
 ### Changed
 
+- README: the "similar names" table now points at `TopNavigationV2` / `BottomNavigationV2` /
+  `BottomNavigationItemV2` (there was never a `NavigationV2`), gains rows for `DropdownMenu` ·
+  `OverflowMenu` · `PopoverMenu` and for `Tooltip` + `TooltipProvider`, documents
+  `@echoit/itui.css/fonts.css` (added in `1.1.1`), says that CSS is one ~109 kB / ~18 kB gzip
+  stylesheet regardless of what you import, and drops three stale claims (module counts, a
+  Storybook that is not in this repo, a comment saying API.md is not in the tarball).
+  `check:readme` now verifies names and subpaths against the build in CI.
+
 ### Fixed
 
 - 86 icon sources (`FileIcon`/`FileType` logos, `*TextFlatLogo`/`*TextColorLogo`, `EmptyIcon`,

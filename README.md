@@ -18,7 +18,7 @@
 - ⚡ **Tailwind CSS v4** — built on the latest `@theme` system
 - 🌗 **Light / Dark mode** — first-class support out of the box
 - 🦾 **Accessible by default** — powered by Radix primitives
-- 🧱 **Tree-shakable** — import only what you use
+- 🧱 **Tree-shakable JS** — import only what you use (CSS is one stylesheet; see step 2)
 - 📐 **TypeScript-first** — fully typed with generics where it matters
 
 ---
@@ -83,14 +83,33 @@ the utility classes the components are built from (`bg-brand`, `h-button-lg`, �
 you would get the design tokens and no utilities at all: every component renders unstyled,
 with no warning.
 
+Tree-shaking applies to the JS. The CSS is one stylesheet — about 109 kB, 18 kB gzipped, measured
+on a Vite app that imports one `Button` — no matter how many components you import, because that
+single `@source` emits the utilities of every component. That is the trade-off of a Tailwind-based
+library, and it is the number to expect when you look at your bundle.
+
 > ⚠️ **Subpath imports carry no CSS.** `import { Button } from '@echoit/itui.css/button'`
-> keeps your dev-server module count small (~30 modules instead of ~15,000 through the
-> barrel), but pulls in **no** stylesheet. If you only import by subpath, load the CSS once
-> yourself:
+> resolves one component's module graph instead of the barrel's, but pulls in **no** stylesheet.
+> If you only import by subpath, load the CSS once yourself:
 >
 > ```css
 > @import '@echoit/itui.css/dist/index.css';
 > ```
+
+### 3. Load the font (optional)
+
+`--font-sans` names Pretendard, but the package registers no `@font-face` by itself — an app that
+already loads Pretendard (for example through `next/font`, which sets `--font-pretendard`) must not
+be made to serve it twice. If yours does not, opt in:
+
+```css
+@import '@echoit/itui.css/fonts.css';
+```
+
+`fonts.css` points at `/fonts/Pretendard-{Regular,Medium,SemiBold,Bold}.woff2` — fixed,
+root-absolute paths, because `url()` cannot read a custom property. Serve those four files from your
+web root; the `.woff2` files are **not** in the npm package. With neither route, `font-sans` falls
+through to `system-ui`.
 
 ---
 
@@ -117,7 +136,7 @@ say.
 ## Next.js / React Server Components
 
 Every component that needs state, refs, effects or event handlers carries its own `"use client"`
-banner — 36 modules currently do. Importing any of them from a Server Component works as-is, with
+banner. Importing any of them from a Server Component works as-is, with
 no boundary of your own:
 
 ```tsx
@@ -168,14 +187,16 @@ and which name to reach for.
 Several names look interchangeable and are not. Autocomplete cannot tell you which is which,
 so here is the whole list — reach for the **Use** column unless the note applies to you.
 
-| Looks like a pair                            | Use                                                      | Because                                                                                                                                                                                                                                                                                                                                                                                               |
-| -------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Tab` · `Tabs`                               | **`Tab`** (with `TabList` / `TabTrigger` / `TabContent`) | `Tab` is the design-system component: four `type`s (`default` · `line` · `segment` · `pill`) drawn from the Figma spec, ITUI tokens throughout. `Tabs` predates it and still paints itself with raw `slate-*` palette classes, so it ignores your theme and your dark mode.                                                                                                                           |
-| `Navigation` · `NavigationV2`                | **`NavigationV2`**                                       | Both implement the same mobile bars. V2 is the current one — richer top-bar slots, `asChild` support via Slot. V1 stays exported so existing screens keep working.                                                                                                                                                                                                                                    |
-| `Input` · `InputV2`                          | **`InputV2`**                                            | Not a v1/v2 pair. `InputV2` is one entry point to the whole field family — `fieldType="date" \| "tag" \| "upload" \| "text-formatting"` and six more, each type-checked against its own props. With no `fieldType` it gives you the plain single-line field. It is `fieldType` rather than `variant` because it swaps the field itself, not its look, and `type` stays free for the native attribute. |
-| `Input` · `InputText`                        | **`InputText`**                                          | This one _is_ a real duplicate. `InputText` is the field every other field type is built from, so it stays in step with the family. `Input` is now a thin deprecated alias over it — same props, except it defaults to shrink-to-content instead of full width. Pass `block` to choose either way.                                                                                                    |
-| `Dialog` · `Modal` · `Popup` · `BottomSheet` | **whichever matches the job**                            | Four different designs, not four versions of one. `Dialog` is the primitive you compose freely. `Modal` is the ready-made title + body + two-button confirm. `Popup` is the announcement card with an image slot and "don't show again". `BottomSheet` is the mobile sheet that slides up from the bottom edge.                                                                                       |
-| `Toast` · `Snackbar`                         | **both, together**                                       | They are designed to coexist: `Snackbar` renders into its own sonner viewport, so the app-wide `<Toaster />` never picks up a snackbar and vice versa. `toast()` is the top-centre notification; `snackbar()` is the bottom-centre bar with an optional action link. Mount `<Toaster />` and `<SnackbarToaster />` both.                                                                              |
+| Looks like a pair                                                                         | Use                                                                                                                        | Because                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Tab` · `Tabs`                                                                            | **`Tab`** (with `TabList` / `TabTrigger` / `TabContent`)                                                                   | `Tab` is the design-system component: four `type`s (`default` · `line` · `segment` · `pill`) drawn from the Figma spec, ITUI tokens throughout. `Tabs` predates it and still paints itself with raw `slate-*` palette classes, so it ignores your theme and your dark mode.                                                                                                                                                                  |
+| `TopNavigation` · `TopNavigationV2` (same for `BottomNavigation`, `BottomNavigationItem`) | **`TopNavigationV2`** · **`BottomNavigationV2`** · **`BottomNavigationItemV2`**                                            | Same mobile bars. V2 is the current one — richer top-bar slots, `asChild` on the slots via Slot. V1 is `@deprecated` since `1.1.0` and stays exported so existing screens keep working.                                                                                                                                                                                                                                                      |
+| `Input` · `InputV2`                                                                       | **`InputV2`**                                                                                                              | Not a v1/v2 pair. `InputV2` is one entry point to the whole field family — `fieldType="date" \| "tag" \| "upload" \| "text-formatting"` and six more, each type-checked against its own props. With no `fieldType` it gives you the plain single-line field. It is `fieldType` rather than `variant` because it swaps the field itself, not its look, and `type` stays free for the native attribute.                                        |
+| `Input` · `InputText`                                                                     | **`InputText`**                                                                                                            | This one _is_ a real duplicate. `InputText` is the field every other field type is built from, so it stays in step with the family. `Input` is now a thin deprecated alias over it — same props, except it defaults to shrink-to-content instead of full width. Pass `block` to choose either way.                                                                                                                                           |
+| `Dialog` · `Modal` · `Popup` · `BottomSheet`                                              | **whichever matches the job**                                                                                              | Four different designs, not four versions of one. `Dialog` is the primitive you compose freely. `Modal` is the ready-made title + body + two-button confirm. `Popup` is the announcement card with an image slot and "don't show again". `BottomSheet` is the mobile sheet that slides up from the bottom edge.                                                                                                                              |
+| `Toast` · `Snackbar`                                                                      | **both, together**                                                                                                         | They are designed to coexist: `Snackbar` renders into its own sonner viewport, so the app-wide `<Toaster />` never picks up a snackbar and vice versa. `toast()` is the top-centre notification; `snackbar()` is the bottom-centre bar with an optional action link. Mount `<Toaster />` and `<SnackbarToaster />` both.                                                                                                                     |
+| `DropdownMenu` · `OverflowMenu` · `PopoverMenu`                                           | **`OverflowMenu`** for a "more actions" list; **`PopoverMenu`** for actions inside a popover that also holds other content | Three menus, three jobs. `OverflowMenu` is the dots-trigger menu on ITUI tokens (Radix dropdown underneath). `PopoverMenu` adds `role="menu"` and arrow-key navigation to a run of `PopoverItem`s inside a `Popover`. `DropdownMenu` is the full-featured one — submenus, checkbox and radio items, shortcuts — but still paints itself with raw `slate-*` classes, so it ignores your theme and dark mode (ACCESSIBILITY.md, "Known gaps"). |
+| `Tooltip` · `TooltipProvider`                                                             | **both** — every `Tooltip` under one `TooltipProvider`                                                                     | Not alternatives. The provider shares open/close timing between neighbouring tooltips and is **required**: a `Tooltip` with no provider above it throws at runtime. Mount one near the root; `Popover`, `Dialog` and `DropdownMenu` need no such wrapper. See [Tooltip](#tooltip).                                                                                                                                                           |
 
 ### Button
 
@@ -302,7 +323,7 @@ extension. [Props →][api-filetype]
 import { MagnifyingGlassRegularIcon } from '@echoit/itui.css/icons';
 ```
 
-The 6,615 ITUI icons ship from their own subpath — they are **not** on the main barrel, because a
+The ITUI icon set — 6,600+ icons — ships from its own subpath. It is **not** on the main barrel, because a
 dev server does not tree-shake and one `Button` import would otherwise load the whole set on every
 page load. Production bundles are unaffected either way.
 
@@ -445,6 +466,34 @@ also makes the header keyboard-operable and report `aria-sort`. [Props →][api-
 
 ---
 
+### Tooltip
+
+```tsx
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from '@echoit/itui.css';
+```
+
+One `TooltipProvider` near the root — a `Tooltip` rendered outside one throws:
+
+```tsx
+<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <Button variant="secondary">Save</Button>
+    </TooltipTrigger>
+    <TooltipContent>Ctrl+S</TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+```
+
+[Props →][api-tooltip]
+
+---
+
 ### Toast (Toaster)
 
 ```tsx
@@ -519,7 +568,8 @@ There is no hosted docs site yet. Until there is, these are the sources of truth
 - **This README** — setup, theming, and how the compound components fit together.
 - **Types** — every component ships `.d.ts` with the same JSDoc, so your editor has all of the
   above without leaving the file.
-- **Storybook** — `pnpm dev` in `apps/storybook` for a live component gallery.
+- **Storybook** — not in this repository. The live gallery lives in the private monorepo that
+  consumes this package.
 
 > All three Markdown files are in the npm tarball as well, so `node_modules/@echoit/itui.css/`
 > answers these questions offline. The links point at GitHub for reading them in a browser.
@@ -596,9 +646,9 @@ pnpm dev
 ISC © echoit
 
 <!--
-  Absolute, because relative links break on the npm page and API.md is not in the
-  tarball either way (`files` ships dist only). Anchors are the ones API.md's own
-  index uses — regenerate it with `pnpm docs:api` if a heading moves.
+  Absolute, because relative links break on the npm page. API.md, TOKENS.md and
+  ACCESSIBILITY.md are in the tarball (`files`), but the npm page renders only this README.
+  Anchors are the ones API.md's own index uses — regenerate it with `pnpm docs:api` if a heading moves.
 -->
 
 [api]: https://github.com/platform-echoit/itui.css/blob/main/API.md
@@ -618,3 +668,4 @@ ISC © echoit
 [api-spinner]: https://github.com/platform-echoit/itui.css/blob/main/API.md#spinner
 [api-table]: https://github.com/platform-echoit/itui.css/blob/main/API.md#echoitituicsstable
 [api-toast]: https://github.com/platform-echoit/itui.css/blob/main/API.md#echoitituicsstoast
+[api-tooltip]: https://github.com/platform-echoit/itui.css/blob/main/API.md#echoitituicsstooltip
