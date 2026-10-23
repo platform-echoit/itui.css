@@ -22,6 +22,11 @@ dates are the npm publish dates and the entries were reconstructed from the comm
   stylesheet regardless of what you import, and drops three stale claims (module counts, a
   Storybook that is not in this repo, a comment saying API.md is not in the tarball).
   `check:readme` now verifies names and subpaths against the build in CI.
+- README _Next.js_: under Next 16 `cacheComponents` (what `create-next-app@16` scaffolds),
+  `Calendar`, `DatePicker` and `InputTextFormatting` must be wrapped in `<Suspense>` by the page —
+  they read the clock or a random value while prerendering, and `next build` stops otherwise. The
+  section now says so with a snippet, drops the unconditional "works as-is", and names
+  `@tailwindcss/turbopack` next to `@tailwindcss/postcss`. The components themselves are unchanged.
 
 ### Fixed
 
@@ -32,6 +37,10 @@ dates are the npm publish dates and the entries were reconstructed from the comm
   render smoke in CI) keeps it that way.
 
 ### Internal
+
+- `fixtures/next-app` is back, built with `cacheComponents: true`, and the `rsc-fixture` CI job runs
+  again: every export renders on a Server Component page, the three above under the `<Suspense>`
+  the README prescribes and every other one bare.
 
 ## [1.1.3] - 2026-10-23
 

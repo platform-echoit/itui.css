@@ -136,15 +136,16 @@ say.
 ## Next.js / React Server Components
 
 Every component that needs state, refs, effects or event handlers carries its own `"use client"`
-banner. Importing any of them from a Server Component works as-is, with
-no boundary of your own:
+banner. Importing any of them from a Server Component needs no `"use client"` boundary of your own:
 
 ```tsx
 // app/page.tsx — a Server Component, no "use client" needed
 import { Button, Card, Table, Select, Dialog } from '@echoit/itui.css';
 ```
 
-Load the stylesheet once from the root layout's CSS, same as [step 2](#2-load-the-styles):
+Load the stylesheet once from the root layout's CSS, same as [step 2](#2-load-the-styles). Tailwind
+runs through whichever loader your app already has — `@tailwindcss/turbopack`, which is what
+`create-next-app@16` scaffolds, or `@tailwindcss/postcss`:
 
 ```css
 /* app/globals.css */
@@ -157,6 +158,29 @@ Load the stylesheet once from the root layout's CSS, same as [step 2](#2-load-th
 import './globals.css';
 ```
 
+### `cacheComponents` (Next 16)
+
+`create-next-app@16` scaffolds `cacheComponents: true`. Under it, a Client Component that reads the
+current time or a random value while a route prerenders has to sit under a `<Suspense>` boundary, or
+`next build` stops with _"used `new Date()` inside a Client Component without a Suspense boundary
+above it"_. Three exports do exactly that, inside the libraries they wrap: `Calendar` and
+`DatePicker` ask DayPicker for "today", and `InputTextFormatting` lets Lexical draw a random editor
+key. On such a route, wrap each of them yourself:
+
+```tsx
+import { Suspense } from 'react';
+import { Calendar } from '@echoit/itui.css';
+
+<Suspense fallback={<div className="h-[386px]" />}>
+  <Calendar />
+</Suspense>;
+```
+
+The fallback is what the static shell shows until the component streams in with the first request,
+so give it roughly the component's size — a five-week `Calendar` is 386px tall — and the page does
+not jump when it arrives. Every other export prerenders to static HTML with no boundary, and
+without `cacheComponents` none of this applies.
+
 Two things this does **not** do for you:
 
 - **Your own file still needs `"use client"` when you write a handler.** Passing a function across
@@ -168,8 +192,9 @@ Two things this does **not** do for you:
 
 The boundary is a build gate rather than a convention: `check:client` rejects a module that uses
 client-only React or hands a handler to a DOM prop without declaring itself, and `check:rsc` packs
-the tarball and runs a real `next build` over a fixture that renders **every** export. Both run in
-CI.
+the tarball and runs a real `next build`, with `cacheComponents: true`, over a fixture that renders
+**every** export. The fixture wraps those three exports exactly as above and leaves every other one
+bare, so a fourth that needs a boundary fails the build. Both run in CI.
 
 ---
 
