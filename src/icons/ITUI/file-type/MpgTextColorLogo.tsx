@@ -28,7 +28,7 @@ const MpgTextColorLogo = ({
       <path
         d="M12.6002 7.8H18.0002L10.2002 0V5.4C10.2002 6.72548 11.2747 7.8 12.6002 7.8Z"
         fill="white"
-        fill-opacity="0.5"
+        fillOpacity="0.5"
       />
     </g>
     <path

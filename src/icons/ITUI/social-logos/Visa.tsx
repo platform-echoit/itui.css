@@ -35,8 +35,8 @@ const Visa = ({
         y2="-1019.54"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#222357" />
-        <stop offset="1" stop-color="#254AA5" />
+        <stop stopColor="#222357" />
+        <stop offset="1" stopColor="#254AA5" />
       </linearGradient>
       <clipPath id="clip0_1_20224">
         <rect width="32" height="32" fill="white" />

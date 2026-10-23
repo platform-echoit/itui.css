@@ -17,6 +17,12 @@ dates are the npm publish dates and the entries were reconstructed from the comm
 
 ### Fixed
 
+- 86 icon sources (`FileIcon`/`FileType` logos, `*TextFlatLogo`/`*TextColorLogo`, `EmptyIcon`,
+  `Telegram`, `Visa`) used kebab-case SVG attributes (`stop-color`, `stroke-opacity`,
+  `fill-opacity`), so React printed `Invalid DOM property` for each of them. Rendered markup is
+  byte-identical; only the warnings are gone. A new `check:icons` gate (static scan in `prebuild`,
+  render smoke in CI) keeps it that way.
+
 ### Internal
 
 ## [1.1.3] - 2026-10-23

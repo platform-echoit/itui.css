@@ -32,7 +32,7 @@ const ZipTextFlatLogo = ({
       <path
         d="M3.2002 0.400391H10.0342L17.5996 7.96582V20.7998C17.5996 22.3462 16.3462 23.5996 14.7998 23.5996H3.2002C1.6538 23.5996 0.400391 22.3462 0.400391 20.7998V3.2002C0.400391 1.6538 1.6538 0.400391 3.2002 0.400391Z"
         stroke="black"
-        stroke-opacity="0.06"
+        strokeOpacity="0.06"
         strokeWidth="0.8"
       />
     </g>
@@ -57,8 +57,8 @@ const ZipTextFlatLogo = ({
         y2="24"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#F2F6FC" />
-        <stop offset="1" stop-color="#EDF1F7" />
+        <stop stopColor="#F2F6FC" />
+        <stop offset="1" stopColor="#EDF1F7" />
       </linearGradient>
       <clipPath id="clip0_1_19720">
         <rect width="18" height="24" fill="white" />

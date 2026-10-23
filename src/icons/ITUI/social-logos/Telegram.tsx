@@ -41,8 +41,8 @@ const Telegram = ({
         y2="31.7627"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#2AABEE" />
-        <stop offset="1" stop-color="#229ED9" />
+        <stop stopColor="#2AABEE" />
+        <stop offset="1" stopColor="#229ED9" />
       </linearGradient>
       <clipPath id="clip0_1_20185">
         <rect width="32" height="32" fill="white" />

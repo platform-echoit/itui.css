@@ -86,6 +86,35 @@ jobs:
       - name: Check class merging
         run: pnpm check:classes
 
+  # 86 icon sources carried kebab-case SVG attributes (stop-color, stroke-opacity,
+  # fill-opacity) — valid SVG, but React wants the camelCase name and prints
+  # "Invalid DOM property" for each in every consumer's console (ISS-28). No
+  # other gate renders an icon, so none could see it.
+  icons:
+    name: Icons render without React warnings
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check the rules still fire
+        run: pnpm check:icons --self-test
+
+      - name: Check attribute names
+        run: pnpm check:icons
+
+      - name: Render every icon
+        run: pnpm check:icons --render
+
   # API.md is generated from the type checker, so a PR that adds a prop or a
   # component without regenerating it turns the reference into fiction — which is
   # how the README came to advertise 5 Button variants against the source's 7.
