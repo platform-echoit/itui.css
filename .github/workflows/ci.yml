@@ -138,6 +138,31 @@ jobs:
       - name: Check API.md is up to date
         run: pnpm check:docs
 
+  # The README named `NavigationV2`, an export that never existed, and never
+  # mentioned `./fonts.css` (F-28). A hand-written README drifts from index.d.ts
+  # and `exports` unless something reads all three. Reads src/, no build needed.
+  readme:
+    name: README names what the package ships
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check the rules still fire
+        run: pnpm check:readme --self-test
+
+      - name: Check README against exports
+        run: pnpm check:readme
+
   # Integration counterpart to client-boundary: the static check cannot tell
   # whether the *packaging* still delivers those directives, and this cannot see
   # a hook that only runs at render time. Both are needed — see

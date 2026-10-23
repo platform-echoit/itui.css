@@ -82,6 +82,7 @@
     "check:barrels": "tsx scripts/check-barrel-exports.ts",
     "check:classes": "tsx scripts/check-class-merge.ts",
     "check:icons": "tsx scripts/check-icons.ts",
+    "check:readme": "tsx scripts/check-readme.ts",
     "check:rsc": "tsx scripts/check-rsc.ts",
     "check:bundle": "tsx scripts/check-bundle.ts",
     "prebuild": "pnpm check:client && pnpm check:barrels && pnpm check:classes && pnpm check:icons",
